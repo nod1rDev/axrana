@@ -99,7 +99,7 @@ function Shaxsiy() {
           </div>
         </div>
 
-        {/* {userData && userData.adminStatus ? <Users /> : null} */}
+        {userData && userData.adminStatus ? <Users /> : null}
       </div>
       <EditModal
         setValue={setValue}

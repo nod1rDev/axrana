@@ -37,7 +37,7 @@ const columns: readonly Column[] = [
 
   {
     id: "unvonDate",
-    label: "Tuman Yaratilgan Vaqt",
+    label: "",
     minWidth: 180,
     align: "center",
   },
@@ -74,7 +74,7 @@ export default function LocationTab({ ranks }: { ranks: any }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name, e.date, 5, e.id))
+    ? ranks.map((e: any) => createData(1, e.name, e.date, 5, e._id))
     : [];
 
   const dispatch = useDispatch();

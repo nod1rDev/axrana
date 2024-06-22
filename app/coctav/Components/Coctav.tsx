@@ -1,11 +1,6 @@
 "use client";
 import React from "react";
-import {
-  CreateCoctavs,
-  DeleteCoctav,
-  GetCoctavs,
-  UpdateCoctavs,
-} from "@/app/Api/Apis";
+
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { extractNmae } from "@/app/Utils";
@@ -13,6 +8,7 @@ import CoctavTab from "./CoctavTab";
 import CreateCoctavlar from "./CreateCoctav";
 import CoctavModal from "./CoctavModal";
 import { setModalCoctav } from "@/app/Redux/CoctavsSlice";
+import { Createotryads, Deleteotryad, Getotryads, Updateotryads } from "@/app/Api/Apis";
 
 function Coctav() {
   //Umumiy
@@ -23,7 +19,7 @@ function Coctav() {
   const [allRanks, setAllRAnks] = React.useState<any>();
 
   const getAllRanks = async () => {
-    const res = await GetCoctavs(JWT);
+    const res = await Getotryads(JWT);
 
     setAllRAnks(res.data);
   };
@@ -38,7 +34,7 @@ function Coctav() {
   });
 
   const deleteUnvon = async () => {
-    const res = await DeleteCoctav(JWT, open.id);
+    const res = await Deleteotryad(JWT, open.id);
 
     if (res.success) {
       handleClose();
@@ -65,7 +61,7 @@ function Coctav() {
     deleteUnvon();
   };
   const EditUnvon = async (value: any) => {
-    const res = await UpdateCoctavs(JWT, value, open.id);
+    const res = await Updateotryads(JWT, value, open.id);
 
     if (res.success) {
       handleClose();
@@ -113,7 +109,7 @@ function Coctav() {
   //create unvon
   const [data, setData] = React.useState<any>([]);
   const createRanks = async () => {
-    const res = await CreateCoctavs(JWT, extractNmae(data));
+    const res = await Createotryads(JWT, extractNmae(data));
 
     if (res.success) {
       getAllRanks();

@@ -24,6 +24,7 @@ export const loginAuth = async (username: any, password: any) => {
 
 export const UpdateAuth = async (
   JWT: any,
+  username: any,
   oldPassword: any,
   newPassword: any
 ) => {
@@ -33,7 +34,7 @@ export const UpdateAuth = async (
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
-    body: JSON.stringify({ oldPassword, newPassword }),
+    body: JSON.stringify({ username, oldPassword, newPassword }),
   });
 
   const data = await res.json();
@@ -70,12 +71,7 @@ export const getAuth = async (JWT: any) => {
 };
 
 export const SelectAuth = async () => {
-  const res = await fetch(URL + "/auth/login/for", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(URL + "/auth/login/for");
 
   const data = await res.json();
 
@@ -311,16 +307,16 @@ export const DeleteLocation = async (JWT: any, id: any) => {
   return data;
 };
 
-//Sostav APi
-export const CreateCoctavs = async (JWT: any, coctavs: any) => {
-  const res = await fetch(URL + "/coctav/create", {
+//Otryad APi
+export const Createotryads = async (JWT: any, otryads: any) => {
+  const res = await fetch(URL + "/otryad/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify({
-      coctavs: coctavs,
+      otryads: otryads,
     }),
   });
 
@@ -329,8 +325,8 @@ export const CreateCoctavs = async (JWT: any, coctavs: any) => {
   return data;
 };
 
-export const GetCoctavs = async (JWT: any) => {
-  const res = await fetch(URL + "/coctav/get", {
+export const Getotryads = async (JWT: any) => {
+  const res = await fetch(URL + "/otryad/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -342,14 +338,14 @@ export const GetCoctavs = async (JWT: any) => {
   return data;
 };
 
-export const UpdateCoctavs = async (JWT: any, coctav: any, id: any) => {
-  const res = await fetch(URL + "/coctav/update/" + id, {
+export const Updateotryads = async (JWT: any, otryad: any, id: any) => {
+  const res = await fetch(URL + "/otryad/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
-    body: JSON.stringify(coctav),
+    body: JSON.stringify(otryad),
   });
 
   const data = await res.json();
@@ -357,8 +353,8 @@ export const UpdateCoctavs = async (JWT: any, coctav: any, id: any) => {
   return data;
 };
 
-export const DeleteCoctav = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/coctav/delete/" + id, {
+export const Deleteotryad = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/otryad/delete/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

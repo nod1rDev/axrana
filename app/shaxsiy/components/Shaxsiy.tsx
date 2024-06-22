@@ -11,6 +11,7 @@ function Shaxsiy() {
   const [userData, setUserData] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = React.useState<any>({
+    username: null,
     oldPassword: null,
     newPassword: null,
   });
@@ -29,10 +30,15 @@ function Shaxsiy() {
   }, []);
   const dispatch = useDispatch();
   const updateAuth = async (value: any) => {
-    const res = await UpdateAuth(JWT, value.oldPassword, value.newPassword);
+    const res = await UpdateAuth(
+      JWT,
+      value.username,
+      value.oldPassword,
+      value.newPassword
+    );
     if (res.success) {
       handleClose();
-      setValue({ oldPassword: null, newPassword: null });
+      setValue({ username: null, oldPassword: null, newPassword: null });
       dispatch(
         alertChange({
           open: true,
@@ -94,7 +100,7 @@ function Shaxsiy() {
           <div className="flex flex-col">
             <h1 className="font-bold text-[18px]">Ishlatuvchinig paroli:</h1>
             <span className=" text-slate-400 font-bold">
-              {userData && userData.passwordInfo}
+              {userData && userData.password}
             </span>
           </div>
         </div>

@@ -79,7 +79,7 @@ export default function Users() {
   }, []);
 
   const rows = users
-    ? users.map((e: any) => createData(1, e.username, e.passwordInfo, e._id))
+    ? users.map((e: any) => createData(1, e.username, e.password, e._id))
     : [];
   const dispatch = useDispatch();
 

@@ -33,18 +33,13 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "unvonNomi", label: "Otryad Nomi", align: "left", minWidth: 300 },
+  { id: "unvonNomi", label: "Otryad Nomi", align: "left", minWidth: 600 },
 
-  {
-    id: "unvonDate",
-    label: "Otryad Yaratilgan Vaqt",
-    minWidth: 180,
-    align: "center",
-  },
+ 
   {
     id: "actions",
     label: "Amallar",
-    minWidth: 300,
+    minWidth: 10,
     align: "right",
   },
 ];
@@ -53,7 +48,7 @@ interface Data {
   number: any;
   unvonNomi: any;
 
-  unvonDate: any;
+ 
   actions: any;
   id: number;
 }
@@ -62,11 +57,11 @@ function createData(
   number: any,
   unvonNomi: any,
 
-  unvonDate: any,
+
   actions: any,
   id: number
 ): Data {
-  return { number, unvonNomi, unvonDate, actions, id };
+  return { number, unvonNomi, actions, id };
 }
 
 export default function CoctavTab({ ranks }: { ranks: any }) {
@@ -74,7 +69,7 @@ export default function CoctavTab({ ranks }: { ranks: any }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name, e.date, 5, e.id))
+    ? ranks.map((e: any) => createData(1, e.name,  5, e._id))
     : [];
 
   const dispatch = useDispatch();
@@ -108,7 +103,7 @@ export default function CoctavTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 3 ? (
+                          ) : e == 2 ? (
                             <>
                               <IconButton
                                 onClick={() =>

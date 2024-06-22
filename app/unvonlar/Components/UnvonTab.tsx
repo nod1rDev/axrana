@@ -40,12 +40,7 @@ const columns: readonly Column[] = [
     minWidth: 180,
     align: "center",
   },
-  {
-    id: "unvonDate",
-    label: "Unvon Yaratilgan Vaqt",
-    minWidth: 180,
-    align: "center",
-  },
+
   {
     id: "actions",
     label: "Amallar",
@@ -58,7 +53,7 @@ interface Data {
   number: any;
   unvonNomi: any;
   unvonNarxi: any;
-  unvonDate: any;
+
   actions: any;
   id: number;
 }
@@ -67,11 +62,11 @@ function createData(
   number: any,
   unvonNomi: any,
   unvonNarxi: any,
-  unvonDate: any,
+
   actions: any,
   id: number
 ): Data {
-  return { number, unvonNomi, unvonNarxi, unvonDate, actions, id };
+  return { number, unvonNomi, unvonNarxi, actions, id };
 }
 
 export default function UnvonTab({ ranks }: { ranks: any }) {
@@ -79,7 +74,7 @@ export default function UnvonTab({ ranks }: { ranks: any }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name, e.summa, e.date, 5, e.id))
+    ? ranks.map((e: any) => createData(1, e.name, e.summa, 5, e._id))
     : [];
 
   const dispatch = useDispatch();
@@ -113,7 +108,7 @@ export default function UnvonTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 4 ? (
+                          ) : e == 3 ? (
                             <>
                               <IconButton
                                 onClick={() =>
@@ -123,7 +118,7 @@ export default function UnvonTab({ ranks }: { ranks: any }) {
                                       open: true,
                                       id: row.id,
                                       name: row.unvonNomi,
-                                      summa:row.unvonNarxi
+                                      summa: row.unvonNarxi,
                                     })
                                   )
                                 }
@@ -147,7 +142,7 @@ export default function UnvonTab({ ranks }: { ranks: any }) {
                                       open: true,
                                       id: row.id,
                                       name: row.unvonNomi,
-                                      summa:row.unvonNarxi
+                                      summa: row.unvonNarxi,
                                     })
                                   )
                                 }

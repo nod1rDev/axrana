@@ -8,7 +8,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 
-
 export default function EditModal({
   value,
   setValue,
@@ -18,15 +17,12 @@ export default function EditModal({
   value: any;
   setValue: any;
   handleSubmit: any;
-  handleClose:any
+  handleClose: any;
 }) {
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const open = useSelector((s: any) => s.shax.modal);
-
-
-  
 
   const handleChange = (e: any) => {
     setValue({
@@ -37,8 +33,6 @@ export default function EditModal({
 
   const handleSubmite = async () => {
     handleSubmit();
-
-    
   };
 
   return (
@@ -52,7 +46,16 @@ export default function EditModal({
         <DialogTitle id="responsive-dialog-title">
           {"Shaxsiy parolingizni ozgartirin"}
         </DialogTitle>
-        <div className="flex flex-col w-full gap-2 px-4">
+        <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
+          <TextField
+            name="username"
+            error={value.username == ""}
+            fullWidth
+            value={value.username}
+            onChange={(e: any) => handleChange(e)}
+            label="Foydalanuvchi nomi"
+            id="fullWidth"
+          />
           <TextField
             name="oldPassword"
             error={value.oldPassword == ""}

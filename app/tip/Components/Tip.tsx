@@ -1,20 +1,7 @@
 "use client";
 import React from "react";
 
-import {
-  CreateCoctavs,
-  CreateLocations,
-  Createtips,
-  DeleteCoctav,
-  DeleteLocation,
-  Deletetip,
-  GetCoctavs,
-  GetLocation,
-  Gettips,
-  UpdateCoctavs,
-  UpdateLocation,
-  Updatetips,
-} from "@/app/Api/Apis";
+import { Createtips, Deletetip, Gettips, Updatetips } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
 import { setModalUnvon } from "@/app/Redux/UnvonSlice";
 

@@ -27,7 +27,7 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems = ["Shaxsiy"];
+const navItems = ["Shaxsiy", "shartnoma"];
 const navItems2 = [
   "Unvonlar",
   "Joylashuv",

@@ -21,7 +21,7 @@ function AddFuqoro() {
           status: "success",
         })
       );
-      router.push("/tip")
+      router.push("/tip");
     } else {
       dispatch(
         alertChange({
@@ -47,10 +47,11 @@ function AddFuqoro() {
           Orqaga
         </Button>
       </div>
-      <AddFuqaroTab setData={setData} ranks={data} />
-      <div className="mt-16">
+
+      <div className="my-5">
         <CreateFuqaro data={data} setData={setData} />
       </div>
+      <AddFuqaroTab setData={setData} ranks={data} />
       <div className="w-full">
         <Button
           onClick={handleSave}

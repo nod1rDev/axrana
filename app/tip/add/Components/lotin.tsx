@@ -163,6 +163,7 @@ const LatCyrConverter = ({
               autoComplete: "off",
               autoCorrect: "off",
               spellCheck: "false",
+              readOnly: true,
             }}
             label="Kirill"
             value={cyrillicText}
@@ -171,7 +172,7 @@ const LatCyrConverter = ({
           />
         </div>
       ) : (
-        <div className="flex w-full gap-5 ">
+        <div className="flex w-full  items-center  justify-between gap-10 ">
           <TextField
             label="Kirill"
             value={cyrillicText}
@@ -196,11 +197,8 @@ const LatCyrConverter = ({
           </IconButton>
           <TextField
             label="Lotin"
-            sx={{
-              "& .MuiInputBase-input.Mui-disabled": {
-                color: "#000000", // Text color inside the input when disabled
-                opacity: 1, // Ensure the text is fully opaque
-              },
+            InputProps={{
+              readOnly: true,
             }}
             value={latinText}
             disabled

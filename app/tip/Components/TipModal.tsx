@@ -12,7 +12,13 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { GetCreateInfoWorker } from "@/app/Api/Apis";
+import { IconButton } from "@mui/material";
+
+import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+
 const latinToCyrillic = (latin: string): string => {
+  // Bu yerda lotincha matnni kirillchaga aylantiradigan funksiyani yozing
+  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
   const map: any = {
     a: "а",
     b: "б",
@@ -40,6 +46,7 @@ const latinToCyrillic = (latin: string): string => {
     x: "х",
     y: "й",
     z: "з",
+
     " ": " ",
   };
   return latin
@@ -47,6 +54,46 @@ const latinToCyrillic = (latin: string): string => {
     .map((char) => map[char] || char)
     .join("");
 };
+
+const cyrillicToLatin = (cyrillic: string): string => {
+  // Bu yerda kirillcha matnni lotinchaga aylantiradigan funksiyani yozing
+  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
+  const map: any = {
+    а: "a",
+    б: "b",
+    ц: "c",
+    д: "d",
+    е: "e",
+    ф: "f",
+    г: "g",
+    ҳ: "h",
+    и: "i",
+    ж: "j",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    п: "p",
+    қ: "q",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    в: "v",
+    ў: "w",
+    х: "x",
+    й: "y",
+    з: "z",
+
+    " ": " ",
+  };
+  return cyrillic
+    .split("")
+    .map((char) => map[char] || char)
+    .join("");
+};
+
 export default function TipModal({
   value,
   setValue,
@@ -65,7 +112,10 @@ export default function TipModal({
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const open = useSelector((s: any) => s.tip.modal);
   const [select, setSelect] = React.useState<any>();
-
+  const [isLatinToCyrillic, setIsLatinToCyrillic] = React.useState(true);
+  const [latinText, setLatinText] = React.useState("");
+  const [cyrillicText, setCyrillicText] = React.useState("");
+  const [isLotin, setIsLotin] = React.useState(true);
   const getSelect = async () => {
     const res = await GetCreateInfoWorker(JWT);
     setSelect(res);
@@ -89,6 +139,12 @@ export default function TipModal({
         selectRank: filter.name,
         selectRankSumma: filter.summa,
       });
+    } else if (i.target.name == "FIOkril") {
+      setValue({
+        ...value,
+        FIOlotin: cyrillicToLatin(i.target.value),
+        FIOkril: i.target.value,
+      });
     } else {
       setValue({
         ...value,
@@ -99,6 +155,16 @@ export default function TipModal({
 
   const handleSubmite = async () => {
     handleSubmit();
+  };
+  const handleSwitch = () => {
+    setIsLatinToCyrillic(!isLatinToCyrillic);
+    if (!isLotin) {
+      setLatinText(cyrillicText);
+      setCyrillicText(latinText);
+    } else {
+      setLatinText(latinText);
+      setCyrillicText(cyrillicText);
+    }
   };
 
   return (
@@ -119,35 +185,87 @@ export default function TipModal({
             {open.name + " " + "o'zgartirin"}
           </DialogTitle>
           <div className="flex flex-row  min-w-[1120px] p-4 gap-2 px-4">
-            <div className="flex w-[33.333%] items-center justify-between gap-3">
-              <TextField
-                value={value.FIOlotin}
-                onChange={handleChange}
-                name="FIOlotin"
-                fullWidth
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-              />
-              <TextField
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-                value={value.FIOkril}
-                disabled
-                fullWidth
-              />
-            </div>
+            {isLatinToCyrillic ? (
+              <div className="flex w-[33.333%] items-center justify-between gap-3">
+                <TextField
+                  label="Lotin"
+                  value={value.FIOlotin}
+                  onChange={handleChange}
+                  fullWidth
+                  name="FIOlotin"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                />
+
+                <IconButton
+                  sx={{ width: "40px", height: "40px" }}
+                  aria-label="delete"
+                  onClick={handleSwitch}
+                  size="medium"
+                >
+                  <CompareArrowsIcon fontSize="inherit" />
+                </IconButton>
+
+                <TextField
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                  label="Kirill"
+                  value={value.FIOkril}
+                  disabled
+                  fullWidth
+                />
+              </div>
+            ) : (
+              <div className="flex w-[33.333%] items-center justify-between gap-3">
+                <TextField
+                  label="Kirill"
+                  value={value.FIOkril}
+                  onChange={handleChange}
+                  fullWidth
+                  name="FIOkril"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                />
+                <IconButton
+                  aria-label="delete"
+                  onClick={handleSwitch}
+                  sx={{ width: "40px", height: "40px" }}
+                  size="medium"
+                >
+                  <CompareArrowsIcon fontSize="inherit" />
+                </IconButton>
+                <TextField
+                  label="Lotin"
+                  sx={{
+                    "& .MuiInputBase-input.Mui-disabled": {
+                      color: "#000000", // Text color inside the input when disabled
+                      opacity: 1, // Ensure the text is fully opaque
+                    },
+                  }}
+                  value={value.FIOlotin}
+                  disabled
+                  fullWidth
+                />
+              </div>
+            )}
 
             <div className="w-[33.333%] flex justify-between gap-3">
               <FormControl fullWidth>

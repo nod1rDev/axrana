@@ -676,3 +676,37 @@ export const Deleteworker = async (JWT: any, id: any) => {
 
   return data;
 };
+
+export const GetForShartnoma = async (JWT: any, language: any) => {
+  const res = await fetch(URL + "/contract/for/page?query=" + language, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const Createshartnomaa = async (
+  JWT: any,
+  shartnoma: any,
+  language: any
+) => {
+  const res = await fetch(URL + "/contract/create?query=" + language, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({
+      ...shartnoma,
+    }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

@@ -77,11 +77,17 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
 
   return (
     <form onSubmit={saqlsh} className="w-full mt-6 flex flex-col gap-4">
+      <div className="flex justify-end">
+        <Button type="submit" variant="contained">
+          {"Qo'shish"}
+        </Button>
+      </div>
       <LatCyrConverter
         clear={clear}
         setValue={setCreateInp}
         value={createInp}
       />
+
       <div className="w-full flex justify-between gap-[140px]">
         <FormControl fullWidth>
           <InputLabel id="rank-select-label">Unvon</InputLabel>
@@ -110,7 +116,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             label="Unvon Summa"
             name="selectRankSumma"
             value={createInp.selectRankSumma}
-          
           >
             <MenuItem value={createInp.selectRankSumma}>
               {createInp.selectRankSumma}
@@ -157,12 +162,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
               ))}
           </Select>
         </FormControl>
-      </div>
-
-      <div className="flex justify-end">
-        <Button type="submit" variant="contained">
-          {"Qo'shish"}
-        </Button>
       </div>
     </form>
   );

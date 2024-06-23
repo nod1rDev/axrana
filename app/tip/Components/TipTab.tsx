@@ -44,13 +44,13 @@ const columns: readonly Column[] = [
 
   {
     id: "UnvonNom",
-    label: "UnvonNom",
+    label: "Unvon Nomi",
     minWidth: 180,
     align: "center",
   },
   {
     id: "UnvonSum",
-    label: "UnvonSum",
+    label: "Unvon Summasi",
     minWidth: 180,
     align: "center",
   },

@@ -43,8 +43,8 @@ interface Column {
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
   { id: "FIO", label: "FIO", align: "left", minWidth: 100 },
-  { id: "UnvonNom", label: "UnvonNom", minWidth: 180, align: "center" },
-  { id: "UnvonSum", label: "UnvonSum", minWidth: 180, align: "center" },
+  { id: "UnvonNom", label: "Unvon Nomi", minWidth: 180, align: "center" },
+  { id: "UnvonSum", label: "Unvon Summasi", minWidth: 180, align: "center" },
   { id: "Tuman", label: "Tuman", minWidth: 180, align: "center" },
   { id: "Otryad", label: "Otryad", minWidth: 180, align: "center" },
   { id: "actions", label: "Amallar", minWidth: 100, align: "right" },
@@ -126,7 +126,6 @@ export default function AddFuqaroTab({
 
   const getSelect = async () => {
     const res = await GetCreateInfoWorker(JWT);
-   
 
     setSelect(res);
   };
@@ -246,10 +245,26 @@ export default function AddFuqaroTab({
                               value={row.FIO.FIOlotin}
                               onChange={handleLatinChange}
                               fullWidth
+                              autoComplete="off"
+                              autoCorrect="off"
+                              spellCheck="false"
+                              InputProps={{
+                                autoComplete: "off",
+                                autoCorrect: "off",
+                                spellCheck: "false",
+                              }}
                             />
                             <TextField
                               value={row.FIO.FIOkril}
                               disabled
+                              autoComplete="off"
+                              autoCorrect="off"
+                              spellCheck="false"
+                              InputProps={{
+                                autoComplete: "off",
+                                autoCorrect: "off",
+                                spellCheck: "false",
+                              }}
                               fullWidth
                             />
                           </div>

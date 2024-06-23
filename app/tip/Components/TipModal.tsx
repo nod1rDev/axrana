@@ -125,8 +125,28 @@ export default function TipModal({
                 onChange={handleChange}
                 name="FIOlotin"
                 fullWidth
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                InputProps={{
+                  autoComplete: "off",
+                  autoCorrect: "off",
+                  spellCheck: "false",
+                }}
               />
-              <TextField value={value.FIOkril} disabled fullWidth />
+              <TextField
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                InputProps={{
+                  autoComplete: "off",
+                  autoCorrect: "off",
+                  spellCheck: "false",
+                }}
+                value={value.FIOkril}
+                disabled
+                fullWidth
+              />
             </div>
 
             <div className="w-[33.333%] flex justify-between gap-3">

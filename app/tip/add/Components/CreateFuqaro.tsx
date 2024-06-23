@@ -110,7 +110,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             label="Unvon Summa"
             name="selectRankSumma"
             value={createInp.selectRankSumma}
-            disabled
+          
           >
             <MenuItem value={createInp.selectRankSumma}>
               {createInp.selectRankSumma}

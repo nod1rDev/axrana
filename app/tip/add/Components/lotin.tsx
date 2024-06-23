@@ -33,7 +33,7 @@ const latinToCyrillic = (latin: string): string => {
     x: "х",
     y: "й",
     z: "з",
-   
+
     " ": " ",
   };
   return latin
@@ -72,7 +72,7 @@ const cyrillicToLatin = (cyrillic: string): string => {
     х: "x",
     й: "y",
     з: "z",
-   
+
     " ": " ",
   };
   return cyrillic
@@ -136,6 +136,14 @@ const LatCyrConverter = ({
             value={latinText}
             onChange={handleLatinChange}
             fullWidth
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+            }}
           />
 
           <IconButton
@@ -147,7 +155,20 @@ const LatCyrConverter = ({
             <CompareArrowsIcon fontSize="inherit" />
           </IconButton>
 
-          <TextField label="Kirill" value={cyrillicText} disabled fullWidth />
+          <TextField
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+            }}
+            label="Kirill"
+            value={cyrillicText}
+            disabled
+            fullWidth
+          />
         </div>
       ) : (
         <div className="flex w-full gap-5 ">
@@ -156,6 +177,14 @@ const LatCyrConverter = ({
             value={cyrillicText}
             onChange={handleCyrillicChange}
             fullWidth
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+            }}
           />
           <IconButton
             aria-label="delete"
@@ -165,7 +194,18 @@ const LatCyrConverter = ({
           >
             <CompareArrowsIcon fontSize="inherit" />
           </IconButton>
-          <TextField label="Lotin" value={latinText} disabled fullWidth />
+          <TextField
+            label="Lotin"
+            sx={{
+              "& .MuiInputBase-input.Mui-disabled": {
+                color: "#000000", // Text color inside the input when disabled
+                opacity: 1, // Ensure the text is fully opaque
+              },
+            }}
+            value={latinText}
+            disabled
+            fullWidth
+          />
         </div>
       )}
     </Box>

@@ -710,3 +710,16 @@ export const Createshartnomaa = async (
 
   return data;
 };
+
+export const GetAllShartnoma = async (JWT: any) => {
+  const res = await fetch(URL + "/contract/get", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

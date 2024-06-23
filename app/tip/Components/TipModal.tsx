@@ -7,8 +7,46 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { GetCreateInfoWorker } from "@/app/Api/Apis";
+const latinToCyrillic = (latin: string): string => {
+  const map: any = {
+    a: "а",
+    b: "б",
+    c: "ц",
+    d: "д",
+    e: "е",
+    f: "ф",
+    g: "г",
+    h: "ҳ",
+    i: "и",
+    j: "ж",
+    k: "к",
+    l: "л",
+    m: "м",
+    n: "н",
+    o: "о",
+    p: "п",
+    q: "қ",
+    r: "р",
+    s: "с",
+    t: "т",
+    u: "у",
+    v: "в",
+    w: "ў",
+    x: "х",
+    y: "й",
+    z: "з",
+    " ": " ",
+  };
+  return latin
+    .split("")
+    .map((char) => map[char] || char)
+    .join("");
+};
 export default function TipModal({
   value,
   setValue,
@@ -23,16 +61,40 @@ export default function TipModal({
   handleDelete: any;
 }) {
   const theme = useTheme();
-
+  const JWT = useSelector((s: any) => s.auth.JWT);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const open = useSelector((s: any) => s.tip.modal);
+  const [select, setSelect] = React.useState<any>();
+
+  const getSelect = async () => {
+    const res = await GetCreateInfoWorker(JWT);
+    setSelect(res);
+  };
+  React.useEffect(() => {
+    getSelect();
+  }, []);
   const dispatch = useDispatch();
 
-  const handleChange = (e: any) => {
-    setValue({
-      ...value,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (i: any) => {
+    if (i.target.name == "FIOlotin") {
+      setValue({
+        ...value,
+        FIOlotin: i.target.value,
+        FIOkril: latinToCyrillic(i.target.value),
+      });
+    } else if (i.target.name == "selectRank") {
+      const filter = select.ranks.find((e: any) => i.target.value === e.name);
+      setValue({
+        ...value,
+        selectRank: filter.name,
+        selectRankSumma: filter.summa,
+      });
+    } else {
+      setValue({
+        ...value,
+        [i.target.name]: i.target.value,
+      });
+    }
   };
 
   const handleSubmite = async () => {
@@ -46,36 +108,105 @@ export default function TipModal({
           fullScreen={fullScreen}
           open={open.open}
           onClose={handleClose}
+          sx={{
+            "& .MuiDialog-paper": {
+              maxWidth: "1120px", // Custom width here
+            },
+          }}
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
             {open.name + " " + "o'zgartirin"}
           </DialogTitle>
-          <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
-            <TextField
-              name="lastName"
-              fullWidth
-              value={value.lastName}
-              onChange={(e: any) => handleChange(e)}
-              label="Familya"
-              id="fullWidth"
-            />
-            <TextField
-              name="name"
-              fullWidth
-              value={value.name}
-              onChange={(e: any) => handleChange(e)}
-              label="Ism"
-              id="fullWidth"
-            />
-            <TextField
-              name="sharif"
-              fullWidth
-              value={value.sharif}
-              onChange={(e: any) => handleChange(e)}
-              label="Sharif"
-              id="fullWidth"
-            />
+          <div className="flex flex-row  min-w-[1120px] p-4 gap-2 px-4">
+            <div className="flex w-[33.333%] items-center justify-between gap-3">
+              <TextField
+                value={value.FIOlotin}
+                onChange={handleChange}
+                name="FIOlotin"
+                fullWidth
+              />
+              <TextField value={value.FIOkril} disabled fullWidth />
+            </div>
+
+            <div className="w-[33.333%] flex justify-between gap-3">
+              <FormControl fullWidth>
+                <InputLabel id="rank-select-label">Unvon</InputLabel>
+                <Select
+                  labelId="rank-select-label"
+                  id="rank-select"
+                  label="Unvon"
+                  name="selectRank"
+                  value={value.selectRank}
+                  onChange={handleChange}
+                >
+                  {select &&
+                    select.ranks.map((e: any) => (
+                      <MenuItem key={e.name} value={e.name}>
+                        {e.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel id="rank-summa-select-label">
+                  Unvon Summa
+                </InputLabel>
+                <Select
+                  labelId="rank-summa-select-label"
+                  id="rank-summa-select"
+                  label="Unvon Summa"
+                  name="selectRankSumma"
+                  value={value.selectRankSumma}
+                  disabled
+                >
+                  <MenuItem value={value.selectRankSumma}>
+                    {value.selectRankSumma}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
+            <div className="w-[33.333%] flex justify-between gap-4">
+              <FormControl fullWidth>
+                <InputLabel id="region-select-label">Tuman</InputLabel>
+                <Select
+                  labelId="region-select-label"
+                  id="region-select"
+                  label="Tuman"
+                  name="selectRegion"
+                  value={value.selectRegion}
+                  onChange={handleChange}
+                >
+                  {select &&
+                    select.locations.map((e: any) => (
+                      <MenuItem key={e.name} value={e.name}>
+                        {e.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel id="otryad-select-label">Otryad</InputLabel>
+                <Select
+                  labelId="otryad-select-label"
+                  id="otryad-select"
+                  label="Otryad"
+                  name="selectOtryad"
+                  value={value.selectOtryad}
+                  onChange={handleChange}
+                >
+                  {select &&
+                    select.otryads.map((e: any) => (
+                      <MenuItem key={e.name} value={e.name}>
+                        {e.name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </div>
           </div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">

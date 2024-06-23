@@ -24,7 +24,14 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "Familya" | "Ism" | "Sharif" | "actions";
+  id:
+    | "number"
+    | "FIO"
+    | "UnvonNom"
+    | "UnvonSum"
+    | "Tuman"
+    | "Otryad"
+    | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -33,17 +40,29 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "Familya", label: "Familya", align: "left", minWidth: 100 },
+  { id: "FIO", label: "FIO", align: "left", minWidth: 100 },
 
   {
-    id: "Ism",
-    label: "Ism",
+    id: "UnvonNom",
+    label: "UnvonNom",
     minWidth: 180,
     align: "center",
   },
   {
-    id: "Sharif",
-    label: "Sharif",
+    id: "UnvonSum",
+    label: "UnvonSum",
+    minWidth: 180,
+    align: "center",
+  },
+  {
+    id: "Tuman",
+    label: "Tuman",
+    minWidth: 180,
+    align: "center",
+  },
+  {
+    id: "Otryad",
+    label: "Otryad",
     minWidth: 180,
     align: "center",
   },
@@ -57,24 +76,28 @@ const columns: readonly Column[] = [
 
 interface Data {
   number: any;
-  Familya: any;
+  FIO: any;
 
-  Ism: any;
-  Sharif: any;
+  UnvonNom: any;
+  UnvonSum: any;
+  Tuman: any;
+  Otryad: any;
   actions: any;
   id: number;
 }
 
 function createData(
   number: any,
-  Familya: any,
+  FIO: any,
 
-  Ism: any,
-  Sharif: any,
+  UnvonNom: any,
+  UnvonSum: any,
+  Tuman: any,
+  Otryad: any,
   actions: any,
   id: number
 ): Data {
-  return { number, Familya, Ism, Sharif, actions, id };
+  return { number, FIO, UnvonNom, UnvonSum, Tuman, Otryad, actions, id };
 }
 
 export default function TipTab({ ranks }: { ranks: any }) {
@@ -82,7 +105,18 @@ export default function TipTab({ ranks }: { ranks: any }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name, e.date, "sharif", 5, e.id))
+    ? ranks.map((e: any, i: any) =>
+        createData(
+          i + 1,
+          { FIOlotin: e.FIOlotin, FIOkril: e.FIOkril },
+          e.selectRank,
+          e.selectRankSumma,
+          e.selectRegion,
+          e.selectOtryad,
+          null,
+          e._id
+        )
+      )
     : [];
 
   const dispatch = useDispatch();
@@ -116,7 +150,12 @@ export default function TipTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 4 ? (
+                          ) : e == 1 ? (
+                            <div className="w-full flex gap-2">
+                              <span>{row.FIO.FIOlotin}</span>
+                              <span>{row.FIO.FIOkril}</span>
+                            </div>
+                          ) : e == 6 ? (
                             <>
                               <IconButton
                                 onClick={() =>
@@ -125,9 +164,13 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       type: 1,
                                       open: true,
                                       id: row.id,
-                                      name: row.Ism,
-                                      lastName: row.Familya,
-                                      sharif: row.Sharif,
+                                      name: row.FIO.FIOlotin,
+                                      FIOlotin: row.FIO.FIOlotin,
+                                      FIOkril: row.FIO.FIOkril,
+                                      selectRank: row.UnvonNom,
+                                      selectRankSumma: row.UnvonSum,
+                                      selectRegion: row.Tuman,
+                                      selectOtryad: row.Otryad,
                                     })
                                   )
                                 }
@@ -150,9 +193,7 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       type: 2,
                                       open: true,
                                       id: row.id,
-                                      name: row.Ism,
-                                      lastName: row.Familya,
-                                      sharif: row.Sharif,
+                                      name: row.FIO.FIOlotin,
                                     })
                                   )
                                 }

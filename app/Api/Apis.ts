@@ -603,3 +603,76 @@ export const GetCreateInfofiles = async (JWT: any, id: any) => {
   const data = await res.json();
   return data;
 };
+
+export const GetCreateInfoWorker = async (JWT: any) => {
+  const res = await fetch(URL + "/worker/for/page", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+// workers
+export const Createworkers = async (JWT: any, workers: any) => {
+  const res = await fetch(URL + "/worker/create/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({
+      workers: workers,
+    }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const Getworkers = async (JWT: any) => {
+  const res = await fetch(URL + "/worker/get", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const Updateworkers = async (JWT: any, worker: any, id: any) => {
+  const res = await fetch(URL + "/worker/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(worker),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const Deleteworker = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/worker/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};

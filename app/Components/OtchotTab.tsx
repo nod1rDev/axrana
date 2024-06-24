@@ -37,6 +37,10 @@ interface Data {
   contractContent: string;
   serviceDuration: any;
   company: string;
+  inn: any;
+  manzil: any;
+  raxbar: any;
+  telefon: any;
 }
 
 function createData(
@@ -50,7 +54,11 @@ function createData(
   contractAmount: number,
   contractContent: string,
   serviceDuration: any,
-  company: string
+  company: string,
+  inn: any,
+  manzil: any,
+  raxbar: any,
+  telefon: any
 ): Data {
   return {
     tr,
@@ -64,182 +72,14 @@ function createData(
     contractContent,
     serviceDuration,
     company,
+    inn,
+    manzil,
+    raxbar,
+    telefon,
   };
 }
 
-const rows = [
-  createData(
-    1,
-    "Абдукаримов Хикмат Умар угли",
-    "сержант",
-    "Асaка",
-    "1-отряд",
-    "шт-0826",
-    "3/10/2024",
-    3000000,
-    "Футбол 2024 Лига чемпионат",
-    4,
-    "Асaка Футбол Мажмуаси"
-  ),
-  createData(
-    2,
-    "Вохидов Умар Акмалович",
-    "майор",
-    "Асaка",
-    "1-отряд",
-    "шт-0826",
-    "3/10/2024",
-    3000000,
-    "Футбол 2024 Лига чемпионат",
-    2,
-    "Асaка Футбол Мажмуаси"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
 
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-
-  createData(
-    3,
-    "Жасуров Хикмат Отaжон угли",
-    "рядовой",
-    "Андижон",
-    "2-отряд",
-    "23",
-    "15/06/2024",
-    150000000,
-    "Концерт",
-    1,
-    "Андижон Марказий уйингохи"
-  ),
-];
 
 export default function CustomizedTables({ data }: { data: any }) {
   const rows =
@@ -256,37 +96,67 @@ export default function CustomizedTables({ data }: { data: any }) {
         e.rankSumma,
         e.content,
         e.dayOrhour + " " + e.timeType,
-        e.name
+        e.name,
+        e.inn,
+        e.address,
+        e.boss,
+        e.phone
       )
     );
   return (
     <TableContainer
-      sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }}
+      sx={{ minWidth: 700, maxHeight: "400px", overflow: "auto" }}
       component={Paper}
     >
       <Table
-        sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }}
+        sx={{ minWidth: 700, maxHeight: "400px", overflow: "auto" }}
         aria-label="customized table"
       >
         <TableHead sx={{ position: "sticky", top: "0px" }}>
           <TableRow>
-            <StyledTableCell sx={{ width: "3.5%" }}>т/р</StyledTableCell>
-            <StyledTableCell sx={{ width: "14%" }} align="right">
+            <StyledTableCell sx={{ minWidth: "60px" }}>т/р</StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "260px" }} align="right">
               жалб килинган ходим ФИО
             </StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
               унвони
             </StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">Туман</StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">отряди</StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома №</StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома санаси</StyledTableCell>
-            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома суммаси</StyledTableCell>
-            <StyledTableCell sx={{ width: "14%" }} align="right">Шартнома мазмуни</StyledTableCell>
-            <StyledTableCell sx={{ width: "7%" }} align="right">
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+              Туман
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+              отряди
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+              шартнома №
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+              шартнома санаси
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+              шартнома суммаси
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "250px" }} align="right">
+              Шартнома мазмуни
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
               хисмат муддати
             </StyledTableCell>
-            <StyledTableCell sx={{ width: "7%" }} align="right">корхона номи</StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "250px" }} align="right">
+              корхона номи
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+              инн
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+              манзил
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "160px" }} align="right">
+              рахбар ФИО
+            </StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+              телефон
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -313,6 +183,10 @@ export default function CustomizedTables({ data }: { data: any }) {
                 {row.serviceDuration}
               </StyledTableCell>
               <StyledTableCell align="right">{row.company}</StyledTableCell>
+              <StyledTableCell align="right">{row.inn}</StyledTableCell>
+              <StyledTableCell align="right">{row.manzil}</StyledTableCell>
+              <StyledTableCell align="right">{row.raxbar}</StyledTableCell>
+              <StyledTableCell align="right">{row.telefon}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

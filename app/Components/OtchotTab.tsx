@@ -12,12 +12,12 @@ import Paper from "@mui/material/Paper";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     color: "#000",
-    fontWeight: "600",
+    fontWeight: "500",
     backgroundColor: "#f1faee",
     textAlign: "center", // Center align text
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 13,
     textAlign: "center", // Center align text
   },
 }));
@@ -106,29 +106,164 @@ const rows = [
     1,
     "Андижон Марказий уйингохи"
   ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
+
+  createData(
+    3,
+    "Жасуров Хикмат Отaжон угли",
+    "рядовой",
+    "Андижон",
+    "2-отряд",
+    "23",
+    "15/06/2024",
+    150000000,
+    "Концерт",
+    1,
+    "Андижон Марказий уйингохи"
+  ),
 ];
 
 export default function CustomizedTables({ data }: { data: any }) {
-  const rows =
-    data &&
-    data.map((e: any, i: any) =>
-      createData(
-        i + 1,
-        e.FIOlotin,
-        e.rank,
-        e.region,
-        e.otryad,
-        e.contractNumber,
-        e.contractDate,
-        e.rankSumma,
-        e.content,
-        e.dayOrhour + " " + e.timeType,
-        e.name
-      )
-    );
+    const rows =
+      data &&
+      data.map((e: any, i: any) =>
+        createData(
+          i + 1,
+          e.FIOlotin,
+          e.rank,
+          e.region,
+          e.otryad,
+          e.contractNumber,
+          e.contractDate,
+          e.rankSumma,
+          e.content,
+          e.dayOrhour + " " + e.timeType,
+          e.name
+        )
+      );
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <TableContainer   sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }} component={Paper}>
+      <Table
+        sx={{ minWidth: 700, maxHeight: "500px", overflow: "auto" }}
+        aria-label="customized table"
+      >
         <TableHead>
           <TableRow>
             <StyledTableCell>т/р</StyledTableCell>

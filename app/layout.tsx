@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang="en">
-        <body id="body" className={`max-w-[1580px] mx-auto ${inter.className}`}>
+        <body id="body" className={`max-w-full mx-auto ${inter.className}`}>
           <Prodected>
             <Main>{children}</Main>
           </Prodected>

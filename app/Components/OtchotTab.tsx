@@ -12,13 +12,14 @@ import Paper from "@mui/material/Paper";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     color: "#000",
-    fontWeight: "500",
-    fontSize: 16,
+    fontWeight: "600",
+    fontSize: 18,
     backgroundColor: "#f1faee",
     textAlign: "center", // Center align text
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 13,
+    fontSize: 16,
+    fontWeight: "500",
     textAlign: "center", // Center align text
   },
 }));
@@ -114,47 +115,47 @@ export default function CustomizedTables({ data }: { data: any }) {
       >
         <TableHead sx={{ position: "sticky", top: "0px" }}>
           <TableRow>
-            <StyledTableCell sx={{ minWidth: "60px" }}>т/р</StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "260px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "90px" }}>т/р</StyledTableCell>
+            <StyledTableCell sx={{ minWidth: "280px" }} align="right">
               жалб килинган ходим ФИО
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "80px" }} align="right">
               унвони
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "80px" }} align="right">
               Туман
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "80px" }} align="right">
               отряди
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "120px" }} align="right">
               шартнома №
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "80px" }} align="right">
               шартнома санаси
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "90px" }} align="right">
               шартнома суммаси
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "250px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "280px" }} align="right">
               Шартнома мазмуни
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "70px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "90px" }} align="right">
               хисмат муддати
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "250px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "290px" }} align="right">
               корхона номи
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "140px" }} align="right">
               инн
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "140px" }} align="right">
               манзил
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "160px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "180px" }} align="right">
               рахбар ФИО
             </StyledTableCell>
-            <StyledTableCell sx={{ minWidth: "100px" }} align="right">
+            <StyledTableCell sx={{ minWidth: "140px" }} align="right">
               телефон
             </StyledTableCell>
           </TableRow>

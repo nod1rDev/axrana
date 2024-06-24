@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CustomizedTables from "./OtchotTab";
 import { useSelector } from "react-redux";
 import { GetOtchot, getCantractFilter } from "../Api/Apis";
@@ -9,9 +9,12 @@ import { Box, Button, Checkbox, IconButton } from "@mui/material";
 import { Theme, useTheme } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { FiltDate } from "../Utils";
+import { useReactToPrint } from "react-to-print";
 import dayjs, { Dayjs } from "dayjs";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import PrintIcon from "@mui/icons-material/Print";
+import Documenttt from "./Document";
 function Othcot() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -45,91 +48,111 @@ function Othcot() {
     }
   };
 
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: (): any => componentRef.current,
+  });
+
   return (
-    <div>
-      <div className="flex w-full  justify-between">
-        <div className="text-[28px] font-bold">Otchot</div>
-        <div className="flex flex-col">
-          <div className="flex justify-end text-[28px] mb-2 font-bold">
-            Filter
-          </div>
-          <div className="flex translate-y-[-32px] items-center gap-4">
-            <div className="  flex flex-col   md:ml-0 ">
-              <div className=" ">Sana 1</div>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                  components={[
-                    "DatePicker",
-                    "TimePicker",
-                    "DatePicker",
-                    "DateRangePicker",
-                  ]}
-                >
-                  <DemoItem>
-                    <DatePicker
-                      defaultValue={dayjs(new Date())}
-                      sx={{ width: "100%" }}
-                      onChange={(e: any) =>
-                        setValue({ ...value, date1: FiltDate(e) })
-                      }
-                      onAccept={(e: any) =>
-                        setValue({ ...value, date1: FiltDate(e) })
-                      }
-                    />
-                  </DemoItem>
-                </DemoContainer>
-              </LocalizationProvider>
+    <>
+      <div>
+        <div className="flex w-full  justify-between">
+          <div className="text-[28px] font-bold">Otchot</div>
+          <div className="flex flex-col">
+            <div className="flex justify-end text-[28px] mb-2 font-bold">
+              Filter
             </div>
-            <div className="  flex flex-col   md:ml-0 ">
-              <div className=" ">Sana 2</div>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                  components={[
-                    "DatePicker",
-                    "TimePicker",
-                    "DatePicker",
-                    "DateRangePicker",
-                  ]}
+            <div className="flex translate-y-[-32px] items-center gap-4">
+              <div className="  flex flex-col   md:ml-0 ">
+                <div className=" ">Sana 1</div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer
+                    components={[
+                      "DatePicker",
+                      "TimePicker",
+                      "DatePicker",
+                      "DateRangePicker",
+                    ]}
+                  >
+                    <DemoItem>
+                      <DatePicker
+                        defaultValue={dayjs(new Date())}
+                        sx={{ width: "100%" }}
+                        onChange={(e: any) =>
+                          setValue({ ...value, date1: FiltDate(e) })
+                        }
+                        onAccept={(e: any) =>
+                          setValue({ ...value, date1: FiltDate(e) })
+                        }
+                      />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+              <div className="  flex flex-col   md:ml-0 ">
+                <div className=" ">Sana 2</div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer
+                    components={[
+                      "DatePicker",
+                      "TimePicker",
+                      "DatePicker",
+                      "DateRangePicker",
+                    ]}
+                  >
+                    <DemoItem>
+                      <DatePicker
+                        defaultValue={dayjs(new Date())}
+                        sx={{ width: "100%" }}
+                        onChange={(e: any) =>
+                          setValue({ ...value, date2: FiltDate(e) })
+                        }
+                        onAccept={(e: any) =>
+                          setValue({ ...value, date2: FiltDate(e) })
+                        }
+                      />
+                    </DemoItem>
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+              {search ? (
+                <IconButton
+                  size="large"
+                  sx={{ width: "60px", height: "60px", mt: 3 }}
+                  aria-label="delete"
+                  onClick={searchData}
                 >
-                  <DemoItem>
-                    <DatePicker
-                      defaultValue={dayjs(new Date())}
-                      sx={{ width: "100%" }}
-                      onChange={(e: any) =>
-                        setValue({ ...value, date2: FiltDate(e) })
-                      }
-                      onAccept={(e: any) =>
-                        setValue({ ...value, date2: FiltDate(e) })
-                      }
-                    />
-                  </DemoItem>
-                </DemoContainer>
-              </LocalizationProvider>
+                  <CloseIcon fontSize="inherit" color="error" />
+                </IconButton>
+              ) : (
+                <IconButton
+                  size="large"
+                  sx={{ width: "60px", height: "60px", mt: 3 }}
+                  aria-label="delete"
+                  onClick={searchData}
+                >
+                  <SearchIcon fontSize="inherit" color="info" />
+                </IconButton>
+              )}
             </div>
-            {search ? (
-              <IconButton
-                size="large"
-                sx={{ width: "60px", height: "60px", mt: 3 }}
-                aria-label="delete"
-                onClick={searchData}
-              >
-                <CloseIcon fontSize="inherit" color="error" />
-              </IconButton>
-            ) : (
-              <IconButton
-                size="large"
-                sx={{ width: "60px", height: "60px", mt: 3 }}
-                aria-label="delete"
-                onClick={searchData}
-              >
-                <SearchIcon fontSize="inherit" color="info" />
-              </IconButton>
-            )}
           </div>
         </div>
+        <div className="flex mb-4 justify-end">
+          <Button
+            onClick={handlePrint}
+            variant="contained"
+            startIcon={<PrintIcon />}
+          >
+            chop etish
+          </Button>
+        </div>
+        <CustomizedTables data={data} />
       </div>
-      <CustomizedTables data={data} />
-    </div>
+      <div className=" hidden">
+        <Documenttt printData={data} ref={componentRef} />
+      </div>
+    </>
   );
 }
 

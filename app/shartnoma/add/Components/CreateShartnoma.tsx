@@ -43,6 +43,7 @@ function CreateShartnoma({ language }: { language: any }) {
     contractDate: "",
     contractTurnOffDate: "",
     contractSumma: 0,
+    boss: "",
     contractNumber: "",
     phone: "",
     content: "",
@@ -132,7 +133,7 @@ function CreateShartnoma({ language }: { language: any }) {
       .filter((e: any) => e.selected)
       .map((e: any) => {
         return {
-          username: e.worker,
+          worker: e.worker,
           dayOrHour: e.dayOrHour,
           timeType: e.timeType,
         };
@@ -163,7 +164,7 @@ function CreateShartnoma({ language }: { language: any }) {
   };
   return (
     <>
-      <div className="flex flex-col mt-[60px] gap-0 w-full">
+      <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
         <div className="flex w-full justify-between gap-4 ">
           <TextField
             id="outlined-basic"
@@ -353,10 +354,26 @@ function CreateShartnoma({ language }: { language: any }) {
           <TextField
             id="outlined-basic"
             label="Bank Nomi"
-            sx={{ width: "30%" }}
+            sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
             name="bankName"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Raxbar Ismi"
+            sx={{ width: "20%" }}
+            onChange={(e: any) => handleChangeValue(e)}
+            variant="outlined"
+            name="boss"
             autoComplete="off"
             autoCorrect="off"
             spellCheck="false"
@@ -474,11 +491,12 @@ function CreateShartnoma({ language }: { language: any }) {
           </div>
         </div>
       </div>
-      <div className="w-full mt-10">
+      <div className="w-full mb-[18vh]">
         <Button onClick={saqlash} color="success" fullWidth variant="contained">
           Saqlash
         </Button>
       </div>
+      <div></div>
     </>
   );
 }

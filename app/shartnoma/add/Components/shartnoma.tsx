@@ -11,7 +11,7 @@ function Shartnoma() {
   const [isLotin, setIsLotin] = useState("uz");
   const router = useRouter();
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="w-[90%] mt-[5vh] mx-auto">
       <div className="flex justify-center mb-6 text-[28px] font-bold">
         Shartnoma yaratish
       </div>

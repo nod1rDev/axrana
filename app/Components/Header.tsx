@@ -101,7 +101,7 @@ export default function Header(props: Props) {
                 {navItems.map((item) => (
                   <Button
                     key={item}
-                    onClick={() => router.push(item.toLowerCase())}
+                    onClick={() => router.push(`/${item.toLowerCase()}`)}
                     sx={{ color: "#fff", fontWeight: "bold", ml: 3 }}
                   >
                     {item}

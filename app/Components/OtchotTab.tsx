@@ -13,11 +13,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     color: "#000",
     fontWeight: "500",
+    fontSize: 14,
     backgroundColor: "#f1faee",
     textAlign: "center", // Center align text
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 13,
+    fontSize: 11,
     textAlign: "center", // Center align text
   },
 }));
@@ -241,46 +242,51 @@ const rows = [
 ];
 
 export default function CustomizedTables({ data }: { data: any }) {
-    const rows =
-      data &&
-      data.map((e: any, i: any) =>
-        createData(
-          i + 1,
-          e.FIOlotin,
-          e.rank,
-          e.region,
-          e.otryad,
-          e.contractNumber,
-          e.contractDate,
-          e.rankSumma,
-          e.content,
-          e.dayOrhour + " " + e.timeType,
-          e.name
-        )
-      );
+  const rows =
+    data &&
+    data.map((e: any, i: any) =>
+      createData(
+        i + 1,
+        e.FIOlotin,
+        e.rank,
+        e.region,
+        e.otryad,
+        e.contractNumber,
+        e.contractDate,
+        e.rankSumma,
+        e.content,
+        e.dayOrhour + " " + e.timeType,
+        e.name
+      )
+    );
   return (
-    <TableContainer   sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }} component={Paper}>
+    <TableContainer
+      sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }}
+      component={Paper}
+    >
       <Table
         sx={{ minWidth: 700, maxHeight: "500px", overflow: "auto" }}
         aria-label="customized table"
       >
-        <TableHead>
+        <TableHead sx={{ position: "sticky", top: "0px" }}>
           <TableRow>
-            <StyledTableCell>т/р</StyledTableCell>
-            <StyledTableCell align="right">
+            <StyledTableCell sx={{ width: "3.5%" }}>т/р</StyledTableCell>
+            <StyledTableCell sx={{ width: "14%" }} align="right">
               жалб килинган ходим ФИО
             </StyledTableCell>
-            <StyledTableCell align="right">унвони</StyledTableCell>
-            <StyledTableCell align="right">Туман</StyledTableCell>
-            <StyledTableCell align="right">отряди</StyledTableCell>
-            <StyledTableCell align="right">шартнома №</StyledTableCell>
-            <StyledTableCell align="right">шартнома санаси</StyledTableCell>
-            <StyledTableCell align="right">шартнома суммаси</StyledTableCell>
-            <StyledTableCell align="right">Шартнома мазмуни</StyledTableCell>
-            <StyledTableCell align="right">
-              ходим хисмат муддати
+            <StyledTableCell sx={{ width: "3%" }} align="right">
+              унвони
             </StyledTableCell>
-            <StyledTableCell align="right">корхона номи</StyledTableCell>
+            <StyledTableCell sx={{ width: "3%" }} align="right">Туман</StyledTableCell>
+            <StyledTableCell sx={{ width: "3%" }} align="right">отряди</StyledTableCell>
+            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома №</StyledTableCell>
+            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома санаси</StyledTableCell>
+            <StyledTableCell sx={{ width: "3%" }} align="right">шартнома суммаси</StyledTableCell>
+            <StyledTableCell sx={{ width: "14%" }} align="right">Шартнома мазмуни</StyledTableCell>
+            <StyledTableCell sx={{ width: "7%" }} align="right">
+              хисмат муддати
+            </StyledTableCell>
+            <StyledTableCell sx={{ width: "7%" }} align="right">корхона номи</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

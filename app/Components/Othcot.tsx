@@ -38,7 +38,7 @@ function Othcot() {
 
   const searchData = () => {
     setSearch(!search);
-    if (!search) {
+    if (search) {
       if (value.date1 && value.date2) {
         getSearchData();
       }

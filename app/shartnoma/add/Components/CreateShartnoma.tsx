@@ -322,6 +322,7 @@ function CreateShartnoma({ language }: { language: any }) {
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
             name="address"
+            multiline
             autoComplete="off"
             autoCorrect="off"
             spellCheck="false"

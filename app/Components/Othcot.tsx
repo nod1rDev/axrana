@@ -69,6 +69,9 @@ function Othcot() {
                     <DatePicker
                       defaultValue={dayjs(new Date())}
                       sx={{ width: "100%" }}
+                      onChange={(e: any) =>
+                        setValue({ ...value, date1: FiltDate(e) })
+                      }
                       onAccept={(e: any) =>
                         setValue({ ...value, date1: FiltDate(e) })
                       }
@@ -92,6 +95,9 @@ function Othcot() {
                     <DatePicker
                       defaultValue={dayjs(new Date())}
                       sx={{ width: "100%" }}
+                      onChange={(e: any) =>
+                        setValue({ ...value, date2: FiltDate(e) })
+                      }
                       onAccept={(e: any) =>
                         setValue({ ...value, date2: FiltDate(e) })
                       }

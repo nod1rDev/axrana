@@ -16,9 +16,9 @@ function Othcot() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [search, setSearch] = useState(false);
-  const [value, setValue] = useState({
-    date1: "",
-    date2: "",
+  const [value, setValue] = useState<any>({
+    date1: new Date(),
+    date2: new Date(),
   });
   const getResoult = async () => {
     const res = await GetOtchot(JWT);

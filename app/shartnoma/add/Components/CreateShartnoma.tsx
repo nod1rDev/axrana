@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Box, Button, Checkbox } from "@mui/material";
+import { Box, Button, Checkbox, IconButton } from "@mui/material";
 import { Theme, useTheme } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -16,7 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Createshartnomaa, GetForShartnoma } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
-
+import SaveIcon from "@mui/icons-material/Save";
+import { FiltDate } from "@/app/Utils";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -105,8 +106,10 @@ function CreateShartnoma({ language }: { language: any }) {
       })
     : [];
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const createShartnoman = async (shartnoma: any) => {
     const res = await Createshartnomaa(JWT, shartnoma, language);
+   
 
     if (res.success) {
       dispatch(
@@ -162,6 +165,7 @@ function CreateShartnoma({ language }: { language: any }) {
   const handleChangeValue = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
+
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -214,7 +218,7 @@ function CreateShartnoma({ language }: { language: any }) {
                   <DatePicker
                     sx={{ width: "100%" }}
                     onAccept={(e: any) =>
-                      setValue({ ...value, contractDate: e.$d })
+                      setValue({ ...value, contractDate: FiltDate(e) })
                     }
                   />
                 </DemoItem>
@@ -236,7 +240,7 @@ function CreateShartnoma({ language }: { language: any }) {
                   <DatePicker
                     sx={{ width: "100%" }}
                     onAccept={(e: any) =>
-                      setValue({ ...value, contractTurnOffDate: e.$d })
+                      setValue({ ...value, contractTurnOffDate: FiltDate(e) })
                     }
                   />
                 </DemoItem>
@@ -385,13 +389,15 @@ function CreateShartnoma({ language }: { language: any }) {
             }}
           />
 
-          <div className="flex w-[70%] ">
+          <div className="flex w-[70%] gap-10 ">
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="demo-multiple-chip-label">Ishchilar</InputLabel>
               <Select
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
                 multiple
+                onOpen={() => setOpen(true)}
+                onClose={() => setOpen(false)}
                 value={personName}
                 onChange={handleChange}
                 input={
@@ -433,7 +439,7 @@ function CreateShartnoma({ language }: { language: any }) {
                           {name.name}
                         </MenuItem>
                       </div>
-                      <div className="flex w-[40%] gap-4">
+                      <div className="flex w-[50%] gap-4">
                         <TextField
                           id="outlined-basic"
                           label="Ishlash vaqti"
@@ -489,6 +495,11 @@ function CreateShartnoma({ language }: { language: any }) {
                 ))}
               </Select>
             </FormControl>
+            {open && (
+              <IconButton size="large" aria-label="delete">
+                <SaveIcon fontSize="inherit" color="success" />
+              </IconButton>
+            )}
           </div>
         </div>
       </div>

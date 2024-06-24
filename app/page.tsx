@@ -3,11 +3,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { puJWT } from "./Redux/AuthSlice";
+import Othcot from "./Components/Othcot";
 function Page() {
   const dispatch = useDispatch();
   const JWT = useSelector((state: any) => state.auth.JWT);
 
-  
   React.useEffect(() => {
     return () => {
       dispatch(puJWT(JWT));
@@ -19,10 +19,9 @@ function Page() {
       e = window.event;
     }
 
-
     dispatch(puJWT(sessionStorage.getItem("token")));
   };
-  return <div>Otchyot</div>;
+  return <Othcot />;
 }
 
 export default Page;

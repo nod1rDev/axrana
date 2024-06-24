@@ -130,3 +130,9 @@ export function transformArray(arr: InputObject[]): OutputObject[] {
     coefficient: obj.summa,
   }));
 }
+
+export const FiltDate = (date: any) => {
+  return `${date.$y}-${
+    `${date.$M + 1}`.length > 1 ? date.$M + 1 : `0${date.$M + 1}`
+  }-${`${date.$D}`.length > 1 ? date.$D : `0${date.$D}`}`;
+};

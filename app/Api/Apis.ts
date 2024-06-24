@@ -723,3 +723,33 @@ export const GetAllShartnoma = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+
+export const GetOtchot = async (JWT: any) => {
+  const res = await fetch(URL + "/result/get?query=uz", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getCantractFilter = async (JWT: any, shartnoma: any) => {
+  const res = await fetch(URL + "/result/filter?query=uz", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({
+      ...shartnoma,
+    }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

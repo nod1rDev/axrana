@@ -13,12 +13,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     color: "#000",
     fontWeight: "500",
-    fontSize: 14,
+    fontSize: 16,
     backgroundColor: "#f1faee",
     textAlign: "center", // Center align text
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 11,
+    fontSize: 13,
     textAlign: "center", // Center align text
   },
 }));
@@ -265,7 +265,7 @@ export default function CustomizedTables({ data }: { data: any }) {
       component={Paper}
     >
       <Table
-        sx={{ minWidth: 700, maxHeight: "500px", overflow: "auto" }}
+        sx={{ minWidth: 700, maxHeight: "440px", overflow: "auto" }}
         aria-label="customized table"
       >
         <TableHead sx={{ position: "sticky", top: "0px" }}>

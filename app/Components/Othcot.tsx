@@ -50,7 +50,7 @@ function Othcot() {
       <div className="flex w-full  justify-between">
         <div className="text-[28px] font-bold">Otchot</div>
         <div className="flex flex-col">
-          <div className="flex justify-end text-[28px] mb-6 font-bold">
+          <div className="flex justify-end text-[28px] mb-2 font-bold">
             Filter
           </div>
           <div className="flex translate-y-[-32px] items-center gap-4">

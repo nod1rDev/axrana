@@ -110,11 +110,11 @@ export default function CustomizedTables({
     );
   return (
     <TableContainer
-      sx={{ minWidth: 700, maxHeight: "58vh", overflow: "auto" }}
+      sx={{ minWidth: 700, maxHeight: "64vh", overflow: "auto" }}
       component={Paper}
     >
       <Table
-        sx={{ minWidth: 700, maxHeight: "58vh", overflow: "auto" }}
+        sx={{ minWidth: 700, maxHeight: "64vh", overflow: "auto" }}
         aria-label="customized table"
       >
         <TableHead sx={{ position: "sticky", top: "0px" }}>

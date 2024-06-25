@@ -72,7 +72,7 @@ export default function SingleTab({ ranks }: { ranks: any }) {
     ? ranks.map((e: any, i: any) =>
         createData(
           i + 1,
-          { FIOotin: e.worker.FIOlotin, FIOkril: e.worker.FIOkril },
+          { FIOlotin: e.worker.FIOlotin, FIOkril: e.worker.FIOkril },
           e.dayOrHour + " " + e.timeType,
           e._id
         )
@@ -100,6 +100,8 @@ export default function SingleTab({ ranks }: { ranks: any }) {
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row: any, i: any) => {
+                console.log(row);
+
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                     {columns.map((column, e) => {

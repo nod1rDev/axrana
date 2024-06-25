@@ -24,7 +24,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "FIO" | "UnvonNom";
+  id: "number" | "lotinFIO" | "krilFIO" | "UnvonNom";
 
   label: string;
   minWidth?: number;
@@ -34,8 +34,14 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "FIO", label: "FIO", align: "left", minWidth: 100 },
+  { id: "lotinFIO", label: "FIO lotin", align: "center", minWidth: 100 },
 
+  {
+    id: "krilFIO",
+    label: "FIO kril",
+    minWidth: 180,
+    align: "center",
+  },
   {
     id: "UnvonNom",
     label: "Ishlash Muddati",
@@ -46,8 +52,8 @@ const columns: readonly Column[] = [
 
 interface Data {
   number: any;
-  FIO: any;
-
+  lotinFIO: any;
+  krilFIO: any;
   UnvonNom: any;
 
   id: number;
@@ -55,13 +61,13 @@ interface Data {
 
 function createData(
   number: any,
-  FIO: any,
-
+  lotinFIO: any,
+  krilFIO: any,
   UnvonNom: any,
 
   id: number
 ): Data {
-  return { number, FIO, UnvonNom, id };
+  return { number, lotinFIO, krilFIO, UnvonNom, id };
 }
 
 export default function SingleTab({ ranks }: { ranks: any }) {
@@ -72,7 +78,8 @@ export default function SingleTab({ ranks }: { ranks: any }) {
     ? ranks.map((e: any, i: any) =>
         createData(
           i + 1,
-          { FIOlotin: e.worker.FIOlotin, FIOkril: e.worker.FIOkril },
+          e.worker.FIOlotin,
+          e.worker.FIOkril,
           e.dayOrHour + " " + e.timeType,
           e._id
         )
@@ -108,18 +115,11 @@ export default function SingleTab({ ranks }: { ranks: any }) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {e == 0 ? (
-                            i + 1
-                          ) : e == 1 ? (
-                            <div className="w-full flex flex-col gap-2">
-                              <span>{row.FIO.FIOlotin}</span>
-                              <span>{row.FIO.FIOkril}</span>
-                            </div>
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
+                          {e == 0
+                            ? i + 1
+                            : column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
                         </TableCell>
                       );
                     })}

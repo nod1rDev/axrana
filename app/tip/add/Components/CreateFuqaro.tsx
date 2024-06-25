@@ -186,7 +186,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           {file && (
             <IconButton
               onClick={handleSubmit}
-              size="medium"
+              size="large"
               aria-label="upload"
             >
               <SaveIcon fontSize="inherit" color="info" />

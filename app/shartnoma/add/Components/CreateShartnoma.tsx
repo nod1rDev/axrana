@@ -90,9 +90,6 @@ function CreateShartnoma({ language }: { language: any }) {
     getWorkersInfo();
   }, [language]);
 
-  useEffect(() => {
-    console.log(workers);
-  }, [workers]);
 
   const names = workers
     ? workers.map((e: any) => {

@@ -13,6 +13,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconButton } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -108,6 +109,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       return { success: false, message: "Invalid JSON format" };
     }
   };
+  const router = useRouter();
 
   const handleSubmit = async () => {
     if (!file) return;
@@ -138,6 +140,8 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
               status: "success",
             })
           );
+
+          router.push("/tip");
         } else {
           dispatch(
             alertChange({

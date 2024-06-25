@@ -120,7 +120,7 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-[1540px] h-[100vh] login       bg-no-repeat bg-cover ">
+    <div className="max-w-full h-[100vh] login       bg-no-repeat bg-cover ">
       <div className="  flex items-center justify-center  ">
         <div className="max-w-[400px]   bg-opacity-[15%] mt-[8%] rounded-lg bg-slate-50 ">
           <ThemeProvider theme={defaultTheme}>

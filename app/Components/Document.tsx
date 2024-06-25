@@ -36,7 +36,7 @@ interface Data {
   contractNo: string;
   contractDate: string;
   contractAmount: number;
-  contractContent: string;
+
   serviceDuration: any;
   company: string;
   inn: any;
@@ -54,7 +54,7 @@ function createData(
   contractNo: string,
   contractDate: string,
   contractAmount: number,
-  contractContent: string,
+
   serviceDuration: any,
   company: string,
   inn: any,
@@ -71,7 +71,7 @@ function createData(
     contractNo,
     contractDate,
     contractAmount,
-    contractContent,
+
     serviceDuration,
     company,
     inn,
@@ -95,7 +95,7 @@ const Documenttt = React.forwardRef(
           e.shartnoma_N,
           e.shartnoma_sanasi,
           e.shartnoma_summasi,
-          e.shartnoma_mazmuni,
+
           e.xizmat_muddati,
           e.korxona_nomi,
           e.inn,
@@ -135,9 +135,7 @@ const Documenttt = React.forwardRef(
                 <StyledTableCell sx={{ minWidth: "90px" }} align="right">
                   шартнома суммаси
                 </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "280px" }} align="right">
-                  Шартнома мазмуни
-                </StyledTableCell>
+
                 <StyledTableCell sx={{ minWidth: "90px" }} align="right">
                   хисмат муддати
                 </StyledTableCell>
@@ -179,9 +177,7 @@ const Documenttt = React.forwardRef(
                   <StyledTableCell align="right">
                     {row.contractAmount}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.contractContent}
-                  </StyledTableCell>
+
                   <StyledTableCell align="right">
                     {row.serviceDuration}
                   </StyledTableCell>

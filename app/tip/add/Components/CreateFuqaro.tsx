@@ -38,7 +38,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   });
   const [select, setSelect] = useState<any>({});
   const [clear, setClear] = useState(1);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<any>(null);
   const dispatch = useDispatch();
 
   const getSelect = async () => {
@@ -50,10 +50,10 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     getSelect();
   }, []);
 
-  const handleCreateChange = (i:any) => {
+  const handleCreateChange = (i: any) => {
     const { name, value } = i.target;
     if (name === "selectRank") {
-      const filter = select.ranks.find((e:any) => value === e.name);
+      const filter = select.ranks.find((e: any) => value === e.name);
       setCreateInp({
         ...createInp,
         selectRank: filter.name,
@@ -64,7 +64,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     }
   };
 
-  const saqlsh = (e:any) => {
+  const saqlsh = (e: any) => {
     e.preventDefault();
     if (
       createInp.FIOlotin &&
@@ -97,57 +97,66 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
 
   const handleFileChange = (event: any) => {
     const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
+
+    setFile(selectedFile);
+  };
+  const textToJson = (text: string) => {
+    try {
+      const jsonObject = JSON.parse(text);
+      return jsonObject;
+    } catch (error) {
+      return { success: false, message: "Invalid JSON format" };
     }
   };
 
   const handleSubmit = async () => {
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${JWT}`);
 
-    try {
-      const response = await fetch("http://localhost:3000/result/excel", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${JWT}`,
-        },
-      });
+    const formdata = new FormData();
+    formdata.append("file", file, `[${file?.name}]`);
+    formdata.append("file", file, `[${file?.name}]`);
 
-      if (response.ok) {
-        const res = await response.json();
-        console.log("File uploaded successfully");
+    const requestOptions: any = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:3000/worker/create/excel", requestOptions)
+      .then((response) => response.text())
+      .then((result: any) => {
+        const res = textToJson(result);
+        if (res.success) {
+          dispatch(
+            alertChange({
+              open: true,
+              message: "Exel file kiritildi",
+              status: "success",
+            })
+          );
+        } else {
+          dispatch(
+            alertChange({
+              open: true,
+              message: res.message,
+              status: "error",
+            })
+          );
+        }
+      })
+      .catch((error) =>
         dispatch(
           alertChange({
             open: true,
-            message: "Exel file kiritildi",
-            status: "success",
-          })
-        );
-      } else {
-        const res = await response.json();
-        console.error("Failed to upload file", res);
-        dispatch(
-          alertChange({
-            open: true,
-            message: res.message || "Failed to upload file",
+            message: error,
             status: "error",
           })
-        );
-      }
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      dispatch(
-        alertChange({
-          open: true,
-          message: "Error uploading file",
-          status: "error",
-        })
+        )
       );
-    }
   };
 
   return (
@@ -180,7 +189,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             </IconButton>
           )}
         </div>
-
         <Button type="submit" variant="contained">
           {"Qo'shish"}
         </Button>
@@ -203,7 +211,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             onChange={handleCreateChange}
           >
             {select.ranks &&
-              select.ranks.map((e:any) => (
+              select.ranks.map((e: any) => (
                 <MenuItem key={e.name} value={e.name}>
                   {e.name}
                 </MenuItem>
@@ -239,7 +247,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             onChange={handleCreateChange}
           >
             {select.locations &&
-              select.locations.map((e:any) => (
+              select.locations.map((e: any) => (
                 <MenuItem key={e.name} value={e.name}>
                   {e.name}
                 </MenuItem>
@@ -258,7 +266,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             onChange={handleCreateChange}
           >
             {select.otryads &&
-              select.otryads.map((e:any) => (
+              select.otryads.map((e: any) => (
                 <MenuItem key={e.name} value={e.name}>
                   {e.name}
                 </MenuItem>

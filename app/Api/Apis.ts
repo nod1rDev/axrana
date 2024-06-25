@@ -1,4 +1,4 @@
-const URL = "http://localhost:3000";
+export const URL = "http://localhost:3000";
 
 // Auth
 
@@ -817,6 +817,21 @@ export const setExelFile = async (JWT: any, file: any) => {
       Authorization: "Bearer " + JWT,
     },
     body: file,
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const SendOtchot = async (JWT: any, shartnoma: any) => {
+  const res = await fetch(URL + "/result/excel", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ data: shartnoma }),
   });
 
   const data = await res.json();

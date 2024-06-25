@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomizedTables from "./OtchotTab";
-import { useSelector } from "react-redux";
-import { GetOtchot, getCantractFilter } from "../Api/Apis";
+import { useDispatch, useSelector } from "react-redux";
+import { GetOtchot, SendOtchot, URL, getCantractFilter } from "../Api/Apis";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -18,7 +18,8 @@ import Documenttt from "./Document";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
+import SendIcon from "@mui/icons-material/Send";
+import { alertChange } from "../Redux/ShaxsiySlice";
 function Othcot() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -62,7 +63,76 @@ function Othcot() {
   useEffect(() => {
     getResoult();
   }, [isLotin]);
+  const dispatch = useDispatch();
+  const SendData = async () => {
+    const res = await SendOtchot(JWT, data);
+    console.log(res);
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Otchotlar Jonatildi",
+          status: "success",
+        })
+      );
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: res.message,
+          status: "error",
+        })
+      );
+    }
+  };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleDownload = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(URL + "/result/excel", {
+        method: "POST",
+        // Add any necessary headers for your backend API
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + JWT,
+        },
+        // Add any data you need to send to the backend
+        body: JSON.stringify({ data: data }),
+      });
+
+      if (response.ok) {
+        // Get the blob (Excel file) from the response
+        const blob = await response.blob();
+
+        // Create a download link (using URL.createObjectURL)
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "downloaded-excel.xlsx"); // Set filename
+
+        // Trigger the download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Clean up the URL object
+        window.URL.revokeObjectURL(url);
+      } else {
+        console.error(
+          "Error downloading file:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <div>
@@ -158,7 +228,16 @@ function Othcot() {
             </div>
           </div>
         </div>
-        <div className="flex mb-4 justify-end">
+        <div className="flex mb-4 justify-between w-full">
+          <Button
+            onClick={handleDownload}
+            variant="contained"
+            color="success"
+            startIcon={<SendIcon />}
+          >
+            Malumotlarni Jonatish
+          </Button>
+
           <Button
             onClick={handlePrint}
             variant="contained"

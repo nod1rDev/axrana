@@ -80,6 +80,7 @@ function createData(
   };
 }
 
+
 export default function CustomizedTables({
   data,
   language,

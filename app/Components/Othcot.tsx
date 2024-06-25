@@ -15,6 +15,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PrintIcon from "@mui/icons-material/Print";
 import Documenttt from "./Document";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 function Othcot() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -23,8 +27,9 @@ function Othcot() {
     date1: new Date(),
     date2: new Date(),
   });
+  const [isLotin, setIsLotin] = useState("uz");
   const getResoult = async () => {
-    const res = await GetOtchot(JWT);
+    const res = await GetOtchot(JWT, isLotin);
 
     setData(res.data);
   };
@@ -34,7 +39,7 @@ function Othcot() {
   }, []);
 
   const getSearchData = async () => {
-    const res = await getCantractFilter(JWT, value);
+    const res = await getCantractFilter(JWT, value, isLotin);
 
     setData(res.data);
   };
@@ -54,11 +59,26 @@ function Othcot() {
     content: (): any => componentRef.current,
   });
 
+  useEffect(() => {
+    getResoult();
+  }, [isLotin]);
+
   return (
     <>
       <div>
         <div className="flex w-full  justify-between">
-          <div className="text-[28px] font-bold">Otchot</div>
+          <div className="flex flex-col gap-2">
+            <div className="text-[28px] font-bold">Otchot</div>
+            <FormControl sx={{ width: "160px" }}>
+              <Select
+                value={isLotin}
+                onChange={(e: any) => setIsLotin(e.target.value)}
+              >
+                <MenuItem value={"uz"}>lotincha</MenuItem>
+                <MenuItem value={"ru"}>krilcha</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
           <div className="flex flex-col">
             <div className="flex justify-end text-[28px] mb-2 font-bold">
               Filter
@@ -147,10 +167,10 @@ function Othcot() {
             chop etish
           </Button>
         </div>
-        <CustomizedTables data={data} />
+        <CustomizedTables language={isLotin} data={data} />
       </div>
       <div className=" hidden">
-        <Documenttt printData={data} ref={componentRef} />
+        <Documenttt language={isLotin} printData={data} ref={componentRef} />
       </div>
     </>
   );

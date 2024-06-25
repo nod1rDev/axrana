@@ -13,11 +13,16 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { useDispatch, useSelector } from "react-redux";
-import { Createshartnomaa, GetForShartnoma } from "@/app/Api/Apis";
+import {
+  Createshartnomaa,
+  GetForShartnoma,
+  UpdateShartnoma,
+} from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import SaveIcon from "@mui/icons-material/Save";
 import { FiltDate } from "@/app/Utils";
+import dayjs from "dayjs";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -38,23 +43,15 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-function CreateShartnoma({ language }: { language: any }) {
+function ChangeShartnoma({
+  language,
+  ShartNomaData,
+}: {
+  language: any;
+  ShartNomaData: any;
+}) {
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const [value, setValue] = useState<any>({
-    contractDate: "",
-    contractTurnOffDate: "",
-    contractSumma: 0,
-    boss: "",
-    contractNumber: "",
-    phone: "",
-    content: "",
-    name: "",
-    inn: 0,
-    address: "",
-    accountNumber: "",
-    bankName: "",
-    workers: [],
-  });
+  const [value, setValue] = useState<any>();
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
@@ -70,20 +67,23 @@ function CreateShartnoma({ language }: { language: any }) {
     );
   };
 
+  useEffect(() => {
+    setValue({ ...ShartNomaData });
+  }, [ShartNomaData]);
+
   const getWorkersInfo = async () => {
     const res = await GetForShartnoma(JWT, language);
+    const wokers1 = res.data.map((e: any) => {
+      return {
+        worker: language == "uz" ? e.FIOlotin : e.FIOkril,
+        selected: false,
+        dayOrHour: "",
+        timeType: "",
+        _id: Math.ceil(Math.random() * 3124234),
+      };
+    });
 
-    setWorkers(
-      res.data.map((e: any) => {
-        return {
-          worker: language == "uz" ? e.FIOlotin : e.FIOkril,
-          selected: false,
-          dayOrHour: "",
-          timeType: "",
-          _id: Math.ceil(Math.random() * 3124234),
-        };
-      })
-    );
+    setWorkers([...wokers1]);
   };
 
   useEffect(() => {
@@ -91,8 +91,19 @@ function CreateShartnoma({ language }: { language: any }) {
   }, [language]);
 
   useEffect(() => {
-    console.log(workers);
-  }, [workers]);
+    const workers2 = value
+      ? value.workers.map((e: any) => {
+          return {
+            worker: language == "uz" ? e.worker.FIOlotin : e.worker.FIOkril,
+            selected: true,
+            dayOrHour: e.dayOrHour,
+            timeType: e.timeType,
+            _id: e._id,
+          };
+        })
+      : [];
+    setWorkers([...workers, ...workers2]);
+  }, [value?.workers]);
 
   const names = workers
     ? workers.map((e: any) => {
@@ -108,13 +119,18 @@ function CreateShartnoma({ language }: { language: any }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const createShartnoman = async (shartnoma: any) => {
-    const res = await Createshartnomaa(JWT, shartnoma, language);
+    const res = await UpdateShartnoma(
+      JWT,
+      shartnoma,
+      ShartNomaData._id,
+      language
+    );
 
     if (res.success) {
       dispatch(
         alertChange({
           open: true,
-          message: "Shartnoma qo'shildi",
+          message: "Shartnoma tahrirlandi",
           status: "success",
         })
       );
@@ -175,6 +191,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "25%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.contractNumber : ""}
             name="contractNumber"
             autoComplete="off"
             autoCorrect="off"
@@ -200,6 +217,9 @@ function CreateShartnoma({ language }: { language: any }) {
                 <DemoItem>
                   <DatePicker
                     sx={{ width: "100%" }}
+                    value={
+                      value ? dayjs(value.contractDate) : dayjs(new Date())
+                    }
                     onChange={(e: any) =>
                       setValue({ ...value, contractDate: FiltDate(e) })
                     }
@@ -225,6 +245,11 @@ function CreateShartnoma({ language }: { language: any }) {
                 <DemoItem>
                   <DatePicker
                     sx={{ width: "100%" }}
+                    value={
+                      value
+                        ? dayjs(value.contractTurnOffDate)
+                        : dayjs(new Date())
+                    }
                     onChange={(e: any) =>
                       setValue({ ...value, contractTurnOffDate: FiltDate(e) })
                     }
@@ -242,16 +267,9 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "25%" }}
             onChange={(e: any) => handleChangeValue(e)}
             type="number"
+            value={value ? value.contractSumma : 10}
             name="contractSumma"
             variant="outlined"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
         </div>
 
@@ -262,6 +280,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.inn : 10}
             name="inn"
             type="number"
             autoComplete="off"
@@ -280,6 +299,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.name : ""}
             name="name"
             autoComplete="off"
             autoCorrect="off"
@@ -297,6 +317,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.address : ""}
             name="address"
             multiline
             autoComplete="off"
@@ -315,6 +336,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.accountNumber : ""}
             name="accountNumber"
             autoComplete="off"
             autoCorrect="off"
@@ -331,6 +353,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.bankName : ""}
             name="bankName"
             autoComplete="off"
             autoCorrect="off"
@@ -350,6 +373,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
+            value={value ? value.boss : ""}
             name="boss"
             autoComplete="off"
             autoCorrect="off"
@@ -366,6 +390,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "20%" }}
             onChange={(e) => handleChangeValue(e)}
             type="number"
+            value={value ? value.phone : ""}
             name="phone"
             variant="outlined"
             autoComplete="off"
@@ -385,6 +410,7 @@ function CreateShartnoma({ language }: { language: any }) {
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
             name="content"
+            value={value ? value.content : ""}
             autoComplete="off"
             autoCorrect="off"
             spellCheck="false"
@@ -519,4 +545,4 @@ function CreateShartnoma({ language }: { language: any }) {
   );
 }
 
-export default CreateShartnoma;
+export default ChangeShartnoma;

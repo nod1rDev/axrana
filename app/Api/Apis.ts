@@ -724,8 +724,8 @@ export const GetAllShartnoma = async (JWT: any) => {
   return data;
 };
 
-export const GetOtchot = async (JWT: any) => {
-  const res = await fetch(URL + "/result/get?query=uz", {
+export const GetOtchot = async (JWT: any, language: any) => {
+  const res = await fetch(URL + "/result/get?query=" + language, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -737,8 +737,12 @@ export const GetOtchot = async (JWT: any) => {
   return data;
 };
 
-export const getCantractFilter = async (JWT: any, shartnoma: any) => {
-  const res = await fetch(URL + "/result/filter?query=uz", {
+export const getCantractFilter = async (
+  JWT: any,
+  shartnoma: any,
+  language: any
+) => {
+  const res = await fetch(URL + "/result/filter?query=" + language, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -747,6 +751,72 @@ export const getCantractFilter = async (JWT: any, shartnoma: any) => {
     body: JSON.stringify({
       ...shartnoma,
     }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const GetSingleShartnoma = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/contract/get/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const DeleteShartnoma = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/contract/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const UpdateShartnoma = async (
+  JWT: any,
+  worker: any,
+  id: any,
+  language: any
+) => {
+  const res = await fetch(
+    URL + "/contract/update/" + id + "?query=" + language,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + JWT,
+      },
+      body: JSON.stringify(worker),
+    }
+  );
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const setExelFile = async (JWT: any, file: any) => {
+  const res = await fetch(URL + "/worker/create/excel", {
+    method: "POST",
+    headers: {
+      "Content-Type":
+        "multipart/form-data; boundary=<calculated when request is sent>",
+      Authorization: "Bearer " + JWT,
+    },
+    body: file,
   });
 
   const data = await res.json();

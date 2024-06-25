@@ -24,14 +24,8 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id:
-    | "number"
-    | "FIO"
-    | "UnvonNom"
-    | "UnvonSum"
-    | "Tuman"
-    | "Otryad"
-    | "actions";
+  id: "number" | "FIO" | "UnvonNom";
+
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -44,33 +38,9 @@ const columns: readonly Column[] = [
 
   {
     id: "UnvonNom",
-    label: "Unvon Nomi",
+    label: "Ishlash Muddati",
     minWidth: 180,
     align: "center",
-  },
-  {
-    id: "UnvonSum",
-    label: "Unvon Summasi",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "Tuman",
-    label: "Tuman",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "Otryad",
-    label: "Otryad",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "actions",
-    label: "Amallar",
-    minWidth: 150,
-    align: "right",
   },
 ];
 
@@ -79,10 +49,7 @@ interface Data {
   FIO: any;
 
   UnvonNom: any;
-  UnvonSum: any;
-  Tuman: any;
-  Otryad: any;
-  actions: any;
+
   id: number;
 }
 
@@ -91,16 +58,13 @@ function createData(
   FIO: any,
 
   UnvonNom: any,
-  UnvonSum: any,
-  Tuman: any,
-  Otryad: any,
-  actions: any,
+
   id: number
 ): Data {
-  return { number, FIO, UnvonNom, UnvonSum, Tuman, Otryad, actions, id };
+  return { number, FIO, UnvonNom, id };
 }
 
-export default function TipTab({ ranks }: { ranks: any }) {
+export default function SingleTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -108,22 +72,16 @@ export default function TipTab({ ranks }: { ranks: any }) {
     ? ranks.map((e: any, i: any) =>
         createData(
           i + 1,
-          { FIOlotin: e.FIOlotin, FIOkril: e.FIOkril },
-          e.selectRank,
-          e.selectRankSumma,
-          e.selectRegion,
-          e.selectOtryad,
-          null,
+          { FIOotin: e.worker.FIOlotin, FIOkril: e.worker.FIOkril },
+          e.dayOrHour + " " + e.timeType,
           e._id
         )
       )
     : [];
 
-  const dispatch = useDispatch();
-
   return (
     <Paper sx={{ width: "100%" }}>
-      <TableContainer sx={{ overflow: "auto", maxHeight: 400 }}>
+      <TableContainer sx={{ overflow: "auto", maxHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead sx={{ background: "#edede9" }}>
             <TableRow>
@@ -155,55 +113,6 @@ export default function TipTab({ ranks }: { ranks: any }) {
                               <span>{row.FIO.FIOlotin}</span>
                               <span>{row.FIO.FIOkril}</span>
                             </div>
-                          ) : e == 6 ? (
-                            <>
-                              <IconButton
-                                onClick={() =>
-                                  dispatch(
-                                    setModalTip({
-                                      type: 1,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO.FIOlotin,
-                                      FIOlotin: row.FIO.FIOlotin,
-                                      FIOkril: row.FIO.FIOkril,
-                                      selectRank: row.UnvonNom,
-                                      selectRankSumma: row.UnvonSum,
-                                      selectRegion: row.Tuman,
-                                      selectOtryad: row.Otryad,
-                                    })
-                                  )
-                                }
-                                aria-label="delete"
-                                size="medium"
-                              >
-                                <ModeEditOutlineIcon
-                                  fontSize="inherit"
-                                  color="info"
-                                />
-                              </IconButton>
-
-                              <IconButton
-                                sx={{ ml: 1 }}
-                                aria-label="delete"
-                                size="medium"
-                                onClick={() =>
-                                  dispatch(
-                                    setModalTip({
-                                      type: 2,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO.FIOlotin,
-                                    })
-                                  )
-                                }
-                              >
-                                <RemoveCircleOutlineIcon
-                                  fontSize="inherit"
-                                  color="error"
-                                />
-                              </IconButton>
-                            </>
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

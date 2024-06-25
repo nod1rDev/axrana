@@ -80,37 +80,41 @@ function createData(
   };
 }
 
-
-
-export default function CustomizedTables({ data }: { data: any }) {
+export default function CustomizedTables({
+  data,
+  language,
+}: {
+  data: any;
+  language: any;
+}) {
   const rows =
     data &&
     data.map((e: any, i: any) =>
       createData(
         i + 1,
-        e.FIOlotin,
-        e.rank,
-        e.region,
+        e.FIO,
+        e.unvon,
+        e.tuman,
         e.otryad,
-        e.contractNumber,
-        e.contractDate,
-        e.rankSumma,
-        e.content,
-        e.dayOrhour + " " + e.timeType,
-        e.name,
+        e.shartnoma_N,
+        e.shartnoma_sanasi,
+        e.shartnoma_summasi,
+        e.shartnoma_mazmuni,
+        e.xizmat_muddati,
+        e.korxona_nomi,
         e.inn,
-        e.address,
-        e.boss,
-        e.phone
+        e.manzil,
+        e.raxbar,
+        e.telefon
       )
     );
   return (
     <TableContainer
-      sx={{ minWidth: 700, maxHeight: "400px", overflow: "auto" }}
+      sx={{ minWidth: 700, maxHeight: "58vh", overflow: "auto" }}
       component={Paper}
     >
       <Table
-        sx={{ minWidth: 700, maxHeight: "400px", overflow: "auto" }}
+        sx={{ minWidth: 700, maxHeight: "58vh", overflow: "auto" }}
         aria-label="customized table"
       >
         <TableHead sx={{ position: "sticky", top: "0px" }}>

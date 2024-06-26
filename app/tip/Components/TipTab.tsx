@@ -27,6 +27,7 @@ interface Column {
   id:
     | "number"
     | "FIO"
+    | "FIOkril"
     | "UnvonNom"
     | "UnvonSum"
     | "Tuman"
@@ -40,8 +41,8 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "FIO", label: "FIO", align: "left", minWidth: 100 },
-
+  { id: "FIO", label: "FIO lotin", align: "center", minWidth: 100 },
+  { id: "FIOkril", label: "FIO kril", align: "center", minWidth: 100 },
   {
     id: "UnvonNom",
     label: "Unvon Nomi",
@@ -77,7 +78,7 @@ const columns: readonly Column[] = [
 interface Data {
   number: any;
   FIO: any;
-
+  FIOkril: any;
   UnvonNom: any;
   UnvonSum: any;
   Tuman: any;
@@ -89,7 +90,7 @@ interface Data {
 function createData(
   number: any,
   FIO: any,
-
+  FIOkril: any,
   UnvonNom: any,
   UnvonSum: any,
   Tuman: any,
@@ -97,18 +98,30 @@ function createData(
   actions: any,
   id: number
 ): Data {
-  return { number, FIO, UnvonNom, UnvonSum, Tuman, Otryad, actions, id };
+  return {
+    number,
+    FIO,
+    FIOkril,
+    UnvonNom,
+    UnvonSum,
+    Tuman,
+    Otryad,
+    actions,
+    id,
+  };
 }
 
 export default function TipTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(100000000000000000000000);
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
         createData(
           i + 1,
-          { FIOlotin: e.FIOlotin, FIOkril: e.FIOkril },
+          e.FIOlotin,
+          e.FIOkril,
           e.selectRank,
           e.selectRankSumma,
           e.selectRegion,
@@ -150,12 +163,7 @@ export default function TipTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 1 ? (
-                            <div className="w-full flex flex-col gap-2">
-                              <span>{row.FIO.FIOlotin}</span>
-                              <span>{row.FIO.FIOkril}</span>
-                            </div>
-                          ) : e == 6 ? (
+                          ) : e == 7 ? (
                             <>
                               <IconButton
                                 onClick={() =>

@@ -38,7 +38,7 @@ export default function TipModal({
   const [latinText, setLatinText] = React.useState("");
   const [cyrillicText, setCyrillicText] = React.useState("");
   const [isLotin, setIsLotin] = React.useState(true);
-  
+
   const getSelect = async () => {
     const res = await GetCreateInfoWorker(JWT);
     setSelect(res);
@@ -48,16 +48,16 @@ export default function TipModal({
       selectRank: res.ranks.length > 0 ? res.ranks[0].name : "",
       selectRankSumma: res.ranks.length > 0 ? res.ranks[0].summa : "",
       selectRegion: res.locations.length > 0 ? res.locations[0].name : "",
-      selectOtryad: res.otryads.length > 0 ? res.otryads[0].name : ""
+      selectOtryad: res.otryads.length > 0 ? res.otryads[0].name : "",
     }));
   };
-  
+
   React.useEffect(() => {
     getSelect();
   }, []);
-  
+
   const dispatch = useDispatch();
-  
+
   const handleChange = (i: any) => {
     if (i.target.name === "FIOlotin") {
       setValue({
@@ -89,7 +89,7 @@ export default function TipModal({
   const handleSubmite = async () => {
     handleSubmit();
   };
-  
+
   const handleSwitch = () => {
     setIsLatinToCyrillic(!isLatinToCyrillic);
     if (!isLotin) {
@@ -299,7 +299,9 @@ export default function TipModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "ushbu Fuqoroni ochirishni istaysizmi ?"}
+            {`"${open.name}"` +
+              " " +
+              "ushbu Fuqoroni ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

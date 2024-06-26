@@ -9,6 +9,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
+import { GetNames } from "../Api/Apis";
+import { useSelector } from "react-redux";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,6 +85,16 @@ function createData(
 
 const Documenttt = React.forwardRef(
   ({ printData, language }: any, ref: any) => {
+    const [names, setNames] = React.useState<any>();
+    const JWT = useSelector((s: any) => s.auth.JWT);
+    const getUser = async () => {
+      const res = await GetNames(JWT);
+      setNames(res.data);
+    };
+
+    React.useEffect(() => {
+      getUser();
+    }, []);
     const rows =
       printData &&
       printData.map((e: any, i: any) =>
@@ -195,10 +207,9 @@ const Documenttt = React.forwardRef(
         <div className="flex mt-[5vh] flex-col gap-4 min-w-full  justify-start">
           <h1 className="text-[100%]">
             Qabul qiluvchi imzosi: ____________________________________
-            tasdiqlamoq
           </h1>
-          <h1>Rahbar: ________________________________</h1>
-          <h1>Bosh hisobchi: ________________________________</h1>
+          <h1>Rahbar:{" " + names && names.boss}</h1>
+          <h1>Bosh hisobchi:{" " + names && names.accountant}</h1>
         </div>
       </div>
     );

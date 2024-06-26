@@ -1,12 +1,12 @@
 {
-    "theme_color": "#f69435",
-    "background_color": "#f69435",
+    "theme_color": "#4a90e2",
+    "background_color": "#4a90e2",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "APM ZAPLATA",
-    "short_name": "APM",
-    "description": "APM Zaplata",
+    "name": "Axrana",
+    "short_name": "Axrana",
+    "description": "Axrana",
     "icons": [
         {
             "src": "/icon-192x192.png",

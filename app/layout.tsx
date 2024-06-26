@@ -22,6 +22,9 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang="en">
+        <head>
+          <link rel="icon" href="/icon-192x192.png" />
+        </head>
         <body id="body" className={`max-w-full mx-auto ${inter.className}`}>
           <Prodected>
             <Main>{children}</Main>

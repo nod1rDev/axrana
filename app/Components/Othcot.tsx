@@ -139,7 +139,7 @@ function Othcot() {
       <div>
         <div className="flex w-full  justify-between">
           <div className="flex flex-col gap-2">
-            <div className="text-[28px] font-bold">Otchot</div>
+            <div className="text-[28px] font-bold"> </div>
             <FormControl sx={{ width: "160px" }}>
               <Select
                 value={isLotin}

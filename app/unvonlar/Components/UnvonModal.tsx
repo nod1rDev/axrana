@@ -103,7 +103,7 @@ export default function UnvonModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "o'chiririshga rozimisiz?"}
+            {open.name + " " + "ushbu unvonni ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

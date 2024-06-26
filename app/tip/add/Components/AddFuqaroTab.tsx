@@ -173,7 +173,7 @@ export default function AddFuqaroTab({
 
   return (
     <Paper sx={{ width: "100%" }}>
-      <TableContainer sx={{ overflow: "auto", maxHeight: 400 }}>
+      <TableContainer sx={{ overflow: "auto", maxHeight: "70vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead>
             <TableRow>

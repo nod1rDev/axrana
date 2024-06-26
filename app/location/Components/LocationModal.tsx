@@ -98,7 +98,7 @@ export default function LocationModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "o'chiririshga rozimisiz?"}
+            {open.name + " " + "ushbu tumanni ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

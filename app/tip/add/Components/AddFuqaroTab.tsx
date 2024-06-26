@@ -17,6 +17,7 @@ import { TextField, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GetCreateInfoWorker } from "@/app/Api/Apis";
+import { latinToCyrillic } from "./lotin";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   "& .MuiTableCell-root": {
@@ -74,41 +75,7 @@ function createData(
   return { number, FIO, UnvonNom, UnvonSum, Tuman, Otryad, actions, id };
 }
 
-const latinToCyrillic = (latin: string): string => {
-  const map: any = {
-    a: "а",
-    b: "б",
-    c: "ц",
-    d: "д",
-    e: "е",
-    f: "ф",
-    g: "г",
-    h: "ҳ",
-    i: "и",
-    j: "ж",
-    k: "к",
-    l: "л",
-    m: "м",
-    n: "н",
-    o: "о",
-    p: "п",
-    q: "қ",
-    r: "р",
-    s: "с",
-    t: "т",
-    u: "у",
-    v: "в",
-    w: "ў",
-    x: "х",
-    y: "й",
-    z: "з",
-    " ": " ",
-  };
-  return latin
-    .split("")
-    .map((char) => map[char] || char)
-    .join("");
-};
+
 
 export default function AddFuqaroTab({
   ranks,
@@ -118,7 +85,7 @@ export default function AddFuqaroTab({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000);
   const [latinText, setLatinText] = useState("");
   const [active, setActive] = useState<number | null>(null);
   const [select, setSelect] = useState<any>();

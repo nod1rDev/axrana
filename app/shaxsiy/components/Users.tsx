@@ -53,7 +53,7 @@ function createData(
 
 export default function Users() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000);
   const [users, setUsers] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = React.useState<any>({

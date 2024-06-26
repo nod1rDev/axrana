@@ -67,7 +67,7 @@ export default function LocationModal({
                 autoCorrect: "off",
                 spellCheck: "false",
               }}
-              value={value.name !== "" ? value.name : open.name}
+              defaultValue={value.name !== "" ? value.name : open.name}
               onChange={(e: any) => handleChange(e)}
               label="Tuman Nomi"
               id="fullWidth"

@@ -15,84 +15,9 @@ import { GetCreateInfoWorker } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import { cyrillicToLatin, latinToCyrillic } from "../add/Components/lotin";
 
-const latinToCyrillic = (latin: string): string => {
-  // Bu yerda lotincha matnni kirillchaga aylantiradigan funksiyani yozing
-  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
-  const map: any = {
-    a: "а",
-    b: "б",
-    c: "ц",
-    d: "д",
-    e: "е",
-    f: "ф",
-    g: "г",
-    h: "ҳ",
-    i: "и",
-    j: "ж",
-    k: "к",
-    l: "л",
-    m: "м",
-    n: "н",
-    o: "о",
-    p: "п",
-    q: "қ",
-    r: "р",
-    s: "с",
-    t: "т",
-    u: "у",
-    v: "в",
-    w: "ў",
-    x: "х",
-    y: "й",
-    z: "з",
 
-    " ": " ",
-  };
-  return latin
-    .split("")
-    .map((char) => map[char] || char)
-    .join("");
-};
-
-const cyrillicToLatin = (cyrillic: string): string => {
-  // Bu yerda kirillcha matnni lotinchaga aylantiradigan funksiyani yozing
-  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
-  const map: any = {
-    а: "a",
-    б: "b",
-    ц: "c",
-    д: "d",
-    е: "e",
-    ф: "f",
-    г: "g",
-    ҳ: "h",
-    и: "i",
-    ж: "j",
-    к: "k",
-    л: "l",
-    м: "m",
-    н: "n",
-    о: "o",
-    п: "p",
-    қ: "q",
-    р: "r",
-    с: "s",
-    т: "t",
-    у: "u",
-    в: "v",
-    ў: "w",
-    х: "x",
-    й: "y",
-    з: "z",
-
-    " ": " ",
-  };
-  return cyrillic
-    .split("")
-    .map((char) => map[char] || char)
-    .join("");
-};
 
 export default function TipModal({
   value,

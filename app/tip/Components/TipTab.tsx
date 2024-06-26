@@ -102,7 +102,7 @@ function createData(
 
 export default function TipTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000);
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>

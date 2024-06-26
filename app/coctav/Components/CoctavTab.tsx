@@ -66,7 +66,7 @@ function createData(
 
 export default function CoctavTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(1000000000000000000000000000000000000000000000000);
 
   const rows = ranks
     ? ranks.map((e: any) => createData(1, e.name,  5, e._id))

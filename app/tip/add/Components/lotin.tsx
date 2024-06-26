@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { TextField, Button, Container, Box, IconButton } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
-const latinToCyrillic = (latin: string): string => {
-  // Bu yerda lotincha matnni kirillchaga aylantiradigan funksiyani yozing
-  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
+export const latinToCyrillic = (latin: string): string => {
   const map: any = {
     a: "а",
     b: "б",
@@ -33,18 +31,16 @@ const latinToCyrillic = (latin: string): string => {
     x: "х",
     y: "й",
     z: "з",
-
+    sh: "ш",
+    ch: "ч",
     " ": " ",
   };
-  return latin
-    .split("")
-    .map((char) => map[char] || char)
-    .join("");
+
+  return latin.replace(/sh|ch|./g, (char) => map[char] || char);
 };
 
-const cyrillicToLatin = (cyrillic: string): string => {
-  // Bu yerda kirillcha matnni lotinchaga aylantiradigan funksiyani yozing
-  // Bu faqat oddiy misol, to'liq qoidalarni qo'shing
+
+export const cyrillicToLatin = (cyrillic: string): string => {
   const map: any = {
     а: "a",
     б: "b",
@@ -72,14 +68,14 @@ const cyrillicToLatin = (cyrillic: string): string => {
     х: "x",
     й: "y",
     з: "z",
-
+    ш: "sh",
+    ч: "ch",
     " ": " ",
   };
-  return cyrillic
-    .split("")
-    .map((char) => map[char] || char)
-    .join("");
+
+  return cyrillic.replace(/ш|ч|./g, (char) => map[char] || char);
 };
+
 
 const LatCyrConverter = ({
   setValue,

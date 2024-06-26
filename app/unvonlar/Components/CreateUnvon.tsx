@@ -74,7 +74,7 @@ export default function CreateUnvon({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000);
   const [valueInp, setValueInp] = React.useState<any>({
     name: null,
     summa: null,
@@ -129,7 +129,6 @@ export default function CreateUnvon({
     );
   };
 
-
   return (
     <div>
       <Accordion sx={{ backgroundColor: "transparent" }}>
@@ -140,6 +139,50 @@ export default function CreateUnvon({
           </div>
         </AccordionSummary>
         <AccordionDetails>
+          <form
+            onSubmit={handleSubmit}
+            className="flex justify-between py-[6px]  px-5"
+          >
+            <TextField
+              id="outlined-basic"
+              label="Unvon Nomi"
+              value={valueInp.name}
+              name="name"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              InputProps={{
+                autoComplete: "off",
+                autoCorrect: "off",
+                spellCheck: "false",
+              }}
+              onChange={(e: any) => handleChange(e)}
+              sx={{ width: "300px", height: "44px" }}
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-basic"
+              label="Unvon summa"
+              value={valueInp.summa}
+              type="number"
+              name="summa"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              InputProps={{
+                autoComplete: "off",
+                autoCorrect: "off",
+                spellCheck: "false",
+              }}
+              onChange={(e: any) => handleChange(e)}
+              sx={{ width: "300px" }}
+              variant="outlined"
+            />
+            <IconButton type="submit" aria-label="delete" size="large">
+              <AddCircleOutlineIcon color="success" fontSize="inherit" />
+            </IconButton>
+          </form>
+
           <TableContainer
             sx={{
               maxHeight: 400,
@@ -147,50 +190,6 @@ export default function CreateUnvon({
               overflow: "auto",
             }}
           >
-            <form
-              onSubmit={handleSubmit}
-              className="flex justify-between py-[6px]  px-5"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Unvon Nomi"
-                value={valueInp.name}
-                name="name"
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-                onChange={(e: any) => handleChange(e)}
-                sx={{ width: "300px", height: "44px" }}
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-basic"
-                label="Unvon summa"
-                value={valueInp.summa}
-                type="number"
-                name="summa"
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-                onChange={(e: any) => handleChange(e)}
-                sx={{ width: "300px" }}
-                variant="outlined"
-              />
-              <IconButton type="submit" aria-label="delete" size="large">
-                <AddCircleOutlineIcon color="success" fontSize="inherit" />
-              </IconButton>
-            </form>
-
             <Table stickyHeader aria-label="sticky table">
               <TableHead sx={{ background: "#edede9" }}>
                 <TableRow>
@@ -269,7 +268,7 @@ export default function CreateUnvon({
                                     autoCorrect: "off",
                                     spellCheck: "false",
                                   }}
-                                  sx={{ minWidth: "300px",mt:"10px" }}
+                                  sx={{ minWidth: "300px", mt: "10px" }}
                                   variant="outlined"
                                 />
                               ) : column.format && typeof value === "number" ? (

@@ -66,7 +66,7 @@ export default function CreateLocationlar({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000000000000000);
 
   const [valueInp, setValueInp] = React.useState<any>({
     name: null,
@@ -122,7 +122,7 @@ export default function CreateLocationlar({
 
   return (
     <div>
-      <Accordion sx={{ backgroundColor: "transparent" }}>
+      <Accordion sx={{ backgroundColor: "white" }}>
         <AccordionSummary aria-controls="panel1-content" id="panel1-header">
           <div className="flex gap-2 items-center">
             <KeyboardArrowDownIcon />
@@ -130,42 +130,43 @@ export default function CreateLocationlar({
           </div>
         </AccordionSummary>
         <AccordionDetails>
+          <form
+            onSubmit={handleSubmit}
+            className="flex justify-between ml-10 py-[6px] sticky top-0  px-5"
+          >
+            <TextField
+              id="outlined-basic"
+              label="Tuman Nomi"
+              value={valueInp.name}
+              name="name"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              InputProps={{
+                autoComplete: "off",
+                autoCorrect: "off",
+                spellCheck: "false",
+              }}
+              onChange={(e: any) => handleChange(e)}
+              sx={{ width: "53%", height: "44px", ml: 3 }}
+              variant="outlined"
+            />
+
+            <IconButton type="submit" aria-label="delete" size="large">
+              <AddCircleOutlineIcon color="success" fontSize="inherit" />
+            </IconButton>
+          </form>
           <TableContainer
             sx={{
               maxHeight: 400,
-              backgroundColor: "transparent",
+              backgroundColor: "white",
               overflow: "auto",
             }}
           >
-            <form
-              onSubmit={handleSubmit}
-              className="flex justify-between ml-10 py-[6px]  px-5"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Tuman Nomi"
-                value={valueInp.name}
-                name="name"
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-                onChange={(e: any) => handleChange(e)}
-                sx={{ width: "53%", height: "44px", ml:3 }}
-                variant="outlined"
-              />
-
-              <IconButton type="submit" aria-label="delete" size="large">
-                <AddCircleOutlineIcon color="success" fontSize="inherit" />
-              </IconButton>
-            </form>
-
             <Table stickyHeader aria-label="sticky table">
-              <TableHead sx={{ background: "#edede9" }}>
+              <TableHead
+                sx={{ background: "#edede9", }}
+              >
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
@@ -227,7 +228,7 @@ export default function CreateLocationlar({
                                   onChange={(e) => handleChange1(e)}
                                   sx={{
                                     minWidth: "100%",
-                                    
+
                                     height: "44px",
                                   }}
                                   variant="outlined"

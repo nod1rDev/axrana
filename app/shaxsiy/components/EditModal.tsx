@@ -44,7 +44,7 @@ export default function EditModal({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Shaxsiy parolingizni ozgartirin"}
+          {"Ish profilinggizga ozgartrish kiriting !"}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
           <TextField

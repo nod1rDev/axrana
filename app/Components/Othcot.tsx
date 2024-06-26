@@ -15,6 +15,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PrintIcon from "@mui/icons-material/Print";
 import Documenttt from "./Document";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -233,9 +234,9 @@ function Othcot() {
             onClick={handleDownload}
             variant="contained"
             color="success"
-            startIcon={<SendIcon />}
+            startIcon={<CloudUploadIcon />}
           >
-            Malumotlarni Jonatish
+            Excel fileni yuklash 
           </Button>
 
           <Button

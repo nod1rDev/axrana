@@ -13,11 +13,8 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { GetCreateInfoWorker } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
-
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { cyrillicToLatin, latinToCyrillic } from "../add/Components/lotin";
-
-
 
 export default function TipModal({
   value,
@@ -41,30 +38,41 @@ export default function TipModal({
   const [latinText, setLatinText] = React.useState("");
   const [cyrillicText, setCyrillicText] = React.useState("");
   const [isLotin, setIsLotin] = React.useState(true);
+  
   const getSelect = async () => {
     const res = await GetCreateInfoWorker(JWT);
     setSelect(res);
+    // Set default values for selects if necessary
+    setValue((prevValue: any) => ({
+      ...prevValue,
+      selectRank: res.ranks.length > 0 ? res.ranks[0].name : "",
+      selectRankSumma: res.ranks.length > 0 ? res.ranks[0].summa : "",
+      selectRegion: res.locations.length > 0 ? res.locations[0].name : "",
+      selectOtryad: res.otryads.length > 0 ? res.otryads[0].name : ""
+    }));
   };
+  
   React.useEffect(() => {
     getSelect();
   }, []);
+  
   const dispatch = useDispatch();
-
+  
   const handleChange = (i: any) => {
-    if (i.target.name == "FIOlotin") {
+    if (i.target.name === "FIOlotin") {
       setValue({
         ...value,
         FIOlotin: i.target.value,
         FIOkril: latinToCyrillic(i.target.value),
       });
-    } else if (i.target.name == "selectRank") {
+    } else if (i.target.name === "selectRank") {
       const filter = select.ranks.find((e: any) => i.target.value === e.name);
       setValue({
         ...value,
         selectRank: filter.name,
         selectRankSumma: filter.summa,
       });
-    } else if (i.target.name == "FIOkril") {
+    } else if (i.target.name === "FIOkril") {
       setValue({
         ...value,
         FIOlotin: cyrillicToLatin(i.target.value),
@@ -81,6 +89,7 @@ export default function TipModal({
   const handleSubmite = async () => {
     handleSubmit();
   };
+  
   const handleSwitch = () => {
     setIsLatinToCyrillic(!isLatinToCyrillic);
     if (!isLotin) {
@@ -101,7 +110,7 @@ export default function TipModal({
           onClose={handleClose}
           sx={{
             "& .MuiDialog-paper": {
-              maxWidth: "1120px", // Custom width here
+              maxWidth: "1600px", // Custom width here
             },
           }}
           aria-labelledby="responsive-dialog-title"
@@ -109,9 +118,9 @@ export default function TipModal({
           <DialogTitle id="responsive-dialog-title">
             {open.name + " " + "o'zgartirin"}
           </DialogTitle>
-          <div className="flex flex-row  min-w-[1120px] p-4 gap-2 px-4">
+          <div className="flex flex-row  min-w-[1600px] p-4 gap-2 px-4">
             {isLatinToCyrillic ? (
-              <div className="flex w-[33.333%] items-center justify-between gap-3">
+              <div className="flex w-[48.333%] items-center justify-between gap-3">
                 <TextField
                   label="Lotin"
                   value={value.FIOlotin}
@@ -153,7 +162,7 @@ export default function TipModal({
                 />
               </div>
             ) : (
-              <div className="flex w-[33.333%] items-center justify-between gap-3">
+              <div className="flex w-[48.333%] items-center justify-between gap-3">
                 <TextField
                   label="Kirill"
                   value={value.FIOkril}

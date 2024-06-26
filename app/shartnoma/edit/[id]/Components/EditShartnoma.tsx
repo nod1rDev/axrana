@@ -14,7 +14,7 @@ function EditShartnoma({ data }: { data: any }) {
 
   
   return (
-    <div className="w-[95%] mt-[5vh] mx-auto">
+    <div className="w-[100%] mt-[5vh] mx-auto">
       <div className="flex justify-center mb-6 text-[28px] font-bold">
         Shartnoma tahrirlash
       </div>

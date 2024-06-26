@@ -94,7 +94,7 @@ function ChangeShartnoma({
     const workers2 = value
       ? value.workers.map((e: any) => {
           return {
-            worker: language == "uz" ? e.worker.FIOlotin : e.worker.FIOkril,
+            worker: language == "uz" ? e.FIOlotin : e.FIOkril,
             selected: true,
             dayOrHour: e.dayOrHour,
             timeType: e.timeType,
@@ -102,7 +102,7 @@ function ChangeShartnoma({
           };
         })
       : [];
-    setWorkers([...workers, ...workers2]);
+    setWorkers([...workers2, ...workers]);
   }, [value?.workers]);
 
   const names = workers

@@ -80,7 +80,6 @@ function createData(
   };
 }
 
-
 export default function CustomizedTables({
   data,
   language,
@@ -88,6 +87,8 @@ export default function CustomizedTables({
   data: any;
   language: any;
 }) {
+  console.log(data);
+
   const rows =
     data &&
     data.map((e: any, i: any) =>

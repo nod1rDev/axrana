@@ -39,7 +39,6 @@ export const latinToCyrillic = (latin: string): string => {
   return latin.replace(/sh|ch|./g, (char) => map[char] || char);
 };
 
-
 export const cyrillicToLatin = (cyrillic: string): string => {
   const map: any = {
     а: "a",
@@ -76,7 +75,6 @@ export const cyrillicToLatin = (cyrillic: string): string => {
   return cyrillic.replace(/ш|ч|./g, (char) => map[char] || char);
 };
 
-
 const LatCyrConverter = ({
   setValue,
   value,
@@ -99,12 +97,24 @@ const LatCyrConverter = ({
     setCyrillicText(latinToCyrillic(valuee));
   };
 
+  const handleLatinChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valuee = e.target.value;
+    setValue({ ...value, FIOlotin: valuee });
+    setLatinText(valuee);
+  };
+
   const handleCyrillicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLotin(false);
     const valuee = e.target.value;
     setValue({ ...value, FIOlotin: cyrillicToLatin(valuee), FIOkril: valuee });
     setCyrillicText(valuee);
     setLatinText(cyrillicToLatin(valuee));
+  };
+
+  const handleCyrillicChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const valuee = e.target.value;
+    setValue({ ...value, FIOkril: valuee });
+    setCyrillicText(valuee);
   };
 
   const handleSwitch = () => {
@@ -159,11 +169,10 @@ const LatCyrConverter = ({
               autoComplete: "off",
               autoCorrect: "off",
               spellCheck: "false",
-              readOnly: true,
             }}
             label="Kirill"
             value={cyrillicText}
-            disabled
+            onChange={handleCyrillicChange2}
             fullWidth
           />
         </div>
@@ -193,11 +202,16 @@ const LatCyrConverter = ({
           </IconButton>
           <TextField
             label="Lotin"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
             InputProps={{
-              readOnly: true,
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
             }}
+            onChange={handleLatinChange2}
             value={latinText}
-            disabled
             fullWidth
           />
         </div>

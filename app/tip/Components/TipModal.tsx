@@ -86,6 +86,33 @@ export default function TipModal({
     }
   };
 
+  const handleChange2 = (i: any) => {
+    if (i.target.name === "FIOlotin") {
+      setValue({
+        ...value,
+        FIOlotin: i.target.value,
+      });
+    } else if (i.target.name === "selectRank") {
+      const filter = select.ranks.find((e: any) => i.target.value === e.name);
+      setValue({
+        ...value,
+        selectRank: filter.name,
+        selectRankSumma: filter.summa,
+      });
+    } else if (i.target.name === "FIOkril") {
+      setValue({
+        ...value,
+
+        FIOkril: i.target.value,
+      });
+    } else {
+      setValue({
+        ...value,
+        [i.target.name]: i.target.value,
+      });
+    }
+  };
+
   const handleSubmite = async () => {
     handleSubmit();
   };
@@ -155,9 +182,10 @@ export default function TipModal({
                     autoCorrect: "off",
                     spellCheck: "false",
                   }}
+                  name="FIOkril"
                   label="Kirill"
                   value={value.FIOkril}
-                  disabled
+                  onChange={handleChange2}
                   fullWidth
                 />
               </div>
@@ -188,14 +216,17 @@ export default function TipModal({
                 </IconButton>
                 <TextField
                   label="Lotin"
-                  sx={{
-                    "& .MuiInputBase-input.Mui-disabled": {
-                      color: "#000000", // Text color inside the input when disabled
-                      opacity: 1, // Ensure the text is fully opaque
-                    },
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  name="FIOlotin"
+                  onChange={handleChange2}
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
                   }}
                   value={value.FIOlotin}
-                  disabled
                   fullWidth
                 />
               </div>
@@ -299,9 +330,7 @@ export default function TipModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {`"${open.name}"` +
-              " " +
-              "ushbu Fuqoroni ochirishni istaysizmi ?"}
+            {`"${open.name}"` + " " + "ushbu Fuqoroni ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

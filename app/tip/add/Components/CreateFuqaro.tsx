@@ -118,8 +118,8 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     myHeaders.append("Authorization", `Bearer ${JWT}`);
 
     const formdata = new FormData();
-    formdata.append("file", file, `[${file?.name}]`);
-    formdata.append("file", file, `[${file?.name}]`);
+    formdata.append("file", file, );
+   
 
     const requestOptions: any = {
       method: "POST",

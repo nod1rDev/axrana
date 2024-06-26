@@ -9,9 +9,9 @@ import Alertt from "./Components/Alert";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Apm Zaplata",
+  title: "Axrana",
   manifest: "/manifest.json",
-  description: "Apm Zaplata",
+  description: "Axrana",
 };
 
 export default function RootLayout({

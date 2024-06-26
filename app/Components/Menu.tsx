@@ -17,7 +17,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { puJWT } from "../Redux/AuthSlice";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import { useRouter } from "next/navigation";
 const StyledMenu = styled((props: MenuProps) => (
@@ -129,6 +129,10 @@ export default function MenuHeader() {
         <MenuItem onClick={() => otmoq("/tip")} disableRipple>
           <PaymentsIcon />
           фио
+        </MenuItem>
+        <MenuItem onClick={() => otmoq("/names")} disableRipple>
+          <ManageAccountsIcon />
+          Rахбар фио
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={AuthOut} disableRipple>

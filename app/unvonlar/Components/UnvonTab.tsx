@@ -71,7 +71,8 @@ function createData(
 
 export default function UnvonTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(100000000000000000000000000000000000);
 
   const rows = ranks
     ? ranks.map((e: any) => createData(1, e.name, e.summa, 5, e._id))

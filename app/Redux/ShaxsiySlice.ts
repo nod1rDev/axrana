@@ -4,6 +4,10 @@ const ShaxsiySlice = createSlice({
   name: "Shaxsiy",
   initialState: {
     modal: false,
+    userModal: {
+      open: false,
+      name: "",
+    },
     alert: {
       open: false,
       message: "",
@@ -20,10 +24,13 @@ const ShaxsiySlice = createSlice({
     alertClose: (state, { payload }) => {
       state.alert.open = payload;
     },
+    setUserModal: (state, { payload }) => {
+      state.userModal = payload;
+    },
   },
 });
 
-export const { setModalShaxsiy, alertChange, alertClose } =
+export const { setModalShaxsiy, alertChange, alertClose,setUserModal } =
   ShaxsiySlice.actions;
 
 export default ShaxsiySlice.reducer;

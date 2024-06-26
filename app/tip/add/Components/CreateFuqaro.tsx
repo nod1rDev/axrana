@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import LatCyrConverter from "./lotin";
 import { useSelector, useDispatch } from "react-redux";
-import { GetCreateInfoWorker, setExelFile } from "@/app/Api/Apis";
+import { GetCreateInfoWorker, URL, setExelFile } from "@/app/Api/Apis";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
@@ -118,8 +118,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     myHeaders.append("Authorization", `Bearer ${JWT}`);
 
     const formdata = new FormData();
-    formdata.append("file", file, );
-   
+    formdata.append("file", file);
 
     const requestOptions: any = {
       method: "POST",
@@ -128,7 +127,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       redirect: "follow",
     };
 
-    fetch("http://localhost:3000/worker/create/excel", requestOptions)
+    fetch(URL + "/worker/create/excel", requestOptions)
       .then((response) => response.text())
       .then((result: any) => {
         const res = textToJson(result);
@@ -184,11 +183,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             />
           </Button>
           {file && (
-            <IconButton
-              onClick={handleSubmit}
-              size="large"
-              aria-label="upload"
-            >
+            <IconButton onClick={handleSubmit} size="large" aria-label="upload">
               <SaveIcon fontSize="inherit" color="info" />
             </IconButton>
           )}

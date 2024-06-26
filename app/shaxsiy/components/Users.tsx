@@ -8,14 +8,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { createAuth, getAuth } from "@/app/Api/Apis";
-import { alertChange } from "@/app/Redux/ShaxsiySlice";
-
+import { UpdateUsers, createAuth, getAuth } from "@/app/Api/Apis";
+import { alertChange, setUserModal } from "@/app/Redux/ShaxsiySlice";
+import IconButton from "@mui/material/IconButton";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import EditUser from "./userEdit";
 interface Column {
-  id: "number" | "FoydalanuvchiNomi" | "FoydalanuvchiParoli";
+  id: "number" | "FoydalanuvchiNomi" | "FoydalanuvchiParoli" | "actions";
   label: string;
   minWidth?: number;
-  align?: "left" | "center";
+  align?: "left" | "center" | "right";
   format?: (value: number) => string;
 }
 
@@ -24,7 +27,7 @@ const columns: readonly Column[] = [
   {
     id: "FoydalanuvchiNomi",
     label: "Foydalanuvchi Nomi",
-    align: "center",
+    align: "left",
     minWidth: 100,
   },
   {
@@ -33,12 +36,19 @@ const columns: readonly Column[] = [
     minWidth: 170,
     align: "center",
   },
+  {
+    id: "actions",
+    label: "Tahrirlash",
+    minWidth: 170,
+    align: "right",
+  },
 ];
 
 interface Data {
   number: number;
   FoydalanuvchiNomi: string;
   FoydalanuvchiParoli: number | string;
+  actions: any;
   id: number;
 }
 
@@ -46,19 +56,26 @@ function createData(
   number: number,
   FoydalanuvchiNomi: string,
   FoydalanuvchiParoli: number | string,
+  actions: any,
   id: number
 ): Data {
-  return { number, FoydalanuvchiNomi, FoydalanuvchiParoli, id };
+  return { number, FoydalanuvchiNomi, FoydalanuvchiParoli, actions, id };
 }
 
 export default function Users() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(100000000000000000000000);
   const [users, setUsers] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = React.useState<any>({
     username: "",
     password: "",
+  });
+  const [value2, setValue2] = React.useState<any>({
+    username: null,
+    oldPassword: null,
+    newPassword: null,
   });
 
   const getUsers = async () => {
@@ -79,7 +96,7 @@ export default function Users() {
   }, []);
 
   const rows = users
-    ? users.map((e: any) => createData(1, e.username, e.password, e._id))
+    ? users.map((e: any) => createData(1, e.username, e.password, null, e._id))
     : [];
   const dispatch = useDispatch();
 
@@ -115,6 +132,49 @@ export default function Users() {
 
   const handleChange = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
+  };
+
+  const handleClose = () => {
+    dispatch(setUserModal({ open: false, name: "" }));
+  };
+  const open = useSelector((s: any) => s.shax.userModal);
+  const updateAuth = async (valuee: any) => {
+    
+
+    const res = await UpdateUsers(JWT, valuee, open.id);
+    if (res.success) {
+      handleClose();
+      setValue2({ username: null, oldPassword: null, newPassword: null });
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Password tahrirlandi",
+          status: "success",
+        })
+      );
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: res.message,
+          status: "error",
+        })
+      );
+    }
+  };
+  const handleSubmite = () => {
+    if (value2.oldPassword !== "" && value2.newPassword !== "") {
+      updateAuth(value2);
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Bosh qatorlarni to'ldiring!",
+          status: "warning",
+        })
+      );
+    }
+    setTimeout(() => getUsers(), 500);
   };
 
   return (
@@ -182,11 +242,34 @@ export default function Users() {
 
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {e == 0
-                              ? i + 1
-                              : column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
+                            {e == 0 ? (
+                              i + 1
+                            ) : e == 3 ? (
+                              <>
+                                <IconButton
+                                  onClick={() =>
+                                    dispatch(
+                                      setUserModal({
+                                        open: true,
+                                        id: row.id,
+                                        name: row.FoydalanuvchiNomi,
+                                      })
+                                    )
+                                  }
+                                  aria-label="delete"
+                                  size="medium"
+                                >
+                                  <ModeEditOutlineIcon
+                                    fontSize="inherit"
+                                    color="info"
+                                  />
+                                </IconButton>
+                              </>
+                            ) : column.format && typeof value === "number" ? (
+                              column.format(value)
+                            ) : (
+                              value
+                            )}
                           </TableCell>
                         );
                       })}
@@ -197,6 +280,12 @@ export default function Users() {
           </Table>
         </TableContainer>
       </Paper>
+      <EditUser
+        handleClose={handleClose}
+        handleSubmit={handleSubmite}
+        value={value2}
+        setValue={setValue2}
+      />
     </>
   );
 }

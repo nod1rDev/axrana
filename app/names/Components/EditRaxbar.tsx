@@ -8,23 +8,21 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function EditModal({
+export default function EditRaxbar({
   value,
   setValue,
   handleSubmit,
   handleClose,
-  isUser,
 }: {
   value: any;
   setValue: any;
   handleSubmit: any;
   handleClose: any;
-  isUser: boolean;
 }) {
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const open = useSelector((s: any) => s.shax.modal);
+  const open = useSelector((s: any) => s.names.modal);
 
   const handleChange = (e: any) => {
     setValue({
@@ -49,34 +47,23 @@ export default function EditModal({
           {"Ish profilinggizga ozgartrish kiriting !"}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
-          {isUser && (
-            <TextField
-              name="username"
-              error={value.username == ""}
-              fullWidth
-              value={value.username}
-              onChange={(e: any) => handleChange(e)}
-              label="Foydalanuvchi nomi"
-              id="fullWidth"
-            />
-          )}
-
+        
           <TextField
-            name="oldPassword"
-            error={value.oldPassword == ""}
+            name="boss"
+            error={value.boss == ""}
             fullWidth
-            value={value.oldPassword}
+            value={value.boss}
             onChange={(e: any) => handleChange(e)}
-            label="Amaldagi Parol"
+            label="Raxbar ismi"
             id="fullWidth"
           />
           <TextField
             fullWidth
-            error={value.newPassword == ""}
-            value={value.newPassword}
+            error={value.accountant == ""}
+            value={value.accountant}
             onChange={(e: any) => handleChange(e)}
-            name="newPassword"
-            label="Yangi Parol"
+            name="accountant"
+            label="Bosh hisobchi ismi"
             id="fullWidth"
           />
         </div>

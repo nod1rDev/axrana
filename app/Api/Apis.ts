@@ -22,19 +22,14 @@ export const loginAuth = async (username: any, password: any) => {
   return data;
 };
 
-export const UpdateAuth = async (
-  JWT: any,
-  username: any,
-  oldPassword: any,
-  newPassword: any
-) => {
+export const UpdateAuth = async (JWT: any, value: any) => {
   const res = await fetch(URL + "/auth/update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
-    body: JSON.stringify({ username, oldPassword, newPassword }),
+    body: JSON.stringify({ ...value }),
   });
 
   const data = await res.json();
@@ -832,6 +827,49 @@ export const SendOtchot = async (JWT: any, shartnoma: any) => {
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify({ data: shartnoma }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const GetNames = async (JWT: any) => {
+  const res = await fetch(URL + "/names/get", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const UpdateNames = async (JWT: any, worker: any, id: any) => {
+  const res = await fetch(URL + "/names/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(worker),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const UpdateUsers = async (JWT: any, worker: any, id: any) => {
+  const res = await fetch(URL + "/auth/users/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(worker),
   });
 
   const data = await res.json();

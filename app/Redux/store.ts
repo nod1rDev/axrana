@@ -8,6 +8,7 @@ import CoctavsSlice from "./CoctavsSlice";
 import LavozimSlice from "./LavozimSlice";
 import TipSlice from "./TipSlice";
 import FileSlice from "./FileSlice";
+import names from "./names";
 
 export const store = () => {
   return configureStore({
@@ -21,6 +22,7 @@ export const store = () => {
       lavozim: LavozimSlice,
       tip: TipSlice,
       file: FileSlice,
+      names: names,
     },
   });
 };

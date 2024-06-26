@@ -8,23 +8,21 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function EditModal({
+export default function EditUser({
   value,
   setValue,
   handleSubmit,
   handleClose,
-  isUser,
 }: {
   value: any;
   setValue: any;
   handleSubmit: any;
   handleClose: any;
-  isUser: boolean;
 }) {
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const open = useSelector((s: any) => s.shax.modal);
+  const open = useSelector((s: any) => s.shax.userModal);
 
   const handleChange = (e: any) => {
     setValue({
@@ -41,25 +39,23 @@ export default function EditModal({
     <React.Fragment>
       <Dialog
         fullScreen={fullScreen}
-        open={open}
+        open={open.open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Ish profilinggizga ozgartrish kiriting !"}
+          {`${open.name}` + " ozgartrish kiriting !"}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
-          {isUser && (
-            <TextField
-              name="username"
-              error={value.username == ""}
-              fullWidth
-              value={value.username}
-              onChange={(e: any) => handleChange(e)}
-              label="Foydalanuvchi nomi"
-              id="fullWidth"
-            />
-          )}
+          <TextField
+            name="username"
+            error={value.username == ""}
+            fullWidth
+            value={value.username}
+            onChange={(e: any) => handleChange(e)}
+            label="Foydalanuvchi nomi"
+            id="fullWidth"
+          />
 
           <TextField
             name="oldPassword"

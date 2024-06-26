@@ -72,38 +72,74 @@ function ChangeShartnoma({
   }, [ShartNomaData]);
 
   const getWorkersInfo = async () => {
-    const res = await GetForShartnoma(JWT, language);
-    const wokers1 = res.data.map((e: any) => {
-      return {
-        worker: language == "uz" ? e.FIOlotin : e.FIOkril,
-        selected: false,
-        dayOrHour: "",
-        timeType: "",
-        _id: Math.ceil(Math.random() * 3124234),
-      };
+    if (ShartNomaData?.workers) {
+      const res = await GetForShartnoma(JWT, language);
+      const workers1 = res.data.map((e: any) => {
+        return {
+          worker: language == "uz" ? e.FIOlotin : e.FIOkril,
+          selected: false,
+          dayOrHour: "",
+          timeType: "",
+          _id: Math.ceil(Math.random() * 3124234),
+        };
+      });
+
+      const workers2 = ShartNomaData
+        ? ShartNomaData.workers?.map((e: any) => {
+            return {
+              worker: language == "uz" ? e.FIOlotin : e.FIOkril,
+              selected: true,
+              dayOrHour: e.dayOrHour,
+              timeType: e.timeType,
+              _id: e._id,
+            };
+          })
+        : [];
+      const arr1 = workers2 ? [...workers2, ...workers1] : [...workers];
+
+      setWorkers(filterProducts(arr1));
+    }
+  };
+
+  const filterProducts = (products: any): any => {
+    const groupedByWorker: { [key: string]: any } = {};
+
+    // Group products by worker
+    products.forEach((product: any) => {
+      if (!groupedByWorker[product.worker]) {
+        groupedByWorker[product.worker] = [];
+      }
+      groupedByWorker[product.worker].push(product);
     });
 
-    setWorkers([...wokers1]);
+    const result: any = [];
+
+    Object.keys(groupedByWorker).forEach((worker) => {
+      const group = groupedByWorker[worker];
+
+      if (group.length === 1) {
+        // If there is only one product with this worker, add it to the result
+        result.push(group[0]);
+      } else {
+        // Find the product with selected: true in the group
+        const selectedProduct = group.find((product: any) => product.selected);
+
+        if (selectedProduct) {
+          // If a selected product is found, add it to the result
+          result.push(selectedProduct);
+        } else {
+          // If no selected product is found, add all products in the group to the result
+          result.push(...group);
+        }
+      }
+    });
+
+    return result;
   };
 
   useEffect(() => {
     getWorkersInfo();
-  }, [language]);
-
-  useEffect(() => {
-    const workers2 = value
-      ? value.workers.map((e: any) => {
-          return {
-            worker: language == "uz" ? e.FIOlotin : e.FIOkril,
-            selected: true,
-            dayOrHour: e.dayOrHour,
-            timeType: e.timeType,
-            _id: e._id,
-          };
-        })
-      : [];
-    setWorkers([...workers2, ...workers]);
-  }, [value?.workers]);
+  }, [ShartNomaData, language]);
 
   const names = workers
     ? workers.map((e: any) => {

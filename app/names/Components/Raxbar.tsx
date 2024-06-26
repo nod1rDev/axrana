@@ -1,43 +1,57 @@
 "use client";
-import { UpdateAuth, getAuth } from "@/app/Api/Apis";
+import { GetNames, UpdateAuth, UpdateNames, getAuth } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange, setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
-import EditModal from "./EditModal";
-import Users from "./Users";
-function Shaxsiy() {
+import EditRaxbar from "./EditRaxbar";
+import { setModalRaxbar } from "@/app/Redux/names";
+
+function Raxbar() {
   const [userData, setUserData] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
+  const [id, setId] = useState();
   const [value, setValue] = React.useState<any>({
-    username: null,
-    oldPassword: null,
-    newPassword: null,
+    boss: null,
+    accountant: null,
   });
-
-  const getUser = async () => {
+  const getID = async () => {
     const res = await getAuth(JWT);
-    if (res.admin !== undefined) {
-      setUserData(res.admin);
-    } else {
-      setUserData(res.data);
-    }
+
+    setId(res.data._id);
+  };
+  const getUser = async () => {
+    const res = await GetNames(JWT);
+    setUserData(res.data);
   };
 
   React.useEffect(() => {
     getUser();
+    getID();
   }, []);
+
+  React.useEffect(() => {
+    userData &&
+      setValue({ boss: userData.boss, accountant: userData.accountant });
+  }, [userData]);
   const dispatch = useDispatch();
-  const updateAuth = async (valuee: any) => {
-    const res = await UpdateAuth(JWT, valuee);
+  const updateAuth = async (value: any) => {
+    const res = await UpdateNames(
+      JWT,
+      {
+        bossName: value.boss,
+        accountantName: value.accountant,
+      },
+      userData._id
+    );
     if (res.success) {
       handleClose();
-      setValue({ username: null, oldPassword: null, newPassword: null });
+      setValue({ boss: null, accountant: null });
       dispatch(
         alertChange({
           open: true,
-          message: "Password tahrirlandi",
+          message: "Malumotlar tahrirlandi",
           status: "success",
         })
       );
@@ -52,17 +66,8 @@ function Shaxsiy() {
     }
   };
   const handleSubmit = () => {
-    if (value.oldPassword !== "" && value.newPassword !== "") {
-      userData.adminStatus
-        ? updateAuth({
-            username: value.username,
-            oldPassword: value.oldPassword,
-            newPassword: value.newPassword,
-          })
-        : updateAuth({
-            oldPassword: value.oldPassword,
-            newPassword: value.newPassword,
-          });
+    if (value.boss !== "" && value.accountant !== "") {
+      updateAuth(value);
     } else {
       dispatch(
         alertChange({
@@ -76,17 +81,17 @@ function Shaxsiy() {
   };
 
   const handleClose = () => {
-    dispatch(setModalShaxsiy(false));
+    dispatch(setModalRaxbar(false));
   };
 
   return (
     <>
-      <h1 className="font-bold text-[28px] mb-2">Shaxsiy malumotlar</h1>
+      <h1 className="font-bold text-[28px] mb-2">Raxbar va Bosh hisobchi</h1>
       <div className="flex w-full justify-between">
         <div className="flex rounded-lg relative w-[400px]  bg-slate-50 px-6 py-4 gap-4 flex-col">
           <div className=" absolute top-2 right-2">
             <IconButton
-              onClick={() => dispatch(setModalShaxsiy(true))}
+              onClick={() => dispatch(setModalRaxbar(true))}
               aria-label="delete"
               size="large"
             >
@@ -95,24 +100,21 @@ function Shaxsiy() {
           </div>
 
           <div className="flex flex-col">
-            <h1 className="font-bold text-[18px]">Ish profilinggiz nomi:</h1>
+            <h1 className="font-bold text-[18px]">Raxbar ismi:</h1>
             <span className=" text-slate-400 font-bold">
-              {userData && userData.username}
+              {userData && userData.boss}
             </span>
           </div>
 
           <div className="flex flex-col">
-            <h1 className="font-bold text-[18px]">Ish profilinggiz paroli:</h1>
+            <h1 className="font-bold text-[18px]">Bosh hisobchi ismi:</h1>
             <span className=" text-slate-400 font-bold">
-              {userData && userData.password}
+              {userData && userData.accountant}
             </span>
           </div>
         </div>
-
-        {userData && userData.adminStatus ? <Users /> : null}
       </div>
-      <EditModal
-        isUser={userData && userData.adminStatus}
+      <EditRaxbar
         setValue={setValue}
         value={value}
         handleSubmit={handleSubmit}
@@ -122,4 +124,4 @@ function Shaxsiy() {
   );
 }
 
-export default Shaxsiy;
+export default Raxbar;

@@ -25,7 +25,6 @@ function page() {
   const dispatch = useDispatch();
   const deleteItem = async () => {
     const res = await DeleteShartnoma(JWT, data._id);
-    
 
     if (res.success) {
       dispatch(

@@ -172,9 +172,9 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       type: 1,
                                       open: true,
                                       id: row.id,
-                                      name: row.FIO.FIOlotin,
-                                      FIOlotin: row.FIO.FIOlotin,
-                                      FIOkril: row.FIO.FIOkril,
+                                      name: row.FIO,
+                                      FIOlotin: row.FIO,
+                                      FIOkril: row.FIOkril,
                                       selectRank: row.UnvonNom,
                                       selectRankSumma: row.UnvonSum,
                                       selectRegion: row.Tuman,
@@ -201,7 +201,7 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       type: 2,
                                       open: true,
                                       id: row.id,
-                                      name: row.FIO.FIOlotin,
+                                      name: row.FIO,
                                     })
                                   )
                                 }

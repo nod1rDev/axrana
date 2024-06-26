@@ -205,6 +205,9 @@ const Documenttt = React.forwardRef(
         </TableContainer>
 
         <div className="flex mt-[5vh] flex-col gap-4 min-w-full  justify-start">
+          <h1 className="text-[100%]">
+            Qabul qiluvchi imzosi: ____________________________________
+          </h1>
           <h1>Rahbar:{" " + names && names?.boss}</h1>
           <h1>Bosh hisobchi:{" " + names && names?.accountant}</h1>
         </div>

@@ -482,7 +482,7 @@ function ChangeShartnoma({
               autoComplete: "off",
               autoCorrect: "off",
               spellCheck: "false",
-              readOnly: true,
+        
             }}
           />
           <TextField

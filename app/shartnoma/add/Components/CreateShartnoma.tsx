@@ -416,7 +416,7 @@ function CreateShartnoma({ language }: { language: any }) {
               autoComplete: "off",
               autoCorrect: "off",
               spellCheck: "false",
-              readOnly: true,
+            
             }}
           />
           <TextField

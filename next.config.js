@@ -12,8 +12,6 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
- port:3001
-};
+const nextConfig = {};
 
 module.exports = withPWA(nextConfig);

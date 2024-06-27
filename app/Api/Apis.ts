@@ -876,3 +876,78 @@ export const UpdateUsers = async (JWT: any, worker: any, id: any) => {
 
   return data;
 };
+
+// bank
+export const Createbank = async (JWT: any, banks: any) => {
+  const res = await fetch(URL + "/bank/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ banks: banks }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const Getbanks = async (JWT: any) => {
+  const res = await fetch(URL + "/bank/get", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const Updatebank = async (JWT: any, bank: any, id: any) => {
+  const res = await fetch(URL + "/bank/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(bank),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const Deletebank = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/bank/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const SearchBank = async (JWT: any, number: any) => {
+  const res = await fetch(URL + "/bank/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({
+      number: number,
+    }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

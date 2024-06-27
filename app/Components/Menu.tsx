@@ -17,9 +17,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { puJWT } from "../Redux/AuthSlice";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PinDropIcon from "@mui/icons-material/PinDrop";
 import { useRouter } from "next/navigation";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -129,6 +130,10 @@ export default function MenuHeader() {
         <MenuItem onClick={() => otmoq("/tip")} disableRipple>
           <PaymentsIcon />
           фио
+        </MenuItem>
+        <MenuItem onClick={() => otmoq("/bank")} disableRipple>
+          <AccountBalanceIcon />
+          банк
         </MenuItem>
         <MenuItem onClick={() => otmoq("/names")} disableRipple>
           <ManageAccountsIcon />

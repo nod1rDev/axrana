@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   Createshartnomaa,
   GetForShartnoma,
+  SearchBank,
   UpdateShartnoma,
 } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -52,7 +53,7 @@ function ChangeShartnoma({
 }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [value, setValue] = useState<any>();
-
+  const [search, setSearch] = useState<any>();
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
   const [workers, setWorkers] = React.useState<any>([]);
@@ -215,6 +216,48 @@ function ChangeShartnoma({
 
   const handleChangeValue = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeValue2 = (e: any) => {
+    setSearch(e.target.value);
+  };
+
+  const setBankName = async () => {
+    const res = await SearchBank(JWT, search);
+    if (res.success) {
+      
+
+      setValue({ ...value, bankName: res.data.name });
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Bank nomi muavaqiyatli topildi",
+          status: "success",
+        })
+      );
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Bank nomi topilmadi",
+          status: "error",
+        })
+      );
+    }
+  };
+  const searchSubmit = (e: any) => {
+    e.preventDefault();
+    if (search) {
+      setBankName();
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: "Bank raqamini kiriting",
+          status: "warning",
+        })
+      );
+    }
   };
 
   return (
@@ -383,26 +426,7 @@ function ChangeShartnoma({
               spellCheck: "false",
             }}
           />
-          <TextField
-            id="outlined-basic"
-            label="Bank Nomi"
-            sx={{ width: "20%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            value={value ? value.bankName : ""}
-            name="bankName"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-        </div>
-
-        <div className="flex justify-between w-full gap-3">
+         
           <TextField
             id="outlined-basic"
             label="Raxbar Ismi"
@@ -420,10 +444,51 @@ function ChangeShartnoma({
               spellCheck: "false",
             }}
           />
+        </div>
+
+        <div className="flex justify-between w-full mb-8 gap-3">
+        <form className="w-[25%]" onSubmit={searchSubmit}>
+            <TextField
+              id="outlined-basic"
+              label="Bank Raqami"
+              sx={{ width: "100%" }}
+              onChange={(e: any) => handleChangeValue2(e)}
+              variant="outlined"
+              name="bankName"
+              type="number"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
+              InputProps={{
+                autoComplete: "off",
+                autoCorrect: "off",
+                spellCheck: "false",
+              }}
+            />
+          </form>
+        <TextField
+            id="outlined-basic"
+            label="Bank Nomi"
+            sx={{ width: "25%" }}
+            onChange={(e: any) => handleChangeValue(e)}
+            variant="outlined"
+            value={value ? value.bankName : ""}
+            name="bankName"
+            
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+              readOnly: true,
+            }}
+          />
           <TextField
             id="outlined-basic"
             label="Telfon Raqam"
-            sx={{ width: "20%" }}
+            sx={{ width: "25%" }}
             onChange={(e) => handleChangeValue(e)}
             type="number"
             value={value ? value.phone : ""}
@@ -442,7 +507,7 @@ function ChangeShartnoma({
             id="outlined-basic"
             label="Shartnoma Mazmuni"
             multiline
-            sx={{ width: "20%" }}
+            sx={{ width: "25%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
             name="content"
@@ -456,8 +521,10 @@ function ChangeShartnoma({
               spellCheck: "false",
             }}
           />
-
-          <div className="flex w-[65%] gap-10 ">
+        </div>
+        <div>
+          {" "}
+          <div className="flex w-[100%] gap-10 ">
             <FormControl sx={{ width: "100%" }}>
               <InputLabel id="demo-multiple-chip-label">Ishchilar</InputLabel>
               <Select

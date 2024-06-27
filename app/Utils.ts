@@ -14,6 +14,11 @@ export const extractNameAndSumma = (
 ): { name: string; summa: number }[] => {
   return items.map((item: any) => ({ name: item.name, summa: item.summa }));
 };
+export const extractNameAndSumma2 = (
+  items: any
+): { name: string; number: number }[] => {
+  return items.map((item: any) => ({ name: item.name, number: item.number }));
+};
 export const extractNmae = (items: any): { name: string; summa: number }[] => {
   return items.map((item: any) => ({ name: item.name }));
 };

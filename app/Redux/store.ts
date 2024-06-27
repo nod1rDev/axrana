@@ -9,6 +9,7 @@ import LavozimSlice from "./LavozimSlice";
 import TipSlice from "./TipSlice";
 import FileSlice from "./FileSlice";
 import names from "./names";
+import bankSlice from "./bankSlice";
 
 export const store = () => {
   return configureStore({
@@ -23,6 +24,7 @@ export const store = () => {
       tip: TipSlice,
       file: FileSlice,
       names: names,
+      bank:bankSlice
     },
   });
 };

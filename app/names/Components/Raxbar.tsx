@@ -36,13 +36,9 @@ function Raxbar() {
   }, [userData]);
   const dispatch = useDispatch();
   const updateAuth = async (value: any) => {
-    const res = await UpdateNames(
-      JWT,
-      {
-        summaName: value.summa,
-      },
-      userData._id
-    );
+    const res = await UpdateNames(JWT, {
+      summa: value.summa,
+    });
     if (res.success) {
       handleClose();
       setValue({ summa: null });

@@ -681,8 +681,8 @@ export const GetNames = async (JWT: any) => {
   return data;
 };
 
-export const UpdateNames = async (JWT: any, worker: any, id: any) => {
-  const res = await fetch(URL + "/bxm/update/" + id, {
+export const UpdateNames = async (JWT: any, worker: any) => {
+  const res = await fetch(URL + "/bxm/update/" , {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

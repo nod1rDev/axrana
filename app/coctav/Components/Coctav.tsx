@@ -8,7 +8,13 @@ import CoctavTab from "./CoctavTab";
 import CreateCoctavlar from "./CreateCoctav";
 import CoctavModal from "./CoctavModal";
 import { setModalCoctav } from "@/app/Redux/CoctavsSlice";
-import { Createotryads, Deleteotryad, Getotryads, Updateotryads } from "@/app/Api/Apis";
+import {
+  Createotryads,
+  Deleteotryad,
+  Getotryads,
+  Updateotryads,
+} from "@/app/Api/Apis";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 function Coctav() {
   //Umumiy
@@ -42,7 +48,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: open.name + " " + "o'chirildi",
+          message: open.name + " " + "ўчирилди",
           status: "success",
         })
       );
@@ -69,7 +75,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: "Otryad tahrirlandi",
+          message: latinToCyrillic("Zvaniya nomi taxrirlandi"),
           status: "success",
         })
       );
@@ -78,7 +84,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -96,7 +102,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni to'liq to'ldiring!",
+          message: "Малумотларни тўлиқ тўлдиринг!",
           status: "warning",
         })
       );
@@ -117,7 +123,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: "Otryadlar saqlandi!",
+          message: latinToCyrillic("Zvaniya nomlari saqlandi"),
           status: "success",
         })
       );
@@ -125,7 +131,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -138,7 +144,7 @@ function Coctav() {
       dispatch(
         alertChange({
           open: true,
-          message: "Hali Otryad mavjud emas!",
+          message: "Ҳали zvaniya номи мавжуд емас!",
           status: "error",
         })
       );

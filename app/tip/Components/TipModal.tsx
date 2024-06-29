@@ -43,13 +43,6 @@ export default function TipModal({
     const res = await GetCreateInfoWorker(JWT);
     setSelect(res);
     // Set default values for selects if necessary
-    setValue((prevValue: any) => ({
-      ...prevValue,
-      selectRank: res.ranks.length > 0 ? res.ranks[0].name : "",
-      selectRankSumma: res.ranks.length > 0 ? res.ranks[0].summa : "",
-      selectRegion: res.locations.length > 0 ? res.locations[0].name : "",
-      selectOtryad: res.otryads.length > 0 ? res.otryads[0].name : "",
-    }));
   };
 
   React.useEffect(() => {
@@ -59,25 +52,13 @@ export default function TipModal({
   const dispatch = useDispatch();
 
   const handleChange = (i: any) => {
-    if (i.target.name === "FIOlotin") {
+    if (i.target.name === "FIO") {
       setValue({
         ...value,
-        FIOlotin: i.target.value,
-        FIOkril: latinToCyrillic(i.target.value),
+        FIO: i.target.value,
       });
     } else if (i.target.name === "selectRank") {
-      const filter = select.ranks.find((e: any) => i.target.value === e.name);
-      setValue({
-        ...value,
-        selectRank: filter.name,
-        selectRankSumma: filter.summa,
-      });
     } else if (i.target.name === "FIOkril") {
-      setValue({
-        ...value,
-        FIOlotin: cyrillicToLatin(i.target.value),
-        FIOkril: i.target.value,
-      });
     } else {
       setValue({
         ...value,
@@ -87,24 +68,13 @@ export default function TipModal({
   };
 
   const handleChange2 = (i: any) => {
-    if (i.target.name === "FIOlotin") {
+    if (i.target.name === "FIO") {
       setValue({
         ...value,
-        FIOlotin: i.target.value,
+        FIO: i.target.value,
       });
     } else if (i.target.name === "selectRank") {
-      const filter = select.ranks.find((e: any) => i.target.value === e.name);
-      setValue({
-        ...value,
-        selectRank: filter.name,
-        selectRankSumma: filter.summa,
-      });
     } else if (i.target.name === "FIOkril") {
-      setValue({
-        ...value,
-
-        FIOkril: i.target.value,
-      });
     } else {
       setValue({
         ...value,
@@ -117,17 +87,6 @@ export default function TipModal({
     handleSubmit();
   };
 
-  const handleSwitch = () => {
-    setIsLatinToCyrillic(!isLatinToCyrillic);
-    if (!isLotin) {
-      setLatinText(cyrillicText);
-      setCyrillicText(latinText);
-    } else {
-      setLatinText(latinText);
-      setCyrillicText(cyrillicText);
-    }
-  };
-
   return (
     <React.Fragment>
       {open.type == 1 ? (
@@ -137,172 +96,67 @@ export default function TipModal({
           onClose={handleClose}
           sx={{
             "& .MuiDialog-paper": {
-              maxWidth: "1600px", // Custom width here
+              maxWidth: "800px", // Custom width here
             },
           }}
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "o'zgartirin"}
+            {open.name + " " + latinToCyrillic("o'zgartirin")}
           </DialogTitle>
-          <div className="flex flex-row  min-w-[1600px] p-4 gap-2 px-4">
-            {isLatinToCyrillic ? (
-              <div className="flex w-[48.333%] items-center justify-between gap-3">
-                <TextField
-                  label="Lotin"
-                  value={value.FIOlotin}
-                  onChange={handleChange}
-                  fullWidth
-                  name="FIOlotin"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                  }}
-                />
-
-                <IconButton
-                  sx={{ width: "40px", height: "40px" }}
-                  aria-label="delete"
-                  onClick={handleSwitch}
-                  size="medium"
-                >
-                  <CompareArrowsIcon fontSize="inherit" />
-                </IconButton>
-
-                <TextField
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                  }}
-                  name="FIOkril"
-                  label="Kirill"
-                  value={value.FIOkril}
-                  onChange={handleChange2}
-                  fullWidth
-                />
-              </div>
-            ) : (
-              <div className="flex w-[48.333%] items-center justify-between gap-3">
-                <TextField
-                  label="Kirill"
-                  value={value.FIOkril}
-                  onChange={handleChange}
-                  fullWidth
-                  name="FIOkril"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                  }}
-                />
-                <IconButton
-                  aria-label="delete"
-                  onClick={handleSwitch}
-                  sx={{ width: "40px", height: "40px" }}
-                  size="medium"
-                >
-                  <CompareArrowsIcon fontSize="inherit" />
-                </IconButton>
-                <TextField
-                  label="Lotin"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  name="FIOlotin"
-                  onChange={handleChange2}
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                  }}
-                  value={value.FIOlotin}
-                  fullWidth
-                />
-              </div>
-            )}
-
-            <div className="w-[33.333%] flex justify-between gap-3">
-              <FormControl fullWidth>
-                <InputLabel id="rank-select-label">Unvon</InputLabel>
-                <Select
-                  labelId="rank-select-label"
-                  id="rank-select"
-                  label="Unvon"
-                  name="selectRank"
-                  value={value.selectRank}
-                  onChange={handleChange}
-                >
-                  {select &&
-                    select.ranks.map((e: any) => (
-                      <MenuItem key={e.name} value={e.name}>
-                        {e.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth>
-                <InputLabel id="rank-summa-select-label">
-                  Unvon Summa
+          <div className="flex flex-row  min-w-[800px] p-4 gap-2 px-4">
+            <div className="w-full flex justify-between gap-4">
+              <FormControl sx={{ width: "30%" }} fullWidth>
+                <InputLabel id="region-select-label">
+                  {latinToCyrillic("Zvaniya")}{" "}
                 </InputLabel>
-                <Select
-                  labelId="rank-summa-select-label"
-                  id="rank-summa-select"
-                  label="Unvon Summa"
-                  name="selectRankSumma"
-                  value={value.selectRankSumma}
-                  disabled
-                >
-                  <MenuItem value={value.selectRankSumma}>
-                    {value.selectRankSumma}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-
-            <div className="w-[33.333%] flex justify-between gap-4">
-              <FormControl fullWidth>
-                <InputLabel id="region-select-label">Tuman</InputLabel>
                 <Select
                   labelId="region-select-label"
                   id="region-select"
-                  label="Tuman"
-                  name="selectRegion"
-                  value={value.selectRegion}
+                  label={latinToCyrillic("Zvaniya")}
+                  name="zvaniya"
+                  value={value.zvaniya}
                   onChange={handleChange}
                 >
                   {select &&
-                    select.locations.map((e: any) => (
+                    select.zvaniyas.map((e: any) => (
                       <MenuItem key={e.name} value={e.name}>
                         {e.name}
                       </MenuItem>
                     ))}
                 </Select>
               </FormControl>
+              <TextField
+                label={latinToCyrillic("FIO")}
+                value={value.FIO}
+                onChange={handleChange}
+                fullWidth
+                name="FIO"
+                sx={{ width: "40%" }}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                InputProps={{
+                  autoComplete: "off",
+                  autoCorrect: "off",
+                  spellCheck: "false",
+                }}
+              />
 
-              <FormControl fullWidth>
-                <InputLabel id="otryad-select-label">Otryad</InputLabel>
+              <FormControl sx={{ width: "30%" }} fullWidth>
+                <InputLabel id="otryad-select-label">
+                  {latinToCyrillic("Batalyon")}
+                </InputLabel>
                 <Select
                   labelId="otryad-select-label"
                   id="otryad-select"
-                  label="Otryad"
-                  name="selectOtryad"
-                  value={value.selectOtryad}
+                  label={latinToCyrillic("Batalyon")}
+                  name="batalyon"
+                  value={value.batalyon}
                   onChange={handleChange}
                 >
                   {select &&
-                    select.otryads.map((e: any) => (
+                    select.batalyons.map((e: any) => (
                       <MenuItem key={e.name} value={e.name}>
                         {e.name}
                       </MenuItem>
@@ -314,10 +168,10 @@ export default function TipModal({
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                {latinToCyrillic("Orqaga")}
               </Button>
               <Button onClick={handleSubmite} color="info" variant="contained">
-                Saqlash
+                {latinToCyrillic("Saqlash")}
               </Button>
             </div>
           </DialogActions>
@@ -330,16 +184,18 @@ export default function TipModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {`"${open.name}"` + " " + "ushbu Fuqoroni ochirishni istaysizmi ?"}
+            {`"${open.name}"` +
+              " " +
+              latinToCyrillic("ushbu Fuqoroni ochirishni istaysizmi ?")}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                {latinToCyrillic("Orqaga")}
               </Button>
               <Button onClick={handleDelete} color="error" variant="contained">
-                {"O'chirish"}
+                {latinToCyrillic("O'chirish")}
               </Button>
             </div>
           </DialogActions>

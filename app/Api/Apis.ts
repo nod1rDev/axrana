@@ -73,185 +73,19 @@ export const SelectAuth = async () => {
   return data;
 };
 
-//Folder
-
-export const getFolderInUser = async (JWT: any) => {
-  const res = await fetch(URL + "/folder/open/user", {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-  return data;
-};
-
-export const getFolderPath = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/folder/path/" + id, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-  return data;
-};
-
-export const CreateFolder = async (
-  JWT: any,
-  folderName: any,
-  id: any,
-  quary: any
-) => {
-  const res = await fetch(URL + "/folder/create/" + id + "?who=" + quary, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify({ name: folderName }),
-  });
-  console.log(URL + "/folder/create/" + id + "?who=" + quary);
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const SearchFolder = async (JWT: any, name: any) => {
-  const res = await fetch(URL + "/folder/search", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify({ name: name }),
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const UpdateFOlder = async (JWT: any, name: any, id: any) => {
-  const res = await fetch(URL + "/folder/update/" + id, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify({ name: name }),
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const DeleteFolder = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/folder/delete/" + id, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const OpenFolder = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/folder/open/" + id, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
 //unvonlar
-
-export const CreateRank = async (JWT: any, ranks: any) => {
-  const res = await fetch(URL + "/rank/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify({
-      ranks: ranks,
-    }),
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const GetRanks = async (JWT: any) => {
-  const res = await fetch(URL + "/rank/get", {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-  return data;
-};
-
-export const UpdateRank = async (JWT: any, rank: any, id: any) => {
-  const res = await fetch(URL + "/rank/update/" + id, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify(rank),
-  });
-
-  const data = await res.json();
-
-  return data;
-};
-
-export const DeleteRank = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/rank/delete/" + id, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-  });
-
-  const data = await res.json();
-
-  return data;
-};
 
 //Locations Api
 
 export const CreateLocations = async (JWT: any, locations: any) => {
-  const res = await fetch(URL + "/location/create", {
+  const res = await fetch(URL + "/batalyon/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify({
-      locations: locations,
+      batalyons: locations,
     }),
   });
 
@@ -261,7 +95,7 @@ export const CreateLocations = async (JWT: any, locations: any) => {
 };
 
 export const GetLocation = async (JWT: any) => {
-  const res = await fetch(URL + "/location/get", {
+  const res = await fetch(URL + "/batalyon/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -274,7 +108,7 @@ export const GetLocation = async (JWT: any) => {
 };
 
 export const UpdateLocation = async (JWT: any, location: any, id: any) => {
-  const res = await fetch(URL + "/location/update/" + id, {
+  const res = await fetch(URL + "/batalyon/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -289,7 +123,7 @@ export const UpdateLocation = async (JWT: any, location: any, id: any) => {
 };
 
 export const DeleteLocation = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/location/delete/" + id, {
+  const res = await fetch(URL + "/batalyon/delete/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -304,14 +138,14 @@ export const DeleteLocation = async (JWT: any, id: any) => {
 
 //Otryad APi
 export const Createotryads = async (JWT: any, otryads: any) => {
-  const res = await fetch(URL + "/otryad/create", {
+  const res = await fetch(URL + "/zvaniya/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify({
-      otryads: otryads,
+      zvaniyas: otryads,
     }),
   });
 
@@ -321,7 +155,7 @@ export const Createotryads = async (JWT: any, otryads: any) => {
 };
 
 export const Getotryads = async (JWT: any) => {
-  const res = await fetch(URL + "/otryad/get", {
+  const res = await fetch(URL + "/zvaniya/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -334,7 +168,7 @@ export const Getotryads = async (JWT: any) => {
 };
 
 export const Updateotryads = async (JWT: any, otryad: any, id: any) => {
-  const res = await fetch(URL + "/otryad/update/" + id, {
+  const res = await fetch(URL + "/zvaniya/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -349,7 +183,7 @@ export const Updateotryads = async (JWT: any, otryad: any, id: any) => {
 };
 
 export const Deleteotryad = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/otryad/delete/" + id, {
+  const res = await fetch(URL + "/zvaniya/delete/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -600,7 +434,7 @@ export const GetCreateInfofiles = async (JWT: any, id: any) => {
 };
 
 export const GetCreateInfoWorker = async (JWT: any) => {
-  const res = await fetch(URL + "/worker/for/page", {
+  const res = await fetch(URL + "/FIO/for/page", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -614,7 +448,7 @@ export const GetCreateInfoWorker = async (JWT: any) => {
 
 // workers
 export const Createworkers = async (JWT: any, workers: any) => {
-  const res = await fetch(URL + "/worker/create/", {
+  const res = await fetch(URL + "/FIO/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -631,7 +465,7 @@ export const Createworkers = async (JWT: any, workers: any) => {
 };
 
 export const Getworkers = async (JWT: any) => {
-  const res = await fetch(URL + "/worker/get", {
+  const res = await fetch(URL + "/FIO/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -644,7 +478,7 @@ export const Getworkers = async (JWT: any) => {
 };
 
 export const Updateworkers = async (JWT: any, worker: any, id: any) => {
-  const res = await fetch(URL + "/worker/update/" + id, {
+  const res = await fetch(URL + "/FIO/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -659,7 +493,7 @@ export const Updateworkers = async (JWT: any, worker: any, id: any) => {
 };
 
 export const Deleteworker = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/worker/delete/" + id, {
+  const res = await fetch(URL + "/FIO/delete/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -835,7 +669,7 @@ export const SendOtchot = async (JWT: any, shartnoma: any) => {
 };
 
 export const GetNames = async (JWT: any) => {
-  const res = await fetch(URL + "/names/get", {
+  const res = await fetch(URL + "/bxm/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -848,7 +682,7 @@ export const GetNames = async (JWT: any) => {
 };
 
 export const UpdateNames = async (JWT: any, worker: any, id: any) => {
-  const res = await fetch(URL + "/names/update/" + id, {
+  const res = await fetch(URL + "/bxm/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -894,7 +728,7 @@ export const Createbank = async (JWT: any, banks: any) => {
 };
 
 export const Getbanks = async (JWT: any) => {
-  const res = await fetch(URL + "/bank/get", {
+  const res = await fetch(URL + "/bxm/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -907,7 +741,7 @@ export const Getbanks = async (JWT: any) => {
 };
 
 export const Updatebank = async (JWT: any, bank: any, id: any) => {
-  const res = await fetch(URL + "/bank/update/" + id, {
+  const res = await fetch(URL + "/bxm/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

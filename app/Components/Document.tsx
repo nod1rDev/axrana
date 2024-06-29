@@ -118,9 +118,7 @@ const Documenttt = React.forwardRef(
       );
     return (
       <div ref={ref} className="flex flex-col  p-10 w-full mx-auto">
-        <div className="text-[36px] mx-auto  font-bold mb-5">
-          Otchot {"Ro'yhati"}
-        </div>
+        <div className="text-[36px] mx-auto  font-bold mb-5">отчот руйҳати</div>
         <TableContainer sx={{ minWidth: 700 }} component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead sx={{ position: "sticky", top: "0px" }}>
@@ -205,10 +203,10 @@ const Documenttt = React.forwardRef(
         </TableContainer>
 
         <div className="flex mt-[5vh] flex-col gap-4 min-w-full  justify-start">
-          <h1>Rahbar:{" " + names && names?.boss}</h1>
-          <h1>Bosh hisobchi:{" " + names && names?.accountant}</h1>
+          <h1>Rахбар:{" " + names && names?.boss}</h1>
+          <h1>Bош ҳисобчи:{" " + names && names?.accountant}</h1>
           <h1 className="text-[100%]">
-            Qabul qiluvchi imzosi: ____________________________________
+            Qабул қилувчи имзоси: ____________________________________
           </h1>
         </div>
       </div>

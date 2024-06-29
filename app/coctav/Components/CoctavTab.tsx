@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch } from "react-redux";
 import { setModalCoctav } from "@/app/Redux/CoctavsSlice";
 import { styled } from "@mui/system";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -33,12 +34,16 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "unvonNomi", label: "Otryad Nomi", align: "left", minWidth: 600 },
+  {
+    id: "unvonNomi",
+    label: latinToCyrillic("Zvaniya Nomi"),
+    align: "left",
+    minWidth: 600,
+  },
 
- 
   {
     id: "actions",
-    label: "Amallar",
+    label: "Амаллар",
     minWidth: 10,
     align: "right",
   },
@@ -48,7 +53,6 @@ interface Data {
   number: any;
   unvonNomi: any;
 
- 
   actions: any;
   id: number;
 }
@@ -56,7 +60,6 @@ interface Data {
 function createData(
   number: any,
   unvonNomi: any,
-
 
   actions: any,
   id: number
@@ -66,10 +69,11 @@ function createData(
 
 export default function CoctavTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(1000000000000000000000000000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(1000000000000000000000000000000000000000000000000);
 
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name,  5, e._id))
+    ? ranks.map((e: any) => createData(1, e.name, 5, e._id))
     : [];
 
   const dispatch = useDispatch();

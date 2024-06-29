@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 export default function EditRaxbar({
   value,
@@ -44,36 +45,27 @@ export default function EditRaxbar({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Ish profilinggizga ozgartrish kiriting !"}
+          {latinToCyrillic("DXM summasini ozgartirin!")}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
-        
           <TextField
-            name="boss"
-            error={value.boss == ""}
+            name="summa"
+            error={value.summa == ""}
             fullWidth
-            value={value.boss}
+            value={value.summa}
             onChange={(e: any) => handleChange(e)}
-            label="Raxbar ismi"
+            label={latinToCyrillic("DXM summa")}
             id="fullWidth"
           />
-          <TextField
-            fullWidth
-            error={value.accountant == ""}
-            value={value.accountant}
-            onChange={(e: any) => handleChange(e)}
-            name="accountant"
-            label="Bosh hisobchi ismi"
-            id="fullWidth"
-          />
+          
         </div>
         <DialogActions>
           <div className="flex justify-between w-full mt-3 pb-2">
             <Button variant="contained" color="inherit" onClick={handleClose}>
-              Orqaga
+              {latinToCyrillic("Orqaga")}
             </Button>
             <Button onClick={handleSubmite} color="info" variant="contained">
-              Saqlash
+              {latinToCyrillic("Saqlash")}
             </Button>
           </div>
         </DialogActions>

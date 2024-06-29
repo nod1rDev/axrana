@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch } from "react-redux";
 import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
+import { latinToCyrillic } from "../add/Components/lotin";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -24,15 +25,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id:
-    | "number"
-    | "FIO"
-    | "FIOkril"
-    | "UnvonNom"
-    | "UnvonSum"
-    | "Tuman"
-    | "Otryad"
-    | "actions";
+  id: "number" | "FIO" | "Tuman" | "Otryad" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -41,35 +34,23 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "FIO", label: "FIO lotin", align: "center", minWidth: 100 },
-  { id: "FIOkril", label: "FIO kril", align: "center", minWidth: 100 },
-  {
-    id: "UnvonNom",
-    label: "Unvon Nomi",
-    minWidth: 180,
-    align: "center",
-  },
-  {
-    id: "UnvonSum",
-    label: "Unvon Summasi",
-    minWidth: 180,
-    align: "center",
-  },
   {
     id: "Tuman",
-    label: "Tuman",
-    minWidth: 180,
+    label: latinToCyrillic("Zvaniya"),
+    minWidth: 100,
     align: "center",
   },
+  { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
+
   {
     id: "Otryad",
-    label: "Otryad",
+    label: latinToCyrillic("Batalyon"),
     minWidth: 180,
     align: "center",
   },
   {
     id: "actions",
-    label: "Amallar",
+    label: latinToCyrillic("Amallar"),
     minWidth: 150,
     align: "right",
   },
@@ -78,9 +59,7 @@ const columns: readonly Column[] = [
 interface Data {
   number: any;
   FIO: any;
-  FIOkril: any;
-  UnvonNom: any;
-  UnvonSum: any;
+
   Tuman: any;
   Otryad: any;
   actions: any;
@@ -90,9 +69,7 @@ interface Data {
 function createData(
   number: any,
   FIO: any,
-  FIOkril: any,
-  UnvonNom: any,
-  UnvonSum: any,
+
   Tuman: any,
   Otryad: any,
   actions: any,
@@ -101,9 +78,7 @@ function createData(
   return {
     number,
     FIO,
-    FIOkril,
-    UnvonNom,
-    UnvonSum,
+
     Tuman,
     Otryad,
     actions,
@@ -118,17 +93,7 @@ export default function TipTab({ ranks }: { ranks: any }) {
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
-        createData(
-          i + 1,
-          e.FIOlotin,
-          e.FIOkril,
-          e.selectRank,
-          e.selectRankSumma,
-          e.selectRegion,
-          e.selectOtryad,
-          null,
-          e._id
-        )
+        createData(i + 1, e.FIO, e.zvaniya, e.batalyon, null, e._id)
       )
     : [];
 
@@ -163,7 +128,7 @@ export default function TipTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 7 ? (
+                          ) : e == 4 ? (
                             <>
                               <IconButton
                                 onClick={() =>
@@ -173,12 +138,9 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       open: true,
                                       id: row.id,
                                       name: row.FIO,
-                                      FIOlotin: row.FIO,
-                                      FIOkril: row.FIOkril,
-                                      selectRank: row.UnvonNom,
-                                      selectRankSumma: row.UnvonSum,
-                                      selectRegion: row.Tuman,
-                                      selectOtryad: row.Otryad,
+                                      FIO: row.FIO,
+                                      zvaniya: row.Tuman,
+                                      batalyon: row.Otryad,
                                     })
                                   )
                                 }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import LatCyrConverter from "./lotin";
+import LatCyrConverter, { latinToCyrillic } from "./lotin";
 import { useSelector, useDispatch } from "react-redux";
 import { GetCreateInfoWorker, URL, setExelFile } from "@/app/Api/Apis";
 import InputLabel from "@mui/material/InputLabel";
@@ -30,12 +30,10 @@ const VisuallyHiddenInput = styled("input")({
 function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [createInp, setCreateInp] = useState({
-    FIOlotin: null,
-    FIOkril: null,
-    selectRank: "",
-    selectRankSumma: "",
-    selectRegion: "",
-    selectOtryad: "",
+    FIO: "",
+
+    zvaniya: "",
+    batalyon: "",
   });
   const [select, setSelect] = useState<any>({});
   const [clear, setClear] = useState(1);
@@ -54,12 +52,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   const handleCreateChange = (i: any) => {
     const { name, value } = i.target;
     if (name === "selectRank") {
-      const filter = select.ranks.find((e: any) => value === e.name);
-      setCreateInp({
-        ...createInp,
-        selectRank: filter.name,
-        selectRankSumma: filter.summa,
-      });
     } else {
       setCreateInp({ ...createInp, [name]: value });
     }
@@ -67,29 +59,23 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
 
   const saqlsh = (e: any) => {
     e.preventDefault();
-    if (
-      createInp.FIOlotin &&
-      createInp.selectRankSumma &&
-      createInp.selectOtryad
-    ) {
+    if (createInp.FIO && createInp.zvaniya && createInp.batalyon) {
       setData([
         ...data,
         { ...createInp, _id: Math.ceil(Math.random() * 15415645488) },
       ]);
       setCreateInp({
-        FIOlotin: null,
-        FIOkril: null,
-        selectRank: "",
-        selectRankSumma: "",
-        selectRegion: "",
-        selectOtryad: "",
+        FIO: "",
+
+        zvaniya: "",
+        batalyon: "",
       });
       setClear(clear + 213);
     } else {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni to'liq to'ldiring",
+          message: latinToCyrillic("Malumotlarni to'liq to'ldiring"),
           status: "warning",
         })
       );
@@ -135,7 +121,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           dispatch(
             alertChange({
               open: true,
-              message: "Exel file kiritildi",
+              message: latinToCyrillic("Exel file kiritildi"),
               status: "success",
             })
           );
@@ -145,7 +131,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           dispatch(
             alertChange({
               open: true,
-              message: res.message,
+              message: latinToCyrillic(res.message),
               status: "error",
             })
           );
@@ -174,7 +160,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             color="success"
             startIcon={<CloudUploadIcon />}
           >
-            Exel file yuklash
+            {latinToCyrillic("Exel file yuklash")}
             <VisuallyHiddenInput
               type="file"
               hidden
@@ -189,83 +175,52 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           )}
         </div>
         <Button type="submit" variant="contained">
-          {"Qo'shish"}
+          {latinToCyrillic("Qo'shish")}
         </Button>
       </div>
-      <LatCyrConverter
-        clear={clear}
-        setValue={setCreateInp}
-        value={createInp}
-      />
 
-      <div className="w-full flex justify-between gap-[140px]">
-        <FormControl fullWidth>
-          <InputLabel id="rank-select-label">Unvon</InputLabel>
-          <Select
-            labelId="rank-select-label"
-            id="rank-select"
-            label="Unvon"
-            name="selectRank"
-            value={createInp.selectRank}
-            onChange={handleCreateChange}
-          >
-            {select.ranks &&
-              select.ranks.map((e: any) => (
-                <MenuItem key={e.name} value={e.name}>
-                  {e.name}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel id="rank-summa-select-label">Unvon Summa</InputLabel>
-          <Select
-            labelId="rank-summa-select-label"
-            id="rank-summa-select"
-            label="Unvon Summa"
-            name="selectRankSumma"
-            value={createInp.selectRankSumma}
-          >
-            <MenuItem value={createInp.selectRankSumma}>
-              {createInp.selectRankSumma}
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-
-      <div className="w-full flex justify-between gap-[140px]">
-        <FormControl fullWidth>
-          <InputLabel id="region-select-label">Tuman</InputLabel>
+      <div className="w-full flex justify-between gap-5">
+        <FormControl sx={{ width: "30%" }} fullWidth>
+          <InputLabel id="region-select-label">
+            {latinToCyrillic("Zvaniya")}{" "}
+          </InputLabel>
           <Select
             labelId="region-select-label"
             id="region-select"
-            label="Tuman"
-            name="selectRegion"
-            value={createInp.selectRegion}
+            label={latinToCyrillic("Zvaniya")}
+            name="zvaniya"
+            value={createInp.zvaniya}
             onChange={handleCreateChange}
           >
-            {select.locations &&
-              select.locations.map((e: any) => (
+            {select.zvaniyas &&
+              select.zvaniyas.map((e: any) => (
                 <MenuItem key={e.name} value={e.name}>
                   {e.name}
                 </MenuItem>
               ))}
           </Select>
         </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel id="otryad-select-label">Otryad</InputLabel>
+        <div className="w-[40%]">
+          <LatCyrConverter
+            clear={clear}
+            setValue={setCreateInp}
+            value={createInp}
+          />
+        </div>
+        <FormControl sx={{ width: "30%" }} fullWidth>
+          <InputLabel id="otryad-select-label">
+            {latinToCyrillic("Batalyon")}{" "}
+          </InputLabel>
           <Select
             labelId="otryad-select-label"
             id="otryad-select"
-            label="Otryad"
-            name="selectOtryad"
-            value={createInp.selectOtryad}
+            label={latinToCyrillic("Batalyon")}
+            name="batalyon"
+            value={createInp.batalyon}
             onChange={handleCreateChange}
           >
-            {select.otryads &&
-              select.otryads.map((e: any) => (
+            {select.batalyons &&
+              select.batalyons.map((e: any) => (
                 <MenuItem key={e.name} value={e.name}>
                   {e.name}
                 </MenuItem>

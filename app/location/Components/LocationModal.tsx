@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 export default function LocationModal({
   value,
@@ -26,7 +26,6 @@ export default function LocationModal({
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const open = useSelector((s: any) => s.locat.modal);
-
 
   const handleChange = (e: any) => {
     setValue({
@@ -50,7 +49,7 @@ export default function LocationModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "o'zgartirin"}
+            {open.name + " " + latinToCyrillic("o'zgartirin")}
           </DialogTitle>
           <form
             onSubmit={handleSubmite}
@@ -69,7 +68,7 @@ export default function LocationModal({
               }}
               defaultValue={value.name !== "" ? value.name : open.name}
               onChange={(e: any) => handleChange(e)}
-              label="Tuman Nomi"
+              label={latinToCyrillic("Batalyon Nomi")}
               id="fullWidth"
             />
 
@@ -81,10 +80,10 @@ export default function LocationModal({
                   color="inherit"
                   onClick={handleClose}
                 >
-                  Orqaga
+                  {latinToCyrillic("Orqaga")}
                 </Button>
                 <Button type="submit" color="info" variant="contained">
-                  Saqlash
+                {latinToCyrillic("Saqlash")}
                 </Button>
               </div>
             </DialogActions>
@@ -98,16 +97,16 @@ export default function LocationModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {`"${open.name}"` + " " + "ushbu tumanni ochirishni istaysizmi ?"}
+            {`"${open.name}"` + " " + "ushbu Batalyon nomini ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+              {latinToCyrillic("Orqaga")}
               </Button>
               <Button onClick={handleDelete} color="error" variant="contained">
-                {"O'chirish"}
+              {latinToCyrillic("O'chirish")}
               </Button>
             </div>
           </DialogActions>

@@ -18,6 +18,7 @@ import { Button, TextField } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { DateFilt } from "@/app/Utils";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 interface Column {
   id: "number" | "unvonNomi" | "actions";
@@ -29,11 +30,16 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "unvonNomi", label: "Otryad Nomi", align: "left", minWidth: "100%" },
+  {
+    id: "unvonNomi",
+    label: latinToCyrillic("Zvaniya Nomi"),
+    align: "left",
+    minWidth: "100%",
+  },
 
   {
     id: "actions",
-    label: "Amallar",
+    label: "Амаллар",
     minWidth: 100,
     align: "right",
   },
@@ -67,7 +73,8 @@ export default function CreateCoctavlar({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(1000000000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(1000000000000000000000000000000);
 
   const [valueInp, setValueInp] = React.useState<any>({
     name: null,
@@ -106,7 +113,7 @@ export default function CreateCoctavlar({
       dispatch(
         alertChange({
           open: true,
-          message: "Bo'sh qatorlarni toldiring!",
+          message: "Бўш қаторларни толдиринг!",
           status: "warning",
         })
       );
@@ -127,7 +134,7 @@ export default function CreateCoctavlar({
         <AccordionSummary aria-controls="panel1-content" id="panel1-header">
           <div className="flex gap-2 items-center">
             <KeyboardArrowDownIcon />
-            Otryad {"qo'shish"}
+            {latinToCyrillic("Zvaniya qo'shin")}
           </div>
         </AccordionSummary>
         <AccordionDetails>
@@ -137,7 +144,7 @@ export default function CreateCoctavlar({
           >
             <TextField
               id="outlined-basic"
-              label="Otryad Nomi"
+              label={latinToCyrillic("Zvaniya Nomi")}
               value={valueInp.name}
               name="name"
               onChange={(e: any) => handleChange(e)}
@@ -227,7 +234,7 @@ export default function CreateCoctavlar({
             </Table>
           </TableContainer>
           <Button onClick={saqlash} variant="contained" sx={{ mt: 1 }}>
-            Saqlash
+            {latinToCyrillic("Saqlash")}
           </Button>
         </AccordionDetails>
       </Accordion>

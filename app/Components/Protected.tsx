@@ -34,7 +34,7 @@ function Prodected({ children }: { children: any }) {
     if (loading) {
       setTimeout(() => {
         setloading(false);
-      }, 100);
+      }, 10);
     }
   }, [loading]);
 

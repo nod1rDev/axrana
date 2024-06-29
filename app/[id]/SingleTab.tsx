@@ -7,11 +7,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { useDispatch } from "react-redux";
-import { setModalTip } from "@/app/Redux/TipSlice";
+
 import { styled } from "@mui/system";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
@@ -34,17 +30,17 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "lotinFIO", label: "FIO lotin", align: "center", minWidth: 100 },
+  { id: "lotinFIO", label: "фио", align: "center", minWidth: 100 },
 
   {
     id: "krilFIO",
-    label: "FIO kril",
+    label: "фио",
     minWidth: 180,
     align: "center",
   },
   {
     id: "UnvonNom",
-    label: "Ishlash Muddati",
+    label: "ишлаш мудати",
     minWidth: 180,
     align: "center",
   },

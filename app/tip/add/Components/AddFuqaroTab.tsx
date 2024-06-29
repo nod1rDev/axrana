@@ -28,14 +28,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
 }));
 
 interface Column {
-  id:
-    | "number"
-    | "FIO"
-    | "UnvonNom"
-    | "UnvonSum"
-    | "Tuman"
-    | "Otryad"
-    | "actions";
+  id: "number" | "FIO" | "Zvaniya" | "Batalyon" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -43,21 +36,34 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "FIO", label: "FIO", align: "left", minWidth: 100 },
-  { id: "UnvonNom", label: "Unvon Nomi", minWidth: 180, align: "center" },
-  { id: "UnvonSum", label: "Unvon Summasi", minWidth: 180, align: "center" },
-  { id: "Tuman", label: "Tuman", minWidth: 180, align: "center" },
-  { id: "Otryad", label: "Otryad", minWidth: 180, align: "center" },
-  { id: "actions", label: "Amallar", minWidth: 100, align: "right" },
+  {
+    id: "Zvaniya",
+    label: latinToCyrillic("Zvaniya"),
+    minWidth: 100,
+    align: "left",
+  },
+  { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
+
+  {
+    id: "Batalyon",
+    label: latinToCyrillic("Batalyon"),
+    minWidth: 180,
+    align: "center",
+  },
+  {
+    id: "actions",
+    label: latinToCyrillic("Amallar"),
+    minWidth: 100,
+    align: "right",
+  },
 ];
 
 interface Data {
   number: any;
   FIO: any;
-  UnvonNom: any;
-  UnvonSum: any;
-  Tuman: any;
-  Otryad: any;
+
+  Zvaniya: any;
+  Batalyon: any;
   actions: any;
   id: number;
 }
@@ -65,17 +71,14 @@ interface Data {
 function createData(
   number: any,
   FIO: any,
-  UnvonNom: any,
-  UnvonSum: any,
-  Tuman: any,
-  Otryad: any,
+
+  Zvaniya: any,
+  Batalyon: any,
   actions: any,
   id: number
 ): Data {
-  return { number, FIO, UnvonNom, UnvonSum, Tuman, Otryad, actions, id };
+  return { number, FIO, Zvaniya, Batalyon, actions, id };
 }
-
-
 
 export default function AddFuqaroTab({
   ranks,
@@ -85,7 +88,8 @@ export default function AddFuqaroTab({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(100000000000000000000000000);
   const [latinText, setLatinText] = useState("");
   const [active, setActive] = useState<number | null>(null);
   const [select, setSelect] = useState<any>();
@@ -107,9 +111,7 @@ export default function AddFuqaroTab({
     if (active !== null) {
       setData((prevData: any) =>
         prevData.map((item: any) =>
-          item._id === active
-            ? { ...item, FIOlotin: value, FIOkril: latinToCyrillic(value) }
-            : item
+          item._id === active ? { ...item, FIO: value } : item
         )
       );
     }
@@ -117,48 +119,9 @@ export default function AddFuqaroTab({
 
   const rows = ranks
     ? ranks.map((e: any, i: number) =>
-        createData(
-          i + 1,
-          { FIOlotin: e.FIOlotin, FIOkril: e.FIOkril },
-          e.selectRank,
-          e.selectRankSumma,
-          e.selectRegion,
-          e.selectOtryad,
-          null,
-          e._id
-        )
+        createData(i + 1, e.FIO, e.zvaniya, e.batalyon, null, e._id)
       )
     : [];
-
-  const handleUnvon = (event: any) => {
-    const { value } = event.target;
-    if (active !== null) {
-      const filter = select.ranks.find((rank: any) => rank.name === value);
-      setData((prevData: any) =>
-        prevData.map((item: any) =>
-          item._id === active
-            ? {
-                ...item,
-                selectRank: filter.name,
-                selectRankSumma: filter.summa,
-              }
-            : item
-        )
-      );
-
-      setData((prevData: any) =>
-        prevData.map((item: any) =>
-          item._id === active
-            ? {
-                ...item,
-                selectRank: filter.name,
-                selectRankSumma: filter.summa,
-              }
-            : item
-        )
-      );
-    }
-  };
 
   const handleTwo = (event: any) => {
     const { name, value } = event.target;
@@ -206,10 +169,10 @@ export default function AddFuqaroTab({
                       <TableCell key={column.id} align={column.align}>
                         {index === 0 ? (
                           i + 1
-                        ) : index === 1 ? (
+                        ) : index === 2 ? (
                           <div className="flex w-full items-center justify-between gap-3">
                             <TextField
-                              value={row.FIO.FIOlotin}
+                              value={row.FIO}
                               onChange={handleLatinChange}
                               fullWidth
                               autoComplete="off"
@@ -221,50 +184,18 @@ export default function AddFuqaroTab({
                                 spellCheck: "false",
                               }}
                             />
-                            <TextField
-                              value={row.FIO.FIOkril}
-                              disabled
-                              autoComplete="off"
-                              autoCorrect="off"
-                              spellCheck="false"
-                              InputProps={{
-                                autoComplete: "off",
-                                autoCorrect: "off",
-                                spellCheck: "false",
-                              }}
-                              fullWidth
-                            />
                           </div>
-                        ) : index === 2 ? (
-                          <FormControl fullWidth>
-                            <Select
-                              labelId="rank-select-label"
-                              id="rank-select"
-                              name="selectRank"
-                              onChange={handleUnvon}
-                              value={row.UnvonNom}
-                            >
-                              {select &&
-                                select.ranks.map((rank: any) => (
-                                  <MenuItem key={rank.name} value={rank.name}>
-                                    {rank.name}
-                                  </MenuItem>
-                                ))}
-                            </Select>
-                          </FormControl>
                         ) : index === 3 ? (
-                          <TextField value={row.UnvonSum} disabled fullWidth />
-                        ) : index === 4 ? (
                           <FormControl fullWidth>
                             <Select
                               labelId="region-select-label"
                               id="region-select"
-                              name="selectRegion"
+                              name="batalyon"
                               onChange={handleTwo}
-                              value={row.Tuman}
+                              value={row.Batalyon}
                             >
                               {select &&
-                                select.locations.map((region: any) => (
+                                select.batalyons.map((region: any) => (
                                   <MenuItem
                                     key={region.name}
                                     value={region.name}
@@ -274,27 +205,27 @@ export default function AddFuqaroTab({
                                 ))}
                             </Select>
                           </FormControl>
-                        ) : index === 5 ? (
+                        ) : index === 1 ? (
                           <FormControl fullWidth>
                             <Select
                               labelId="otryad-select-label"
                               id="otryad-select"
-                              name="selectOtryad"
+                              name="zvaniya"
                               onChange={handleTwo}
-                              value={row.Otryad}
+                              value={row.Zvaniya}
                             >
                               {select &&
-                                select.otryads.map((otryad: any) => (
+                                select.zvaniyas.map((zvaniyas: any) => (
                                   <MenuItem
-                                    key={otryad.name}
-                                    value={otryad.name}
+                                    key={zvaniyas.name}
+                                    value={zvaniyas.name}
                                   >
-                                    {otryad.name}
+                                    {zvaniyas.name}
                                   </MenuItem>
                                 ))}
                             </Select>
                           </FormControl>
-                        ) : index === 6 ? (
+                        ) : index === 4 ? (
                           <IconButton
                             onClick={() => {
                               setData((prevData: any) =>

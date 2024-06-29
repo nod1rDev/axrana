@@ -9,6 +9,7 @@ import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import SingleTab from "./SingleTab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { alertChange } from "../Redux/ShaxsiySlice";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
 function page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -30,7 +31,7 @@ function page() {
       dispatch(
         alertChange({
           open: true,
-          message: "Shartnoma Ochirildi",
+          message: latinToCyrillic("Shartnoma Ochirildi"),
           status: "success",
         })
       );
@@ -40,7 +41,7 @@ function page() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message) ,
           status: "error",
         })
       );
@@ -57,7 +58,7 @@ function page() {
             variant="contained"
             onClick={() => router.push("/shartnoma")}
           >
-            {"Orqaga"}
+            {"орқага"}
           </Button>
         </div>
         <div className="rounded-lg w-full bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
@@ -69,46 +70,46 @@ function page() {
               variant="contained"
               onClick={() => deleteItem()}
             >
-              {"O'chirish"}
+              {"учириш"}
             </Button>
             <Button
               onClick={() => router.push("/shartnoma/edit/" + data._id)}
               startIcon={<ModeEditOutlineIcon />}
               variant="contained"
             >
-              {"Tahrirlash"}
+              {"таҳрирлаш"}
             </Button>
           </div>
         </div>
         <div className="rounded-lg w-full mt-6 bg-[#f4f3ee] px-6 py-4 flex-col gap-4">
           <div className="font-bold text-[24px] w-full  text-center mb-4">
-            Shartnoma
+          шартнома
           </div>
           <div className="flex w-full justify-between gap-15  items-start">
             <div className="flex  flex-col gap-1 ">
               <div className="flex">
-                <span>Shartnoma Raqami: </span>
+                <span>шартнома рақами: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.contractNumber}
                 </span>
               </div>
 
               <div className="flex">
-                <span>Shartnoma Sanasi: </span>
+                <span>шартнома санаси: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.contractDate}
                 </span>
               </div>
 
               <div className="flex">
-                <span>Shartnoma Muddati: </span>
+                <span>шартнома муддати: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.contractTurnOffDate}
                 </span>
               </div>
 
               <div className="flex">
-                <span>Shartnoma Summasi: </span>
+                <span>шартнома суммаси: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.contractSumma}
                 </span>
@@ -117,31 +118,31 @@ function page() {
 
             <div className="flex  flex-col gap-1 ">
               <div className="flex">
-                <span>Korxona Inn: </span>
+                <span>корхона инн: </span>
                 <span className="font-[700] max-w-[190px]">{data.inn}</span>
               </div>
 
               <div className="flex">
-                <span>Korxona Nomi: </span>
+                <span>корхона номи: </span>
                 <span className="font-[700] max-w-[190px]">{data.name}</span>
               </div>
 
               <div className="flex">
-                <span className="max-w-[200px]">Korxona Manzil: </span>
+                <span className="max-w-[200px]">корхона манзил: </span>
                 <span className="font-[700]  max-w-[190px]">
                   {data.address}
                 </span>
               </div>
 
               <div className="flex">
-                <span>Xisob Raqami: </span>
+                <span>Xисоб рақами: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.accountNumber}
                 </span>
               </div>
 
               <div className="flex">
-                <span>Bank Nomi: </span>
+                <span>Bанк номи: </span>
                 <span className="font-[700] max-w-[190px]">
                   {data.bankName}
                 </span>
@@ -150,17 +151,17 @@ function page() {
 
             <div className="flex  flex-col gap-1 ">
               <div className="flex">
-                <span>Raxbar Ismi: </span>
+                <span>рахбар исми: </span>
                 <span className="font-[700] max-w-[250px]">{data.boss}</span>
               </div>
 
               <div className="flex">
-                <span>Telefon Raqami: </span>
+                <span>телефон рақами: </span>
                 <span className="font-[700] max-w-[190px]">{data.phone}</span>
               </div>
 
               <div className="flex">
-                <span className="max-w-[200px]">Shartnoma Mazmuni:</span>
+                <span className="max-w-[200px]">шартнома мазмуни:</span>
                 <span className="font-[700]  max-w-[190px]">
                   {data.content}
                 </span>
@@ -168,7 +169,7 @@ function page() {
             </div>
           </div>
           <div className="font-bold text-[24px] w-full  text-center my-5">
-            Ishchilar
+          ишчилар
           </div>
           <div className="mt-4 rounded-lg w-full">
             <SingleTab ranks={data.workers} />

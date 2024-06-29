@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch } from "react-redux";
 import { setModalLocation } from "@/app/Redux/locationSlice";
 import { styled } from "@mui/system";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -33,7 +34,12 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "unvonNomi", label: "Tuman Nomi", align: "left", minWidth: 300 },
+  {
+    id: "unvonNomi",
+    label: latinToCyrillic("Batalyon Nomi"),
+    align: "left",
+    minWidth: 300,
+  },
 
   {
     id: "unvonDate",
@@ -43,7 +49,7 @@ const columns: readonly Column[] = [
   },
   {
     id: "actions",
-    label: "Amallar",
+    label: latinToCyrillic("Amallar"),
     minWidth: 300,
     align: "right",
   },
@@ -71,7 +77,8 @@ function createData(
 
 export default function LocationTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10000000000000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(10000000000000000000000000000000000);
 
   const rows = ranks
     ? ranks.map((e: any) => createData(1, e.name, e.date, 5, e._id))

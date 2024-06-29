@@ -26,6 +26,7 @@ import { alertChange } from "../Redux/ShaxsiySlice";
 
 import { db } from "../firebase";
 import { ref, set } from "firebase/database";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -43,7 +44,7 @@ export default function Login() {
       dispatch(
         alertChange({
           open: true,
-          message: "Foydalanuvchi muvofaqiyatli kirdi!",
+          message: latinToCyrillic("Foydalanuvchi muvofaqiyatli kirdi!"),
           status: "success",
         })
       );
@@ -82,7 +83,7 @@ export default function Login() {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni to'liq toldiring!",
+          message: latinToCyrillic("Malumotlarni to'liq toldiring!"),
           status: "warning",
         })
       );
@@ -92,7 +93,7 @@ export default function Login() {
 
   const getAuth = async () => {
     const res = await SelectAuth();
-    console.log(res);
+
 
     setData(res.data);
   };
@@ -137,13 +138,8 @@ export default function Login() {
                 <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                   <LockOutlinedIcon />
                 </Avatar>
-                <Typography
-                  component="h1"
-                  
-                  fontWeight={"700"}
-                  variant="h5"
-                >
-                  Axrana
+                <Typography component="h1" fontWeight={"700"} variant="h5">
+                  {latinToCyrillic("Axrana")}
                 </Typography>
                 <Box
                   component="form"
@@ -153,13 +149,13 @@ export default function Login() {
                 >
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      Foydalanuvchi
+                      {latinToCyrillic("Foydalanuvchi")}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={select}
-                      label="Foydalanuvchi"
+                      label={latinToCyrillic("Foydalanuvchi")}
                       sx={{ background: "#E8F0FE" }}
                       onChange={(e: any) => setSelect(e.target.value)}
                     >
@@ -172,7 +168,7 @@ export default function Login() {
                   </FormControl>
                   <FormControl sx={{ width: "100%", mt: 2 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
-                      Paroli
+                      {latinToCyrillic("Paroli")}
                     </InputLabel>
                     <OutlinedInput
                       sx={{
@@ -194,7 +190,7 @@ export default function Login() {
                           </IconButton>
                         </InputAdornment>
                       }
-                      label="Paroli"
+                      label={latinToCyrillic("Paroli")}
                       name="password"
                       id="outlined-adornment-password"
                     />
@@ -206,7 +202,7 @@ export default function Login() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    Kirish
+                    {latinToCyrillic("Kirish")}
                   </Button>
                   <Grid container></Grid>
                 </Box>

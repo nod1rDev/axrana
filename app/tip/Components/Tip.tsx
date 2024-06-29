@@ -24,6 +24,7 @@ import TipTab from "./TipTab";
 import TipModal from "./TipModal";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { latinToCyrillic } from "../add/Components/lotin";
 
 function Tips() {
   //Umumiy
@@ -55,7 +56,7 @@ function Tips() {
       dispatch(
         alertChange({
           open: true,
-          message: open.name + " " + "o'chirildi",
+          message: open.name + " " + latinToCyrillic("o'chirildi"),
           status: "success",
         })
       );
@@ -64,7 +65,7 @@ function Tips() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -82,7 +83,7 @@ function Tips() {
       dispatch(
         alertChange({
           open: true,
-          message: "FIO tahrirlandi",
+          message: latinToCyrillic("FIO tahrirlandi"),
           status: "success",
         })
       );
@@ -91,7 +92,7 @@ function Tips() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -100,23 +101,21 @@ function Tips() {
 
   React.useEffect(() => {
     setValu({
-      FIOlotin: open.FIOlotin,
-      FIOkril: open.FIOkril,
-      selectRank: open.selectRank,
-      selectRankSumma: open.selectRankSumma,
-      selectRegion: open.selectRegion,
-      selectOtryad: open.selectOtryad,
+      FIO: open.FIO,
+
+      zvaniya: open.zvaniya,
+      batalyon: open.batalyon,
     });
   }, [open.open]);
 
   const handleSubmit = () => {
-    if (value.FIOlotin && value.selectOtryad) {
+    if (value.FIO && value.batalyon) {
       EditUnvon(value);
     } else {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni to'liq to'ldiring!",
+          message: latinToCyrillic("Malumotlarni to'liq to'ldiring!"),
           status: "warning",
         })
       );
@@ -132,7 +131,7 @@ function Tips() {
     <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
       <div className="  flex justify-end">
         <Button onClick={() => router.push("/tip/add")} variant="contained">
-          {"Qo'shish"}
+          {latinToCyrillic("Qo'shish")}
         </Button>
       </div>
       <TipTab ranks={allRanks} />

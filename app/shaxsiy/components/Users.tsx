@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import EditUser from "./userEdit";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 interface Column {
   id: "number" | "FoydalanuvchiNomi" | "FoydalanuvchiParoli" | "actions";
   label: string;
@@ -26,19 +27,19 @@ const columns: readonly Column[] = [
   { id: "number", label: "No", align: "left", minWidth: 170 },
   {
     id: "FoydalanuvchiNomi",
-    label: "Foydalanuvchi Nomi",
+    label: latinToCyrillic("Foydalanuvchi Nomi"),
     align: "left",
     minWidth: 100,
   },
   {
     id: "FoydalanuvchiParoli",
-    label: "Foydalanuvchi Paroli",
+    label: latinToCyrillic("Foydalanuvchi Paroli"),
     minWidth: 170,
     align: "center",
   },
   {
     id: "actions",
-    label: "Tahrirlash",
+    label: latinToCyrillic("Tahrirlash"),
     minWidth: 170,
     align: "right",
   },
@@ -108,7 +109,7 @@ export default function Users() {
         dispatch(
           alertChange({
             open: true,
-            message: "Foydalanuvchi qoshildi",
+            message: latinToCyrillic("Foydalanuvchi qoshildi"),
             status: "success",
           })
         );
@@ -116,7 +117,7 @@ export default function Users() {
         dispatch(
           alertChange({
             open: true,
-            message: res.message,
+            message: latinToCyrillic(res.message),
             status: "error",
           })
         );
@@ -139,8 +140,6 @@ export default function Users() {
   };
   const open = useSelector((s: any) => s.shax.userModal);
   const updateAuth = async (valuee: any) => {
-    
-
     const res = await UpdateUsers(JWT, valuee, open.id);
     if (res.success) {
       handleClose();
@@ -148,7 +147,7 @@ export default function Users() {
       dispatch(
         alertChange({
           open: true,
-          message: "Password tahrirlandi",
+          message: latinToCyrillic("Password tahrirlandi"),
           status: "success",
         })
       );
@@ -156,7 +155,7 @@ export default function Users() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -169,7 +168,7 @@ export default function Users() {
       dispatch(
         alertChange({
           open: true,
-          message: "Bosh qatorlarni to'ldiring!",
+          message: latinToCyrillic("Bosh qatorlarni to'ldiring!"),
           status: "warning",
         })
       );
@@ -182,7 +181,7 @@ export default function Users() {
       <Paper sx={{ width: "60%", overflow: "hidden" }}>
         <div className="w-full ">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
-            Foydalanuvchi qoshish
+            {latinToCyrillic("Foydalanuvchi qoshish")}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -190,7 +189,7 @@ export default function Users() {
           >
             <TextField
               id="outlined-basic"
-              label="Foydalanuvchi Nomi"
+              label={latinToCyrillic("Foydalanuvchi Nomi")}
               value={value.username}
               name="username"
               onChange={(e: any) => handleChange(e)}
@@ -199,7 +198,7 @@ export default function Users() {
             />
             <TextField
               id="outlined-basic"
-              label="Foydalanuvchi Paroli"
+              label={latinToCyrillic("Foydalanuvchi Paroli")}
               value={value.password}
               name="password"
               onChange={(e: any) => handleChange(e)}
@@ -212,7 +211,7 @@ export default function Users() {
               sx={{ width: "130px" }}
               variant="contained"
             >
-              {"Qo'shish"}
+              {latinToCyrillic("Qo'shish")}
             </Button>
           </form>
         </div>

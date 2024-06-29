@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 export default function EditModal({
   value,
@@ -46,7 +47,7 @@ export default function EditModal({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Ish profilinggizga ozgartrish kiriting !"}
+          {latinToCyrillic("Ish profilinggizga ozgartrish kiriting !")}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
           {isUser && (
@@ -56,7 +57,7 @@ export default function EditModal({
               fullWidth
               value={value.username}
               onChange={(e: any) => handleChange(e)}
-              label="Foydalanuvchi nomi"
+              label={latinToCyrillic("Foydalanuvchi nomi")}
               id="fullWidth"
             />
           )}
@@ -67,7 +68,7 @@ export default function EditModal({
             fullWidth
             value={value.oldPassword}
             onChange={(e: any) => handleChange(e)}
-            label="Amaldagi Parol"
+            label={latinToCyrillic("Amaldagi Parol")}
             id="fullWidth"
           />
           <TextField
@@ -76,17 +77,17 @@ export default function EditModal({
             value={value.newPassword}
             onChange={(e: any) => handleChange(e)}
             name="newPassword"
-            label="Yangi Parol"
+            label={latinToCyrillic("Yangi Parol")}
             id="fullWidth"
           />
         </div>
         <DialogActions>
           <div className="flex justify-between w-full mt-3 pb-2">
             <Button variant="contained" color="inherit" onClick={handleClose}>
-              Orqaga
+              {latinToCyrillic("Orqaga")}
             </Button>
             <Button onClick={handleSubmite} color="info" variant="contained">
-              Saqlash
+              {latinToCyrillic("Saqlash")}
             </Button>
           </div>
         </DialogActions>

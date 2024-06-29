@@ -17,6 +17,7 @@ import { Button, TextField } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { DateFilt } from "@/app/Utils";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 interface Column {
   id: "number" | "unvonNomi" | "actions";
@@ -28,11 +29,16 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "N", align: "left", minWidth: 5 },
-  { id: "unvonNomi", label: "Tuman Nomi", align: "left", minWidth: "100%" },
+  {
+    id: "unvonNomi",
+    label: latinToCyrillic("Btalyon Nomi"),
+    align: "left",
+    minWidth: "100%",
+  },
 
   {
     id: "actions",
-    label: "Amallar",
+    label: latinToCyrillic("Amallar"),
     minWidth: 100,
     align: "right",
   },
@@ -66,7 +72,8 @@ export default function CreateLocationlar({
   setData: any;
 }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100000000000000000000000000000000000000);
+  const [rowsPerPage, setRowsPerPage] =
+    React.useState(100000000000000000000000000000000000000);
 
   const [valueInp, setValueInp] = React.useState<any>({
     name: null,
@@ -105,7 +112,7 @@ export default function CreateLocationlar({
       dispatch(
         alertChange({
           open: true,
-          message: "Bo'sh qatorlarni toldiring!",
+          message: latinToCyrillic("Bo'sh qatorlarni toldiring!"),
           status: "warning",
         })
       );
@@ -126,7 +133,7 @@ export default function CreateLocationlar({
         <AccordionSummary aria-controls="panel1-content" id="panel1-header">
           <div className="flex gap-2 items-center">
             <KeyboardArrowDownIcon />
-            Tuman {"qo'shish"}
+            {latinToCyrillic("Batalyon qo'shish")}
           </div>
         </AccordionSummary>
         <AccordionDetails>
@@ -136,7 +143,7 @@ export default function CreateLocationlar({
           >
             <TextField
               id="outlined-basic"
-              label="Tuman Nomi"
+              label={latinToCyrillic("Batalyon nomi")}
               value={valueInp.name}
               name="name"
               autoComplete="off"
@@ -164,9 +171,7 @@ export default function CreateLocationlar({
             }}
           >
             <Table stickyHeader aria-label="sticky table">
-              <TableHead
-                sx={{ background: "#edede9", }}
-              >
+              <TableHead sx={{ background: "#edede9" }}>
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
@@ -248,7 +253,7 @@ export default function CreateLocationlar({
             </Table>
           </TableContainer>
           <Button onClick={saqlash} variant="contained" sx={{ mt: 1 }}>
-            Saqlash
+          {latinToCyrillic("Saqlash")}
           </Button>
         </AccordionDetails>
       </Accordion>

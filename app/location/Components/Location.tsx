@@ -9,11 +9,12 @@ import {
 } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
-import {  extractNmae } from "@/app/Utils";
+import { extractNmae } from "@/app/Utils";
 import LocationTab from "./LocationTab";
 import CreateLocationlar from "./CreateLocation";
 import LocationModal from "./LocationModal";
 import { setModalLocation } from "@/app/Redux/locationSlice";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 function Location() {
   //Umumiy
@@ -47,7 +48,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: open.name + " " + "o'chirildi",
+          message: open.name + " " + latinToCyrillic("o'chirildi"),
           status: "success",
         })
       );
@@ -74,7 +75,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: "Tuman tahrirlandi",
+          message: latinToCyrillic("Batalyon nomi tahrirlandi"),
           status: "success",
         })
       );
@@ -83,7 +84,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -101,7 +102,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni to'liq to'ldiring!",
+          message: latinToCyrillic("Malumotlarni to'liq to'ldiring!") ,
           status: "warning",
         })
       );
@@ -122,7 +123,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: "Tumanlar saqlandi!",
+          message: latinToCyrillic("Batalyonlar saqlandi!") ,
           status: "success",
         })
       );
@@ -130,7 +131,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -143,7 +144,7 @@ function Location() {
       dispatch(
         alertChange({
           open: true,
-          message: "Hali Tuman mavjud emas!",
+          message: latinToCyrillic("Hali Batalyon mavjud emas!") ,
           status: "error",
         })
       );

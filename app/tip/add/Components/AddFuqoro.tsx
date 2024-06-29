@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Createworkers } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
+import { latinToCyrillic } from "./lotin";
 function AddFuqoro() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -17,7 +18,7 @@ function AddFuqoro() {
       dispatch(
         alertChange({
           open: true,
-          message: "Fuqoro Qo'shildi",
+          message: latinToCyrillic("Fuqoro Qo'shildi"),
           status: "success",
         })
       );
@@ -26,7 +27,7 @@ function AddFuqoro() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -38,13 +39,13 @@ function AddFuqoro() {
     setData([]);
   };
   return (
-    <div className="flex flex-col max-w-[90%] mx-auto">
+    <div className="flex flex-col max-w-[80%] mx-auto">
       <div className=" mx-auto text-[28px] font-bold mb-4">
-        Fuqoro {"qo'shish"}
+        {latinToCyrillic("Fuqoro qo'shish")}
       </div>
       <div className="mb-4">
         <Button onClick={() => router.push("/tip")} variant="contained">
-          Orqaga
+          {latinToCyrillic("Orqaga")}
         </Button>
       </div>
 
@@ -60,7 +61,7 @@ function AddFuqoro() {
           sx={{ mt: "20px" }}
           variant="contained"
         >
-          Saqlash
+          {latinToCyrillic("Saqlash")}
         </Button>
       </div>
     </div>

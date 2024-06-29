@@ -7,16 +7,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ChangeShartnoma from "./ChangeShartnoma";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 function EditShartnoma({ data }: { data: any }) {
   const [isLotin, setIsLotin] = useState("uz");
   const router = useRouter();
 
-  
   return (
     <div className="w-[100%] mt-[5vh] mx-auto">
       <div className="flex justify-center mb-6 text-[28px] font-bold">
-        Shartnoma tahrirlash
+        {latinToCyrillic("Shartnoma tahrirlash")}
       </div>
       <div className="flex justify-between items-center w-full mb-6">
         <Button
@@ -24,7 +24,7 @@ function EditShartnoma({ data }: { data: any }) {
           onClick={() => router.push("/" + data._id)}
           variant="contained"
         >
-          Orqaga
+          {latinToCyrillic("Orqaga")}
         </Button>
 
         <FormControl sx={{ width: "160px" }}>
@@ -32,8 +32,8 @@ function EditShartnoma({ data }: { data: any }) {
             value={isLotin}
             onChange={(e: any) => setIsLotin(e.target.value)}
           >
-            <MenuItem value={"uz"}>lotincha</MenuItem>
-            <MenuItem value={"ru"}>krilcha</MenuItem>
+            <MenuItem value={"uz"}> {latinToCyrillic("Lotincha")}</MenuItem>
+            <MenuItem value={"ru"}> {latinToCyrillic("Krilcha")}</MenuItem>
           </Select>
         </FormControl>
       </div>

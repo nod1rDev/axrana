@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
-
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 export default function CoctavModal({
   value,
@@ -39,8 +39,6 @@ export default function CoctavModal({
     handleSubmit();
   };
 
-
-
   return (
     <React.Fragment>
       {open.type == 1 ? (
@@ -51,7 +49,7 @@ export default function CoctavModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {open.name + " " + "o'zgartirin"}
+            {open.name + " " + "ўзгартирин"}
           </DialogTitle>
           <div className="flex flex-col w-[300px] gap-2 px-4">
             <TextField
@@ -59,17 +57,17 @@ export default function CoctavModal({
               fullWidth
               value={value.name}
               onChange={(e: any) => handleChange(e)}
-              label="Otryad Nomi"
+              label={latinToCyrillic("Zvaniya Nomi")}
               id="fullWidth"
             />
           </div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                Орқага
               </Button>
               <Button onClick={handleSubmite} color="info" variant="contained">
-                Saqlash
+                Сақлаш
               </Button>
             </div>
           </DialogActions>
@@ -82,16 +80,16 @@ export default function CoctavModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {`"${open.name}"` + " " + "ushbu otryadni ochirishni istaysizmi ?"}
+            {`"${open.name}"` + " " + "ушбу zvaniya очиришни истайсизми ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                Орқага
               </Button>
               <Button onClick={handleDelete} color="error" variant="contained">
-                {"O'chirish"}
+                {"Ўчириш"}
               </Button>
             </div>
           </DialogActions>

@@ -4,7 +4,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: process.env.NODE_ENV === "development",
+  disable: false,
   workboxOptions: {
     disableDevLogs: true,
   },
@@ -12,8 +12,6 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
- 
-};
+const nextConfig = {};
 
 module.exports = withPWA(nextConfig);

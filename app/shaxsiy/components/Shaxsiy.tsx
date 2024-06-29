@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { alertChange, setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
 import EditModal from "./EditModal";
 import Users from "./Users";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 function Shaxsiy() {
   const [userData, setUserData] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
@@ -37,7 +38,7 @@ function Shaxsiy() {
       dispatch(
         alertChange({
           open: true,
-          message: "Password tahrirlandi",
+          message: latinToCyrillic("Password tahrirlandi"),
           status: "success",
         })
       );
@@ -45,7 +46,7 @@ function Shaxsiy() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -67,7 +68,7 @@ function Shaxsiy() {
       dispatch(
         alertChange({
           open: true,
-          message: "Bosh qatorlarni to'ldiring!",
+          message: latinToCyrillic("Bosh qatorlarni to'ldiring!"),
           status: "warning",
         })
       );
@@ -81,7 +82,9 @@ function Shaxsiy() {
 
   return (
     <>
-      <h1 className="font-bold text-[28px] mb-2">Shaxsiy malumotlar</h1>
+      <h1 className="font-bold text-[28px] mb-2">
+        {latinToCyrillic("Shaxsiy malumotlar")}
+      </h1>
       <div className="flex w-full justify-between">
         <div className="flex rounded-lg relative w-[400px]  bg-slate-50 px-6 py-4 gap-4 flex-col">
           <div className=" absolute top-2 right-2">
@@ -95,14 +98,18 @@ function Shaxsiy() {
           </div>
 
           <div className="flex flex-col">
-            <h1 className="font-bold text-[18px]">Ish profilinggiz nomi:</h1>
+            <h1 className="font-bold text-[18px]">
+              {latinToCyrillic("Ish profilinggiz nomi:")}{" "}
+            </h1>
             <span className=" text-slate-400 font-bold">
               {userData && userData.username}
             </span>
           </div>
 
           <div className="flex flex-col">
-            <h1 className="font-bold text-[18px]">Ish profilinggiz paroli:</h1>
+            <h1 className="font-bold text-[18px]">
+              {latinToCyrillic("Ish profilinggiz paroli:")}{" "}
+            </h1>
             <span className=" text-slate-400 font-bold">
               {userData && userData.password}
             </span>

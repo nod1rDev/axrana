@@ -18,6 +18,11 @@ import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import SaveIcon from "@mui/icons-material/Save";
 import { FiltDate } from "@/app/Utils";
+import dayjs from "dayjs";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+const CustomTextField: React.FC<any> = (props) => {
+  return <TextField {...props} />;
+};
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -43,17 +48,16 @@ function CreateShartnoma({ language }: { language: any }) {
   const [search, setSearch] = useState<any>();
   const [value, setValue] = useState<any>({
     contractDate: "",
-    contractTurnOffDate: "",
+
     contractSumma: 0,
-    boss: "",
+
     contractNumber: "",
-    phone: "",
+
     content: "",
     name: "",
-    inn: 0,
+
     address: "",
-    accountNumber: "",
-    bankName: "",
+
     workers: [],
   });
 
@@ -111,7 +115,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: "Shartnoma qo'shildi",
+          message: latinToCyrillic("Shartnoma qo'shildi"),
           status: "success",
         })
       );
@@ -120,7 +124,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -151,7 +155,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: "Malumotlarni toliq toldiring",
+          message: latinToCyrillic("Malumotlarni toliq toldiring"),
           status: "warning",
         })
       );
@@ -174,7 +178,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: "Bank nomi muavaqiyatli topildi",
+          message: latinToCyrillic("Bank nomi muavaqiyatli topildi"),
           status: "success",
         })
       );
@@ -182,7 +186,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: "Bank nomi topilmadi",
+          message: latinToCyrillic("Bank nomi topilmadi"),
           status: "error",
         })
       );
@@ -196,7 +200,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: "Bank raqamini kiriting",
+          message: latinToCyrillic("Bank raqamini kiriting"),
           status: "warning",
         })
       );
@@ -209,7 +213,7 @@ function CreateShartnoma({ language }: { language: any }) {
         <div className="flex w-full justify-between gap-4 ">
           <TextField
             id="outlined-basic"
-            label="Shartnoma Raqam"
+            label={latinToCyrillic("Shartnoma Raqam")}
             sx={{ width: "25%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
@@ -225,7 +229,7 @@ function CreateShartnoma({ language }: { language: any }) {
           />
 
           <div className=" translate-y-[-32px] flex flex-col w-[25%]  md:ml-0 ">
-            <div className=" ">Shartnoma sanasi</div>
+            <div className=" ">{latinToCyrillic("Shartnoma sanasi")} </div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer
                 components={[
@@ -244,39 +248,38 @@ function CreateShartnoma({ language }: { language: any }) {
                     onAccept={(e: any) =>
                       setValue({ ...value, contractDate: FiltDate(e) })
                     }
+                    format={latinToCyrillic("kun/oy/yil")}
+                    slots={{
+                      textField: (textFieldProps) => (
+                        <CustomTextField {...textFieldProps} />
+                      ),
+                    }}
                   />
                 </DemoItem>
               </DemoContainer>
             </LocalizationProvider>
           </div>
-          <div className=" translate-y-[-32px] flex flex-col w-[25%]  md:ml-0 ">
-            <div className=" ">Amal qilish muddati</div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer
-                components={[
-                  "DatePicker",
-                  "TimePicker",
-                  "DatePicker",
-                  "DateRangePicker",
-                ]}
-              >
-                <DemoItem>
-                  <DatePicker
-                    sx={{ width: "100%" }}
-                    onChange={(e: any) =>
-                      setValue({ ...value, contractTurnOffDate: FiltDate(e) })
-                    }
-                    onAccept={(e: any) =>
-                      setValue({ ...value, contractTurnOffDate: FiltDate(e) })
-                    }
-                  />
-                </DemoItem>
-              </DemoContainer>
-            </LocalizationProvider>
-          </div>
+
           <TextField
             id="outlined-basic"
-            label="Shartnoma Summasi"
+            label={latinToCyrillic("Shartnoma Nomi")}
+            sx={{ width: "20%" }}
+            onChange={(e: any) => handleChangeValue(e)}
+            variant="outlined"
+            name="name"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+            }}
+          />
+
+          <TextField
+            id="outlined-basic"
+            label={latinToCyrillic("Shartoma Summasi")}
             sx={{ width: "25%" }}
             onChange={(e: any) => handleChangeValue(e)}
             type="number"
@@ -296,12 +299,12 @@ function CreateShartnoma({ language }: { language: any }) {
         <div className="flex w-full justify-between mb-8 gap-4">
           <TextField
             id="outlined-basic"
-            label="Korxona Inn"
-            sx={{ width: "20%" }}
+            label={latinToCyrillic("Shartnoma Mazmuni")}
+            multiline
+            sx={{ width: "50%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
-            name="inn"
-            type="number"
+            name="content"
             autoComplete="off"
             autoCorrect="off"
             spellCheck="false"
@@ -314,25 +317,8 @@ function CreateShartnoma({ language }: { language: any }) {
 
           <TextField
             id="outlined-basic"
-            label="Korxona Nomi"
-            sx={{ width: "20%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            name="name"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-
-          <TextField
-            id="outlined-basic"
-            label=" Korxona Manzili"
-            sx={{ width: "20%" }}
+            label={latinToCyrillic(" Shartnoma Manzili")}
+            sx={{ width: "50%" }}
             onChange={(e: any) => handleChangeValue(e)}
             variant="outlined"
             name="address"
@@ -346,118 +332,14 @@ function CreateShartnoma({ language }: { language: any }) {
               spellCheck: "false",
             }}
           />
-
-          <TextField
-            id="outlined-basic"
-            label=" Xisob Raqami"
-            sx={{ width: "20%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            name="accountNumber"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Raxbar Ismi"
-            sx={{ width: "20%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            name="boss"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
         </div>
 
-        <div className="flex justify-between mb-8 w-full gap-3">
-          <form className="w-[25%]" onSubmit={searchSubmit}>
-            <TextField
-              id="outlined-basic"
-              label="Bank Raqami"
-              sx={{ width: "100%" }}
-              onChange={(e: any) => handleChangeValue2(e)}
-              variant="outlined"
-              name="bankName"
-              type="number"
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck="false"
-              InputProps={{
-                autoComplete: "off",
-                autoCorrect: "off",
-                spellCheck: "false",
-              }}
-            />
-          </form>
-          <TextField
-            id="outlined-basic"
-            label="Bank Nomi"
-            sx={{ width: "25%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            name="bankName"
-            value={value.bankName}
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            
-            }}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Telfon Raqam"
-            sx={{ width: "25%" }}
-            onChange={(e) => handleChangeValue(e)}
-            type="number"
-            name="phone"
-            variant="outlined"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Shartnoma Mazmuni"
-            multiline
-            sx={{ width: "25%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            variant="outlined"
-            name="content"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-        </div>
-        <div>
+        {/* <div>
           <div className="flex w-[100%] gap-10 ">
             <FormControl sx={{ width: "100%" }}>
-              <InputLabel id="demo-multiple-chip-label">Ishchilar</InputLabel>
+              <InputLabel id="demo-multiple-chip-label">
+                {latinToCyrillic("Ishchilar")}
+              </InputLabel>
               <Select
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
@@ -508,7 +390,7 @@ function CreateShartnoma({ language }: { language: any }) {
                       <div className="flex w-[50%] gap-4">
                         <TextField
                           id="outlined-basic"
-                          label="Ishlash vaqti"
+                          label={latinToCyrillic("Ishlash vaqti")}
                           sx={{ width: "100%" }}
                           value={name.dayOrHour}
                           onChange={(i: any) => {
@@ -534,13 +416,13 @@ function CreateShartnoma({ language }: { language: any }) {
 
                         <FormControl fullWidth>
                           <InputLabel id="demo-simple-select-label">
-                            Ishlash muddati
+                            {latinToCyrillic(" Ishlash muddati")}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={name.timeType}
-                            label="Ishlash muddati"
+                            label={latinToCyrillic(" Ishlash muddati")}
                             onChange={(i: any) => {
                               setWorkers(
                                 workers.map((e: any) => {
@@ -551,8 +433,12 @@ function CreateShartnoma({ language }: { language: any }) {
                               );
                             }}
                           >
-                            <MenuItem value={"soat"}>soat</MenuItem>
-                            <MenuItem value={"kun"}>kun</MenuItem>
+                            <MenuItem value={"soat"}>
+                              {latinToCyrillic("Soat")}{" "}
+                            </MenuItem>
+                            <MenuItem value={"kun"}>
+                              {latinToCyrillic("Kun")}
+                            </MenuItem>
                           </Select>
                         </FormControl>
                       </div>
@@ -567,11 +453,11 @@ function CreateShartnoma({ language }: { language: any }) {
               </IconButton>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="w-full mb-[18vh]">
         <Button onClick={saqlash} color="success" fullWidth variant="contained">
-          Saqlash
+          {latinToCyrillic("Saqlash")}
         </Button>
       </div>
       <div></div>

@@ -17,6 +17,7 @@ import Button from "@mui/material/Button";
 import Link from "next/link";
 import MenuHeader from "./Menu";
 import { useRouter } from "next/navigation";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
 
 interface Props {
   /**
@@ -95,7 +96,7 @@ export default function Header(props: Props) {
                   letterSpacing: "5px",
                 }}
               >
-                <Link href={"/"}>Axrana</Link>
+                <Link href={"/"}>Aхрана</Link>
               </Typography>
               <Box sx={{ display: { xs: "none", sm: "block" } }}>
                 {navItems.map((item) => (
@@ -104,7 +105,7 @@ export default function Header(props: Props) {
                     onClick={() => router.push(`/${item.toLowerCase()}`)}
                     sx={{ color: "#fff", fontWeight: "bold", ml: 3 }}
                   >
-                    {item}
+                    {latinToCyrillic(item)}
                   </Button>
                 ))}
               </Box>

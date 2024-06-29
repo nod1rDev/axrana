@@ -10,17 +10,16 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import BroadcastOnPersonalIcon from "@mui/icons-material/BroadcastOnPersonal";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { puJWT } from "../Redux/AuthSlice";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import PinDropIcon from "@mui/icons-material/PinDrop";
+import SecurityIcon from "@mui/icons-material/Security";
 import { useRouter } from "next/navigation";
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -102,7 +101,7 @@ export default function MenuHeader() {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        справьчник
+        {latinToCyrillic("Spravichnik")}
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -113,36 +112,29 @@ export default function MenuHeader() {
         open={open}
         onClose={handleClose}
       >
+        <MenuItem onClick={() => otmoq("/tip")} disableRipple>
+          <PaymentsIcon />
+          {latinToCyrillic("FIO")}
+        </MenuItem>
         <MenuItem onClick={() => otmoq("/coctav")} disableRipple>
-          <SupervisedUserCircleIcon />
-          отряд
+          <WorkspacePremiumIcon />
+          {latinToCyrillic("Zvaniya")}
         </MenuItem>
 
         <MenuItem onClick={() => otmoq("/location")} disableRipple>
-          <PinDropIcon />
-          туман
-        </MenuItem>
-        <MenuItem onClick={() => otmoq("/unvonlar")} disableRipple>
-          <WorkspacePremiumIcon />
-          унвон
+          <BroadcastOnPersonalIcon />
+          {latinToCyrillic("Batalyon")}
         </MenuItem>
 
-        <MenuItem onClick={() => otmoq("/tip")} disableRipple>
-          <PaymentsIcon />
-          фио
-        </MenuItem>
-        <MenuItem onClick={() => otmoq("/bank")} disableRipple>
-          <AccountBalanceIcon />
-          банк
-        </MenuItem>
         <MenuItem onClick={() => otmoq("/names")} disableRipple>
-          <ManageAccountsIcon />
-          Rахбар фио
+          <SecurityIcon />
+          {latinToCyrillic("DXM")}
         </MenuItem>
+
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={AuthOut} disableRipple>
           <LogoutIcon />
-          Chiqish
+          {latinToCyrillic("Chiqish")}
         </MenuItem>
       </StyledMenu>
     </div>

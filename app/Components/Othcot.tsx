@@ -15,12 +15,16 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PrintIcon from "@mui/icons-material/Print";
 import Documenttt from "./Document";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
 import { alertChange } from "../Redux/ShaxsiySlice";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
+const CustomTextField: React.FC<any> = (props) => {
+  return <TextField {...props} />;
+};
 function Othcot() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -72,7 +76,7 @@ function Othcot() {
       dispatch(
         alertChange({
           open: true,
-          message: "Otchotlar Jonatildi",
+          message: latinToCyrillic("Otchotlar Jonatildi"),
           status: "success",
         })
       );
@@ -80,7 +84,7 @@ function Othcot() {
       dispatch(
         alertChange({
           open: true,
-          message: res.message,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -145,18 +149,18 @@ function Othcot() {
                 value={isLotin}
                 onChange={(e: any) => setIsLotin(e.target.value)}
               >
-                <MenuItem value={"uz"}>lotincha</MenuItem>
-                <MenuItem value={"ru"}>krilcha</MenuItem>
+                <MenuItem value={"uz"}>{latinToCyrillic("Lotincha")}</MenuItem>
+                <MenuItem value={"ru"}>{latinToCyrillic("Krilcha")}</MenuItem>
               </Select>
             </FormControl>
           </div>
           <div className="flex flex-col">
             <div className="flex justify-end text-[28px] mb-2 font-bold">
-              Filter
+              {latinToCyrillic("Filter")}
             </div>
             <div className="flex translate-y-[-32px] items-center gap-4">
               <div className="  flex flex-col   md:ml-0 ">
-                <div className=" ">Sana 1</div>
+                <div className=" ">{latinToCyrillic("Sana 1")}</div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer
                     components={[
@@ -176,13 +180,19 @@ function Othcot() {
                         onAccept={(e: any) =>
                           setValue({ ...value, date1: FiltDate(e) })
                         }
+                        format={latinToCyrillic("kun/oy/yil")}
+                        slots={{
+                          textField: (textFieldProps) => (
+                            <CustomTextField {...textFieldProps} />
+                          ),
+                        }}
                       />
                     </DemoItem>
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
               <div className="  flex flex-col   md:ml-0 ">
-                <div className=" ">Sana 2</div>
+                <div className=" ">{latinToCyrillic("Sana 2")}</div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer
                     components={[
@@ -202,6 +212,12 @@ function Othcot() {
                         onAccept={(e: any) =>
                           setValue({ ...value, date2: FiltDate(e) })
                         }
+                        format={latinToCyrillic("kun/oy/yil")}
+                        slots={{
+                          textField: (textFieldProps) => (
+                            <CustomTextField {...textFieldProps} />
+                          ),
+                        }}
                       />
                     </DemoItem>
                   </DemoContainer>
@@ -236,7 +252,7 @@ function Othcot() {
             color="success"
             startIcon={<CloudUploadIcon />}
           >
-            Excel fileni yuklash 
+            {latinToCyrillic("Excel fileni yuklash")}
           </Button>
 
           <Button
@@ -244,7 +260,7 @@ function Othcot() {
             variant="contained"
             startIcon={<PrintIcon />}
           >
-            chop etish
+            {latinToCyrillic("Chop etish")}
           </Button>
         </div>
         <CustomizedTables language={isLotin} data={data} />

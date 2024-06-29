@@ -4,75 +4,158 @@ import { TextField, Button, Container, Box, IconButton } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
 export const latinToCyrillic = (latin: string): string => {
-  const map: any = {
+  const map: { [key: string]: string } = {
     a: "а",
+    A: "А",
     b: "б",
+    B: "Б",
     c: "ц",
+    C: "Ц",
     d: "д",
+    D: "Д",
     e: "е",
+    E: "Е",
     f: "ф",
+    F: "Ф",
     g: "г",
+    G: "Г",
+    "g'": "ғ",
+    "G'": "Ғ",
     h: "ҳ",
+    H: "Ҳ",
     i: "и",
+    I: "И",
     j: "ж",
+    J: "Ж",
     k: "к",
+    K: "К",
     l: "л",
+    L: "Л",
     m: "м",
+    M: "М",
     n: "н",
+    N: "Н",
     o: "о",
+    O: "О",
+    "o'": "ў",
+    "O'": "Ў",
     p: "п",
+    P: "П",
     q: "қ",
+    Q: "Қ",
     r: "р",
+    R: "Р",
     s: "с",
+    S: "С",
     t: "т",
+    T: "Т",
     u: "у",
+    U: "У",
     v: "в",
+    V: "В",
     w: "ў",
+    W: "Ў",
     x: "х",
+    X: "Х",
     y: "й",
+    Y: "Й",
     z: "з",
+    Z: "З",
     sh: "ш",
+    Sh: "Ш",
+    SH: "Ш",
     ch: "ч",
+    Ch: "Ч",
+    CH: "Ч",
+    Ye: "Е",
+    YE: "Е",
+    ye: "е",
+
+    Yo: "Ё",
+    YO: "Ё",
+    yo: "ё",
+
+    Yu: "Ю",
+    YU: "Ю",
+    yu: "ю",
+
+    Ya: "Я",
+    YA: "Я",
+    ya: "я",
+
     " ": " ",
   };
 
-  return latin.replace(/sh|ch|./g, (char) => map[char] || char);
+  return latin.replace(
+    /sh|Sh|SH|ch|Ch|CH|g'|G'|o'|O'|Ye|YE|ye|Yo|YO|yo|Yu|YU|yu|Ya|YA|ya|./g,
+    (char) => map[char] || char
+  );
 };
 
 export const cyrillicToLatin = (cyrillic: string): string => {
-  const map: any = {
+  const map: { [key: string]: string } = {
     а: "a",
+    А: "A",
     б: "b",
+    Б: "B",
     ц: "c",
+    Ц: "C",
     д: "d",
+    Д: "D",
     е: "e",
+    Е: "E",
     ф: "f",
+    Ф: "F",
     г: "g",
+    Г: "G",
+    ғ: "g'",
+    Ғ: "G'",
     ҳ: "h",
+    Ҳ: "H",
     и: "i",
+    И: "I",
     ж: "j",
+    Ж: "J",
     к: "k",
+    К: "K",
     л: "l",
+    Л: "L",
     м: "m",
+    М: "M",
     н: "n",
+    Н: "N",
     о: "o",
+    О: "O",
+    ў: "o'",
+    Ў: "O'",
     п: "p",
+    П: "P",
     қ: "q",
+    Қ: "Q",
     р: "r",
+    Р: "R",
     с: "s",
+    С: "S",
     т: "t",
+    Т: "T",
     у: "u",
+    У: "U",
     в: "v",
-    ў: "w",
+    В: "V",
     х: "x",
+    Х: "X",
     й: "y",
+    Й: "Y",
     з: "z",
+    З: "Z",
     ш: "sh",
+    Ш: "Sh",
     ч: "ch",
+    Ч: "Ch",
     " ": " ",
   };
 
-  return cyrillic.replace(/ш|ч|./g, (char) => map[char] || char);
+  return cyrillic.replace(/ш|ч|ғ|ў|./gi, (char) => map[char] || char);
 };
 
 const LatCyrConverter = ({
@@ -85,137 +168,33 @@ const LatCyrConverter = ({
   clear: any;
 }) => {
   const [latinText, setLatinText] = useState("");
-  const [cyrillicText, setCyrillicText] = useState("");
-  const [isLatinToCyrillic, setIsLatinToCyrillic] = useState(true);
-  const [isLotin, setIsLotin] = useState(true);
 
   const handleLatinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLotin(true);
     const valuee = e.target.value;
-    setValue({ ...value, FIOlotin: valuee, FIOkril: latinToCyrillic(valuee) });
+    setValue({ ...value, FIO: valuee });
     setLatinText(valuee);
-    setCyrillicText(latinToCyrillic(valuee));
-  };
-
-  const handleLatinChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valuee = e.target.value;
-    setValue({ ...value, FIOlotin: valuee });
-    setLatinText(valuee);
-  };
-
-  const handleCyrillicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsLotin(false);
-    const valuee = e.target.value;
-    setValue({ ...value, FIOlotin: cyrillicToLatin(valuee), FIOkril: valuee });
-    setCyrillicText(valuee);
-    setLatinText(cyrillicToLatin(valuee));
-  };
-
-  const handleCyrillicChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const valuee = e.target.value;
-    setValue({ ...value, FIOkril: valuee });
-    setCyrillicText(valuee);
-  };
-
-  const handleSwitch = () => {
-    setIsLatinToCyrillic(!isLatinToCyrillic);
-    if (!isLotin) {
-      setLatinText(cyrillicText);
-      setCyrillicText(latinText);
-    } else {
-      setLatinText(latinText);
-      setCyrillicText(cyrillicText);
-    }
   };
 
   useEffect(() => {
     setLatinText("");
-    setCyrillicText("");
   }, [clear]);
 
   return (
     <Box width={"100%"}>
-      {isLatinToCyrillic ? (
-        <div className="flex w-full  items-center  justify-between gap-10 ">
-          <TextField
-            label="Lotin"
-            value={latinText}
-            onChange={handleLatinChange}
-            fullWidth
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-
-          <IconButton
-            sx={{ width: "60px", height: "60px" }}
-            aria-label="delete"
-            onClick={handleSwitch}
-            size="medium"
-          >
-            <CompareArrowsIcon fontSize="inherit" />
-          </IconButton>
-
-          <TextField
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-            label="Kirill"
-            value={cyrillicText}
-            onChange={handleCyrillicChange2}
-            fullWidth
-          />
-        </div>
-      ) : (
-        <div className="flex w-full  items-center  justify-between gap-10 ">
-          <TextField
-            label="Kirill"
-            value={cyrillicText}
-            onChange={handleCyrillicChange}
-            fullWidth
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-          />
-          <IconButton
-            aria-label="delete"
-            onClick={handleSwitch}
-            sx={{ width: "60px", height: "60px" }}
-            size="medium"
-          >
-            <CompareArrowsIcon fontSize="inherit" />
-          </IconButton>
-          <TextField
-            label="Lotin"
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
-            onChange={handleLatinChange2}
-            value={latinText}
-            fullWidth
-          />
-        </div>
-      )}
+      <TextField
+        label={latinToCyrillic("FIO")}
+        value={latinText}
+        onChange={handleLatinChange}
+        fullWidth
+        autoComplete="off"
+        autoCorrect="off"
+        spellCheck="false"
+        InputProps={{
+          autoComplete: "off",
+          autoCorrect: "off",
+          spellCheck: "false",
+        }}
+      />
     </Box>
   );
 };

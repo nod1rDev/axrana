@@ -25,15 +25,7 @@ function Shartnoma() {
           {latinToCyrillic("Orqaga")}
         </Button>
 
-        <FormControl sx={{ width: "160px" }}>
-          <Select
-            value={isLotin}
-            onChange={(e: any) => setIsLotin(e.target.value)}
-          >
-            <MenuItem value={"uz"}> {latinToCyrillic("Lotincha")}</MenuItem>
-            <MenuItem value={"ru"}> {latinToCyrillic("Krilcha")}</MenuItem>
-          </Select>
-        </FormControl>
+       <div></div>
       </div>
       <CreateShartnoma language={isLotin} />
     </div>

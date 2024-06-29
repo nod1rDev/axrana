@@ -33,7 +33,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "number", label: "N", align: "left", minWidth: 5 },
+  { id: "number", label: "т/р", align: "left", minWidth: 5 },
   {
     id: "Tuman",
     label: latinToCyrillic("Zvaniya"),

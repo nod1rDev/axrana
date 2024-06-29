@@ -24,7 +24,7 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "number", label: "No", align: "left", minWidth: 170 },
+  { id: "number", label: "т/р", align: "left", minWidth: 170 },
   {
     id: "FoydalanuvchiNomi",
     label: latinToCyrillic("Foydalanuvchi Nomi"),

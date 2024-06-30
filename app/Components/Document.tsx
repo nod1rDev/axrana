@@ -239,7 +239,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="pb-[200px] mb-4">
+        <section className="pb-[200px] mb-20">
           <h2 className="text-xl text-center font-semibold mb-4">
             7. Томонларнинг реквизитлари
           </h2>

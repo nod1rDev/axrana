@@ -22,6 +22,7 @@ function AddFuqoro() {
           status: "success",
         })
       );
+      setData([]);
       router.push("/tip");
     } else {
       dispatch(
@@ -36,7 +37,6 @@ function AddFuqoro() {
   const dispatch = useDispatch();
   const handleSave = () => {
     create();
-    setData([]);
   };
   return (
     <div className="flex flex-col max-w-[80%] mx-auto">

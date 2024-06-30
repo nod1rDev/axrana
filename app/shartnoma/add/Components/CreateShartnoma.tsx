@@ -291,6 +291,7 @@ function CreateShartnoma({ language }: { language: any }) {
                 sx={{ width: "49%" }}
                 onChange={(e) => handleChangeOrgans(e, index)}
                 variant="outlined"
+                type="number"
                 value={organs[index].time}
                 name="time"
                 autoComplete="off"

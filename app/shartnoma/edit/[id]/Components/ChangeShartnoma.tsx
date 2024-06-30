@@ -66,36 +66,35 @@ function ChangeShartnoma({
     }
   }, [ShartNomaData]);
   const router = useRouter();
-  interface Item {
-    name: string;
+  interface MyObject {
+    FIO: string;
     selected: boolean;
   }
 
-  const filterItems = (items: Item[]): Item[] => {
-    const nameToItemsMap: { [key: string]: Item[] } = {};
-    const result: Item[] = [];
+  function filterDuplicateObjects(objects: MyObject[]): MyObject[] {
+    const filteredObjects: MyObject[] = [];
+    const seenNames: string[] = [];
 
-    // Bir xil `name` property ga ega bo'lgan obyektlarni guruhlash
-    items.forEach((item) => {
-      if (!nameToItemsMap[item.name]) {
-        nameToItemsMap[item.name] = [];
+    objects.forEach((obj) => {
+      if (seenNames.includes(obj.FIO)) {
+        // If the FIO is already seen, check if the current object is selected
+        const existingObject = filteredObjects.find((o) => o.FIO === obj.FIO);
+        if (existingObject && !obj.selected) {
+          // If the existing object is selected and the current object is not, do nothing
+        } else if (obj.selected) {
+          // If the current object is selected, replace the existing object
+          const index = filteredObjects.findIndex((o) => o.FIO === obj.FIO);
+          filteredObjects[index] = obj;
+        }
+      } else {
+        // If the FIO is not seen, add the object to the filtered array
+        seenNames.push(obj.FIO);
+        filteredObjects.push(obj);
       }
-      nameToItemsMap[item.name].push(item);
     });
 
-    // Har bir guruhda faqat `selected: true` bo'lgan obyektlarni qoldirish
-    Object.keys(nameToItemsMap).forEach((name) => {
-      const group = nameToItemsMap[name];
-      const selectedItems = group.filter((item) => item.selected);
-
-      if (selectedItems.length > 0) {
-        result.push(...selectedItems);
-      }
-    });
-
-    // Barcha obyektlarni qaytarish (ba'zi guruhlarda `selected: true` obyekt bo'lmasligi mumkin)
-    return result;
-  };
+    return filteredObjects;
+  }
   const getWorkerFor = async () => {
     if (organs) {
       const res = await GETworkers(JWT);
@@ -105,8 +104,9 @@ function ChangeShartnoma({
           selected: false,
         };
       });
-      setWorkers(filterItems([...worker1, ...worker2]));
-      console.log(filterItems([...worker1, ...worker2]));
+      const filter = filterDuplicateObjects([...worker1, ...worker2]);
+      setWorkers(filter);
+      
     }
   };
 
@@ -119,9 +119,8 @@ function ChangeShartnoma({
   }, [organs]);
 
   useEffect(() => {
-    if (worker2 && count <= 1) {
+    if (worker2 && count <= 2) {
       setCount(count + 1);
-      console.log(count);
 
       getWorkerFor();
     }
@@ -373,6 +372,7 @@ function ChangeShartnoma({
                 variant="outlined"
                 value={organs[index].time}
                 name="time"
+                type="number"
                 autoComplete="off"
               />
             </div>

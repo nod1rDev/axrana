@@ -74,7 +74,6 @@ export default function Header(props: Props) {
   const router = useRouter();
   const handleChange = (e: any) => {
     setValue(e.target.value);
-    router.push(`/${e.target.value}`);
   };
 
   React.useEffect(() => {}, [value]);
@@ -106,7 +105,9 @@ export default function Header(props: Props) {
                     onChange={handleChange}
                   >
                     {navItems.map((e: any) => (
-                      <MenuItem value={e}>{e}</MenuItem>
+                      <MenuItem onClick={() => router.push(`/${e}`)} value={e}>
+                        {e}
+                      </MenuItem>
                     ))}
                   </Select>
                 </FormControl>

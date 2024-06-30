@@ -4,9 +4,9 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Axrana",
-    "short_name": "Axrana",
-    "description": "Axrana",
+    "name": "Milliy_Gvardiya",
+    "short_name": "Milliy_Gvardiya",
+    "description": "Milliy_Gvardiya",
     "icons": [
         {
             "src": "/icon-192x192.png",

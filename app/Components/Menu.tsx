@@ -128,7 +128,7 @@ export default function MenuHeader() {
 
         <MenuItem onClick={() => otmoq("/names")} disableRipple>
           <SecurityIcon />
-          {latinToCyrillic("DXM")}
+          {latinToCyrillic("BXM")}
         </MenuItem>
 
         <Divider sx={{ my: 0.5 }} />

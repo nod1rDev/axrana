@@ -45,7 +45,7 @@ export default function EditRaxbar({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {latinToCyrillic("DXM summasini ozgartirin!")}
+          {latinToCyrillic("BXM summasini ozgartirin!")}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
           <TextField
@@ -54,7 +54,7 @@ export default function EditRaxbar({
             fullWidth
             value={value.summa}
             onChange={(e: any) => handleChange(e)}
-            label={latinToCyrillic("DXM summa")}
+            label={latinToCyrillic("BXM summa")}
             id="fullWidth"
           />
           

@@ -12,6 +12,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 function EditShartnoma({ data }: { data: any }) {
   const [isLotin, setIsLotin] = useState("uz");
   const router = useRouter();
+ 
 
   return (
     <div className="w-[100%] mt-[5vh] mx-auto">
@@ -27,15 +28,7 @@ function EditShartnoma({ data }: { data: any }) {
           {latinToCyrillic("Orqaga")}
         </Button>
 
-        <FormControl sx={{ width: "160px" }}>
-          <Select
-            value={isLotin}
-            onChange={(e: any) => setIsLotin(e.target.value)}
-          >
-            <MenuItem value={"uz"}> {latinToCyrillic("Lotincha")}</MenuItem>
-            <MenuItem value={"ru"}> {latinToCyrillic("Krilcha")}</MenuItem>
-          </Select>
-        </FormControl>
+        <div></div>
       </div>
       <ChangeShartnoma ShartNomaData={data} language={isLotin} />
     </div>

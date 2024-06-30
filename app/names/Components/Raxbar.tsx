@@ -66,7 +66,7 @@ function Raxbar() {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Bosh qatorlarni to'ldiring!"),
+          message: latinToCyrillic("Bo'sh qatorlarni to'ldiring!"),
           status: "warning",
         })
       );
@@ -81,7 +81,7 @@ function Raxbar() {
   return (
     <>
       <h1 className="font-bold text-[28px] mb-2">
-        {latinToCyrillic("DXM summasi")}{" "}
+        {latinToCyrillic("BXM summasi")}{" "}
       </h1>
       <div className="flex w-full justify-between">
         <div className="flex rounded-lg relative w-[400px]  bg-slate-50 px-6 py-4 gap-4 flex-col">
@@ -99,7 +99,7 @@ function Raxbar() {
 
           <div className="flex items-center gap-2 ">
             <h1 className="font-bold text-[18px]">
-              {latinToCyrillic("DXM summasi :")}
+              {latinToCyrillic("BXM summasi :")}
             </h1>
             <span className=" text-slate-400 font-bold">
               {userData && userData.summa}

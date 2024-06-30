@@ -16,7 +16,7 @@ function page() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getData = async () => {
     const res = await GetSingleShartnoma(JWT, id);
-    console.log(res);
+
     setData(res.data);
   };
 
@@ -41,7 +41,7 @@ function page() {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic(res.message) ,
+          message: latinToCyrillic(res.message),
           status: "error",
         })
       );
@@ -62,7 +62,7 @@ function page() {
           </Button>
         </div>
         <div className="rounded-lg w-full bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
-          <h1 className="text-[24px] font-bold">{data.contractNumber}</h1>
+          <h1 className="text-[24px] font-bold">{data.shartnomaNumber}</h1>
           <div className="flex gap-3">
             <Button
               startIcon={<DeleteIcon />}
@@ -83,93 +83,51 @@ function page() {
         </div>
         <div className="rounded-lg w-full mt-6 bg-[#f4f3ee] px-6 py-4 flex-col gap-4">
           <div className="font-bold text-[24px] w-full  text-center mb-4">
-          шартнома
+            шартнома
           </div>
-          <div className="flex w-full justify-between gap-15  items-start">
-            <div className="flex  flex-col gap-1 ">
-              <div className="flex">
-                <span>шартнома рақами: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.contractNumber}
-                </span>
-              </div>
-
-              <div className="flex">
-                <span>шартнома санаси: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.contractDate}
-                </span>
-              </div>
-
-              <div className="flex">
-                <span>шартнома муддати: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.contractTurnOffDate}
-                </span>
-              </div>
-
-              <div className="flex">
-                <span>шартнома суммаси: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.contractSumma}
-                </span>
-              </div>
+          <div className="flex w-full flex-col gap-4">
+            <div className="flex gap-1">
+              <span className="text-[18px] ">
+                {latinToCyrillic("Shartnoma raqami:")}
+              </span>
+              <span className="text-[18px] font-bold ">
+                {data.shartnomaNumber}
+              </span>
             </div>
 
-            <div className="flex  flex-col gap-1 ">
-              <div className="flex">
-                <span>корхона инн: </span>
-                <span className="font-[700] max-w-[190px]">{data.inn}</span>
-              </div>
-
-              <div className="flex">
-                <span>корхона номи: </span>
-                <span className="font-[700] max-w-[190px]">{data.name}</span>
-              </div>
-
-              <div className="flex">
-                <span className="max-w-[200px]">корхона манзил: </span>
-                <span className="font-[700]  max-w-[190px]">
-                  {data.address}
-                </span>
-              </div>
-
-              <div className="flex">
-                <span>Xисоб рақами: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.accountNumber}
-                </span>
-              </div>
-
-              <div className="flex">
-                <span>Bанк номи: </span>
-                <span className="font-[700] max-w-[190px]">
-                  {data.bankName}
-                </span>
-              </div>
+            <div className="flex gap-1">
+              <span className="text-[18px] ">
+                {latinToCyrillic("Shartnoma sanasi:")}
+              </span>
+              <span className="text-[18px] font-bold ">{data.date}</span>
             </div>
 
-            <div className="flex  flex-col gap-1 ">
-              <div className="flex">
-                <span>рахбар исми: </span>
-                <span className="font-[700] max-w-[250px]">{data.boss}</span>
-              </div>
+            <div className="flex gap-1">
+              <span className="text-[18px] ">
+                {latinToCyrillic(" Buyurtmachi:")}
+              </span>
+              <span className="text-[18px] font-bold ">{data.buyurtmachi}</span>
+            </div>
 
-              <div className="flex">
-                <span>телефон рақами: </span>
-                <span className="font-[700] max-w-[190px]">{data.phone}</span>
-              </div>
+            <div className="flex gap-1">
+              <span className="text-[18px] ">
+                {latinToCyrillic(
+                  "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqalash muddati:"
+                )}
+              </span>
+              <span className="text-[18px] font-bold ">{data.timeLimit}</span>
+            </div>
 
-              <div className="flex">
-                <span className="max-w-[200px]">шартнома мазмуни:</span>
-                <span className="font-[700]  max-w-[190px]">
-                  {data.content}
-                </span>
-              </div>
+            <div className="flex gap-1">
+              <span className="text-[18px] ">
+                {latinToCyrillic("Tadbir o'tadigan joy manzil:")}
+              </span>
+              <span className="text-[18px] font-bold ">{data.address}</span>
             </div>
           </div>
+
           <div className="font-bold text-[24px] w-full  text-center my-5">
-          ишчилар
+            ишчилар
           </div>
           <div className="mt-4 rounded-lg w-full">
             <SingleTab ranks={data.workers} />

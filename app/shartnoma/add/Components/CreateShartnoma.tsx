@@ -1,115 +1,64 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Box, Button, Checkbox, IconButton } from "@mui/material";
-import { Theme, useTheme } from "@mui/material/styles";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
+import {
+  Box,
+  Button,
+  IconButton,
+  FormControl,
+  InputLabel,
+  Checkbox,
+  Autocomplete,
+  Chip,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Createshartnomaa, GetForShartnoma, SearchBank } from "@/app/Api/Apis";
+import { Createshartnomaa, GETworkers } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
-import SaveIcon from "@mui/icons-material/Save";
-import { FiltDate } from "@/app/Utils";
-import dayjs from "dayjs";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-const CustomTextField: React.FC<any> = (props) => {
-  return <TextField {...props} />;
-};
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 function CreateShartnoma({ language }: { language: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const [search, setSearch] = useState<any>();
   const [value, setValue] = useState<any>({
-    contractDate: "",
-
-    contractSumma: 0,
-
-    contractNumber: "",
-
-    content: "",
-    name: "",
-
+    date: "",
+    shartnomaNumber: "",
+    timeLimit: "",
+    buyurtmachi: "",
     address: "",
-
-    workers: [],
+    organs: [],
   });
 
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
-  const [workers, setWorkers] = React.useState<any>([]);
-  const [active, setActive] = React.useState();
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  const [workers, setWorkers] = useState<any[]>([]);
+  const [organs, setOrgans] = useState<any>([
+    {
+      name: "",
+      time: "",
+      workers: [],
+      _id: Math.ceil(Math.random() * 10000),
+    },
+  ]);
 
-  const getWorkersInfo = async () => {
-    const res = await GetForShartnoma(JWT, language);
+  const router = useRouter();
 
+  const getWorkerFor = async () => {
+    const res = await GETworkers(JWT);
     setWorkers(
       res.data.map((e: any) => {
         return {
-          worker: language == "uz" ? e.FIOlotin : e.FIOkril,
+          ...e,
           selected: false,
-          dayOrHour: "",
-          timeType: "",
-          _id: Math.ceil(Math.random() * 3124234),
         };
       })
     );
   };
 
   useEffect(() => {
-    getWorkersInfo();
-  }, [language]);
+    getWorkerFor();
+  }, []);
 
-  const names = workers
-    ? workers.map((e: any) => {
-        return {
-          name: e.worker,
-          id: e._id,
-          selected: e.selected,
-          dayOrHour: e.dayOrHour,
-          timeType: e.timeType,
-        };
-      })
-    : [];
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
   const createShartnoman = async (shartnoma: any) => {
-    const res = await Createshartnomaa(JWT, shartnoma, language);
+    const res = await Createshartnomaa(JWT, shartnoma);
 
     if (res.success) {
       dispatch(
@@ -130,26 +79,24 @@ function CreateShartnoma({ language }: { language: any }) {
       );
     }
   };
+
   const dispatch = useDispatch();
   const saqlash = () => {
-    const filterWorkers = workers
-      .filter((e: any) => e.selected)
-      .map((e: any) => {
-        return {
-          worker: e.worker,
-          dayOrHour: e.dayOrHour,
-          timeType: e.timeType,
-        };
-      });
-    const shartnoma = { ...value, workers: filterWorkers };
-
-    if (
-      shartnoma.contractDate &&
-      shartnoma.contractNumber &&
-      shartnoma.name &&
-      shartnoma.accountNumber &&
-      shartnoma.workers
-    ) {
+    const filtOrgans = organs.map((organ: any) => {
+      return {
+        name: organ.name,
+        time: organ.time,
+        workers: organ.workers.map((worker: any) => {
+          return {
+            FIO: worker.FIO,
+            batalyon: worker.batalyon,
+            zvaniya: worker.zvaniya,
+          };
+        }),
+      };
+    });
+    const shartnoma = { ...value, organs: filtOrgans };
+    if (shartnoma.organs && shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
     } else {
       dispatch(
@@ -166,301 +113,248 @@ function CreateShartnoma({ language }: { language: any }) {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
-  const handleChangeValue2 = (e: any) => {
-    setSearch(e.target.value);
+  const handleChangeOrgans = (e: any, index: number) => {
+    const updatedOrgans = [...organs];
+    updatedOrgans[index] = {
+      ...updatedOrgans[index],
+      [e.target.name]: e.target.value,
+    };
+    setOrgans(updatedOrgans);
   };
-  const setBankName = async () => {
-    const res = await SearchBank(JWT, search);
-    if (res.success) {
-      console.log(res.data.name);
 
-      setValue({ ...value, bankName: res.data.name });
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Bank nomi muavaqiyatli topildi"),
-          status: "success",
-        })
+  const handleWorkerSelect = (index: number, worker: any) => {
+    const updatedWorkers = workers.map((w) =>
+      w._id === worker._id ? { ...w, selected: !w.selected } : w
+    );
+    setWorkers(updatedWorkers);
+
+    const updatedOrgans = [...organs];
+    const organWorkers = updatedOrgans[index].workers;
+    if (organWorkers.find((w: any) => w._id === worker._id)) {
+      updatedOrgans[index].workers = organWorkers.filter(
+        (w: any) => w._id !== worker._id
       );
     } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Bank nomi topilmadi"),
-          status: "error",
-        })
-      );
+      updatedOrgans[index].workers = [...organWorkers, worker];
     }
+    setOrgans(updatedOrgans);
   };
-  const searchSubmit = (e: any) => {
-    e.preventDefault();
-    if (search) {
-      setBankName();
+
+  const handleAddOrgan = () => {
+    setOrgans([
+      ...organs,
+      {
+        name: "",
+        time: "",
+        workers: [],
+        _id: Math.ceil(Math.random() * 10000),
+      },
+    ]);
+  };
+
+  const handleRemoveOrgan = (index: number) => {
+    const removedWorkers = organs[index].workers;
+    const updatedWorkers = workers.map((w) => {
+      if (removedWorkers.find((rw: any) => rw._id === w._id)) {
+        return { ...w, selected: false };
+      }
+      return w;
+    });
+    setWorkers(updatedWorkers);
+
+    const updatedOrgans = organs.filter((_: any, i: any) => i !== index);
+    setOrgans(updatedOrgans);
+  };
+
+  const getAvailableWorkers = (currentOrganIndex: number) => {
+    const selectedWorkers = organs.flatMap((organ: any, index: any) =>
+      index !== currentOrganIndex ? organ.workers : []
+    );
+    return workers.filter(
+      (worker) => !selectedWorkers.some((w: any) => w._id === worker._id)
+    );
+  };
+
+  const handleWorkerCheckboxClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number,
+    worker: any
+  ) => {
+    e.stopPropagation();
+    handleWorkerSelect(index, worker);
+  };
+
+  function getFirstWord(text: string): string {
+    // Find the index of the first space
+    const firstSpaceIndex = text.indexOf(" ");
+
+    // If a space is found, return the substring up to the space
+    if (firstSpaceIndex !== -1) {
+      return text.substring(0, firstSpaceIndex);
     } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Bank raqamini kiriting"),
-          status: "warning",
-        })
-      );
+      // If no space is found, return the entire string
+      return text;
     }
-  };
+  }
 
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
-        <div className="flex w-full justify-between gap-4 ">
+        <div className="flex w-full justify-between mb-4 gap-4 ">
           <TextField
-            id="outlined-basic"
+            id="shartnomaNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
-            sx={{ width: "25%" }}
-            onChange={(e: any) => handleChangeValue(e)}
+            sx={{ width: "35%" }}
+            onChange={handleChangeValue}
             variant="outlined"
-            name="contractNumber"
+            name="shartnomaNumber"
             autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
-
-          <div className=" translate-y-[-32px] flex flex-col w-[25%]  md:ml-0 ">
-            <div className=" ">{latinToCyrillic("Shartnoma sanasi")} </div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer
-                components={[
-                  "DatePicker",
-                  "TimePicker",
-                  "DatePicker",
-                  "DateRangePicker",
-                ]}
-              >
-                <DemoItem>
-                  <DatePicker
-                    sx={{ width: "100%" }}
-                    onChange={(e: any) =>
-                      setValue({ ...value, contractDate: FiltDate(e) })
-                    }
-                    onAccept={(e: any) =>
-                      setValue({ ...value, contractDate: FiltDate(e) })
-                    }
-                    format={latinToCyrillic("kun/oy/yil")}
-                    slots={{
-                      textField: (textFieldProps) => (
-                        <CustomTextField {...textFieldProps} />
-                      ),
-                    }}
-                  />
-                </DemoItem>
-              </DemoContainer>
-            </LocalizationProvider>
-          </div>
-
           <TextField
-            id="outlined-basic"
-            label={latinToCyrillic("Shartnoma Nomi")}
-            sx={{ width: "20%" }}
-            onChange={(e: any) => handleChangeValue(e)}
+            id="date"
+            label={latinToCyrillic("Shartnoma sanasi")}
+            sx={{ width: "30%" }}
+            onChange={handleChangeValue}
             variant="outlined"
-            name="name"
+            name="date"
             autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
-
           <TextField
-            id="outlined-basic"
-            label={latinToCyrillic("Shartoma Summasi")}
-            sx={{ width: "25%" }}
-            onChange={(e: any) => handleChangeValue(e)}
-            type="number"
-            name="contractSumma"
+            id="buyurtmachi"
+            label={latinToCyrillic("Buyurtmachi")}
+            sx={{ width: "35%" }}
+            onChange={handleChangeValue}
             variant="outlined"
+            name="buyurtmachi"
             autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
         </div>
-
-        <div className="flex w-full justify-between mb-8 gap-4">
+        <div className="flex w-full justify-between mb-4 gap-4">
           <TextField
-            id="outlined-basic"
-            label={latinToCyrillic("Shartnoma Mazmuni")}
+            id="timeLimit"
+            label={latinToCyrillic(
+              "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
+            )}
             multiline
             sx={{ width: "50%" }}
-            onChange={(e: any) => handleChangeValue(e)}
+            onChange={handleChangeValue}
             variant="outlined"
-            name="content"
+            name="timeLimit"
             autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
-
           <TextField
-            id="outlined-basic"
-            label={latinToCyrillic(" Shartnoma Manzili")}
+            id="address"
+            label={latinToCyrillic("Tadbir o'tadigan joy manzil")}
             sx={{ width: "50%" }}
-            onChange={(e: any) => handleChangeValue(e)}
+            onChange={handleChangeValue}
             variant="outlined"
             name="address"
             multiline
             autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-            }}
           />
         </div>
-
-        {/* <div>
-          <div className="flex w-[100%] gap-10 ">
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel id="demo-multiple-chip-label">
-                {latinToCyrillic("Ishchilar")}
-              </InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                onOpen={() => setOpen(true)}
-                onClose={() => setOpen(false)}
-                value={personName}
-                onChange={handleChange}
-                input={
-                  <OutlinedInput id="select-multiple-chip" label="ishchila" />
-                }
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {names.map((name: any) => (
-                  <>
-                    <div
-                      onClick={() => setActive(name.id)}
-                      className="flex justify-between w-full items-center mb-1 p-2"
-                    >
-                      <div className="flex gap-2 items-center">
-                        <Checkbox
-                          defaultChecked={name.selected}
-                          onChange={(e: any) => {
-                            setWorkers(
-                              workers.map((e: any) => {
-                                return e._id === name.id
-                                  ? { ...e, selected: !name.selected }
-                                  : e;
-                              })
-                            );
-                          }}
-                        />
-                        <MenuItem
-                          key={name.id}
-                          value={name.name}
-                          style={getStyles(name, personName, theme)}
-                        >
-                          {name.name}
-                        </MenuItem>
-                      </div>
-                      <div className="flex w-[50%] gap-4">
-                        <TextField
-                          id="outlined-basic"
-                          label={latinToCyrillic("Ishlash vaqti")}
-                          sx={{ width: "100%" }}
-                          value={name.dayOrHour}
-                          onChange={(i: any) => {
-                            setWorkers(
-                              workers.map((e: any) => {
-                                return e._id === name.id
-                                  ? { ...e, dayOrHour: +i.target.value }
-                                  : e;
-                              })
-                            );
-                          }}
-                          variant="outlined"
-                          type="number"
-                          autoComplete="off"
-                          autoCorrect="off"
-                          spellCheck="false"
-                          InputProps={{
-                            autoComplete: "off",
-                            autoCorrect: "off",
-                            spellCheck: "false",
-                          }}
-                        />
-
-                        <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">
-                            {latinToCyrillic(" Ishlash muddati")}
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={name.timeType}
-                            label={latinToCyrillic(" Ishlash muddati")}
-                            onChange={(i: any) => {
-                              setWorkers(
-                                workers.map((e: any) => {
-                                  return e._id === name.id
-                                    ? { ...e, timeType: i.target.value }
-                                    : e;
-                                })
-                              );
-                            }}
-                          >
-                            <MenuItem value={"soat"}>
-                              {latinToCyrillic("Soat")}{" "}
-                            </MenuItem>
-                            <MenuItem value={"kun"}>
-                              {latinToCyrillic("Kun")}
-                            </MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    </div>
-                  </>
-                ))}
-              </Select>
-            </FormControl>
-            {open && (
-              <IconButton size="large" aria-label="delete">
-                <SaveIcon fontSize="inherit" color="success" />
-              </IconButton>
-            )}
+        <div className="flex gap-4 flex-col w-full">
+          <div className="text-[24px] font-bold mb-2">
+            {latinToCyrillic("Smeta")}
           </div>
-        </div> */}
+          {organs.map((organ: any, index: any) => (
+            <div key={organ._id} className="flex gap-4 w-full">
+              <TextField
+                label={latinToCyrillic("Organ nomi")}
+                multiline
+                sx={{ width: "26%" }}
+                onChange={(e) => handleChangeOrgans(e, index)}
+                variant="outlined"
+                name="name"
+                value={organ.name}
+                autoComplete="off"
+              />
+              <TextField
+                label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
+                multiline
+                sx={{ width: "28%" }}
+                onChange={(e) => handleChangeOrgans(e, index)}
+                variant="outlined"
+                name="time"
+                value={organ.time}
+                autoComplete="off"
+              />
+              <FormControl sx={{ width: "38%" }}>
+                <Autocomplete
+                  multiple
+                  options={getAvailableWorkers(index)}
+                  getOptionLabel={(option: any) => getFirstWord(option.FIO)}
+                  value={organ.workers}
+                  onChange={(e, newValue) => {
+                    const selectedWorkers = newValue;
+                    setOrgans((prev: any) =>
+                      prev.map((o: any, i: any) =>
+                        i === index ? { ...o, workers: selectedWorkers } : o
+                      )
+                    );
+                    const selectedWorkerIds = selectedWorkers.map(
+                      (w: any) => w._id
+                    );
+                    setWorkers((prev) =>
+                      prev.map((w) =>
+                        selectedWorkerIds.includes(w._id)
+                          ? { ...w, selected: true }
+                          : { ...w, selected: false }
+                      )
+                    );
+                  }}
+                  isOptionEqualToValue={(option, value) =>
+                    option._id === value._id
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label={`${latinToCyrillic("Xodimlar")} (${
+                        organ.workers.length
+                      })`}
+                    />
+                  )}
+                  renderOption={(props, option) => (
+                    <li
+                      {...props}
+                      onClick={(e: any) =>
+                        handleWorkerCheckboxClick(e, index, option)
+                      }
+                    >
+                      <Checkbox checked={option.selected} />
+                      <div className="flex gap-2">
+                        <span>{option.zvaniya},</span>
+                        <span>{option.FIO},</span>
+                        <span>{option.batalyon}</span>
+                      </div>
+                    </li>
+                  )}
+                  disableCloseOnSelect
+                />
+              </FormControl>
+              <div className="flex gap-2 w-[10%]">
+                <IconButton
+                  sx={{ width: "60px", height: "60px" }}
+                  onClick={() => handleRemoveOrgan(index)}
+                >
+                  <RemoveCircleIcon fontSize="medium" color="error" />
+                </IconButton>
+                <IconButton
+                  sx={{ width: "60px", height: "60px" }}
+                  onClick={handleAddOrgan}
+                >
+                  <AddIcon fontSize="medium" color="success" />
+                </IconButton>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="w-full mb-[18vh]">
+      <div className="w-full mb-[5vh]">
         <Button onClick={saqlash} color="success" fullWidth variant="contained">
           {latinToCyrillic("Saqlash")}
         </Button>
       </div>
-      <div></div>
     </>
   );
 }

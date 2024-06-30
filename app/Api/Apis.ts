@@ -519,12 +519,8 @@ export const GetForShartnoma = async (JWT: any, language: any) => {
   return data;
 };
 
-export const Createshartnomaa = async (
-  JWT: any,
-  shartnoma: any,
-  language: any
-) => {
-  const res = await fetch(URL + "/contract/create?query=" + language, {
+export const Createshartnomaa = async (JWT: any, shartnoma: any) => {
+  const res = await fetch(URL + "/shartnoma/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -541,7 +537,7 @@ export const Createshartnomaa = async (
 };
 
 export const GetAllShartnoma = async (JWT: any) => {
-  const res = await fetch(URL + "/contract/get", {
+  const res = await fetch(URL + "/shartnoma/get", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -588,7 +584,7 @@ export const getCantractFilter = async (
 };
 
 export const GetSingleShartnoma = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/contract/get/" + id, {
+  const res = await fetch(URL + "/shartnoma/get/" + id, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -601,7 +597,7 @@ export const GetSingleShartnoma = async (JWT: any, id: any) => {
 };
 
 export const DeleteShartnoma = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/contract/delete/" + id, {
+  const res = await fetch(URL + "/shartnoma/delete/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -614,23 +610,15 @@ export const DeleteShartnoma = async (JWT: any, id: any) => {
   return data;
 };
 
-export const UpdateShartnoma = async (
-  JWT: any,
-  worker: any,
-  id: any,
-  language: any
-) => {
-  const res = await fetch(
-    URL + "/contract/update/" + id + "?query=" + language,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + JWT,
-      },
-      body: JSON.stringify(worker),
-    }
-  );
+export const UpdateShartnoma = async (JWT: any, worker: any, id: any) => {
+  const res = await fetch(URL + "/shartnoma/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(worker),
+  });
 
   const data = await res.json();
 
@@ -682,7 +670,7 @@ export const GetNames = async (JWT: any) => {
 };
 
 export const UpdateNames = async (JWT: any, worker: any) => {
-  const res = await fetch(URL + "/bxm/update/" , {
+  const res = await fetch(URL + "/bxm/update/", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -783,5 +771,18 @@ export const SearchBank = async (JWT: any, number: any) => {
 
   const data = await res.json();
 
+  return data;
+};
+
+export const GETworkers = async (JWT: any) => {
+  const res = await fetch(URL + "/shartnoma/for/page", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
   return data;
 };

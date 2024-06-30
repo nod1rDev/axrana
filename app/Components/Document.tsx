@@ -1,217 +1,306 @@
-"use client"; // components/Table.js
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
-import { GetNames } from "../Api/Apis";
-import { useSelector } from "react-redux";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { DeleteShartnoma, GetSingleShartnoma } from "../Api/Apis";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    color: "#000",
-    fontWeight: "600",
-    fontSize: 18,
-    backgroundColor: "#f1faee",
-    textAlign: "center", // Center align text
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 16,
-    fontWeight: "500",
-    textAlign: "center", // Center align text
-  },
-}));
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { alertChange } from "../Redux/ShaxsiySlice";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({}));
-
-interface Data {
-  tr: number;
-  name: string;
-  rank: string;
-  district: string;
-  unit: string;
-  contractNo: string;
-  contractDate: string;
-  contractAmount: number;
-
-  serviceDuration: any;
-  company: string;
-  inn: any;
-  manzil: any;
-  raxbar: any;
-  telefon: any;
-}
-
-function createData(
-  tr: number,
-  name: string,
-  rank: string,
-  district: string,
-  unit: string,
-  contractNo: string,
-  contractDate: string,
-  contractAmount: number,
-
-  serviceDuration: any,
-  company: string,
-  inn: any,
-  manzil: any,
-  raxbar: any,
-  telefon: any
-): Data {
-  return {
-    tr,
-    name,
-    rank,
-    district,
-    unit,
-    contractNo,
-    contractDate,
-    contractAmount,
-
-    serviceDuration,
-    company,
-    inn,
-    manzil,
-    raxbar,
-    telefon,
-  };
-}
-
-const Documenttt = React.forwardRef(
-  ({ printData, language }: any, ref: any) => {
-    const [names, setNames] = React.useState<any>();
-    const JWT = useSelector((s: any) => s.auth.JWT);
-    const getUser = async () => {
-      const res = await GetNames(JWT);
-      setNames(res.data);
-    };
-
-    React.useEffect(() => {
-      getUser();
-    }, []);
-    const rows =
-      printData &&
-      printData.map((e: any, i: any) =>
-        createData(
-          i + 1,
-          e.FIO,
-          e.unvon,
-          e.tuman,
-          e.otryad,
-          e.shartnoma_N,
-          e.shartnoma_sanasi,
-          e.shartnoma_summasi,
-
-          e.xizmat_muddati,
-          e.korxona_nomi,
-          e.inn,
-          e.manzil,
-          e.raxbar,
-          e.telefon
-        )
-      );
-    return (
-      <div ref={ref} className="flex flex-col  p-10 w-full mx-auto">
-        <div className="text-[36px] mx-auto  font-bold mb-5">отчот руйҳати</div>
-        <TableContainer sx={{ minWidth: 700 }} component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead sx={{ position: "sticky", top: "0px" }}>
-              <TableRow>
-                <StyledTableCell sx={{ minWidth: "90px" }}>т/р</StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "280px" }} align="right">
-                  жалб килинган ходим ФИО
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "80px" }} align="right">
-                  унвони
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "80px" }} align="right">
-                  Туман
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "80px" }} align="right">
-                  отряди
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "120px" }} align="right">
-                  шартнома №
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "80px" }} align="right">
-                  шартнома санаси
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "90px" }} align="right">
-                  шартнома суммаси
-                </StyledTableCell>
-
-                <StyledTableCell sx={{ minWidth: "90px" }} align="right">
-                  хисмат муддати
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "290px" }} align="right">
-                  корхона номи
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "140px" }} align="right">
-                  инн
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "140px" }} align="right">
-                  манзил
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "180px" }} align="right">
-                  рахбар ФИО
-                </StyledTableCell>
-                <StyledTableCell sx={{ minWidth: "140px" }} align="right">
-                  телефон
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row: any) => (
-                <StyledTableRow key={row.tr}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.tr}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.name}</StyledTableCell>
-                  <StyledTableCell align="right">{row.rank}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.district}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.unit}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.contractNo}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.contractDate}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.contractAmount}
-                  </StyledTableCell>
-
-                  <StyledTableCell align="right">
-                    {row.serviceDuration}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.company}</StyledTableCell>
-                  <StyledTableCell align="right">{row.inn}</StyledTableCell>
-                  <StyledTableCell align="right">{row.manzil}</StyledTableCell>
-                  <StyledTableCell align="right">{row.raxbar}</StyledTableCell>
-                  <StyledTableCell align="right">{row.telefon}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <div className="flex mt-[5vh] flex-col gap-4 min-w-full  justify-start">
-          <h1>Rахбар:{" " + names && names?.boss}</h1>
-          <h1>Bош ҳисобчи:{" " + names && names?.accountant}</h1>
-          <h1 className="text-[100%]">
-            Qабул қилувчи имзоси: ____________________________________
-          </h1>
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import { useReactToPrint } from "react-to-print";
+import BudgetTable from "../[id]/SingleTab";
+const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
+  return (
+    <>
+      <div ref={ref} className=" mt-8 w-[80%] mx-auto font-serif text-justify">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва жамоат
+          тартибини сақлаш тўғрисида намунавий шартнома
+        </h1>
+        <div className="mb-4 text-center">
+          <p className="font-bold underline text-[24px]">
+            {data.shartnomaNumber + latinToCyrillic("-son")}
+          </p>
         </div>
+        <div className="mb-4 flex  justify-between">
+          <p className="font-bold">{data.date}</p>
+          <p className="font-bold">Тошкент шаҳри</p>
+        </div>
+        <section className="mb-4">
+          <p>
+            <span className="font-bold">{data.buyurtmachi}</span> номидан
+            _________ асосида фаолият юритувчи
+            <span className="font-bold">______________________</span> келгусида
+            «Буюртмачи» деб номланувчи бир томондан ва Ўзбекистон Республикаси
+            Миллий гвардияси Тошкент шаҳри бўйича бошқармаси номидан шартнома
+            асосида фаолият юритувчи Бошқарма бошлиғи А.Р. Ортиков келгусида
+            «Бажарувчи» деб номланувчи иккинчи томондан биргаликда эса томонлар
+            ўртасида Ўзбекистон Республикаси Вазирлар Маҳкамасининг 2014 йил 29
+            июлдаги 205-сон қарорига мувофиқ оммавий тадбирни ўтказишда
+            фуқаролар хавфсизлигини таъминлаш ва жамоат тартибини сақлаш
+            юзасидан шартнома тузилди.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            1. Шартнома предмети
+          </h2>
+          <p className="mb-0">
+            1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»{" "}
+            <span className="font-bold">{data.timeLimit}</span> гача{" "}
+            {data.address}да бўлиб ўтадиган тадбирлар бўйича ўтказиладиган
+            оммавий тадбир вақтида фуқаролар хавфсизлигини ва жамоат тартибини
+            сақлаш бўйича мажбуриятни ўз зиммасига олади.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            2. Ҳисоблашиш тартиблари ва хизмат нархлари
+          </h2>
+          <p className="mb-0">
+            2.1 «Буюртмачи» «Бажарувчи»нинг хизмат тўловларини ҳисоб рақамига
+            пул ўтказиш ёки нақд тўлаш орқали амалга оширади ва тўлов ҳужжатлари
+            нусхасини 3.3-бандда кўрсатилган муддатдан кечиктирмаган ҳолда
+            тақдим этади.
+          </p>
+          <p className="mb-0">
+            2.2 Жамоат тартибини сақлаш борасидаги хизмат нархи Миллий гвардия
+            Тошкент шаҳри бўйича бошқармаси томонидан тақдим этилган
+            шартноманинг ажралмас қисми хисобланган смета харажатлари асосида
+            жами миқдори
+            <span className="font-bold">{" " + data.allAllMoney} сўм</span> деб
+            белгиланди.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            3. Томонларнинг мажбуриятлари ва ҳуқуқлари
+          </h2>
+          <p className="mb-0">
+            3.1 «Бажарувчи» оммавий тадбир ўтказиш даврида жамоат тартибини
+            сақлаш ҳуқуқбузарликларни ва бошқа қонун бузилиши ҳаракатларининг
+            олдини олиш мажбуриятини олади.
+          </p>
+          <p className="mb-0">
+            3.2 «Бажарувчи» оммавий тадбир ўтказиш даврида томошабинларнинг сони
+            ва тадбир ўтказилаётган ҳудуддаги тезкор вазиятга асосланган ҳолда
+            ҳарбий хизматчилар ва ходимлар сонини камайтириш кўпайтириш ёки
+            зарурият туғилганда оммавий тадбирни ўтказишни тўхтатишгача бўлган
+            ҳуқуққа эга.
+          </p>
+          <p className="mb-0">
+            3.3 Шартнома имзолангач ___ кун ичида «Буюртмачи» тўловни 100%
+            амалга ошириш мажбуриятини олади ва «Бажарувчи»дан жамоат тартибини
+            сақлаш юзасидан ёзма мажбуриятини олиш ва ваколатли орган оммавий
+            тадбирларни ўтказилишини назорат қилиш комиссиясига тақдим этиш учун
+            тўлов ҳужжатлари нусхаларини тақдим этади.
+          </p>
+          <p className="mb-0">
+            3.4 «Бажарувчи» тўловнинг амалга оширилганлиги тўғрисидаги ҳужжат
+            нусхаларини олгандан сўнг бир иш куни ичида «Буюртмачи»га
+            _________ваколатли орган ҳузуридаги оммавий тадбирларнинг
+            ўтказилишини назорат қилиш комиссиясига тақдим этиш учун жамоат
+            тартибини сақлаш бўйича ёзма мажбуриятни тақдим этади.
+          </p>
+          <p className="mb-0">
+            3.5 «Буюртмачи» тадбир бошланишидан олдин уч календар куни ичида
+            «Бажарувчи»га маълум қилган ҳолда тадбирни бекор қилиш ёки ўтказиш
+            санасини ўзгартириш ҳуқуқига эга.
+          </p>
+          <p className="mb-0">
+            3.6 «Буюртмачи» объект маъмурияти билан ҳамкорликда Миллий гвардия
+            ва ИИО ходимларига оммавий тадбир ўтадиган бинонинг маъмурий
+            омборхона ва бошқа хоналарини текширувдан ўтказиш ҳамда жамоат
+            тартибини сақлаш учун тақдим этиш мажбуриятини ўз зиммасига олади.
+          </p>
+          <p className="mb-0">
+            3.7 «Буюртмачи» томон шартноманинг 3.3-бандида кўрсатилган
+            мажбуриятларни тўлиқ бажармаган тақдирда ваколатли орган оммавий
+            тадбирларни ўтказилишини назорат қилиш комиссияси оммавий тадбирни
+            ўтказишни тўхтатиш ҳуқуққа эга.
+          </p>
+          <p className="mb-0">
+            3.8 Вазирлар Маҳкамасининг 2014 йил 29 июлдаги 205-сонли қарори
+            асосида «Буюртмачи» «Бажарувчи»га тадбир бошланишидан олдин объектга
+            эркин киришларини тасдиқловчи ҳужжатларни (чипталар таклифномалар ва
+            бошқалар) Миллий гвардия ва ИИО (ходимлари ёки ҳарбий хизматчилари)
+            зал ичида ўтиришлари учун ҳар бир тадбирга энг камида ______донадан
+            тақдим этиш мажбуриятини ўз зиммасига олади.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl font-semibold text-center mb-0">
+            4. Томонларнинг жавобгарлиги
+          </h2>
+          <p className="mb-0">
+            4.1 Ушбу шартномада белгиланган мажбуриятлар бажарилмаган тақдирда
+            айбдор томон қонунчилик ҳужжатларига мувофиқ жавобгар ҳисобланади.
+          </p>
+          <p className="mb-0">
+            4.2 Ушбу шартнома ёки унга алоқадор масалалар бўйича баҳслар юзага
+            келган тақдирда, томонлар ўзаро музокаралар орқали уларнинг ечимини
+            топишнинг барча зарур чора-тадбирларини кўрадилар. Ушбу шартнома
+            бўйича юзага келган барча баҳсларнинг ечими топилмаган тақдирда,
+            ушбу баҳслар Ўзбекистон Республикасининг амалдаги қонунчиликда
+            белгиланган суд тартибида ҳал қилинади.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            5. Форс-мажор
+          </h2>
+          <p className="mb-0">
+            5.1 Томонлар мазкур шартнома бўйича форс-мажор ҳолатлари рўй
+            берганда ўз мажбуриятларини қисман ёки бутунлай бажаришдан озод
+            этиладилар.
+          </p>
+          <p className="mb-0">
+            5.2 Форс-мажор ҳолатларига олдини олиш мумкин бўлмаган ҳодисалар
+            (ёнғин, тошқин, ер қимирлаши, фавқулодда ҳолатлар (вазиятлар) ва
+            бошқа табиий офатлар), шунингдек, қонунчиликдаги ўзгаришлар киради.
+          </p>
+          <p className="mb-0">
+            5.3 Форс-мажор ҳолатлари рўй берганда “Томонлар” бу ҳақда
+            бир-бирларини ёзма равишда хабардор этишлари шарт.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            6. Коррупсияга қарши қўшимча шартлар
+          </h2>
+          <p className="mb-0">
+            6.1 Тарафларнинг шартнома тузишда, шартноманинг амал қилиш муддатида
+            ва ушбу муддат тугагандан сўнг, шартнома билан боғлиқ коррупсиявий
+            ҳаракатлар содир қилмасликка келишиб оладилар.
+          </p>
+          <p className="mb-0">
+            6.2 Тарафлар шартномадаги коррупсияга қарши қўшимча шартларда
+            белгиланган коррупсиянинг олдини олиш чораларини тан олади ва уларга
+            риоя этилиши бўйича ҳамкорликни таъминлайдилар.
+          </p>
+          <p className="mb-0">
+            6.3 Ҳар бир тараф шартнома тузилган пайтда бевосита ўзи ёки унинг
+            ижроия органлари, мансабдор шахслари ва ходимлари томонидан шартнома
+            билан боғлиқ муносабатлар юзасидан қонунга хилоф равишда пул, мрддий
+            қийматликлар берилмаганлигини, шартнома тузилиши эвазига норасмий
+            пул ёки моддий қийматликлар олининшига йўл қўйилмаганлигини, таклиф
+            этилмаганлигини, уларни беришга ваъда қилинмаганлигини кафолатлайди.
+          </p>
+          <p className="mb-0">
+            6.4 Коррупсияга оид ҳуқуқбузурлик содир қилиш учун таъмагирлик
+            қилиш, ундаш, тазйиқ ўтказиш ёки таҳдид қилиш. Ушбу ҳолат бўйича бир
+            тараф иккинчи тарафни ҳамда ваколатли давлат оргаларини дарҳол
+            хабардор қилиши шарт.
+          </p>
+        </section>
+
+        <section className="mb-4">
+          <h2 className="text-xl text-center font-semibold mb-0">
+            7. Шартноманинг амал қилиш муддати ва шартномани бекор қилиш
+            тартиблари
+          </h2>
+          <p className="mb-0">
+            7.1. Тарафларнинг юридик манзиллари, банк реквизитлари ўзгарган
+            тақдирда, 2 кун ичида бир-бирларига ўзгарганлик ҳақида ёзма маълумот
+            беришга мажбурдирлар.
+          </p>
+          <p className="mb-0">
+            7.2 Мазкур шартномага киритилган барча ўзгартириш ва қўшимчалар ёзма
+            шаклда тузилиб, белгиланган тартибда тарафларнинг ваколатли
+            вакиллари томонидан имзоланган тақдирдагина амалда бўлади.
+          </p>
+          <p className="mb-0">
+            7.3 Ўтказиладиган дастур вақтига, иштирокчилар ва меҳмонларнинг
+            сонига ўзгартиришлар киритилган тақдирда, тадбир бошланишидан олдин
+            қўшимча келишув шартномаси тузилиб, “Буюртмачи” қўшимча тўловни
+            амалга оширишни ўз зиммасига олади.
+          </p>
+          <p className="mb-0">
+            7.4 Мазкур шартнома икки нусхада тузилиб, томонлар имзолаган кундан,
+            бюджет ҳисобидан молиялаштириладиганлар учун шартнома ғазначилик
+            бўлимлари томонидан рўйхатга олинган кундан кучга киради ва
+            ______йилнинг _______кунигача амалда бўлади.
+          </p>
+          <p className="mb-0">
+            7.5 Шартнома муддатидан олдин томонларнинг ўзаро келишувига кўра ёки
+            улардан бири томонидан шартнома шартларини бошқа томон жиддий
+            равишда бузган тақдирда бекор қилиниши мумкин.
+          </p>
+        </section>
+
+        <section className="pb-[200px] mb-4">
+          <h2 className="text-xl text-center font-semibold mb-4">
+            7. Томонларнинг реквизитлари
+          </h2>
+          <div className="flex  justify-between items-start">
+            <div className="flex w-[50%] relative justify-center items-center flex-col">
+              <h2 className="text-lg text-center font-bold mb-2">Буюртмачи:</h2>
+              <p className="font-bold text-xl text-center">
+                “TRASTBANK” хусусий акциядорлик банки”
+              </p>
+
+              <div className=" absolute top-[250px] left-[40px]">
+                <div className="flex flex-col">
+                  <h1 className="font-bold text-xl">
+                    Раҳбари: _________ _______________________
+                  </h1>
+                  <div className="flex   gap-36 justify-center items-center">
+                    <div>(имзо)</div>
+                    <div>(Ф.И.О.)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex w-[50%] justify-center relative items-center flex-col">
+              <h2 className="text-lg text-center font-bold mb-2">Бажарувчи:</h2>
+              <p className="font-bold text-xl text-center">
+                ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
+              </p>
+              <div className="flex gap-2">
+                <span className="font-bold text-xl">Манзил:</span>
+                <p className=" text-start text-xl">
+                  Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй. Банк
+                  реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:00014. х/р 21
+                  506 000 705 131 158 003 СТИР: 207 305 369
+                </p>
+              </div>
+
+              <div className=" absolute top-[250px] left-[40px]">
+                <div className="flex flex-col">
+                  <h1 className="font-bold text-xl">
+                    Раҳбари: ________ ________________
+                    <span className="font-[400]">А.Р. Ортиков</span>
+                  </h1>
+                  <div className="flex    gap-32 justify-center items-center">
+                    <div>(имзо)</div>
+                    <div>(Ф.И.О.)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <BudgetTable
+          data1={data.smeta}
+          raq={data.shartnomaNumber}
+          dataId={data._id}
+        />
       </div>
-    );
-  }
-);
+    </>
+  );
+});
 
 export default Documenttt;

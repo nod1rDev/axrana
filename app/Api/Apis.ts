@@ -774,8 +774,55 @@ export const SearchBank = async (JWT: any, number: any) => {
   return data;
 };
 
+export const SearchShartnoma = async (JWT: any, number: any) => {
+  const res = await fetch(URL + "/shartnoma/filter", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(number),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 export const GETworkers = async (JWT: any) => {
   const res = await fetch(URL + "/shartnoma/for/page", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const GetWorkerByOrgan1 = async (
+  JWT: any,
+  dataId: any,
+  organId: any
+) => {
+  const res = await fetch(
+    URL + "/shartnoma/one/organ/workers/" + dataId + "?organ=" + organId,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await res.json();
+  return data;
+};
+
+export const GetWorkerByOrgan = async (JWT: any, dataId: any) => {
+  const res = await fetch(URL + "/shartnoma/organs/all/workers/" + dataId, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,

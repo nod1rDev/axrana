@@ -177,7 +177,7 @@ export default function Login() {
 
                         width: "100%",
                       }}
-                      type={showPassword ? "text" : "password"}
+                      
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton

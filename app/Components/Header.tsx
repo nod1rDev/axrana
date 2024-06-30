@@ -15,6 +15,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuHeader from "./Menu";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
@@ -28,7 +32,7 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems = ["Shaxsiy", "shartnoma"];
+const navItems = ["shartnoma", "shaxsiy"];
 const navItems2 = [
   "Unvonlar",
   "Joylashuv",
@@ -42,7 +46,7 @@ const navItems2 = [
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [value, setValue] = React.useState("shartnoma");
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -68,6 +72,12 @@ export default function Header(props: Props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const router = useRouter();
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+    router.push(`/${e.target.value}`);
+  };
+
+  React.useEffect(() => {}, [value]);
 
   return (
     <Box sx={{ display: "flex", maxWidth: "100%" }}>
@@ -85,30 +95,23 @@ export default function Header(props: Props) {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography
-                variant="h4"
-                component="div"
-                sx={{
-                  flexGrow: 1,
-                  display: { xs: "block", sm: "block" },
-                  ml: { xs: "100px", lg: "50px" },
-                  fontWeight: "bold",
-                  letterSpacing: "5px",
-                }}
-              >
-                <Link href={"/"}>Aхрана</Link>
-              </Typography>
-              <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item}
-                    onClick={() => router.push(`/${item.toLowerCase()}`)}
-                    sx={{ color: "#fff", fontWeight: "bold", ml: 3 }}
+              <div className=" flex-1">
+                <FormControl sx={{ width: "200px" }}>
+                  <Select
+                    sx={{
+                      color: "white", // Selectning tanlangan qiymat matni uchun rang
+                      ".MuiSvgIcon-root": { color: "white" }, // Select icon uchun rang
+                    }}
+                    value={value}
+                    onChange={handleChange}
                   >
-                    {latinToCyrillic(item)}
-                  </Button>
-                ))}
-              </Box>
+                    {navItems.map((e: any) => (
+                      <MenuItem value={e}>{e}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+
               <div className="hidden ml-[100px] lg:block">
                 <MenuHeader />
               </div>

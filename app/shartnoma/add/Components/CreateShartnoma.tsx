@@ -5,13 +5,11 @@ import {
   Button,
   IconButton,
   FormControl,
-  InputLabel,
   Checkbox,
   Autocomplete,
-  Chip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Createshartnomaa, GETworkers } from "@/app/Api/Apis";
+import { Createshartnomaa, GETworkers, UpdateShartnoma } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -30,27 +28,50 @@ function CreateShartnoma({ language }: { language: any }) {
   });
 
   const [workers, setWorkers] = useState<any[]>([]);
-  const [organs, setOrgans] = useState<any>([
-    {
-      name: "",
-      time: "",
-      workers: [],
-      _id: Math.ceil(Math.random() * 10000),
-    },
-  ]);
+  const [worker2, setWorker2] = useState<any>([]);
+  const [organs, setOrgans] = useState<any>([]);
+  const [count, setCount] = useState(0);
 
   const router = useRouter();
+  interface Item {
+    name: string;
+    selected: boolean;
+  }
 
+  const filterItems = (items: Item[]): Item[] => {
+    const nameToItemsMap: { [key: string]: Item[] } = {};
+    const result: Item[] = [];
+
+    // Bir xil `name` property ga ega bo'lgan obyektlarni guruhlash
+    items.forEach((item) => {
+      if (!nameToItemsMap[item.name]) {
+        nameToItemsMap[item.name] = [];
+      }
+      nameToItemsMap[item.name].push(item);
+    });
+
+    // Har bir guruhda faqat `selected: true` bo'lgan obyektlarni qoldirish
+    Object.keys(nameToItemsMap).forEach((name) => {
+      const group = nameToItemsMap[name];
+      const selectedItems = group.filter((item) => item.selected);
+
+      if (selectedItems.length > 0) {
+        result.push(...selectedItems);
+      }
+    });
+
+    // Barcha obyektlarni qaytarish (ba'zi guruhlarda `selected: true` obyekt bo'lmasligi mumkin)
+    return result;
+  };
   const getWorkerFor = async () => {
     const res = await GETworkers(JWT);
-    setWorkers(
-      res.data.map((e: any) => {
-        return {
-          ...e,
-          selected: false,
-        };
-      })
-    );
+    const worker1 = res.data.map((e: any) => {
+      return {
+        ...e,
+        selected: false,
+      };
+    });
+    setWorkers(worker1);
   };
 
   useEffect(() => {
@@ -64,7 +85,7 @@ function CreateShartnoma({ language }: { language: any }) {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Shartnoma qo'shildi"),
+          message: latinToCyrillic("Shartnoma Qo'shildi"),
           status: "success",
         })
       );
@@ -98,6 +119,7 @@ function CreateShartnoma({ language }: { language: any }) {
     const shartnoma = { ...value, organs: filtOrgans };
     if (shartnoma.organs && shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
+      console.log(shartnoma);
     } else {
       dispatch(
         alertChange({
@@ -135,7 +157,10 @@ function CreateShartnoma({ language }: { language: any }) {
         (w: any) => w._id !== worker._id
       );
     } else {
-      updatedOrgans[index].workers = [...organWorkers, worker];
+      updatedOrgans[index].workers = [
+        ...organWorkers,
+        { ...worker, selected: true },
+      ];
     }
     setOrgans(updatedOrgans);
   };
@@ -184,19 +209,6 @@ function CreateShartnoma({ language }: { language: any }) {
     handleWorkerSelect(index, worker);
   };
 
-  function getFirstWord(text: string): string {
-    // Find the index of the first space
-    const firstSpaceIndex = text.indexOf(" ");
-
-    // If a space is found, return the substring up to the space
-    if (firstSpaceIndex !== -1) {
-      return text.substring(0, firstSpaceIndex);
-    } else {
-      // If no space is found, return the entire string
-      return text;
-    }
-  }
-
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -205,6 +217,7 @@ function CreateShartnoma({ language }: { language: any }) {
             id="shartnomaNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
             sx={{ width: "35%" }}
+            value={value.shartnomaNumber}
             onChange={handleChangeValue}
             variant="outlined"
             name="shartnomaNumber"
@@ -216,15 +229,17 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
+            value={value.date}
             name="date"
             autoComplete="off"
           />
           <TextField
             id="buyurtmachi"
             label={latinToCyrillic("Buyurtmachi")}
-            sx={{ width: "35%" }}
+            sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
+            value={value.buyurtmachi}
             name="buyurtmachi"
             autoComplete="off"
           />
@@ -235,96 +250,76 @@ function CreateShartnoma({ language }: { language: any }) {
             label={latinToCyrillic(
               "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
             )}
-            multiline
-            sx={{ width: "50%" }}
+            sx={{ width: "49%" }}
             onChange={handleChangeValue}
             variant="outlined"
+            value={value.timeLimit}
             name="timeLimit"
             autoComplete="off"
           />
           <TextField
             id="address"
             label={latinToCyrillic("Tadbir o'tadigan joy manzil")}
-            sx={{ width: "50%" }}
+            sx={{ width: "49%" }}
             onChange={handleChangeValue}
             variant="outlined"
+            value={value.address}
             name="address"
-            multiline
             autoComplete="off"
           />
         </div>
-        <div className="flex gap-4 flex-col w-full">
-          <div className="text-[24px] font-bold mb-2">
-            {latinToCyrillic("Smeta")}
-          </div>
-          {organs.map((organ: any, index: any) => (
-            <div key={organ._id} className="flex gap-4 w-full">
+        <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
+        {organs?.map((e: any, index: any) => (
+          <div
+            key={index}
+            className="flex  gap-2 mt-3 mb-4 border-2 border-sky-600 rounded-xl p-4"
+          >
+            <div className="flex w-full gap-3 justify-between">
               <TextField
+                id={`organ-name-${index}`}
                 label={latinToCyrillic("Organ nomi")}
-               
-                sx={{ width: "26%" }}
+                sx={{ width: "49%" }}
                 onChange={(e) => handleChangeOrgans(e, index)}
                 variant="outlined"
+                value={organs[index].name}
                 name="name"
-                value={organ.name}
                 autoComplete="off"
               />
               <TextField
+                id={`organ-time-${index}`}
                 label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
-                
-                sx={{ width: "28%" }}
+                sx={{ width: "49%" }}
                 onChange={(e) => handleChangeOrgans(e, index)}
                 variant="outlined"
-                type="number"
+                value={organs[index].time}
                 name="time"
-                value={organ.time}
                 autoComplete="off"
               />
-              <FormControl sx={{ width: "38%" }}>
+            </div>
+            <div className="flex w-full justify-between items-center">
+              <FormControl className="w-[100%]">
                 <Autocomplete
                   multiple
+                  id={`workers-${index}`}
                   options={getAvailableWorkers(index)}
+                  disableCloseOnSelect
+                  noOptionsText={latinToCyrillic("Xodim yo'q")}
+                  value={organs[index].workers}
                   getOptionLabel={(option: any) =>
                     option.zvaniya + " " + option.FIO + " " + option.batalyon
                   }
-                  value={organ.workers}
-                  onChange={(e, newValue) => {
-                    const selectedWorkers = newValue;
-                    setOrgans((prev: any) =>
-                      prev.map((o: any, i: any) =>
-                        i === index ? { ...o, workers: selectedWorkers } : o
-                      )
-                    );
-                    const selectedWorkerIds = selectedWorkers.map(
-                      (w: any) => w._id
-                    );
-                    setWorkers((prev) =>
-                      prev.map((w) =>
-                        selectedWorkerIds.includes(w._id)
-                          ? { ...w, selected: true }
-                          : { ...w, selected: false }
-                      )
-                    );
-                  }}
-                  isOptionEqualToValue={(option, value) =>
+                  isOptionEqualToValue={(option: any, value: any) =>
                     option._id === value._id
                   }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={`${latinToCyrillic("Xodimlar")} (${
-                        organ.workers.length
-                      })`}
-                    />
-                  )}
-                  renderOption={(props, option) => (
-                    <li
-                      {...props}
-                      onClick={(e: any) =>
-                        handleWorkerCheckboxClick(e, index, option)
-                      }
-                    >
-                      <Checkbox checked={option.selected} />
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props} key={option._id}>
+                      <Checkbox
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                        onClick={(e: any) =>
+                          handleWorkerCheckboxClick(e, index, option)
+                        }
+                      />
                       <div className="flex gap-2">
                         <span>{option.zvaniya}</span>
                         <span>{option.FIO}</span>
@@ -332,31 +327,54 @@ function CreateShartnoma({ language }: { language: any }) {
                       </div>
                     </li>
                   )}
-                  disableCloseOnSelect
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label={latinToCyrillic(`Hodimlar(${e.workers.length})`)}
+                    />
+                  )}
+                  onChange={(_, selectedWorkers) =>
+                    setOrgans((prevOrgans: any) => {
+                      const updatedOrgans = [...prevOrgans];
+                      updatedOrgans[index].workers = selectedWorkers.map(
+                        (worker) => ({ ...worker, selected: true })
+                      );
+                      return updatedOrgans;
+                    })
+                  }
                 />
               </FormControl>
-              <div className="flex gap-2 w-[10%]">
-                <IconButton
-                  sx={{ width: "60px", height: "60px" }}
-                  onClick={() => handleRemoveOrgan(index)}
-                >
-                  <RemoveCircleIcon fontSize="medium" color="error" />
-                </IconButton>
-                <IconButton
-                  sx={{ width: "60px", height: "60px" }}
-                  onClick={handleAddOrgan}
-                >
-                  <AddIcon fontSize="medium" color="success" />
-                </IconButton>
-              </div>
+              <IconButton
+                color="error"
+                className="h-[56px]"
+                onClick={() => handleRemoveOrgan(index)}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
             </div>
-          ))}
+          </div>
+        ))}
+        <div className="flex justify-end">
+          <Button
+            variant="contained"
+            color="info"
+            onClick={handleAddOrgan}
+            endIcon={<AddIcon />}
+          >
+            {latinToCyrillic("Organ")}
+          </Button>
         </div>
-      </div>
-      <div className="w-full mb-[5vh]">
-        <Button onClick={saqlash} color="success" fullWidth variant="contained">
-          {latinToCyrillic("Saqlash")}
-        </Button>
+        <div className="flex w-full  mt-4">
+          <Button
+            fullWidth
+            variant="contained"
+            color="success"
+            onClick={saqlash}
+          >
+            {latinToCyrillic("Saqlash")}
+          </Button>
+        </div>
       </div>
     </>
   );

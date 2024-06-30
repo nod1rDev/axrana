@@ -5,13 +5,11 @@ import {
   Button,
   IconButton,
   FormControl,
-  InputLabel,
   Checkbox,
   Autocomplete,
-  Chip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Createshartnomaa, GETworkers, UpdateShartnoma } from "@/app/Api/Apis";
+import { GETworkers, UpdateShartnoma } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -41,7 +39,11 @@ function ChangeShartnoma({
   const [count, setCount] = useState(0);
   React.useEffect(() => {
     if (ShartNomaData) {
-      setValue(ShartNomaData);
+      const formattedData = {
+        ...ShartNomaData,
+        date: formatDate(ShartNomaData.date),
+      };
+      setValue(formattedData);
       setOrgans(
         ShartNomaData.smeta?.organs.map((e: any) => {
           return {
@@ -204,7 +206,10 @@ function ChangeShartnoma({
         (w: any) => w._id !== worker._id
       );
     } else {
-      updatedOrgans[index].workers = [...organWorkers, worker];
+      updatedOrgans[index].workers = [
+        ...organWorkers,
+        { ...worker, selected: true },
+      ];
     }
     setOrgans(updatedOrgans);
   };
@@ -252,17 +257,35 @@ function ChangeShartnoma({
     e.stopPropagation();
     handleWorkerSelect(index, worker);
   };
+  function removeHyphens(input: string): string {
+    return input.replace(/-/g, "");
+  }
+  function formatDate(dateString: string): any {
+    if (dateString) {
+      const [day, month, year] = dateString.split(" ");
 
-  function getFirstWord(text: string): string {
-    // Find the index of the first space
-    const firstSpaceIndex = text.indexOf(" ");
+      const monthMap: { [key: string]: string } = {
+        январь: "01",
+        февраль: "02",
+        март: "03",
+        апрель: "04",
+        май: "05",
+        июнь: "06",
+        июль: "07",
+        август: "08",
+        сентябрь: "09",
+        октябрь: "10",
+        ноябрь: "11",
+        декабрь: "12",
+      };
 
-    // If a space is found, return the substring up to the space
-    if (firstSpaceIndex !== -1) {
-      return text.substring(0, firstSpaceIndex);
-    } else {
-      // If no space is found, return the entire string
-      return text;
+      const monthNumber = monthMap[month];
+
+      if (!monthNumber) {
+        throw new Error(`Invalid month: ${month}`);
+      }
+
+      return removeHyphens(`${day}.${monthNumber}.${year}`);
     }
   }
 
@@ -293,7 +316,7 @@ function ChangeShartnoma({
           <TextField
             id="buyurtmachi"
             label={latinToCyrillic("Buyurtmachi")}
-            sx={{ width: "35%" }}
+            sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.buyurtmachi}
@@ -307,129 +330,131 @@ function ChangeShartnoma({
             label={latinToCyrillic(
               "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
             )}
-            value={value.timeLimit}
-            multiline
-            sx={{ width: "50%" }}
+            sx={{ width: "49%" }}
             onChange={handleChangeValue}
             variant="outlined"
+            value={value.timeLimit}
             name="timeLimit"
             autoComplete="off"
           />
           <TextField
             id="address"
             label={latinToCyrillic("Tadbir o'tadigan joy manzil")}
-            sx={{ width: "50%" }}
+            sx={{ width: "49%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.address}
             name="address"
-            multiline
             autoComplete="off"
           />
         </div>
-        <div className="flex gap-4 flex-col w-full">
-          <div className="text-[24px] font-bold mb-2">
-            {latinToCyrillic("Smeta")}
-          </div>
-          {organs &&
-            organs.map((organ: any, index: any) => (
-              <div key={organ._id} className="flex gap-4 w-full">
-                <TextField
-                  label={latinToCyrillic("Organ nomi")}
-                  sx={{ width: "26%" }}
-                  onChange={(e) => handleChangeOrgans(e, index)}
-                  variant="outlined"
-                  name="name"
-                  value={organ.name}
-                  autoComplete="off"
-                />
-                <TextField
-                  label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
-                  sx={{ width: "28%" }}
-                  onChange={(e) => handleChangeOrgans(e, index)}
-                  variant="outlined"
-                  name="time"
-                  type="number"
-                  value={organ.time}
-                  autoComplete="off"
-                />
-                <FormControl sx={{ width: "38%" }}>
-                  <Autocomplete
-                    multiple
-                    options={getAvailableWorkers(index)}
-                    getOptionLabel={(option: any) =>
-                      option.zvaniya + " " + option.FIO + " " + option.batalyon
-                    }
-                    value={organ.workers}
-                    onChange={(e, newValue) => {
-                      const selectedWorkers = newValue;
-                      setOrgans((prev: any) =>
-                        prev.map((o: any, i: any) =>
-                          i === index ? { ...o, workers: selectedWorkers } : o
-                        )
-                      );
-                      const selectedWorkerIds = selectedWorkers.map(
-                        (w: any) => w._id
-                      );
-                      setWorkers((prev) =>
-                        prev.map((w) =>
-                          selectedWorkerIds.includes(w._id)
-                            ? { ...w, selected: true }
-                            : { ...w, selected: false }
-                        )
-                      );
-                    }}
-                    isOptionEqualToValue={(option, value) =>
-                      option._id === value._id
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label={`${latinToCyrillic("Xodimlar")} (${
-                          organ.workers.length
-                        })`}
-                      />
-                    )}
-                    renderOption={(props, option) => (
-                      <li
-                        {...props}
+        <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
+        {organs?.map((e: any, index: any) => (
+          <div
+            key={index}
+            className="flex  gap-2 mt-3 mb-4 border-2 border-sky-600 rounded-xl p-4"
+          >
+            <div className="flex w-full gap-3 justify-between">
+              <TextField
+                id={`organ-name-${index}`}
+                label={latinToCyrillic("Organ nomi")}
+                sx={{ width: "49%" }}
+                onChange={(e) => handleChangeOrgans(e, index)}
+                variant="outlined"
+                value={organs[index].name}
+                name="name"
+                autoComplete="off"
+              />
+              <TextField
+                id={`organ-time-${index}`}
+                label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
+                sx={{ width: "49%" }}
+                onChange={(e) => handleChangeOrgans(e, index)}
+                variant="outlined"
+                value={organs[index].time}
+                name="time"
+                autoComplete="off"
+              />
+            </div>
+            <div className="flex w-full justify-between items-center">
+              <FormControl className="w-[100%]">
+                <Autocomplete
+                  multiple
+                  id={`workers-${index}`}
+                  options={getAvailableWorkers(index)}
+                  disableCloseOnSelect
+                  noOptionsText={latinToCyrillic("Xodim yo'q")}
+                  value={organs[index].workers}
+                  getOptionLabel={(option: any) =>
+                    option.zvaniya + " " + option.FIO + " " + option.batalyon
+                  }
+                  isOptionEqualToValue={(option: any, value: any) =>
+                    option._id === value._id
+                  }
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props} key={option._id}>
+                      <Checkbox
+                        style={{ marginRight: 8 }}
+                        checked={selected}
                         onClick={(e: any) =>
                           handleWorkerCheckboxClick(e, index, option)
                         }
-                      >
-                        <Checkbox checked={option.selected} />
-                        <div className="flex gap-2">
-                          <span>{option.zvaniya}</span>
-                          <span>{option.FIO}</span>
-                          <span>{option.batalyon}</span>
-                        </div>
-                      </li>
-                    )}
-                    disableCloseOnSelect
-                  />
-                </FormControl>
-                <div className="flex gap-2 w-[10%]">
-                  <IconButton
-                    sx={{ width: "60px", height: "60px" }}
-                    onClick={() => handleRemoveOrgan(index)}
-                  >
-                    <RemoveCircleIcon fontSize="medium" color="error" />
-                  </IconButton>
-                  <IconButton
-                    sx={{ width: "60px", height: "60px" }}
-                    onClick={handleAddOrgan}
-                  >
-                    <AddIcon fontSize="medium" color="success" />
-                  </IconButton>
-                </div>
-              </div>
-            ))}
+                      />
+                      <div className="flex gap-2">
+                        <span>{option.zvaniya}</span>
+                        <span>{option.FIO}</span>
+                        <span>{option.batalyon}</span>
+                      </div>
+                    </li>
+                  )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label={latinToCyrillic(`Hodimlar(${e.workers.length})`)}
+                    />
+                  )}
+                  onChange={(_, selectedWorkers) =>
+                    setOrgans((prevOrgans: any) => {
+                      const updatedOrgans = [...prevOrgans];
+                      updatedOrgans[index].workers = selectedWorkers.map(
+                        (worker) => ({ ...worker, selected: true })
+                      );
+                      return updatedOrgans;
+                    })
+                  }
+                />
+              </FormControl>
+              <IconButton
+                color="error"
+                className="h-[56px]"
+                onClick={() => handleRemoveOrgan(index)}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
+            </div>
+          </div>
+        ))}
+        <div className="flex justify-end">
+          <Button
+            variant="contained"
+            color="info"
+            onClick={handleAddOrgan}
+            endIcon={<AddIcon />}
+          >
+            {latinToCyrillic("Organ")}
+          </Button>
         </div>
-      </div>
-      <div className="w-full mb-[5vh]">
-        <Button onClick={saqlash} color="success" fullWidth variant="contained">
-          {latinToCyrillic("Saqlash")}
-        </Button>
+        <div className="flex w-full  mt-4">
+          <Button
+            fullWidth
+            variant="contained"
+            color="success"
+            onClick={saqlash}
+          >
+            {latinToCyrillic("Saqlash")}
+          </Button>
+        </div>
       </div>
     </>
   );

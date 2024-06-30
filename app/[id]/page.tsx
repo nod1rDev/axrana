@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { DeleteShartnoma, GetSingleShartnoma } from "../Api/Apis";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { alertChange } from "../Redux/ShaxsiySlice";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import BudgetTable from "./SingleTab";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import { useReactToPrint } from "react-to-print";
+import Documenttt from "../Components/Document";
 function page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -50,8 +53,15 @@ function page() {
     }
   };
   const router = useRouter();
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: (): any => componentRef.current,
+  });
   return (
     <>
+      <div className=" hidden">
+        <Documenttt data={data} ref={componentRef} />
+      </div>
       <div className="w-[80%] flex-col  gap-6 mx-auto">
         <div className="mb-6">
           <Button
@@ -80,6 +90,14 @@ function page() {
               variant="contained"
             >
               {"таҳрирлаш"}
+            </Button>
+            <Button
+              onClick={handlePrint}
+              color="success"
+              startIcon={<LocalPrintshopIcon />}
+              variant="contained"
+            >
+              {latinToCyrillic("Chop etish")}
             </Button>
           </div>
         </div>
@@ -368,7 +386,11 @@ function page() {
             </div>
           </section>
 
-          <BudgetTable />
+          <BudgetTable
+            data1={data.smeta}
+            raq={data.shartnomaNumber}
+            dataId={data._id}
+          />
         </div>
       </div>
     </>

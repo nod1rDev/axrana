@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { puJWT } from "./Redux/AuthSlice";
 import Othcot from "./Components/Othcot";
+import Shartnoma from "./shartnoma/Components/Shartnoma";
 function Page() {
   const dispatch = useDispatch();
   const JWT = useSelector((state: any) => state.auth.JWT);
@@ -21,7 +22,7 @@ function Page() {
 
     dispatch(puJWT(sessionStorage.getItem("token")));
   };
-  return <Othcot />;
+  return <Shartnoma />;
 }
 
 export default Page;

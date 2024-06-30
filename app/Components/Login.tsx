@@ -139,7 +139,7 @@ export default function Login() {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" fontWeight={"700"} variant="h5">
-                  {latinToCyrillic("Axrana")}
+                  {latinToCyrillic("Milliy_Gvardiya")}
                 </Typography>
                 <Box
                   component="form"

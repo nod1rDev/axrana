@@ -343,7 +343,7 @@ function page() {
 
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
-                    <h1 className="font-bold text-xl">
+                    <h1 className="font-bold ">
                       Раҳбари: _________ _______________________
                     </h1>
                     <div className="flex   gap-36 justify-center items-center">
@@ -372,7 +372,7 @@ function page() {
 
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
-                    <h1 className="font-bold text-xl">
+                    <h1 className="font-bold ">
                       Раҳбари: ________ ________________
                       <span className="font-[400]">А.Р. Ортиков</span>
                     </h1>

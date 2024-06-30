@@ -239,7 +239,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="pb-[200px] mb-20">
+        <section className=" mb-[800px]">
           <h2 className="text-xl text-center font-semibold mb-4">
             7. Томонларнинг реквизитлари
           </h2>
@@ -250,10 +250,10 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
                 “TRASTBANK” хусусий акциядорлик банки”
               </p>
 
-              <div className=" absolute top-[250px] left-[40px]">
+              <div className=" absolute top-[300px] left-[40px]">
                 <div className="flex flex-col">
-                  <h1 className="font-bold text-xl">
-                    Раҳбари: _________ _______________________
+                  <h1 className="font-bold ">
+                    Раҳбари: _______ _________________
                   </h1>
                   <div className="flex   gap-36 justify-center items-center">
                     <div>(имзо)</div>
@@ -277,9 +277,9 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
                 </p>
               </div>
 
-              <div className=" absolute top-[250px] left-[40px]">
+              <div className=" absolute top-[300px] left-[40px]">
                 <div className="flex flex-col">
-                  <h1 className="font-bold text-xl">
+                  <h1 className="font-bold ">
                     Раҳбари: ________ ________________
                     <span className="font-[400]">А.Р. Ортиков</span>
                   </h1>

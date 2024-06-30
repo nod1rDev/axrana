@@ -1,130 +1,157 @@
-"use client";
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+  styled,
+} from "@mui/material";
 
-import { styled } from "@mui/system";
-
-const CustomTableHead = styled(TableHead)(({ theme }) => ({
-  // Asosiy rang
-  "& .MuiTableCell-root": {
-    color: "#000",
-    fontWeight: "600",
-    backgroundColor: "#f1faee",
-    // Matn rangini o'zgartirish
-  },
-}));
-interface Column {
-  id: "number" | "lotinFIO" | "krilFIO" | "UnvonNom";
-
-  label: string;
-  minWidth?: number;
-  align?: "right" | "center" | "left";
-  format?: (value: number) => string;
+// Define the data structure for a row
+interface TableRowData {
+  id: number;
+  department: string;
+  personnel: number;
+  hours: number;
+  rate: number;
+  total: number;
 }
 
-const columns: readonly Column[] = [
-  { id: "number", label: "т/р", align: "left", minWidth: 5 },
-  { id: "lotinFIO", label: "фио", align: "center", minWidth: 100 },
-
+// Define the data
+const data: TableRowData[] = [
   {
-    id: "krilFIO",
-    label: "фио",
-    minWidth: 180,
-    align: "center",
+    id: 1,
+    department: "MG Toshkent shahar boʻyicha boshqarmasi 81109/y.k",
+    personnel: 10,
+    hours: 4,
+    rate: 23800,
+    total: 952000,
   },
   {
-    id: "UnvonNom",
-    label: "ишлаш мудати",
-    minWidth: 180,
-    align: "center",
+    id: 2,
+    department: "98157/y.k",
+    personnel: 10,
+    hours: 4,
+    rate: 23800,
+    total: 952000,
+  },
+  {
+    id: 3,
+    department: "IIB",
+    personnel: 7,
+    hours: 4,
+    rate: 23800,
+    total: 666400,
   },
 ];
 
-interface Data {
-  number: any;
-  lotinFIO: any;
-  krilFIO: any;
-  UnvonNom: any;
+const totals = {
+  personnel: data.reduce((acc, row) => acc + row.personnel, 0),
+  rate: 23800,
+  total: data.reduce((acc, row) => acc + row.total, 0),
+};
 
-  id: number;
-}
+// Style for bordered cells
+const BorderedTableCell = styled(TableCell)({
+  border: "1px solid black",
+  textAlign: "center",
+  padding: "8px",
+});
 
-function createData(
-  number: any,
-  lotinFIO: any,
-  krilFIO: any,
-  UnvonNom: any,
+const LeftBorderedTableRow = styled(TableRow)({
+  borderLeft: "1px solid black",
+});
 
-  id: number
-): Data {
-  return { number, lotinFIO, krilFIO, UnvonNom, id };
-}
-
-export default function SingleTab({ ranks }: { ranks: any }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const rows = ranks
-    ? ranks.map((e: any, i: any) =>
-        createData(
-          i + 1,
-          e.FIOlotin,
-          e.FIOkril,
-          e.dayOrHour + " " + e.timeType,
-          e._id
-        )
-      )
-    : [];
-
+const BudgetTable: React.FC = () => {
   return (
-    <Paper sx={{ width: "100%" }}>
-      <TableContainer sx={{ overflow: "auto", maxHeight: 300 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <CustomTableHead sx={{ background: "#edede9" }}>
+    <Box p={3}>
+      <Typography variant="h6" align="right">
+        20-iyun 2024-yildagi
+      </Typography>
+      <Typography variant="h6" align="right">
+        118-sonli qaror loyihasi
+      </Typography>
+      <Typography variant="h5" align="center" gutterBottom>
+        Ommaiy tadbirni o'tkazishda fuqarolar xavfsizligini ta'minlash va jamoat
+        tartibini saqlash uchun xarajatlar smetasi
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
             <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
+              <BorderedTableCell>
+                Tadbir o'tkaziladigan joy nomi
+              </BorderedTableCell>
+              <BorderedTableCell>
+                Жалб этиладиган шахсий таркиб ваколатли давлат идоралари ёки
+                органлар номи
+              </BorderedTableCell>
+              <BorderedTableCell>
+                Jami ishlatiladigan shaxsiy tarkib soni
+              </BorderedTableCell>
+              <BorderedTableCell>
+                Ommaiy tadbir o'tkazish vaqti (soat)
+              </BorderedTableCell>
+              <BorderedTableCell>
+                Bir kishilik soatbay ish haqi (BHM*7%)
+              </BorderedTableCell>
+              <BorderedTableCell>Jami hisoblangan (3*4*5)</BorderedTableCell>
+              <BorderedTableCell>Umumiy hisoblangan</BorderedTableCell>
             </TableRow>
-          </CustomTableHead>
+          </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row: any, i: any) => {
-                
-
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={i}>
-                    {columns.map((column, e) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {e == 0
-                            ? i + 1
-                            : column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            <LeftBorderedTableRow>
+              <BorderedTableCell>1</BorderedTableCell>
+              <BorderedTableCell>2</BorderedTableCell>
+              <BorderedTableCell>3</BorderedTableCell>
+              <BorderedTableCell>4</BorderedTableCell>
+              <BorderedTableCell>5</BorderedTableCell>
+              <BorderedTableCell>6</BorderedTableCell>
+              <BorderedTableCell>6</BorderedTableCell>
+            </LeftBorderedTableRow>
+            {data.map((row, i) => (
+              <LeftBorderedTableRow key={row.id}>
+                <div className="font-bold text-center">
+                  {i === 0 ? "“NEXT” кўнгил очар маркази" : null}
+                </div>
+                <BorderedTableCell>{row.department}</BorderedTableCell>
+                <BorderedTableCell>{row.personnel}</BorderedTableCell>
+                <BorderedTableCell>{row.hours}</BorderedTableCell>
+                <BorderedTableCell>
+                  {row.rate.toLocaleString()}
+                </BorderedTableCell>
+                <BorderedTableCell>
+                  {row.total.toLocaleString()}
+                </BorderedTableCell>
+                <BorderedTableCell>
+                  {row.total.toLocaleString()}
+                </BorderedTableCell>
+              </LeftBorderedTableRow>
+            ))}
+            <LeftBorderedTableRow>
+              <BorderedTableCell colSpan={2}>Jami</BorderedTableCell>
+              <BorderedTableCell>{totals.personnel}</BorderedTableCell>
+              <BorderedTableCell></BorderedTableCell>
+              <BorderedTableCell>
+                {totals.rate.toLocaleString()}
+              </BorderedTableCell>
+              <BorderedTableCell>
+                {totals.total.toLocaleString()}
+              </BorderedTableCell>
+              <BorderedTableCell>
+                {totals.total.toLocaleString()}
+              </BorderedTableCell>
+            </LeftBorderedTableRow>
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </Box>
   );
-}
+};
+
+export default BudgetTable;

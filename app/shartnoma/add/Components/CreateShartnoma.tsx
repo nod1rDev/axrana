@@ -261,7 +261,7 @@ function CreateShartnoma({ language }: { language: any }) {
             <div key={organ._id} className="flex gap-4 w-full">
               <TextField
                 label={latinToCyrillic("Organ nomi")}
-                multiline
+               
                 sx={{ width: "26%" }}
                 onChange={(e) => handleChangeOrgans(e, index)}
                 variant="outlined"
@@ -271,10 +271,11 @@ function CreateShartnoma({ language }: { language: any }) {
               />
               <TextField
                 label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
-                multiline
+                
                 sx={{ width: "28%" }}
                 onChange={(e) => handleChangeOrgans(e, index)}
                 variant="outlined"
+                type="number"
                 name="time"
                 value={organ.time}
                 autoComplete="off"
@@ -283,7 +284,9 @@ function CreateShartnoma({ language }: { language: any }) {
                 <Autocomplete
                   multiple
                   options={getAvailableWorkers(index)}
-                  getOptionLabel={(option: any) => getFirstWord(option.FIO)}
+                  getOptionLabel={(option: any) =>
+                    option.zvaniya + " " + option.FIO + " " + option.batalyon
+                  }
                   value={organ.workers}
                   onChange={(e, newValue) => {
                     const selectedWorkers = newValue;
@@ -323,8 +326,8 @@ function CreateShartnoma({ language }: { language: any }) {
                     >
                       <Checkbox checked={option.selected} />
                       <div className="flex gap-2">
-                        <span>{option.zvaniya},</span>
-                        <span>{option.FIO},</span>
+                        <span>{option.zvaniya}</span>
+                        <span>{option.FIO}</span>
                         <span>{option.batalyon}</span>
                       </div>
                     </li>

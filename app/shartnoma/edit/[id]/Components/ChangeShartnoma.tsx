@@ -16,119 +16,135 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
-function ChangeShartnoma({
+interface Worker {
+  FIO: string;
+  batalyon: string;
+  zvaniya: string;
+  _id: string;
+  selected?: boolean;
+}
+
+interface Organ {
+  name: string;
+  time: string;
+  workers: Worker[];
+  _id: string | number;
+}
+
+interface ShartnomaData {
+  date: string;
+  shartnomaNumber: string;
+  timeLimit: string;
+  buyurtmachi: string;
+  address: string;
+  smeta?: {
+    organs: Organ[];
+  };
+  _id: string;
+}
+
+interface ChangeShartnomaProps {
+  language: string;
+  ShartNomaData: ShartnomaData;
+}
+
+const ChangeShartnoma: React.FC<ChangeShartnomaProps> = ({
   language,
   ShartNomaData,
-}: {
-  language: any;
-  ShartNomaData: any;
-}) {
-  const JWT = useSelector((s: any) => s.auth.JWT);
-  const [value, setValue] = useState<any>({
+}) => {
+  const JWT = useSelector((state: any) => state.auth.JWT);
+  const [value, setValue] = useState({
     date: "",
     shartnomaNumber: "",
     timeLimit: "",
     buyurtmachi: "",
     address: "",
-    organs: [],
+    organs: [] as Organ[],
   });
 
-  const [workers, setWorkers] = useState<any[]>([]);
-  const [worker2, setWorker2] = useState<any>([]);
-  const [organs, setOrgans] = useState<any>([]);
-  const [count, setCount] = useState(0);
-  React.useEffect(() => {
+  const [workers, setWorkers] = useState<Worker[]>([]);
+  const [organs, setOrgans] = useState<Organ[]>([]);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
     if (ShartNomaData) {
-      const formattedData = {
+      const formattedData: any = {
         ...ShartNomaData,
         date: formatDate(ShartNomaData.date),
       };
       setValue(formattedData);
       setOrgans(
-        ShartNomaData.smeta?.organs.map((e: any) => {
-          return {
-            name: e.name,
-            time: e.time,
-            workers: e.workers.map((i: any) => {
-              return {
-                FIO: i.FIO,
-                batalyon: i.batalyon,
-                zvaniya: i.zvaniya,
-                _id: i._id,
-                selected: true,
-              };
-            }),
-            _id: e._id,
-          };
-        })
+        ShartNomaData.smeta?.organs.map((e) => ({
+          name: e.name,
+          time: e.time,
+          workers: e.workers.map((i) => ({
+            FIO: i.FIO,
+            batalyon: i.batalyon,
+            zvaniya: i.zvaniya,
+            _id: i._id,
+            selected: true,
+          })),
+          _id: e._id,
+        })) || []
       );
       getWorkerFor();
     }
   }, [ShartNomaData]);
-  const router = useRouter();
-  interface MyObject {
-    FIO: string;
-    selected: boolean;
-  }
 
-  function filterDuplicateObjects(objects: MyObject[]): MyObject[] {
-    const filteredObjects: MyObject[] = [];
-    const seenNames: string[] = [];
+  function processArray(array: Worker[]) {
+    const processedArray: Worker[] = [];
+    const FIOMap: { [key: string]: Worker[] } = {};
 
-    objects.forEach((obj) => {
-      if (seenNames.includes(obj.FIO)) {
-        // If the FIO is already seen, check if the current object is selected
-        const existingObject = filteredObjects.find((o) => o.FIO === obj.FIO);
-        if (existingObject && !obj.selected) {
-          // If the existing object is selected and the current object is not, do nothing
-        } else if (obj.selected) {
-          // If the current object is selected, replace the existing object
-          const index = filteredObjects.findIndex((o) => o.FIO === obj.FIO);
-          filteredObjects[index] = obj;
-        }
+    array.forEach((obj) => {
+      if (!FIOMap[obj.FIO]) {
+        FIOMap[obj.FIO] = [];
+      }
+      FIOMap[obj.FIO].push(obj);
+    });
+
+    Object.keys(FIOMap).forEach((FIO) => {
+      const objects = FIOMap[FIO];
+      if (objects.length > 1) {
+        objects[0].selected = true;
+        processedArray.push(objects[0]);
       } else {
-        // If the FIO is not seen, add the object to the filtered array
-        seenNames.push(obj.FIO);
-        filteredObjects.push(obj);
+        objects[0].selected = false;
+        processedArray.push(objects[0]);
       }
     });
 
-    return filteredObjects;
+    return processedArray;
   }
+
   const getWorkerFor = async () => {
     if (ShartNomaData) {
       const res = await GETworkers(JWT);
-      const worker1 = res.data.map((e: any) => {
-        return {
-          ...e,
-          selected: false,
-        };
-      });
+      const worker1 = res.data.map((e: Worker) => ({
+        ...e,
+        selected: false,
+      }));
       const organWorker = await getOrganWorker();
-      const filter = filterDuplicateObjects([...worker1, ...organWorker]);
-      console.log(filter);
-
+      const filter = processArray([...worker1, ...organWorker]);
       setWorkers(filter);
     }
   };
+
   const getOrganWorker = async () => {
     const res = await GetWorkerByOrgan(JWT, ShartNomaData._id);
 
     if (res.success) {
-      const filterData = res.data.map((e: any) => {
-        return { ...e, selected: true };
-      });
-      return filterData;
+      return res.data.map((e: Worker) => ({
+        ...e,
+        selected: true,
+      }));
     } else {
       return [];
     }
   };
 
-  useEffect(() => {}, []);
-
-  const createShartnoman = async (shartnoma: any) => {
+  const createShartnoman = async (shartnoma: typeof value) => {
     const res = await UpdateShartnoma(JWT, shartnoma, ShartNomaData._id);
-    console.log(JWT, shartnoma, ShartNomaData._id);
 
     if (res.success) {
       dispatch(
@@ -150,22 +166,18 @@ function ChangeShartnoma({
     }
   };
 
-  const dispatch = useDispatch();
   const saqlash = () => {
-    const filtOrgans = organs.map((organ: any) => {
-      return {
-        name: organ.name,
-        time: organ.time,
-        workers: organ.workers.map((worker: any) => {
-          return {
-            FIO: worker.FIO,
-            batalyon: worker.batalyon,
-            zvaniya: worker.zvaniya,
-          };
-        }),
-      };
-    });
-    const shartnoma = { ...value, organs: filtOrgans };
+    const filtOrgans = organs.map((organ) => ({
+      name: organ.name,
+      time: organ.time,
+      workers: organ.workers.map((worker) => ({
+        FIO: worker.FIO,
+        batalyon: worker.batalyon,
+        zvaniya: worker.zvaniya,
+      })),
+    }));
+
+    const shartnoma: any = { ...value, organs: filtOrgans };
     if (shartnoma.organs && shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
     } else {
@@ -179,11 +191,14 @@ function ChangeShartnoma({
     }
   };
 
-  const handleChangeValue = (e: any) => {
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
-  const handleChangeOrgans = (e: any, index: number) => {
+  const handleChangeOrgans = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
       ...updatedOrgans[index],
@@ -192,7 +207,7 @@ function ChangeShartnoma({
     setOrgans(updatedOrgans);
   };
 
-  const handleWorkerSelect = (index: number, worker: any) => {
+  const handleWorkerSelect = (index: number, worker: Worker) => {
     const updatedWorkers = workers.map((w) =>
       w._id === worker._id ? { ...w, selected: !w.selected } : w
     );
@@ -200,9 +215,9 @@ function ChangeShartnoma({
 
     const updatedOrgans = [...organs];
     const organWorkers = updatedOrgans[index].workers;
-    if (organWorkers.find((w: any) => w._id === worker._id)) {
+    if (organWorkers.find((w) => w._id === worker._id)) {
       updatedOrgans[index].workers = organWorkers.filter(
-        (w: any) => w._id !== worker._id
+        (w) => w._id !== worker._id
       );
     } else {
       updatedOrgans[index].workers = [
@@ -228,38 +243,41 @@ function ChangeShartnoma({
   const handleRemoveOrgan = (index: number) => {
     const removedWorkers = organs[index].workers;
     const updatedWorkers = workers.map((w) => {
-      if (removedWorkers.find((rw: any) => rw._id === w._id)) {
+      if (removedWorkers.find((rw) => rw._id === w._id)) {
         return { ...w, selected: false };
       }
       return w;
     });
     setWorkers(updatedWorkers);
 
-    const updatedOrgans = organs.filter((_: any, i: any) => i !== index);
+    const updatedOrgans = organs.filter((_, i) => i !== index);
     setOrgans(updatedOrgans);
   };
 
   const getAvailableWorkers = (currentOrganIndex: number) => {
-    const selectedWorkers = organs.flatMap((organ: any, index: any) =>
+    const selectedWorkers = organs.flatMap((organ, index) =>
       index !== currentOrganIndex ? organ.workers : []
     );
+
     return workers.filter(
-      (worker) => !selectedWorkers.some((w: any) => w._id === worker._id)
+      (worker) => !selectedWorkers.some((w) => w._id === worker._id)
     );
   };
 
   const handleWorkerCheckboxClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement>,
     index: number,
-    worker: any
+    worker: Worker
   ) => {
     e.stopPropagation();
     handleWorkerSelect(index, worker);
   };
-  function removeHyphens(input: string): string {
+
+  function removeHyphens(input: string) {
     return input.replace(/-/g, "");
   }
-  function formatDate(dateString: string): any {
+
+  function formatDate(dateString: string) {
     if (dateString) {
       const [day, month, year] = dateString.split(" ");
 
@@ -286,6 +304,7 @@ function ChangeShartnoma({
 
       return removeHyphens(`${day}.${monthNumber}.${year}`);
     }
+    return "";
   }
 
   return (
@@ -358,7 +377,7 @@ function ChangeShartnoma({
                 id={`organ-name-${index}`}
                 label={latinToCyrillic("Organ nomi")}
                 sx={{ width: "49%" }}
-                onChange={(e) => handleChangeOrgans(e, index)}
+                onChange={(e: any) => handleChangeOrgans(e, index)}
                 variant="outlined"
                 value={organs[index].name}
                 name="name"
@@ -368,43 +387,33 @@ function ChangeShartnoma({
                 id={`organ-time-${index}`}
                 label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
                 sx={{ width: "49%" }}
-                onChange={(e) => handleChangeOrgans(e, index)}
+                onChange={(e: any) => handleChangeOrgans(e, index)}
                 variant="outlined"
+                type="number"
                 value={organs[index].time}
                 name="time"
-                type="number"
                 autoComplete="off"
               />
             </div>
             <div className="flex w-full justify-between items-center">
-              <FormControl className="w-[100%]">
+              <FormControl className="w-full">
                 <Autocomplete
                   multiple
-                  id={`workers-${index}`}
                   options={getAvailableWorkers(index)}
-                  disableCloseOnSelect
-                  noOptionsText={latinToCyrillic("Xodim yo'q")}
-                  value={organs[index].workers}
                   getOptionLabel={(option: any) =>
                     option.zvaniya + " " + option.FIO + " " + option.batalyon
                   }
-                  isOptionEqualToValue={(option: any, value: any) =>
-                    option._id === value._id
-                  }
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props} key={option._id}>
+                  renderOption={(props, option) => (
+                    <li {...props}>
                       <Checkbox
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                        onClick={(e: any) =>
+                        icon={<AddIcon />}
+                        checkedIcon={<RemoveCircleIcon />}
+                        checked={option.selected}
+                        onClick={(e) =>
                           handleWorkerCheckboxClick(e, index, option)
                         }
                       />
-                      <div className="flex gap-2">
-                        <span>{option.zvaniya}</span>
-                        <span>{option.FIO}</span>
-                        <span>{option.batalyon}</span>
-                      </div>
+                      {option.FIO}
                     </li>
                   )}
                   renderInput={(params) => (
@@ -414,14 +423,14 @@ function ChangeShartnoma({
                       label={latinToCyrillic(`Hodimlar(${e.workers.length})`)}
                     />
                   )}
-                  onChange={(_, selectedWorkers) =>
-                    setOrgans((prevOrgans: any) => {
-                      const updatedOrgans = [...prevOrgans];
-                      updatedOrgans[index].workers = selectedWorkers.map(
-                        (worker) => ({ ...worker, selected: true })
-                      );
-                      return updatedOrgans;
-                    })
+                  value={organs[index].workers}
+                  onChange={(event, newValue) => {
+                    const updatedOrgans = [...organs];
+                    updatedOrgans[index].workers = newValue;
+                    setOrgans(updatedOrgans);
+                  }}
+                  isOptionEqualToValue={(option, value) =>
+                    option._id === value._id
                   }
                 />
               </FormControl>
@@ -458,6 +467,6 @@ function ChangeShartnoma({
       </div>
     </>
   );
-}
+};
 
 export default ChangeShartnoma;

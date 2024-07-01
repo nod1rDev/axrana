@@ -305,7 +305,7 @@ function CreateShartnoma({ language }: { language: any }) {
                   options={getAvailableWorkers(index)}
                   disableCloseOnSelect
                   noOptionsText={latinToCyrillic("Xodim yo'q")}
-                  value={organs[index].workers}
+                  value={[...organs[index].workers]}
                   getOptionLabel={(option: any) =>
                     option.zvaniya + " " + option.FIO + " " + option.batalyon
                   }

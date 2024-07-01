@@ -9,7 +9,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { GETworkers, UpdateShartnoma } from "@/app/Api/Apis";
+import { GETworkers, GetWorkerByOrgan, UpdateShartnoma } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -96,7 +96,7 @@ function ChangeShartnoma({
     return filteredObjects;
   }
   const getWorkerFor = async () => {
-    if (organs) {
+    if (ShartNomaData) {
       const res = await GETworkers(JWT);
       const worker1 = res.data.map((e: any) => {
         return {
@@ -104,27 +104,27 @@ function ChangeShartnoma({
           selected: false,
         };
       });
-      const filter = filterDuplicateObjects([...worker1, ...worker2]);
+      const organWorker = await getOrganWorker();
+      const filter = filterDuplicateObjects([...worker1, ...organWorker]);
+      console.log(filter);
+
       setWorkers(filter);
-      
+    }
+  };
+  const getOrganWorker = async () => {
+    const res = await GetWorkerByOrgan(JWT, ShartNomaData._id);
+
+    if (res.success) {
+      const filterData = res.data.map((e: any) => {
+        return { ...e, selected: true };
+      });
+      return filterData;
+    } else {
+      return [];
     }
   };
 
-  useEffect(() => {
-    if (organs) {
-      organs.forEach((work: any) => {
-        setWorker2([...worker2, ...work.workers]);
-      });
-    }
-  }, [organs]);
-
-  useEffect(() => {
-    if (worker2 && count <= 2) {
-      setCount(count + 1);
-
-      getWorkerFor();
-    }
-  }, [worker2]);
+  useEffect(() => {}, []);
 
   const createShartnoman = async (shartnoma: any) => {
     const res = await UpdateShartnoma(JWT, shartnoma, ShartNomaData._id);

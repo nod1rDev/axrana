@@ -75,7 +75,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
             Тошкент шаҳри бўйича бошқармаси томонидан тақдим этилган
             шартноманинг ажралмас қисми хисобланган смета харажатлари асосида
             жами миқдори
-            <span className="font-bold">{" " + data.allAllMoney} сўм</span> деб
+            <span className="font-bold text-red-500">{" " + data.allAllMoney} сўм</span> деб
             белгиланди.
           </p>
         </section>

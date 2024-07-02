@@ -4,7 +4,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useRouter } from "next/navigation";
 function ShartnomaCard({ data }: { data: any }) {
   const router = useRouter();
-  console.log(data);
+
 
   return (
     <div

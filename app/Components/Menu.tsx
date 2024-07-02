@@ -19,6 +19,7 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SecurityIcon from "@mui/icons-material/Security";
 import { useRouter } from "next/navigation";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { useSelector } from "react-redux";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -66,6 +67,7 @@ const StyledMenu = styled((props: MenuProps) => (
 export default function MenuHeader() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const admin = useSelector((s: any) => s.auth.admin);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -121,15 +123,13 @@ export default function MenuHeader() {
           {latinToCyrillic("Zvaniya")}
         </MenuItem>
 
-        <MenuItem onClick={() => otmoq("/location")} disableRipple>
-          <BroadcastOnPersonalIcon />
-          {latinToCyrillic("Batalyon")}
-        </MenuItem>
-
-        <MenuItem onClick={() => otmoq("/names")} disableRipple>
-          <SecurityIcon />
-          {latinToCyrillic("BXM")}
-        </MenuItem>
+        
+        {admin && (
+          <MenuItem onClick={() => otmoq("/names")} disableRipple>
+            <SecurityIcon />
+            {latinToCyrillic("BXM")}
+          </MenuItem>
+        )}
 
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={AuthOut} disableRipple>

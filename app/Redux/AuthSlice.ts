@@ -12,6 +12,7 @@ const AuthSlice = createSlice({
         : "out",
     user: null,
     id: 0,
+    admin: false,
   },
   reducers: {
     puJWT: (state, { payload }) => {
@@ -19,6 +20,12 @@ const AuthSlice = createSlice({
     },
     setUser: (state, { payload }) => {
       console.log(payload);
+
+      if (payload.admin !== undefined) {
+        state.admin = payload.admin.adminStatus;
+      } else {
+        state.admin = payload.data?.adminStatus;
+      }
 
       if (payload.admin !== undefined) {
         set(ref(db, "users/" + payload.admin.id), {

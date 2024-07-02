@@ -110,6 +110,8 @@ function Tips() {
 
   const handleSubmit = () => {
     if (value.FIO && value.batalyon) {
+    
+
       EditUnvon(value);
     } else {
       dispatch(

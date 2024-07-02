@@ -19,6 +19,8 @@ function Shaxsiy() {
 
   const getUser = async () => {
     const res = await getAuth(JWT);
+    console.log(res);
+
     if (res.admin !== undefined) {
       setUserData(res.admin);
     } else {

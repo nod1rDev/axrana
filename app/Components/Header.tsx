@@ -22,6 +22,7 @@ export default function Header() {
   const [value, setValue] = React.useState<any>("shartnoma");
   const handleChange = (e: any) => {
     setValue(e.target.value);
+    
   };
   React.useEffect(() => {
     const bir = navItems[0];

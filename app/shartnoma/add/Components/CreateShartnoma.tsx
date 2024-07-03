@@ -9,20 +9,31 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { Createshartnomaa, GETworkers, UpdateShartnoma } from "@/app/Api/Apis";
+import {
+  Createshartnomaa,
+  GETworkers,
+  GetForBatalyon,
+  UpdateShartnoma,
+} from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 function CreateShartnoma({ language }: { language: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [value, setValue] = useState<any>({
     date: "",
     shartnomaNumber: "",
     timeLimit: "",
-    buyurtmachi: "",
+    buyurtmachi: {
+      name: "",
+    },
+    topshiriqDate: "",
     address: "",
     organs: [],
   });
@@ -38,31 +49,6 @@ function CreateShartnoma({ language }: { language: any }) {
     selected: boolean;
   }
 
-  const filterItems = (items: Item[]): Item[] => {
-    const nameToItemsMap: { [key: string]: Item[] } = {};
-    const result: Item[] = [];
-
-    // Bir xil `name` property ga ega bo'lgan obyektlarni guruhlash
-    items.forEach((item) => {
-      if (!nameToItemsMap[item.name]) {
-        nameToItemsMap[item.name] = [];
-      }
-      nameToItemsMap[item.name].push(item);
-    });
-
-    // Har bir guruhda faqat `selected: true` bo'lgan obyektlarni qoldirish
-    Object.keys(nameToItemsMap).forEach((name) => {
-      const group = nameToItemsMap[name];
-      const selectedItems = group.filter((item) => item.selected);
-
-      if (selectedItems.length > 0) {
-        result.push(...selectedItems);
-      }
-    });
-
-    // Barcha obyektlarni qaytarish (ba'zi guruhlarda `selected: true` obyekt bo'lmasligi mumkin)
-    return result;
-  };
   const getWorkerFor = async () => {
     const res = await GETworkers(JWT);
     const worker1 = res.data.map((e: any) => {
@@ -76,6 +62,7 @@ function CreateShartnoma({ language }: { language: any }) {
 
   useEffect(() => {
     getWorkerFor();
+    GetOrganName();
   }, []);
 
   const createShartnoman = async (shartnoma: any) => {
@@ -107,19 +94,13 @@ function CreateShartnoma({ language }: { language: any }) {
       return {
         name: organ.name,
         time: organ.time,
-        workers: organ.workers.map((worker: any) => {
-          return {
-            FIO: worker.FIO,
-            batalyon: worker.batalyon,
-            zvaniya: worker.zvaniya,
-          };
-        }),
+        workerNumber: organ.workerNumber,
       };
     });
     const shartnoma = { ...value, organs: filtOrgans };
     if (shartnoma.organs && shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
-      console.log(shartnoma);
+     
     } else {
       dispatch(
         alertChange({
@@ -132,11 +113,16 @@ function CreateShartnoma({ language }: { language: any }) {
   };
 
   const handleChangeValue = (e: any) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    if (e.target.name == "buyurtmachi") {
+      setValue({ ...value, buyurtmachi: { name: e.target.value } });
+    } else {
+      setValue({ ...value, [e.target.name]: e.target.value });
+    }
   };
 
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
+
     updatedOrgans[index] = {
       ...updatedOrgans[index],
       [e.target.name]: e.target.value,
@@ -144,25 +130,9 @@ function CreateShartnoma({ language }: { language: any }) {
     setOrgans(updatedOrgans);
   };
 
-  const handleWorkerSelect = (index: number, worker: any) => {
-    const updatedWorkers = workers.map((w) =>
-      w._id === worker._id ? { ...w, selected: !w.selected } : w
-    );
-    setWorkers(updatedWorkers);
-
-    const updatedOrgans = [...organs];
-    const organWorkers = updatedOrgans[index].workers;
-    if (organWorkers.find((w: any) => w._id === worker._id)) {
-      updatedOrgans[index].workers = organWorkers.filter(
-        (w: any) => w._id !== worker._id
-      );
-    } else {
-      updatedOrgans[index].workers = [
-        ...organWorkers,
-        { ...worker, selected: true },
-      ];
-    }
-    setOrgans(updatedOrgans);
+  const GetOrganName = async () => {
+    const res = await GetForBatalyon(JWT);
+    setWorker2(res.data);
   };
 
   const handleAddOrgan = () => {
@@ -175,38 +145,6 @@ function CreateShartnoma({ language }: { language: any }) {
         _id: Math.ceil(Math.random() * 10000),
       },
     ]);
-  };
-
-  const handleRemoveOrgan = (index: number) => {
-    const removedWorkers = organs[index].workers;
-    const updatedWorkers = workers.map((w) => {
-      if (removedWorkers.find((rw: any) => rw._id === w._id)) {
-        return { ...w, selected: false };
-      }
-      return w;
-    });
-    setWorkers(updatedWorkers);
-
-    const updatedOrgans = organs.filter((_: any, i: any) => i !== index);
-    setOrgans(updatedOrgans);
-  };
-
-  const getAvailableWorkers = (currentOrganIndex: number) => {
-    const selectedWorkers = organs.flatMap((organ: any, index: any) =>
-      index !== currentOrganIndex ? organ.workers : []
-    );
-    return workers.filter(
-      (worker) => !selectedWorkers.some((w: any) => w._id === worker._id)
-    );
-  };
-
-  const handleWorkerCheckboxClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number,
-    worker: any
-  ) => {
-    e.stopPropagation();
-    handleWorkerSelect(index, worker);
   };
 
   return (
@@ -225,7 +163,7 @@ function CreateShartnoma({ language }: { language: any }) {
           />
           <TextField
             id="date"
-            label={latinToCyrillic("Shartnoma sanasi")}
+            label={latinToCyrillic("Shartnoma Sanasi")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
@@ -234,13 +172,13 @@ function CreateShartnoma({ language }: { language: any }) {
             autoComplete="off"
           />
           <TextField
-            id="buyurtmachi"
-            label={latinToCyrillic("Buyurtmachi")}
+            id="topshiriqDate"
+            label={latinToCyrillic("Topshiriq Sanasi")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.buyurtmachi}
-            name="buyurtmachi"
+            value={value.topshiriqDate}
+            name="topshiriqDate"
             autoComplete="off"
           />
         </div>
@@ -268,23 +206,46 @@ function CreateShartnoma({ language }: { language: any }) {
             autoComplete="off"
           />
         </div>
+        <div className="font-bold text-[28px]">
+          {latinToCyrillic("Buyurtmachi")}
+        </div>
+        <div className="flex gap-4 mb-4">
+          <TextField
+            id="buyurtmachi"
+            label={latinToCyrillic("Buyurtma Nomi")}
+            sx={{ width: "30%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.buyurtmachi.name}
+            name="buyurtmachi"
+            autoComplete="off"
+          />
+        </div>
         <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
         {organs?.map((e: any, index: any) => (
           <div
             key={index}
             className="flex  gap-2 mt-3 mb-4 border-2 border-sky-600 rounded-xl p-4"
           >
-            <div className="flex w-full gap-3 justify-between">
-              <TextField
-                id={`organ-name-${index}`}
-                label={latinToCyrillic("Organ nomi")}
-                sx={{ width: "49%" }}
-                onChange={(e) => handleChangeOrgans(e, index)}
-                variant="outlined"
+            <FormControl sx={{ width: "40%" }}>
+              <InputLabel id="demo-simple-select-label">
+                {latinToCyrillic("Organ Nomi")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label={latinToCyrillic("Organ Nomi")}
                 value={organs[index].name}
                 name="name"
-                autoComplete="off"
-              />
+                onChange={(e) => handleChangeOrgans(e, index)}
+              >
+                {worker2 &&
+                  worker2.map((e: any) => (
+                    <MenuItem value={e.username}>{e.username}</MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            <div className="flex w-[60%] gap-3 justify-between">
               <TextField
                 id={`organ-time-${index}`}
                 label={latinToCyrillic("Ommaviy tadbir o'tadigan soati")}
@@ -296,63 +257,17 @@ function CreateShartnoma({ language }: { language: any }) {
                 name="time"
                 autoComplete="off"
               />
-            </div>
-            <div className="flex w-full justify-between items-center">
-              <FormControl className="w-[100%]">
-                <Autocomplete
-                  multiple
-                  id={`workers-${index}`}
-                  options={getAvailableWorkers(index)}
-                  disableCloseOnSelect
-                  noOptionsText={latinToCyrillic("Xodim yo'q")}
-                  value={[...organs[index].workers]}
-                  getOptionLabel={(option: any) =>
-                    option.zvaniya + " " + option.FIO + " " + option.batalyon
-                  }
-                  isOptionEqualToValue={(option: any, value: any) =>
-                    option._id === value._id
-                  }
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props} key={option._id}>
-                      <Checkbox
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                        onClick={(e: any) =>
-                          handleWorkerCheckboxClick(e, index, option)
-                        }
-                      />
-                      <div className="flex gap-2">
-                        <span>{option.zvaniya}</span>
-                        <span>{option.FIO}</span>
-                        <span>{option.batalyon}</span>
-                      </div>
-                    </li>
-                  )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label={latinToCyrillic(`Hodimlar(${e.workers.length})`)}
-                    />
-                  )}
-                  onChange={(_, selectedWorkers) =>
-                    setOrgans((prevOrgans: any) => {
-                      const updatedOrgans = [...prevOrgans];
-                      updatedOrgans[index].workers = selectedWorkers.map(
-                        (worker) => ({ ...worker, selected: true })
-                      );
-                      return updatedOrgans;
-                    })
-                  }
-                />
-              </FormControl>
-              <IconButton
-                color="error"
-                className="h-[56px]"
-                onClick={() => handleRemoveOrgan(index)}
-              >
-                <RemoveCircleIcon />
-              </IconButton>
+              <TextField
+                id={`organ-workerNumber-${index}`}
+                label={latinToCyrillic("Xodim Soni")}
+                sx={{ width: "49%" }}
+                onChange={(e) => handleChangeOrgans(e, index)}
+                variant="outlined"
+                type="number"
+                value={organs[index].workerNumber}
+                name="workerNumber"
+                autoComplete="off"
+              />
             </div>
           </div>
         ))}

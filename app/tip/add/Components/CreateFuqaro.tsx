@@ -33,7 +33,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     FIO: "",
 
     zvaniya: "",
-    batalyon: "",
   });
   const [select, setSelect] = useState<any>({});
   const [clear, setClear] = useState(1);
@@ -59,18 +58,26 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
 
   const saqlsh = (e: any) => {
     e.preventDefault();
-    if (createInp.FIO && createInp.zvaniya && createInp.batalyon) {
-      setData([
-        ...data,
-        { ...createInp, _id: Math.ceil(Math.random() * 15415645488) },
-      ]);
-      setCreateInp({
-        FIO: "",
-
-        zvaniya: "",
-        batalyon: "",
-      });
-      setClear(clear + 213);
+    if (createInp.FIO && createInp.zvaniya) {
+      if (validateFIO(createInp.FIO)) {
+        setData([
+          ...data,
+          { ...createInp, _id: Math.ceil(Math.random() * 15415645488) },
+        ]);
+        setCreateInp({
+          FIO: "",
+          zvaniya: "",
+        });
+        setClear(clear + 213);
+      } else {
+        dispatch(
+          alertChange({
+            open: true,
+            message: latinToCyrillic("Familya Isim Sharifni togri kiriting"),
+            status: "warning",
+          })
+        );
+      }
     } else {
       dispatch(
         alertChange({
@@ -148,6 +155,15 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       );
   };
 
+  function validateFIO(fio: any) {
+    // Regular expression to match the required pattern
+    const regex =
+      /^[A-Za-z]+(v|va) [A-Za-z]+ [A-Za-z]+(ovich|ovna| ogli| qizi)$/;
+
+    // Test the input string against the regex
+    return regex.test(fio);
+  }
+
   return (
     <form onSubmit={saqlsh} className="w-full mt-6 flex flex-col gap-4">
       <div className="flex w-full justify-between">
@@ -180,7 +196,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       </div>
 
       <div className="w-full flex justify-between gap-5">
-        <FormControl sx={{ width: "30%" }} fullWidth>
+        <FormControl sx={{ width: "40%" }} fullWidth>
           <InputLabel id="region-select-label">
             {latinToCyrillic("Zvaniya")}{" "}
           </InputLabel>
@@ -200,33 +216,13 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
               ))}
           </Select>
         </FormControl>
-        <div className="w-[40%]">
+        <div className="w-[60%]">
           <LatCyrConverter
             clear={clear}
             setValue={setCreateInp}
             value={createInp}
           />
         </div>
-        <FormControl sx={{ width: "30%" }} fullWidth>
-          <InputLabel id="otryad-select-label">
-            {latinToCyrillic("Batalyon")}{" "}
-          </InputLabel>
-          <Select
-            labelId="otryad-select-label"
-            id="otryad-select"
-            label={latinToCyrillic("Batalyon")}
-            name="batalyon"
-            value={createInp.batalyon}
-            onChange={handleCreateChange}
-          >
-            {select.batalyons &&
-              select.batalyons.map((e: any) => (
-                <MenuItem key={e.name} value={e.name}>
-                  {e.name}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
       </div>
     </form>
   );

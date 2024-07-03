@@ -30,7 +30,7 @@ function EditShartnoma({ data }: { data: any }) {
 
         <div></div>
       </div>
-      <ChangeShartnoma ShartNomaData={data} language={isLotin} />
+      <ChangeShartnoma data={data}  />
     </div>
   );
 }

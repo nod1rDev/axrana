@@ -33,6 +33,8 @@ function Shartnoma() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContract = async () => {
     const res = await GetAllShartnoma(JWT);
+    console.log(res);
+
     setShartnomalar(res.data);
   };
   useEffect(() => {
@@ -110,7 +112,7 @@ function Shartnoma() {
             {search ? (
               <IconButton
                 size="large"
-                sx={{ width: "60px", height: "60px", }}
+                sx={{ width: "60px", height: "60px" }}
                 aria-label="delete"
                 onClick={searchData}
               >
@@ -119,7 +121,7 @@ function Shartnoma() {
             ) : (
               <IconButton
                 size="large"
-                sx={{ width: "60px", height: "60px", }}
+                sx={{ width: "60px", height: "60px" }}
                 aria-label="delete"
                 onClick={searchData}
               >

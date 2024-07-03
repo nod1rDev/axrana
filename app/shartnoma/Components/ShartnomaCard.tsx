@@ -15,7 +15,7 @@ function ShartnomaCard({ data }: { data: any }) {
         {data && data.shartnomaNumber}
       </span>
       <span>{data && data.date}</span>
-      <span>{data && data.buyurtmachi}</span>
+      <span>{data && data.buyurtmachi.name}</span>
 
       <div>
         <KeyboardArrowRightIcon fontSize="large" color="info" />

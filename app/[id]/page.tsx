@@ -20,6 +20,7 @@ function page() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getData = async () => {
     const res = await GetSingleShartnoma(JWT, id);
+   
 
     setData(res.data);
   };
@@ -31,7 +32,6 @@ function page() {
   const deleteItem = async () => {
     const res = await DeleteShartnoma(JWT, data._id);
 
-    console.log(res);
     if (res.delete) {
       dispatch(
         alertChange({
@@ -117,7 +117,7 @@ function page() {
           </div>
           <section className="mb-4">
             <p>
-              <span className="font-bold">{data.buyurtmachi}</span> номидан
+              <span className="font-bold">{data.buyurtmachi?.name}</span> номидан
               _________ асосида фаолият юритувчи
               <span className="font-bold">______________________</span>{" "}
               келгусида «Буюртмачи» деб номланувчи бир томондан ва Ўзбекистон
@@ -338,7 +338,7 @@ function page() {
                   Буюртмачи:
                 </h2>
                 <p className="font-bold text-xl text-center">
-                  “TRASTBANK” хусусий акциядорлик банки”
+                  {data.buyurtmachi?.name}
                 </p>
 
                 <div className=" absolute top-[250px] left-[40px]">

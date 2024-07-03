@@ -1,7 +1,9 @@
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import { useState, useEffect } from "react";
 
 const Timer = ({ targetDate }: { targetDate: Date }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
+
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -10,7 +12,7 @@ const Timer = ({ targetDate }: { targetDate: Date }) => {
 
       if (remainingTime.total <= 0) {
         clearInterval(intervalId);
-        console.log("Bajarildi");
+        return <div>Bajarildi</div>;
       }
     }, 1000);
 
@@ -18,11 +20,17 @@ const Timer = ({ targetDate }: { targetDate: Date }) => {
   }, [targetDate]);
 
   return (
-    <div>
-      {timeLeft.hours.toString().padStart(2, "0")}:
-      {timeLeft.minutes.toString().padStart(2, "0")}:
-      {timeLeft.seconds.toString().padStart(2, "0")}
-    </div>
+    <>
+      {timeLeft.total > 0 ? (
+        <div>
+          {timeLeft.hours.toString().padStart(2, "0")}:
+          {timeLeft.minutes.toString().padStart(2, "0")}:
+          {timeLeft.seconds.toString().padStart(2, "0")}
+        </div>
+      ) : (
+        <div>{latinToCyrillic("Bajarilmadi")}</div>
+      )}
+    </>
   );
 };
 
@@ -40,11 +48,11 @@ const calculateTimeLeft = (targetDate: Date) => {
 };
 
 const Timerr = ({ date }: { date: Date }) => {
-  const targetDate = new Date("Tue Jul 02 2024 22:50:01 GMT+0500 (Uzbekistan Standard Time)");
+  const targetDate = new Date(date);
+console.log(targetDate);
 
   return (
     <div>
-      <h1>Timer</h1>
       <Timer targetDate={targetDate} />
     </div>
   );

@@ -111,12 +111,15 @@ export default function ShowWorkerModal({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
+  console.log(ranks);
 
-  const rows = ranks
-    ? ranks.map((e: any, i: any) =>
-        createData(i + 1, e.FIO, e.zvaniya, e.batalyon, e._id)
-      )
-    : [];
+  const rows =
+    ranks !== "Hali batalyon topshiriqni bajarmadi" &&
+    ranks !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
+      ? ranks.map((e: any, i: any) =>
+          createData(i + 1, e.FIO, e.zvaniya, e.batalyon, e._id)
+        )
+      : [];
 
   const dispatch = useDispatch();
 
@@ -134,7 +137,10 @@ export default function ShowWorkerModal({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {latinToCyrillic(`Jami ${ranks.length} xodim mavjud`)}
+          {ranks !== "Hali batalyon topshiriqni bajarmadi" &&
+          ranks !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
+            ? latinToCyrillic(`Jami ${ranks.length} xodim mavjud`)
+            : latinToCyrillic(ranks)}
         </DialogTitle>
         <div className="flex flex-row  min-w-[1200px] p-4 gap-2 px-4">
           <Paper sx={{ width: "100%" }}>

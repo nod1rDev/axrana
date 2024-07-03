@@ -28,7 +28,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "number" | "FIO" | "Zvaniya" | "Batalyon" | "actions";
+  id: "number" | "FIO" | "Zvaniya"  | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -44,12 +44,7 @@ const columns: readonly Column[] = [
   },
   { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
 
-  {
-    id: "Batalyon",
-    label: latinToCyrillic("Batalyon"),
-    minWidth: 180,
-    align: "center",
-  },
+ 
   {
     id: "actions",
     label: latinToCyrillic("Amallar"),
@@ -63,7 +58,7 @@ interface Data {
   FIO: any;
 
   Zvaniya: any;
-  Batalyon: any;
+  
   actions: any;
   id: number;
 }
@@ -73,11 +68,11 @@ function createData(
   FIO: any,
 
   Zvaniya: any,
-  Batalyon: any,
+ 
   actions: any,
   id: number
 ): Data {
-  return { number, FIO, Zvaniya, Batalyon, actions, id };
+  return { number, FIO, Zvaniya,  actions, id };
 }
 
 export default function AddFuqaroTab({
@@ -119,7 +114,7 @@ export default function AddFuqaroTab({
 
   const rows = ranks
     ? ranks.map((e: any, i: number) =>
-        createData(i + 1, e.FIO, e.zvaniya, e.batalyon, null, e._id)
+        createData(i + 1, e.FIO, e.zvaniya,  null, e._id)
       )
     : [];
 
@@ -185,27 +180,7 @@ export default function AddFuqaroTab({
                               }}
                             />
                           </div>
-                        ) : index === 3 ? (
-                          <FormControl fullWidth>
-                            <Select
-                              labelId="region-select-label"
-                              id="region-select"
-                              name="batalyon"
-                              onChange={handleTwo}
-                              value={row.Batalyon}
-                            >
-                              {select &&
-                                select.batalyons.map((region: any) => (
-                                  <MenuItem
-                                    key={region.name}
-                                    value={region.name}
-                                  >
-                                    {region.name}
-                                  </MenuItem>
-                                ))}
-                            </Select>
-                          </FormControl>
-                        ) : index === 1 ? (
+                        )  : index === 1 ? (
                           <FormControl fullWidth>
                             <Select
                               labelId="otryad-select-label"
@@ -225,7 +200,7 @@ export default function AddFuqaroTab({
                                 ))}
                             </Select>
                           </FormControl>
-                        ) : index === 4 ? (
+                        ) : index === 3 ? (
                           <IconButton
                             onClick={() => {
                               setData((prevData: any) =>

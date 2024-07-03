@@ -83,7 +83,7 @@ const BudgetTable: any = ({
   raq: any;
   dataId: any;
 }) => {
-  console.log(data1 && data1);
+ 
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [worker, setWorker] = React.useState([]);
   const dispatch = useDispatch();
@@ -92,7 +92,7 @@ const BudgetTable: any = ({
         return {
           id: organ._id,
           department: organ.name,
-          personnel: organ.workers.length,
+          personnel: organ.workerNumber,
           hours: organ.time,
           rate: organ.timeMoney,
           total: organ.allMoney,
@@ -109,7 +109,7 @@ const BudgetTable: any = ({
   };
   const getAll = async () => {
     const res = await GetWorkerByOrgan(JWT, dataId);
-    console.log("salom");
+ 
 
     setWorker(res.data);
     if (res.success) {

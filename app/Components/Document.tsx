@@ -33,7 +33,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
         </div>
         <section className="mb-4">
           <p>
-            <span className="font-bold">{data.buyurtmachi}</span> номидан
+            <span className="font-bold">{data.buyurtmachi?.name}</span> номидан
             _________ асосида фаолият юритувчи
             <span className="font-bold">______________________</span> келгусида
             «Буюртмачи» деб номланувчи бир томондан ва Ўзбекистон Республикаси
@@ -75,8 +75,10 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
             Тошкент шаҳри бўйича бошқармаси томонидан тақдим этилган
             шартноманинг ажралмас қисми хисобланган смета харажатлари асосида
             жами миқдори
-            <span className="font-bold text-red-500">{" " + data.allAllMoney} сўм</span> деб
-            белгиланди.
+            <span className="font-bold text-red-500">
+              {" " + data.allAllMoney} сўм
+            </span>{" "}
+            деб белгиланди.
           </p>
         </section>
 
@@ -247,7 +249,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
             <div className="flex w-[50%] relative justify-center items-center flex-col">
               <h2 className="text-lg text-center font-bold mb-2">Буюртмачи:</h2>
               <p className="font-bold text-xl text-center">
-                “TRASTBANK” хусусий акциядорлик банки”
+                {data.buyurtmachi?.name}
               </p>
 
               <div className=" absolute top-[300px] left-[40px]">

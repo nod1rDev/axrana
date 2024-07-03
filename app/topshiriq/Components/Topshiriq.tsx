@@ -6,17 +6,31 @@ import { useSelector } from "react-redux";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 import TextField from "@mui/material/TextField";
-import { GetAllShartnoma, SearchShartnoma } from "@/app/Api/Apis";
+import {
+  GetAllShartnoma,
+  GetTopshiriqlar,
+  SearchShartnoma,
+} from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import TopshiriqCard from "./TopshiriqCard";
 import Timerr from "./Timer";
 function Topshiriq() {
-  const now = new Date();
-  const fiveMinutesLater = new Date(now.getTime() + 5 * 60000);
-  console.log(fiveMinutesLater);
+  const [data, setData] = useState([]);
+  
+  const JWT = useSelector((s: any) => s.auth.JWT);
+  const getTopshiriqApi = async () => {
+    const res = await GetTopshiriqlar(JWT);
 
+    setData(res.bajarilmoqda);
+  };
+  useEffect(() => {
+    getTopshiriqApi();
+  }, []);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <div className="w-[70%] mt-6 mx-auto">
       <div className="flex w-full justify-between mb-10">
@@ -29,10 +43,10 @@ function Topshiriq() {
           </span>
         </div>
 
-        <Timerr date={fiveMinutesLater} />
+       
       </div>
       <div className="flex flex-col gap-4">
-        <TopshiriqCard />
+        {data && data.map((e: any) => <TopshiriqCard data={e} />)}
       </div>
     </div>
   );

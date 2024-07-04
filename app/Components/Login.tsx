@@ -53,7 +53,6 @@ export default function Login() {
       sessionStorage.setItem("id", res.data.id);
 
       setTimeout(() => window.location.reload(), 200);
-      router.push("/");
     } else {
       dispatch(
         alertChange({
@@ -79,6 +78,7 @@ export default function Login() {
       );
 
       login(select, data.get("password"));
+      router.push("/");
     } else {
       dispatch(
         alertChange({
@@ -93,7 +93,6 @@ export default function Login() {
 
   const getAuth = async () => {
     const res = await SelectAuth();
-
 
     setData(res.data);
   };
@@ -177,7 +176,6 @@ export default function Login() {
 
                         width: "100%",
                       }}
-                      
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton

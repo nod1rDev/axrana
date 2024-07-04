@@ -158,7 +158,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   function validateFIO(fio: any) {
     // Regular expression to match the required pattern
     const regex =
-      /^[A-Za-z]+(v|va) [A-Za-z]+ [A-Za-z]+(ovich|ovna| ogli| qizi)$/;
+      /^[A-Za-z]+(v|va|в|ва) [A-Za-z]+ [A-Za-z]+(ovich|ovna|ович|овна| огли| қизи| ўғли| ogli| qizi| o'g'li)$/;
 
     // Test the input string against the regex
     return regex.test(fio);

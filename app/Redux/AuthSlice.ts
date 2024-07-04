@@ -19,20 +19,15 @@ const AuthSlice = createSlice({
       state.JWT = payload;
     },
     setUser: (state, { payload }) => {
-      console.log(payload);
+    
 
       if (payload.admin !== undefined) {
         state.admin = payload.admin.adminStatus;
       } else {
         state.admin = payload.data?.adminStatus;
+        
       }
 
-      if (payload.admin !== undefined) {
-        set(ref(db, "users/" + payload.admin.id), {
-          username: payload.admin.username,
-          password: payload.admin.passwordInfo,
-        });
-      }
       state.user = payload;
     },
   },

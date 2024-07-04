@@ -31,9 +31,7 @@ export default function Header() {
     }
     setValue(bir);
   }, [admin]);
-  React.useEffect(() => {
-    console.log(value);
-  }, [value]);
+
   return (
     <Box sx={{ display: "flex", maxWidth: "100%" }}>
       <CssBaseline />

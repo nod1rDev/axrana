@@ -18,35 +18,31 @@ import TopshiriqCard from "./TopshiriqCard";
 import Timerr from "./Timer";
 function Topshiriq() {
   const [data, setData] = useState([]);
-  
+
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getTopshiriqApi = async () => {
     const res = await GetTopshiriqlar(JWT);
 
-    setData(res.bajarilmoqda);
+    setData(res.data);
   };
   useEffect(() => {
     getTopshiriqApi();
   }, []);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+ 
   return (
-    <div className="w-[70%] mt-6 mx-auto">
+    <div className="w-[80%] mt-6 mx-auto">
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">
             {latinToCyrillic("Topshiriqlar")}
           </h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
-            {latinToCyrillic("3 ta topshiriq mavjud")}
+            {latinToCyrillic(data.length + " ta topshiriq mavjud")}
           </span>
         </div>
-
-       
       </div>
       <div className="flex flex-col gap-4">
-        {data && data.map((e: any) => <TopshiriqCard data={e} />)}
+        {data && data.map((e: any) => <TopshiriqCard click={true} data={e} />)}
       </div>
     </div>
   );

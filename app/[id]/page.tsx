@@ -20,7 +20,6 @@ function page() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getData = async () => {
     const res = await GetSingleShartnoma(JWT, id);
-   
 
     setData(res.data);
   };
@@ -68,7 +67,7 @@ function page() {
             startIcon={<ArrowBackIcon />}
             color="info"
             variant="contained"
-            onClick={() => router.push("/shartnoma")}
+            onClick={() => router.push("/read/" + id)}
           >
             {"орқага"}
           </Button>
@@ -117,8 +116,8 @@ function page() {
           </div>
           <section className="mb-4">
             <p>
-              <span className="font-bold">{data.buyurtmachi?.name}</span> номидан
-              _________ асосида фаолият юритувчи
+              <span className="font-bold">{data.buyurtmachi?.name}</span>{" "}
+              номидан _________ асосида фаолият юритувчи
               <span className="font-bold">______________________</span>{" "}
               келгусида «Буюртмачи» деб номланувчи бир томондан ва Ўзбекистон
               Республикаси Миллий гвардияси Тошкент шаҳри бўйича бошқармаси

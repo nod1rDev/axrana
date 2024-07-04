@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Typography,
+ 
   Box,
   styled,
 } from "@mui/material";
@@ -29,39 +29,7 @@ interface TableRowData {
   total: number;
 }
 
-// Define the data
-const data: TableRowData[] = [
-  {
-    id: 1,
-    department: "MG Toshkent shahar boʻyicha boshqarmasi 81109/y.k",
-    personnel: 10,
-    hours: 4,
-    rate: 23800,
-    total: 952000,
-  },
-  {
-    id: 2,
-    department: "98157/y.k",
-    personnel: 10,
-    hours: 4,
-    rate: 23800,
-    total: 952000,
-  },
-  {
-    id: 3,
-    department: "IIB",
-    personnel: 7,
-    hours: 4,
-    rate: 23800,
-    total: 666400,
-  },
-];
 
-const totals = {
-  personnel: data.reduce((acc, row) => acc + row.personnel, 0),
-  rate: 23800,
-  total: data.reduce((acc, row) => acc + row.total, 0),
-};
 
 // Style for bordered cells
 const BorderedTableCell = styled(TableCell)({

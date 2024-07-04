@@ -536,8 +536,8 @@ export const Createshartnomaa = async (JWT: any, shartnoma: any) => {
   return data;
 };
 
-export const GetAllShartnoma = async (JWT: any) => {
-  const res = await fetch(URL + "/shartnoma/get?page2?limit=1", {
+export const GetAllShartnoma = async (JWT: any, page: any, limet: any) => {
+  const res = await fetch(URL + `/shartnoma/get?page${page}?limit=${limet}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -857,5 +857,35 @@ export const GetTopshiriqlar = async (JWT: any) => {
   });
 
   const data = await res.json();
+  return data;
+};
+
+export const GetStatus = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/shartnoma/organs/status/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const CreateWorkerForOrgan = async (JWT: any, worker: any, id: any) => {
+  const res = await fetch(URL + "/shartnoma/create/worker/" + id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({
+      workers: worker,
+    }),
+  });
+
+  const data = await res.json();
+
   return data;
 };

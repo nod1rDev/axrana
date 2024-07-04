@@ -27,13 +27,13 @@ const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 170 },
   {
     id: "FoydalanuvchiNomi",
-    label: latinToCyrillic("Foydalanuvchi Nomi"),
+    label: latinToCyrillic("Batalyon Nomi"),
     align: "left",
     minWidth: 100,
   },
   {
     id: "FoydalanuvchiParoli",
-    label: latinToCyrillic("Foydalanuvchi Paroli"),
+    label: latinToCyrillic("Batalyon Paroli"),
     minWidth: 170,
     align: "center",
   },
@@ -109,7 +109,7 @@ export default function Users() {
         dispatch(
           alertChange({
             open: true,
-            message: latinToCyrillic("Foydalanuvchi qoshildi"),
+            message: latinToCyrillic("Batalyon qoshildi"),
             status: "success",
           })
         );
@@ -147,7 +147,7 @@ export default function Users() {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Password tahrirlandi"),
+          message: latinToCyrillic("Parol tahrirlandi"),
           status: "success",
         })
       );
@@ -181,7 +181,7 @@ export default function Users() {
       <Paper sx={{ width: "60%", overflow: "hidden" }}>
         <div className="w-full ">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
-            {latinToCyrillic("Foydalanuvchi qoshish")}
+            {latinToCyrillic("Batalyon qoshish")}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -189,7 +189,7 @@ export default function Users() {
           >
             <TextField
               id="outlined-basic"
-              label={latinToCyrillic("Foydalanuvchi Nomi")}
+              label={latinToCyrillic("Batalyon Nomi")}
               value={value.username}
               name="username"
               onChange={(e: any) => handleChange(e)}
@@ -198,7 +198,7 @@ export default function Users() {
             />
             <TextField
               id="outlined-basic"
-              label={latinToCyrillic("Foydalanuvchi Paroli")}
+              label={latinToCyrillic("Batalyon Paroli")}
               value={value.password}
               name="password"
               onChange={(e: any) => handleChange(e)}

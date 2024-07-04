@@ -28,7 +28,7 @@ const Timer = ({ targetDate }: { targetDate: Date }) => {
           {timeLeft.seconds.toString().padStart(2, "0")}
         </div>
       ) : (
-        <div>{latinToCyrillic("Bajarilmadi")}</div>
+        <div>{latinToCyrillic("00:00:00")}</div>
       )}
     </>
   );
@@ -49,7 +49,7 @@ const calculateTimeLeft = (targetDate: Date) => {
 
 const Timerr = ({ date }: { date: Date }) => {
   const targetDate = new Date(date);
-console.log(targetDate);
+
 
   return (
     <div>

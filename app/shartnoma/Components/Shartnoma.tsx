@@ -7,11 +7,15 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import ShartnomaCard from "./ShartnomaCard";
 import TextField from "@mui/material/TextField";
 import { GetAllShartnoma, SearchShartnoma } from "@/app/Api/Apis";
-import { IconButton } from "@mui/material";
+import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+
 function Shartnoma() {
   const [shartnomalar, setShartnomalar] = useState([]);
+  const [data, setData] = useState<any>();
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState(false);
   const [value, setValue] = useState<any>({
     date1: "",
@@ -32,9 +36,8 @@ function Shartnoma() {
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContract = async () => {
-    const res = await GetAllShartnoma(JWT);
-    console.log(res);
-
+    const res = await GetAllShartnoma(JWT, page + 1, rowsPerPage);
+    setData(res);
     setShartnomalar(res.data);
   };
   useEffect(() => {
@@ -42,7 +45,7 @@ function Shartnoma() {
   }, []);
   const getSearchData = async () => {
     const res = await SearchShartnoma(JWT, value);
-
+    setData(res);
     setShartnomalar(res.data);
   };
   const router = useRouter();
@@ -58,8 +61,21 @@ function Shartnoma() {
   const handleChangeValue = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+    getAllContract();
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
-    <div className="w-[70%] mt-6 mx-auto">
+    <div className="w-[80%] flex flex-col mt-6 mx-auto">
       <div className="flex mb-5 justify-end">
         <Button
           onClick={() => router.push("/shartnoma/add")}
@@ -134,6 +150,19 @@ function Shartnoma() {
       <div className="flex flex-col gap-4">
         {shartnomalar &&
           shartnomalar.map((e: any) => <ShartnomaCard data={e} />)}
+      </div>
+
+      <div className="flex justify-end mt-4">
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          component="div"
+          count={data?.count}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage={latinToCyrillic("Qatorlar")}
+        />
       </div>
     </div>
   );

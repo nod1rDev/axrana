@@ -17,7 +17,7 @@ import BudgetTable from "../[id]/SingleTab";
 const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
   return (
     <>
-      <div ref={ref} className=" mt-8 w-[80%] mx-auto font-serif text-justify">
+      <div ref={ref} className="  mt-8 w-[80%] mx-auto font-serif text-justify">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва жамоат
           тартибини сақлаш тўғрисида намунавий шартнома
@@ -28,10 +28,10 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </div>
         <div className="mb-4 flex  justify-between">
-          <p className="font-bold">{data.date}</p>
-          <p className="font-bold">Тошкент шаҳри</p>
+          <p className="font-bold text-lg">{`<<${data.date}>>`}</p>
+          <p className="font-bold text-lg">Тошкент шаҳри</p>
         </div>
-        <section className="mb-4">
+        <section className="mb-7">
           <p>
             <span className="font-bold">{data.buyurtmachi?.name}</span> номидан
             _________ асосида фаолият юритувчи
@@ -47,7 +47,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             1. Шартнома предмети
           </h2>
@@ -60,7 +60,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             2. Ҳисоблашиш тартиблари ва хизмат нархлари
           </h2>
@@ -82,7 +82,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             3. Томонларнинг мажбуриятлари ва ҳуқуқлари
           </h2>
@@ -139,7 +139,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl font-semibold text-center mb-0">
             4. Томонларнинг жавобгарлиги
           </h2>
@@ -157,7 +157,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             5. Форс-мажор
           </h2>
@@ -177,7 +177,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             6. Коррупсияга қарши қўшимча шартлар
           </h2>
@@ -207,7 +207,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className="mb-4">
+        <section className="mb-7">
           <h2 className="text-xl text-center font-semibold mb-0">
             7. Шартноманинг амал қилиш муддати ва шартномани бекор қилиш
             тартиблари
@@ -241,7 +241,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
           </p>
         </section>
 
-        <section className=" mb-[800px]">
+        <section className=" mb-[3000000px]">
           <h2 className="text-xl text-center font-semibold mb-4">
             7. Томонларнинг реквизитлари
           </h2>
@@ -255,7 +255,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
               <div className=" absolute top-[300px] left-[40px]">
                 <div className="flex flex-col">
                   <h1 className="font-bold ">
-                    Раҳбари: _______ _________________
+                    Раҳбари: _____ ______________
                   </h1>
                   <div className="flex   gap-36 justify-center items-center">
                     <div>(имзо)</div>
@@ -272,7 +272,7 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
               </p>
               <div className="flex gap-2">
                 <span className="font-bold text-xl">Манзил:</span>
-                <p className=" text-start text-xl">
+                <p className=" text-start text-lg">
                   Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй. Банк
                   реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:00014. х/р 21
                   506 000 705 131 158 003 СТИР: 207 305 369

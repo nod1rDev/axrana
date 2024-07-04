@@ -29,7 +29,7 @@ function Page() {
   useEffect(() => {
     if (data && data.length > 0) {
       const newCount = data.reduce((acc: number, e: any) => {
-        if (e.workers) {
+        if (e.bajarilgan) {
           return acc + 1;
         }
         return acc;

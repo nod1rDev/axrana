@@ -6,9 +6,10 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { GetStatus } from "@/app/Api/Apis";
+import { DeleteShartnoma, GetStatus } from "@/app/Api/Apis";
 import BittaTab from "./Components/BittaTab";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 function Page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -25,7 +26,29 @@ function Page() {
   }, []);
 
   const dispatch = useDispatch();
+  const deleteItem = async () => {
+    const res = await DeleteShartnoma(JWT, id);
 
+    if (res.delete) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Shartnoma Ochirildi"),
+          status: "success",
+        })
+      );
+
+      router.push("/shartnoma");
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
   useEffect(() => {
     if (data && data.length > 0) {
       const newCount = data.reduce((acc: number, e: any) => {
@@ -68,12 +91,27 @@ function Page() {
           >
             {"орқага"}
           </Button>
-          <h1 className="font-bold text-[28px]">
-            {latinToCyrillic("Organlar Statusi")}
-          </h1>
-          <Button color="success" variant="contained" onClick={otish}>
-            {latinToCyrillic("Shartnomani ko'rish")}
-          </Button>
+
+          <div className="flex gap-3">
+            <Button
+              startIcon={<DeleteIcon />}
+              color="error"
+              variant="contained"
+              onClick={() => deleteItem()}
+            >
+              {"учириш"}
+            </Button>
+            <Button
+              onClick={() => router.push("/shartnoma/edit/" + id)}
+              startIcon={<ModeEditOutlineIcon />}
+              variant="contained"
+            >
+              {"таҳрирлаш"}
+            </Button>
+            <Button color="success" variant="contained" onClick={otish}>
+              {latinToCyrillic("Shartnomani ko'rish")}
+            </Button>
+          </div>
         </div>
         <BittaTab ranks={data} />
       </div>

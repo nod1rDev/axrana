@@ -9,7 +9,6 @@ import {
   TableHead,
   TableRow,
   Paper,
- 
   Box,
   styled,
 } from "@mui/material";
@@ -28,8 +27,6 @@ interface TableRowData {
   rate: number;
   total: number;
 }
-
-
 
 // Style for bordered cells
 const BorderedTableCell = styled(TableCell)({
@@ -51,7 +48,6 @@ const BudgetTable: any = ({
   raq: any;
   dataId: any;
 }) => {
- 
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [worker, setWorker] = React.useState([]);
   const dispatch = useDispatch();
@@ -77,7 +73,6 @@ const BudgetTable: any = ({
   };
   const getAll = async () => {
     const res = await GetWorkerByOrgan(JWT, dataId);
- 
 
     setWorker(res.data);
     if (res.success) {
@@ -95,13 +90,13 @@ const BudgetTable: any = ({
   };
   return (
     <>
-      <Box p={3}>
-        <div className="flex w-full pb-20 justify-end flex-col gap-0">
+      <Box>
+        <div className="flex  pb-20 justify-end flex-col gap-0">
           <div className="font-bold text-[18px] flex justify-end">
             {data1 && data1.date}
           </div>
           <div className="font-bold text-[18px] flex justify-end">
-            {data1 && raq}-sonli qaror loyihasi
+            {data1 && raq + latinToCyrillic("-sonli qaror loyihasi")}
           </div>
         </div>
 

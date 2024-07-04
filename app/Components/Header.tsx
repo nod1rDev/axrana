@@ -16,13 +16,10 @@ export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const router = useRouter();
 
-  const navItems = !admin
-    ? ["topshiriq", "shartnoma", "shaxsiy"]
-    : ["shartnoma", "shaxsiy"];
+  const navItems = !admin ? ["topshiriq", "shaxsiy"] : ["shartnoma", "shaxsiy"];
   const [value, setValue] = React.useState<any>("shartnoma");
   const handleChange = (e: any) => {
     setValue(e.target.value);
-    
   };
   React.useEffect(() => {
     const bir = navItems[0];
@@ -43,8 +40,11 @@ export default function Header() {
                 <FormControl sx={{ width: "200px" }}>
                   <Select
                     sx={{
-                      color: "white", // Selectning tanlangan qiymat matni uchun rang
-                      ".MuiSvgIcon-root": { color: "white" }, // Select icon uchun rang
+                      color: "white",
+                      ".MuiSvgIcon-root": { color: "white" },
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        border: "none", // Selectning borderini yo'qotish
+                      },
                     }}
                     value={value}
                     onChange={handleChange}

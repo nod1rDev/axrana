@@ -25,58 +25,16 @@ function Page() {
     getData();
   }, []);
 
-  const dispatch = useDispatch();
-  const deleteItem = async () => {
-    const res = await DeleteShartnoma(JWT, id);
 
-    if (res.delete) {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Shartnoma Ochirildi"),
-          status: "success",
-        })
-      );
 
-      router.push("/shartnoma");
-    } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic(res.message),
-          status: "error",
-        })
-      );
-    }
-  };
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const newCount = data.reduce((acc: number, e: any) => {
-        if (e.bajarilgan) {
-          return acc + 1;
-        }
-        return acc;
-      }, 0);
-      setCount(newCount);
-    }
-  }, [data]);
+
 
   const router = useRouter();
 
   const otish = () => {
-    if (count === data.length) {
+    
       router.push("/" + id);
-    } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic(
-            "Barcha organlar statusi bajarilgan bo'lishi shart!"
-          ),
-          status: "error",
-        })
-      );
-    }
+   
   };
 
   return (
@@ -92,26 +50,12 @@ function Page() {
             {"орқага"}
           </Button>
 
-          <div className="flex gap-3">
-            <Button
-              startIcon={<DeleteIcon />}
-              color="error"
-              variant="contained"
-              onClick={() => deleteItem()}
-            >
-              {"учириш"}
-            </Button>
-            <Button
-              onClick={() => router.push("/shartnoma/edit/" + id)}
-              startIcon={<ModeEditOutlineIcon />}
-              variant="contained"
-            >
-              {"таҳрирлаш"}
-            </Button>
+         <h1 className="text-[28px] font-bold">{latinToCyrillic("Organlar Statusi")}</h1>
+         
             <Button color="success" variant="contained" onClick={otish}>
               {latinToCyrillic("Shartnomani ko'rish")}
             </Button>
-          </div>
+          
         </div>
         <BittaTab ranks={data} />
       </div>

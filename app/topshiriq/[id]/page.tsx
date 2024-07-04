@@ -115,7 +115,7 @@ const Page = () => {
         <div className="mb-6">
           <TopshiriqCard click={false} data={data} />
         </div>
-        {data && (data.bajarilmoqda || data.bajarilgan) && (
+        {data && (data.bajarilmoqda) && (
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

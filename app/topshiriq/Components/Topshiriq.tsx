@@ -17,18 +17,33 @@ import SearchIcon from "@mui/icons-material/Search";
 import TopshiriqCard from "./TopshiriqCard";
 import Timerr from "./Timer";
 function Topshiriq() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
 
+  function filterAndSortTasks(
+    tasks: {
+      bajarilmagan?: boolean;
+      bajarilmoqda?: boolean;
+      bajarilgan?: boolean;
+    }[]
+  ): { bajarilmagan?: boolean; bajarilmoqda?: boolean; bajarilgan?: boolean }[] {
+    const notStarted = tasks.filter((task) => task.bajarilmagan);
+    const inProgress = tasks.filter((task) => task.bajarilmoqda);
+    const completed = tasks.filter((task) => task.bajarilgan);
+
+    return [...notStarted, ...inProgress, ...completed];
+  }
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getTopshiriqApi = async () => {
     const res = await GetTopshiriqlar(JWT);
+    const filtData = filterAndSortTasks(res.data);
+    console.log(res.data);
 
-    setData(res.data);
+    setData(filtData);
   };
   useEffect(() => {
     getTopshiriqApi();
   }, []);
- 
+
   return (
     <div className="w-[80%] mt-6 mx-auto">
       <div className="flex w-full justify-between mb-10">

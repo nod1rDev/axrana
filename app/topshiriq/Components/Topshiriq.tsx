@@ -4,20 +4,31 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import {
   GetAllShartnoma,
   GetTopshiriqlar,
+  SearchByStatus,
   SearchShartnoma,
+  SearchTopshiriq,
 } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import TopshiriqCard from "./TopshiriqCard";
 import Timerr from "./Timer";
+
 function Topshiriq() {
   const [data, setData] = useState<any>([]);
+  const [search, setSearch] = useState(false);
+  const [value, setValue] = useState<any>({
+    date1: "",
+    date2: "",
+  });
 
   function filterAndSortTasks(
     tasks: {
@@ -25,24 +36,73 @@ function Topshiriq() {
       bajarilmoqda?: boolean;
       bajarilgan?: boolean;
     }[]
-  ): { bajarilmagan?: boolean; bajarilmoqda?: boolean; bajarilgan?: boolean }[] {
+  ): {
+    bajarilmagan?: boolean;
+    bajarilmoqda?: boolean;
+    bajarilgan?: boolean;
+  }[] {
     const notStarted = tasks.filter((task) => task.bajarilmagan);
     const inProgress = tasks.filter((task) => task.bajarilmoqda);
     const completed = tasks.filter((task) => task.bajarilgan);
 
     return [...notStarted, ...inProgress, ...completed];
   }
+
   const JWT = useSelector((s: any) => s.auth.JWT);
+
   const getTopshiriqApi = async () => {
     const res = await GetTopshiriqlar(JWT);
     const filtData = filterAndSortTasks(res.data);
-    console.log(res.data);
+    console.log(filtData);
 
     setData(filtData);
   };
+  function formatDateToDDMMYYYY(date: Date): string {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() 0-indexed
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+  }
+
   useEffect(() => {
+    const date = new Date();
+    const filtDate = formatDateToDDMMYYYY(date);
+    setValue({ date1: filtDate, date2: filtDate });
     getTopshiriqApi();
   }, []);
+
+  const getSearchData = async () => {
+    const res = await SearchTopshiriq(JWT, value);
+    setData(res.data);
+  };
+
+  const searchData = () => {
+    setSearch(!search);
+    if (!search) {
+      getSearchData();
+    } else {
+      getTopshiriqApi();
+    }
+  };
+
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getByStatus = async (value: any) => {
+    const res = await SearchByStatus(JWT, value);
+
+    setData(res.data);
+  };
+  const handleStatus = (e: any) => {
+    setSearch(true);
+
+    getByStatus(e.target.value);
+  };
 
   return (
     <div className="w-[80%] mt-6 mx-auto">
@@ -55,9 +115,75 @@ function Topshiriq() {
             {latinToCyrillic(data.length + " ta topshiriq mavjud")}
           </span>
         </div>
+        <div className="flex flex-col">
+          <div className="flex justify-end text-[28px]  font-bold">
+            {latinToCyrillic("Filter")}
+          </div>
+          <div className="flex items-center gap-4">
+            <FormControl sx={{ width: "200px" }}>
+              <InputLabel id="demo-simple-select-label">
+                {latinToCyrillic("Status")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label={latinToCyrillic("Status")}
+                onChange={handleStatus}
+              >
+                <MenuItem value={"bajarilgan"}>Bajarilgan</MenuItem>
+                <MenuItem value={"bajarilmoqda"}>Bajarilmoqda</MenuItem>
+                <MenuItem value={"bajarilmagan"}>Bajarilmagan</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              id="date1"
+              label={latinToCyrillic("Sana 1")}
+              sx={{ width: "200px" }}
+              onChange={handleChangeValue}
+              variant="outlined"
+              value={value.date1}
+              name="date1"
+              autoComplete="off"
+            />
+
+            <TextField
+              id="date2"
+              label={latinToCyrillic("Sana 2")}
+              sx={{ width: "200px" }}
+              onChange={handleChangeValue}
+              variant="outlined"
+              value={value.date2}
+              name="date2"
+              autoComplete="off"
+            />
+
+            {search ? (
+              <IconButton
+                size="large"
+                sx={{ width: "60px", height: "60px" }}
+                aria-label="delete"
+                onClick={searchData}
+              >
+                <CloseIcon fontSize="inherit" color="error" />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="large"
+                sx={{ width: "60px", height: "60px" }}
+                aria-label="search"
+                onClick={searchData}
+              >
+                <SearchIcon fontSize="inherit" color="info" />
+              </IconButton>
+            )}
+          </div>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
-        {data && data.map((e: any) => <TopshiriqCard click={true} data={e} />)}
+        {data &&
+          data.map((e: any) => (
+            <TopshiriqCard key={e._id} click={true} data={e} />
+          ))}
       </div>
     </div>
   );

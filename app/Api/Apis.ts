@@ -918,3 +918,32 @@ export const SearchTadbir = async (JWT: any, date: any, id: any) => {
 
   return data;
 };
+
+export const SearchByStatus = async (JWT: any, status: any) => {
+  const res = await fetch(URL + "/shartnoma/filter/status/batalyon?status=" + status, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+
+export const SearchTopshiriq = async (JWT: any, date: any,) => {
+  const res = await fetch(URL + "/shartnoma/filter/date/batalyon" , {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(date),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

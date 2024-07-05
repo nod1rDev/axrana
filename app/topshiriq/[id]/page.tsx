@@ -37,7 +37,7 @@ const Page = () => {
 
   const getData = async () => {
     const res = await GetTopshiriqlar(JWT);
-    const single = res.data.find((e: any) => e._id === id);
+    const single = res.data.find((e: any) => e.shartnoma_id === id);
     setData(single);
   };
 

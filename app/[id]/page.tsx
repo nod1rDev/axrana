@@ -339,7 +339,12 @@ function page() {
                 <p className="font-bold text-xl text-center">
                   {data.buyurtmachi?.name}
                 </p>
-
+                {data.buyurtmachi?.address  && (
+                  <div className="flex gap-2">
+                    <span className="font-bold text-xl">Манзил:</span>
+                    <p className=" text-start ">{data.buyurtmachi?.address}</p>
+                  </div>
+                )}
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">

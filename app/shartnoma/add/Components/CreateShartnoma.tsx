@@ -164,7 +164,7 @@ function CreateShartnoma({ language }: { language: any }) {
           <TextField
             id="shartnomaNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
-            sx={{ width: "35%" }}
+            sx={{ width: "30%" }}
             value={value.shartnomaNumber}
             onChange={handleChangeValue}
             variant="outlined"
@@ -181,14 +181,14 @@ function CreateShartnoma({ language }: { language: any }) {
             name="date"
             autoComplete="off"
           />
-          <TextField
-            id="topshiriqDate"
-            label={latinToCyrillic("Topshiriq Sanasi")}
-            sx={{ width: "30%" }}
+         <TextField
+            id="address"
+            label={latinToCyrillic("Tadbir o'tadigan joy manzil")}
+            sx={{ width: "40%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.topshiriqDate}
-            name="topshiriqDate"
+            value={value.address}
+            name="address"
             autoComplete="off"
           />
         </div>
@@ -198,23 +198,14 @@ function CreateShartnoma({ language }: { language: any }) {
             label={latinToCyrillic(
               "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
             )}
-            sx={{ width: "49%" }}
+            sx={{ width: "100%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.timeLimit}
             name="timeLimit"
             autoComplete="off"
           />
-          <TextField
-            id="address"
-            label={latinToCyrillic("Tadbir o'tadigan joy manzil")}
-            sx={{ width: "49%" }}
-            onChange={handleChangeValue}
-            variant="outlined"
-            value={value.address}
-            name="address"
-            autoComplete="off"
-          />
+          
         </div>
         <div className="font-bold text-[28px] flex gap-3 mb-4">
           <Switch
@@ -274,7 +265,17 @@ function CreateShartnoma({ language }: { language: any }) {
             </>
           )}
         </div>
-        <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
+        <div className="font-bold mb-3 text-[28px]">{latinToCyrillic("Smeta")}</div>
+        <TextField
+            id="topshiriqDate"
+            label={latinToCyrillic("Topshiriq Sanasi")}
+            sx={{ width: "30%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.topshiriqDate}
+            name="topshiriqDate"
+            autoComplete="off"
+          />
         {organs?.map((e: any, index: any) => (
           <div
             key={index}

@@ -15,7 +15,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { loginAuth, SelectAuth } from "../Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../Redux/AuthSlice";
+import { changeAdminStatus, setUser } from "../Redux/AuthSlice";
 import { useRouter } from "next/navigation";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -36,9 +36,10 @@ export default function Login() {
   const [data, setData] = React.useState<any>();
   const [password, setPassword] = React.useState<any>();
   const [select, setSelect] = React.useState<any>();
-
+  const admin = useSelector((s: any) => s.auth.admin);
   const login = async (username: any, password: any) => {
     const res = await loginAuth(username, password);
+  
 
     if (res.success) {
       dispatch(
@@ -51,8 +52,11 @@ export default function Login() {
       sessionStorage.setItem("token", res.token);
 
       sessionStorage.setItem("id", res.data.id);
-
-      setTimeout(() => window.location.reload(), 200);
+      res.data.adminStatus
+        ? router.push("/shartnoma")
+        : router.push("/topshiriq");
+      dispatch(changeAdminStatus(res.data.adminStatus));
+      setTimeout(() => window.location.reload(), 700);
     } else {
       dispatch(
         alertChange({
@@ -78,7 +82,6 @@ export default function Login() {
       );
 
       login(select, data.get("password"));
-      router.push("/");
     } else {
       dispatch(
         alertChange({

@@ -7,6 +7,7 @@ import {
   FormControl,
   Checkbox,
   Autocomplete,
+  Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -32,6 +33,9 @@ function CreateShartnoma({ language }: { language: any }) {
     timeLimit: "",
     buyurtmachi: {
       name: "",
+      address: "",
+      accountNumber: "",
+      CTIR: "",
     },
     topshiriqDate: "",
     address: "",
@@ -41,7 +45,7 @@ function CreateShartnoma({ language }: { language: any }) {
   const [workers, setWorkers] = useState<any[]>([]);
   const [worker2, setWorker2] = useState<any>([]);
   const [organs, setOrgans] = useState<any>([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(false);
 
   const router = useRouter();
   interface Item {
@@ -100,7 +104,6 @@ function CreateShartnoma({ language }: { language: any }) {
     const shartnoma = { ...value, organs: filtOrgans };
     if (shartnoma.organs && shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
-     
     } else {
       dispatch(
         alertChange({
@@ -118,6 +121,13 @@ function CreateShartnoma({ language }: { language: any }) {
     } else {
       setValue({ ...value, [e.target.name]: e.target.value });
     }
+  };
+
+  const handleChangeValue2 = (e: any) => {
+    setValue({
+      ...value,
+      buyurtmachi: { ...value.buyurtmachi, [e.target.name]: e.target.value },
+    });
   };
 
   const handleChangeOrgans = (e: any, index: number) => {
@@ -206,20 +216,63 @@ function CreateShartnoma({ language }: { language: any }) {
             autoComplete="off"
           />
         </div>
-        <div className="font-bold text-[28px]">
-          {latinToCyrillic("Buyurtmachi")}
+        <div className="font-bold text-[28px] flex gap-3 mb-4">
+          <Switch
+            checked={count}
+            onChange={() => setCount(!count)}
+            inputProps={{ "aria-label": "controlled" }}
+          />{" "}
+          <span>{latinToCyrillic("Buyurtmachi")}</span>
         </div>
         <div className="flex gap-4 mb-4">
           <TextField
             id="buyurtmachi"
             label={latinToCyrillic("Buyurtma Nomi")}
-            sx={{ width: "30%" }}
-            onChange={handleChangeValue}
+            sx={{ width: "25%" }}
+            onChange={handleChangeValue2}
             variant="outlined"
             value={value.buyurtmachi.name}
-            name="buyurtmachi"
+            name="name"
             autoComplete="off"
           />
+
+          {count && (
+            <>
+              {" "}
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma Manzili")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                value={value.buyurtmachi.address}
+                name="address"
+                autoComplete="off"
+              />
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma Xisob Raqami")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                type="number"
+                value={value.buyurtmachi.accountNumber}
+                name="accountNumber"
+                autoComplete="off"
+              />
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma CTIR")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                type="number"
+                value={value.buyurtmachi.CTIR}
+                name="CTIR"
+                autoComplete="off"
+              />
+            </>
+          )}
         </div>
         <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
         {organs?.map((e: any, index: any) => (

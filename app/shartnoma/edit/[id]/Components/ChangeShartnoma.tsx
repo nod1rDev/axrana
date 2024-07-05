@@ -7,6 +7,7 @@ import {
   FormControl,
   Checkbox,
   Autocomplete,
+  Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -42,7 +43,7 @@ function ChangeShartnoma({ data }: { data: any }) {
   const [workers, setWorkers] = useState<any[]>([]);
   const [worker2, setWorker2] = useState<any>([]);
   const [organs, setOrgans] = useState<any>([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(false);
 
   const router = useRouter();
   interface Item {
@@ -95,11 +96,11 @@ function ChangeShartnoma({ data }: { data: any }) {
     });
 
     if (data) {
-      console.log(newOrgans);
       setOrgans(newOrgans);
 
       setValue({
         ...data,
+        buyurtmachi: { ...data.buyurtmachi },
         date: formatDate(data.date),
         topshiriqDate: formatDate(data.date),
       });
@@ -115,8 +116,13 @@ function ChangeShartnoma({ data }: { data: any }) {
         workerNumber: organ.workerNumber,
       };
     });
-    const shartnoma = { ...value, organs: filtOrgans };
-    if (shartnoma.organs && shartnoma.shartnomaNumber) {
+    const shartnoma = {
+      ...value,
+      organs: filtOrgans,
+    };
+    
+
+    if (shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
     } else {
       dispatch(
@@ -130,11 +136,13 @@ function ChangeShartnoma({ data }: { data: any }) {
   };
 
   const handleChangeValue = (e: any) => {
-    if (e.target.name === "buyurtmachi") {
-      setValue({ ...value, buyurtmachi: { name: e.target.value } });
-    } else {
-      setValue({ ...value, [e.target.name]: e.target.value });
-    }
+    setValue({ ...value, [e.target.name]: e.target.value });
+  };
+  const handleChangeValue2 = (e: any) => {
+    setValue({
+      ...value,
+      buyurtmachi: { ...value.buyurtmachi, [e.target.name]: e.target.value },
+    });
   };
 
   const handleChangeOrgans = (e: any, index: number) => {
@@ -168,7 +176,9 @@ function ChangeShartnoma({ data }: { data: any }) {
 
   function formatDate(dateString: string) {
     if (dateString) {
-      const [day, month, year] = dateString.split(" ");
+      // Sana satrini bo'sh joy va tire orqali bo'linadi
+      const [dayMonth, year] = dateString.split(" ");
+      const [day, month] = dayMonth.split("-");
 
       const monthMap: { [key: string]: string } = {
         январь: "01",
@@ -187,11 +197,10 @@ function ChangeShartnoma({ data }: { data: any }) {
 
       const monthNumber = monthMap[month];
 
-      if (!monthNumber) {
-        throw new Error(`Invalid month: ${month}`);
-      }
+      // "йил" so'zini olib tashlash va yildagi har qanday "-" belgilarini olib tashlash
+      const cleanedYear = removeHyphens(year.replace("йил", ""));
 
-      return removeHyphens(`${day}.${monthNumber}.${year}`);
+      return `${day}.${monthNumber}.${cleanedYear}`;
     }
     return "";
   }
@@ -254,20 +263,63 @@ function ChangeShartnoma({ data }: { data: any }) {
             autoComplete="off"
           />
         </div>
-        <div className="font-bold mb-2 text-[28px]">
-          {latinToCyrillic("Buyurtmachi")}
+        <div className="font-bold text-[28px] flex gap-3 mb-4">
+          <Switch
+            checked={count}
+            onChange={() => setCount(!count)}
+            inputProps={{ "aria-label": "controlled" }}
+          />{" "}
+          <span>{latinToCyrillic("Buyurtmachi")}</span>
         </div>
         <div className="flex gap-4 mb-4">
           <TextField
             id="buyurtmachi"
             label={latinToCyrillic("Buyurtma Nomi")}
             sx={{ width: "30%" }}
-            onChange={handleChangeValue}
+            onChange={handleChangeValue2}
             variant="outlined"
             value={value.buyurtmachi?.name}
-            name="buyurtmachi"
+            name="name"
             autoComplete="off"
           />
+
+          {count && (
+            <>
+              {" "}
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma Manzili")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                value={value.buyurtmachi.address}
+                name="address"
+                autoComplete="off"
+              />
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma Xisob Raqami")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                type="number"
+                value={value.buyurtmachi.accountNumber}
+                name="accountNumber"
+                autoComplete="off"
+              />
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtma CTIR")}
+                sx={{ width: "25%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                type="number"
+                value={value.buyurtmachi.CTIR}
+                name="CTIR"
+                autoComplete="off"
+              />
+            </>
+          )}
         </div>
         <div className="font-bold text-[28px]">{latinToCyrillic("Smeta")}</div>
         {organs?.map((e: any, index: any) => (

@@ -5,12 +5,13 @@ import { LinearProgress } from "@mui/material";
 import Login from "./Login";
 import { getAuth, loginAuth } from "../Api/Apis";
 import { setUser } from "../Redux/AuthSlice";
+import { useRouter } from "next/navigation";
 
 function Prodected({ children }: { children: any }) {
   const [loading, setloading] = useState(true);
   const dispatch = useDispatch();
   const [user, setUserr] = useState<boolean>(false);
-
+  const router = useRouter();
   const JWT = useSelector((state: any) => state.auth.JWT);
   useEffect(() => {
     const getUser = async () => {

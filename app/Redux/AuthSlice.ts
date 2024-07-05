@@ -19,20 +19,16 @@ const AuthSlice = createSlice({
       state.JWT = payload;
     },
     setUser: (state, { payload }) => {
-    
-
-      if (payload.admin !== undefined) {
-        state.admin = payload.admin.adminStatus;
-      } else {
-        state.admin = payload.data?.adminStatus;
-        
-      }
+      state.admin = payload.data?.adminStatus;
 
       state.user = payload;
+    },
+    changeAdminStatus: (state, { payload }) => {
+      state.admin = payload;
     },
   },
 });
 
-export const { puJWT, setUser } = AuthSlice.actions;
+export const { puJWT, setUser, changeAdminStatus } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

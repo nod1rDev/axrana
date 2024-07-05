@@ -889,3 +889,32 @@ export const CreateWorkerForOrgan = async (JWT: any, worker: any, id: any) => {
 
   return data;
 };
+
+export const GetTadbir = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/FIO/get/workers/tadbirlar/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+
+export const SearchTadbir = async (JWT: any, date: any, id: any) => {
+  const res = await fetch(URL + "/FIO/get/workers/search/tadbirlar/" + id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(date),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

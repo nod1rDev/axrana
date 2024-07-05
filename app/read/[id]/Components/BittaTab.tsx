@@ -26,7 +26,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "FIO" | "Tuman" | "Otryad" | "actions";
+  id: "number" | "FIO" | "Tuman" | "Otryad" | "sanasi" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -38,20 +38,26 @@ const columns: readonly Column[] = [
   {
     id: "Tuman",
     label: latinToCyrillic("Organ nomi"),
-    minWidth: 200,
+    minWidth: 100,
     align: "center",
   },
   {
     id: "FIO",
     label: latinToCyrillic("Nazorat qilish muddati"),
     align: "center",
-    minWidth: 280,
+    minWidth: 180,
   },
 
   {
     id: "Otryad",
     label: latinToCyrillic("Xodimlar soni"),
-    minWidth: 280,
+    minWidth: 180,
+    align: "center",
+  },
+  {
+    id: "sanasi",
+    label: latinToCyrillic("Topshiriq Sanasi"),
+    minWidth: 180,
     align: "center",
   },
   {
@@ -68,6 +74,7 @@ interface Data {
 
   Tuman: any;
   Otryad: any;
+  sanasi: any;
   actions: any;
   id: number;
 }
@@ -78,7 +85,9 @@ function createData(
 
   Tuman: any,
   Otryad: any,
+  sanasi: any,
   actions: any,
+
   id: number
 ): Data {
   return {
@@ -87,6 +96,7 @@ function createData(
 
     Tuman,
     Otryad,
+    sanasi,
     actions,
     id,
   };
@@ -96,6 +106,7 @@ export default function BittaTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
+  console.log(ranks);
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
@@ -104,7 +115,7 @@ export default function BittaTab({ ranks }: { ranks: any }) {
           e.time,
           e.name,
           e.workerNumber,
-
+          e.topshiriqDate,
           e.bajarilmagan
             ? "bajarilmagan"
             : e.bajarilmoqda
@@ -150,6 +161,19 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                           {e == 0 ? (
                             i + 1
                           ) : e == 4 ? (
+                            <>
+                              <div
+                                className={`font-bold ${
+                                  row.actions == "bajarilmoqda" ||
+                                  row.actions == "bajarilmagan"
+                                    ? "text-red-500"
+                                    : ""
+                                }`}
+                              >
+                                {row.sanasi}
+                              </div>
+                            </>
+                          ) : e == 5 ? (
                             <>
                               <div className="flex justify-end">
                                 <Status status={row.actions} />

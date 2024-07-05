@@ -23,7 +23,6 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
       : data.bajarilmoqda
       ? "bajarilmoqda"
       : "";
-  
 
     setStatus(filtStat);
   }, [data]);
@@ -36,8 +35,14 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         <span className="font-bold text-center">
           {data && data.buyurtmachi}
         </span>
-        <span>
-          <Timerr date={data && swapDayMonth(data.topshiriqDate)} />
+        <span
+          className={`font-bold ${
+            status == "bajarilmoqda" || status == "bajarilmagan"
+              ? "text-red-500"
+              : ""
+          }`}
+        >
+          {data && data.topshiriqDate}
         </span>
         <span>{data && data.address}</span>
 

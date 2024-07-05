@@ -10,10 +10,11 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
 import { latinToCyrillic } from "../add/Components/lotin";
+import { useRouter } from "next/navigation";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -98,7 +99,13 @@ export default function TipTab({ ranks }: { ranks: any }) {
     : [];
 
   const dispatch = useDispatch();
-
+  const router = useRouter();
+  const admin = useSelector((s: any) => s.auth.admin);
+  const otish = (id: any) => {
+    if (admin) {
+      router.push("/tip/" + id);
+    }
+  };
   return (
     <Paper sx={{ width: "100%" }}>
       <TableContainer sx={{ overflow: "auto", maxHeight: "70vh" }}>
@@ -121,7 +128,15 @@ export default function TipTab({ ranks }: { ranks: any }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row: any, i: any) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={i}>
+                  <TableRow
+                    hover
+                    onClick={() => {
+                      otish(row.id);
+                    }}
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={i}
+                  >
                     {columns.map((column, e) => {
                       const value = row[column.id];
                       return (
@@ -131,7 +146,8 @@ export default function TipTab({ ranks }: { ranks: any }) {
                           ) : e == 4 ? (
                             <>
                               <IconButton
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   dispatch(
                                     setModalTip({
                                       type: 1,
@@ -140,10 +156,10 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       name: row.FIO,
                                       FIO: row.FIO,
                                       zvaniya: row.Tuman,
-                                      batalyon: row.Otryad,
+                                    
                                     })
-                                  )
-                                }
+                                  );
+                                }}
                                 aria-label="delete"
                                 size="medium"
                               >
@@ -157,7 +173,8 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                 sx={{ ml: 1 }}
                                 aria-label="delete"
                                 size="medium"
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   dispatch(
                                     setModalTip({
                                       type: 2,
@@ -165,8 +182,8 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       id: row.id,
                                       name: row.FIO,
                                     })
-                                  )
-                                }
+                                  );
+                                }}
                               >
                                 <RemoveCircleOutlineIcon
                                   fontSize="inherit"

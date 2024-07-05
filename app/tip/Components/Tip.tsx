@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
-
+import React, { useState } from "react";
+import { TextField, IconButton } from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 import {
   Createtips,
   Deletetip,
@@ -11,7 +12,7 @@ import {
   Updateworkers,
 } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
-import { setModalUnvon } from "@/app/Redux/UnvonSlice";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 
@@ -27,32 +28,33 @@ import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
 
 function Tips() {
-  //Umumiy
+  // Umumiy
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
 
-  //All ranks
-  const [allRanks, setAllRAnks] = React.useState<any>();
+  // All ranks
+  const [allRanks, setAllRanks] = React.useState<any[]>([]);
+  const [filteredRanks, setFilteredRanks] = React.useState<any[]>([]);
 
   const getAllRanks = async () => {
     const res = await Getworkers(JWT);
-
-    setAllRAnks(res.data);
+    setAllRanks(res.data);
+    setFilteredRanks(res.data);
   };
+
   React.useEffect(() => {
     getAllRanks();
   }, []);
 
-  //Modal
+  // Modal
   const open = useSelector((s: any) => s.tip.modal);
   const [value, setValu] = React.useState<any>({});
+  const [search, setSearch] = useState("");
 
   const deleteUnvon = async () => {
     const res = await Deleteworker(JWT, open.id);
-
     if (res.success) {
       handleClose();
-
       dispatch(
         alertChange({
           open: true,
@@ -71,15 +73,15 @@ function Tips() {
       );
     }
   };
+
   const deleteAllRanks = () => {
     deleteUnvon();
   };
+
   const EditUnvon = async (value: any) => {
     const res = await Updateworkers(JWT, value, open.id);
-
     if (res.success) {
       handleClose();
-
       dispatch(
         alertChange({
           open: true,
@@ -102,16 +104,12 @@ function Tips() {
   React.useEffect(() => {
     setValu({
       FIO: open.FIO,
-
       zvaniya: open.zvaniya,
-      batalyon: open.batalyon,
     });
   }, [open.open]);
 
   const handleSubmit = () => {
-    if (value.FIO && value.batalyon) {
-    
-
+    if (value.FIO && value.zvaniya) {
       EditUnvon(value);
     } else {
       dispatch(
@@ -123,20 +121,64 @@ function Tips() {
       );
     }
   };
+
   const handleClose = () => {
     dispatch(setModalTip({ type: 0, open: false, id: 0, name: "" }));
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const filtered = allRanks.filter((rank) =>
+      rank.FIO.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredRanks(filtered);
+  };
+
+  const clearSearch = () => {
+    setSearch("");
+    setFilteredRanks(allRanks);
   };
 
   const router = useRouter();
 
   return (
     <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-      <div className="  flex justify-end">
-        <Button onClick={() => router.push("/tip/add")} variant="contained">
+      <div className="flex justify-between items-center">
+        <form onSubmit={handleSearch} className="flex items-center">
+          <TextField
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            fullWidth
+            label={latinToCyrillic("FIO orqali qidiring")}
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            InputProps={{
+              autoComplete: "off",
+              autoCorrect: "off",
+              spellCheck: "false",
+              endAdornment: search ? (
+                <IconButton onClick={clearSearch}>
+                  <CloseIcon color="error" />
+                </IconButton>
+              ) : (
+                <IconButton type="submit">
+                  <PersonSearchIcon color="info" />
+                </IconButton>
+              ),
+            }}
+          />
+        </form>
+        <Button
+          sx={{ width: "150px", height: "40px" }}
+          onClick={() => router.push("/tip/add")}
+          variant="contained"
+        >
           {latinToCyrillic("Qo'shish")}
         </Button>
       </div>
-      <TipTab ranks={allRanks} />
+      <TipTab ranks={filteredRanks} />
       {open.open ? (
         <TipModal
           handleDelete={deleteAllRanks}

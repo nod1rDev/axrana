@@ -13,7 +13,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import {
   CreateWorkerForOrgan,
   GetTopshiriqlar,
@@ -27,6 +31,8 @@ const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
   const [workers, setWorkers] = useState([]);
+  const [filteredWorkers, setFilteredWorkers] = useState([]);
+  const [search, setSearch] = useState("");
   const JWT = useSelector((s: any) => s.auth.JWT);
 
   const getData = async () => {
@@ -44,6 +50,7 @@ const Page = () => {
       _id: e._id,
     }));
     setWorkers(filData);
+    setFilteredWorkers(filData);
   };
 
   useEffect(() => {
@@ -57,9 +64,16 @@ const Page = () => {
         worker._id === id ? { ...worker, selected: !worker.selected } : worker
       )
     );
+    setFilteredWorkers((prevFiltered: any) =>
+      prevFiltered.map((worker: any) =>
+        worker._id === id ? { ...worker, selected: !worker.selected } : worker
+      )
+    );
   };
+
   const dispatch = useDispatch();
   const router = useRouter();
+
   const CreateWorker = async (value: any) => {
     const res = await CreateWorkerForOrgan(JWT, value, id);
 
@@ -82,23 +96,38 @@ const Page = () => {
       );
     }
   };
+
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e: any) => e.selected === true);
     const pureWorker = FiltWorker.map((e: any) => {
       return { FIO: e.FIO, zvaniya: e.zvaniya };
     });
-    if (pureWorker) {
+    if (pureWorker.length > 0) {
       CreateWorker(pureWorker);
-    }else{
-        dispatch(
-            alertChange({
-              open: true,
-              message: latinToCyrillic("Hodim tanlang!"),
-              status: "warning",
-            })
-          );
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Hodim tanlang!"),
+          status: "warning",
+        })
+      );
     }
   };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const filtered = workers.filter((worker: any) =>
+      worker.FIO.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredWorkers(filtered);
+  };
+
+  const clearSearch = () => {
+    setSearch("");
+    setFilteredWorkers(workers);
+  };
+
   return (
     <>
       <div className="w-[80%] mt-5 flex-col gap-6 mx-auto">
@@ -115,7 +144,7 @@ const Page = () => {
         <div className="mb-6">
           <TopshiriqCard click={false} data={data} />
         </div>
-        {data && (data.bajarilmoqda) && (
+        {data && data.bajarilmoqda && (
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -125,6 +154,37 @@ const Page = () => {
               {latinToCyrillic("Hodim qo'shish")}
             </AccordionSummary>
             <AccordionDetails>
+              <div className="flex flex-col pb-5 border-b  gap-3">
+                <h1 className="font-bold">{latinToCyrillic("Filter")}</h1>
+                <form
+                  onSubmit={handleSearch}
+                  className="flex items-center w-full"
+                >
+                  <TextField
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    fullWidth
+                    label={latinToCyrillic("FIO orqali qidiring")}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    InputProps={{
+                      autoComplete: "off",
+                      autoCorrect: "off",
+                      spellCheck: "false",
+                      endAdornment: search ? (
+                        <IconButton onClick={clearSearch}>
+                          <CloseIcon color="error" />
+                        </IconButton>
+                      ) : (
+                        <IconButton type="submit">
+                          <PersonSearchIcon color="info" />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </form>
+              </div>
               <List
                 sx={{
                   width: "100%",
@@ -132,7 +192,7 @@ const Page = () => {
                   bgcolor: "background.paper",
                 }}
               >
-                {workers.map((value: any) => {
+                {filteredWorkers.map((value: any) => {
                   const labelId = `checkbox-list-label-${value._id}`;
                   return (
                     <ListItem key={value._id} disablePadding>

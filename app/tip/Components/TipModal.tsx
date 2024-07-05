@@ -106,7 +106,7 @@ export default function TipModal({
           </DialogTitle>
           <div className="flex flex-row  min-w-[800px] p-4 gap-2 px-4">
             <div className="w-full flex justify-between gap-4">
-              <FormControl sx={{ width: "30%" }} fullWidth>
+              <FormControl sx={{ width: "40%" }} fullWidth>
                 <InputLabel id="region-select-label">
                   {latinToCyrillic("Zvaniya")}{" "}
                 </InputLabel>
@@ -132,7 +132,7 @@ export default function TipModal({
                 onChange={handleChange}
                 fullWidth
                 name="FIO"
-                sx={{ width: "40%" }}
+                sx={{ width: "60%" }}
                 autoComplete="off"
                 autoCorrect="off"
                 spellCheck="false"
@@ -143,26 +143,7 @@ export default function TipModal({
                 }}
               />
 
-              <FormControl sx={{ width: "30%" }} fullWidth>
-                <InputLabel id="otryad-select-label">
-                  {latinToCyrillic("Batalyon")}
-                </InputLabel>
-                <Select
-                  labelId="otryad-select-label"
-                  id="otryad-select"
-                  label={latinToCyrillic("Batalyon")}
-                  name="batalyon"
-                  value={value.batalyon}
-                  onChange={handleChange}
-                >
-                  {select &&
-                    select.batalyons.map((e: any) => (
-                      <MenuItem key={e.name} value={e.name}>
-                        {e.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
+              
             </div>
           </div>
           <DialogActions>

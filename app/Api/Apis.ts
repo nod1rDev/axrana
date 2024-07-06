@@ -476,7 +476,18 @@ export const Getworkers = async (JWT: any, page: number, limet: number) => {
   const data = await res.json();
   return data;
 };
+export const Getworkers2 = async (JWT: any) => {
+  const res = await fetch(URL + `/FIO/get`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
 
+  const data = await res.json();
+  return data;
+};
 export const Updateworkers = async (JWT: any, worker: any, id: any) => {
   const res = await fetch(URL + "/FIO/update/" + id, {
     method: "PUT",

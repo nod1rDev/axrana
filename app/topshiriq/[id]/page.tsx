@@ -22,6 +22,7 @@ import {
   CreateWorkerForOrgan,
   GetTopshiriqlar,
   Getworkers,
+  Getworkers2,
 } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
@@ -42,7 +43,7 @@ const Page = () => {
   };
 
   const GetWorkers = async () => {
-    const res = await Getworkers(JWT);
+    const res = await Getworkers2(JWT);
     const filData = res.data.map((e: any) => ({
       zvaniya: e.zvaniya,
       FIO: e.FIO,

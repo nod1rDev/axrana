@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch } from "react-redux";
-import { setModalTip } from "@/app/Redux/TipSlice";
+import { setModalBitta, setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import Status from "@/app/topshiriq/Components/Status";
@@ -78,6 +78,7 @@ interface Data {
   sanasi: any;
   actions: any;
   id: number;
+  shartnomaId: number;
 }
 
 function createData(
@@ -89,7 +90,8 @@ function createData(
   sanasi: any,
   actions: any,
 
-  id: number
+  id: number,
+  shartnomaId: number
 ): Data {
   return {
     number,
@@ -100,6 +102,7 @@ function createData(
     sanasi,
     actions,
     id,
+    shartnomaId,
   };
 }
 
@@ -124,7 +127,8 @@ export default function BittaTab({ ranks }: { ranks: any }) {
             ? "bajarildi"
             : "",
 
-          e._id
+          e._id,
+          e.shartnoma_id
         )
       )
     : [];
@@ -167,7 +171,20 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                                   <div className={`font-bold text-red-500`}>
                                     {row.sanasi}
                                   </div>
-                                  <Button variant="contained" color="info">
+                                  <Button
+                                    onClick={() =>
+                                      dispatch(
+                                        setModalBitta({
+                                          open: true,
+                                          shartnomaId: row.shartnomaId,
+                                          organId: row.id,
+                                          sana: row.sanasi,
+                                        })
+                                      )
+                                    }
+                                    variant="contained"
+                                    color="info"
+                                  >
                                     {latinToCyrillic("Uzaytirish")}
                                   </Button>
                                 </div>

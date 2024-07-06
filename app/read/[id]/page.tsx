@@ -27,9 +27,43 @@ function Page() {
   useEffect(() => {
     getData();
   }, []);
+  function removeHyphens(input: string) {
+    return input.replace(/-/g, "");
+  }
 
+  function formatDate(dateString: string) {
+    if (dateString) {
+      // Sana satrini bo'sh joy va tire orqali bo'linadi
+      const [dayMonth, year] = dateString.split(" ");
+      const [day, month] = dayMonth.split("-");
+
+      const monthMap: { [key: string]: string } = {
+        январь: "01",
+        февраль: "02",
+        март: "03",
+        апрель: "04",
+        май: "05",
+        июнь: "06",
+        июль: "07",
+        август: "08",
+        сентябрь: "09",
+        октябрь: "10",
+        ноябрь: "11",
+        декабрь: "12",
+      };
+
+      const monthNumber = monthMap[month];
+
+      // "йил" so'zini olib tashlash va yildagi har qanday "-" belgilarini olib tashlash
+      const cleanedYear = removeHyphens(year.replace("йил", ""));
+
+      return `${day}.${monthNumber}.${cleanedYear}`;
+    }
+    return "";
+  }
   useEffect(() => {
-    setValue(modal.sana);
+    const pureDate = formatDate(modal.sana);
+    setValue(pureDate);
   }, [modal.open]);
   const dispatch = useDispatch();
   const handleClose = () => {

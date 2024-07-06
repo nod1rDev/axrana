@@ -47,7 +47,7 @@ export default function BittaModal({
         </DialogTitle>
         <form
           onSubmit={handleSubmite}
-          className="flex flex-col w-[300px] gap-2 px-4"
+          className="flex flex-col w-full gap-2 px-4"
         >
           <TextField
             name="name"
@@ -60,7 +60,7 @@ export default function BittaModal({
               autoCorrect: "off",
               spellCheck: "false",
             }}
-            defaultValue={value.name !== "" ? value.name : open.sana}
+            defaultValue={value}
             onChange={(e: any) => handleChange(e)}
             label={latinToCyrillic("Sana")}
             id="fullWidth"

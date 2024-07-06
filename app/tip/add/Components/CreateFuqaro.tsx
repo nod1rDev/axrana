@@ -162,7 +162,8 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       /^[A-Za-z]+(v|va|в|ва) [A-Za-z]+ [A-Za-z]+(ovich|ovna|ович|овна| огли|оғли|ўгли| қизи| ўғли|og'li|ивич|ivich| o'gli| ogli| qizi| o'g'li)$/;
 
     // Test the input string against the regex
-    return regex.test(fio);
+    const trimStr = regex.test(fio.trim());
+    return trimStr;
   }
 
   return (

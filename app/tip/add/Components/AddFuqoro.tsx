@@ -41,7 +41,7 @@ function AddFuqoro() {
   return (
     <div className="flex flex-col max-w-[80%] mx-auto">
       <div className=" mx-auto text-[28px] font-bold mb-4">
-        {latinToCyrillic("Fuqoro qo'shish")}
+        {latinToCyrillic("Xodim qo'shish")}
       </div>
       <div className="mb-4">
         <Button onClick={() => router.push("/tip")} variant="contained">

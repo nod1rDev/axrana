@@ -111,7 +111,7 @@ export default function ShowWorkerModal({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
-  console.log(ranks);
+ 
 
   const rows =
     ranks !== "Hali batalyon topshiriqni bajarmadi" &&

@@ -464,8 +464,8 @@ export const Createworkers = async (JWT: any, workers: any) => {
   return data;
 };
 
-export const Getworkers = async (JWT: any) => {
-  const res = await fetch(URL + "/FIO/get", {
+export const Getworkers = async (JWT: any, page: number, limet: number) => {
+  const res = await fetch(URL + `/FIO/get?page=${page}&limit=${limet}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,
@@ -903,7 +903,6 @@ export const GetTadbir = async (JWT: any, id: any) => {
   return data;
 };
 
-
 export const SearchTadbir = async (JWT: any, date: any, id: any) => {
   const res = await fetch(URL + "/FIO/get/workers/search/tadbirlar/" + id, {
     method: "POST",
@@ -920,21 +919,23 @@ export const SearchTadbir = async (JWT: any, date: any, id: any) => {
 };
 
 export const SearchByStatus = async (JWT: any, status: any) => {
-  const res = await fetch(URL + "/shartnoma/filter/status/batalyon?status=" + status, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(
+    URL + "/shartnoma/filter/status/batalyon?status=" + status,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await res.json();
   return data;
 };
 
-
-export const SearchTopshiriq = async (JWT: any, date: any,) => {
-  const res = await fetch(URL + "/shartnoma/filter/date/batalyon" , {
+export const SearchTopshiriq = async (JWT: any, date: any) => {
+  const res = await fetch(URL + "/shartnoma/filter/date/batalyon", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -942,6 +943,44 @@ export const SearchTopshiriq = async (JWT: any, date: any,) => {
     },
     body: JSON.stringify(date),
   });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const SearchWorkerByFIO = async (JWT: any, date: any) => {
+  const res = await fetch(URL + "/FIO/search/workers", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ fio: date }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const UpdateDate = async (
+  JWT: any,
+  date: any,
+  shartnomaId: any,
+  organId: any
+) => {
+  const res = await fetch(
+    URL + `/shartnoma/vaqt/berish/${shartnomaId}?organ=${organId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + JWT,
+      },
+      body: JSON.stringify({ date: date }),
+    }
+  );
 
   const data = await res.json();
 

@@ -91,7 +91,7 @@ const BudgetTable: any = ({
   return (
     <>
       <Box>
-        <div className="flex  pb-20 justify-end flex-col gap-0">
+        <div className="flex  pb-6 justify-end flex-col gap-0">
           <div className="font-bold text-[18px] flex justify-end">
             {data1 && data1.date}
           </div>

@@ -265,8 +265,8 @@ function ChangeShartnoma({ data }: { data: any }) {
         <div className="flex gap-4 mb-4">
           <TextField
             id="buyurtmachi"
-            label={latinToCyrillic("Buyurtma Nomi")}
-            sx={{ width: "30%" }}
+            label={latinToCyrillic("Buyurtmachi Nomi")}
+            sx={{ width: "20%" }}
             onChange={handleChangeValue2}
             variant="outlined"
             value={value.buyurtmachi?.name}
@@ -279,8 +279,8 @@ function ChangeShartnoma({ data }: { data: any }) {
               {" "}
               <TextField
                 id="buyurtmachi"
-                label={latinToCyrillic("Buyurtma Manzili")}
-                sx={{ width: "25%" }}
+                label={latinToCyrillic("Buyurtmachi Manzili")}
+                sx={{ width: "20%" }}
                 onChange={handleChangeValue2}
                 variant="outlined"
                 value={value.buyurtmachi.address}
@@ -289,8 +289,8 @@ function ChangeShartnoma({ data }: { data: any }) {
               />
               <TextField
                 id="buyurtmachi"
-                label={latinToCyrillic("Buyurtma Xisob Raqami")}
-                sx={{ width: "25%" }}
+                label={latinToCyrillic("Buyurtmachi Xisob Raqami")}
+                sx={{ width: "20%" }}
                 onChange={handleChangeValue2}
                 variant="outlined"
                 type="number"
@@ -300,8 +300,19 @@ function ChangeShartnoma({ data }: { data: any }) {
               />
               <TextField
                 id="buyurtmachi"
-                label={latinToCyrillic("Buyurtma CTIR")}
-                sx={{ width: "25%" }}
+                label={latinToCyrillic("Buyurtmachi MFIO")}
+                sx={{ width: "20%" }}
+                onChange={handleChangeValue2}
+                variant="outlined"
+                type="number"
+                value={value.buyurtmachi.MFIO}
+                name="MFIO"
+                autoComplete="off"
+              />
+              <TextField
+                id="buyurtmachi"
+                label={latinToCyrillic("Buyurtmachi CTIR")}
+                sx={{ width: "20%" }}
                 onChange={handleChangeValue2}
                 variant="outlined"
                 type="number"

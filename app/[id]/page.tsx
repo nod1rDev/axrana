@@ -339,10 +339,10 @@ function page() {
                 <p className="font-bold text-xl text-center">
                   {data.buyurtmachi?.name}
                 </p>
-                {data.buyurtmachi?.address  && (
+                {data.buyurtmachi?.address && (
                   <div className="flex gap-2">
                     <span className="font-bold text-xl">Манзил:</span>
-                    <p className=" text-start ">{data.buyurtmachi?.address}</p>
+                    <p className=" text-start max-w-[400px] ">{`${data.buyurtmachi?.address}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.accountNumber} СТИР: ${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.CTIR} `}</p>
                   </div>
                 )}
                 <div className=" absolute top-[250px] left-[40px]">
@@ -395,6 +395,23 @@ function page() {
             raq={data.shartnomaNumber}
             dataId={data._id}
           />
+
+          <div className="w-[75%] mt-10 mx-auto flex justify-between">
+            <div className="flex h-[150px] justify-between flex-col">
+              <h2 className="text-lg text-center font-bold ">Бажарувчи:</h2>
+
+              <span className="text-center font-bold">
+                ________________________
+              </span>
+            </div>
+            <div className="flex h-[150px] justify-between flex-col">
+              <h2 className="text-lg text-center font-bold ">Буюртмачи:</h2>
+
+              <span className="text-center font-bold">
+                ________________________
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </>

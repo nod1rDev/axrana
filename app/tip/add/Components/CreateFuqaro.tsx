@@ -14,6 +14,7 @@ import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { ranksData } from "@/app/Utils";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -158,7 +159,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   function validateFIO(fio: any) {
     // Regular expression to match the required pattern
     const regex =
-      /^[A-Za-z]+(v|va|в|ва) [A-Za-z]+ [A-Za-z]+(ovich|ovna|ович|овна| огли|оғли|ўгли| қизи| ўғли|og'li| o'gli| ogli| qizi| o'g'li)$/;
+      /^[A-Za-z]+(v|va|в|ва) [A-Za-z]+ [A-Za-z]+(ovich|ovna|ович|овна| огли|оғли|ўгли| қизи| ўғли|og'li|ивич|ivich| o'gli| ogli| qizi| o'g'li)$/;
 
     // Test the input string against the regex
     return regex.test(fio);
@@ -208,12 +209,11 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             value={createInp.zvaniya}
             onChange={handleCreateChange}
           >
-            {select.zvaniyas &&
-              select.zvaniyas.map((e: any) => (
-                <MenuItem key={e.name} value={e.name}>
-                  {e.name}
-                </MenuItem>
-              ))}
+            {ranksData.map((e: any) => (
+              <MenuItem key={e.zvaniye} value={e.zvaniye}>
+                {e.zvaniye}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <div className="w-[60%]">

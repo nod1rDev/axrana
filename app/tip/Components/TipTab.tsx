@@ -15,6 +15,7 @@ import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
 import { latinToCyrillic } from "../add/Components/lotin";
 import { useRouter } from "next/navigation";
+import TablePagination from '@mui/material/TablePagination';
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -87,17 +88,25 @@ function createData(
   };
 }
 
-export default function TipTab({ ranks }: { ranks: any }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] =
-    React.useState(100000000000000000000000);
-
+export default function TipTab({
+  ranks,
+  page,
+  handleChangePage,
+  rowsPerPage,
+  handleChangeRowsPerPage,
+}: {
+  ranks: any;
+  page: any;
+  handleChangePage: any;
+  rowsPerPage: any;
+  handleChangeRowsPerPage: any;
+}) {
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
         createData(i + 1, e.FIO, e.zvaniya, e.batalyon, null, e._id)
       )
     : [];
-
+ 
   const dispatch = useDispatch();
   const router = useRouter();
   const admin = useSelector((s: any) => s.auth.admin);
@@ -156,7 +165,6 @@ export default function TipTab({ ranks }: { ranks: any }) {
                                       name: row.FIO,
                                       FIO: row.FIO,
                                       zvaniya: row.Tuman,
-                                    
                                     })
                                   );
                                 }}
@@ -205,6 +213,15 @@ export default function TipTab({ ranks }: { ranks: any }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 20, 100,200,500]}
+        component="div"
+        count={ranks.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Paper>
   );
 }

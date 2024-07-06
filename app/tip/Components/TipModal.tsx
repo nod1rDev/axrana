@@ -15,6 +15,7 @@ import { GetCreateInfoWorker } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { cyrillicToLatin, latinToCyrillic } from "../add/Components/lotin";
+import { ranksData } from "@/app/Utils";
 
 export default function TipModal({
   value,
@@ -116,14 +117,20 @@ export default function TipModal({
                   label={latinToCyrillic("Zvaniya")}
                   name="zvaniya"
                   value={value.zvaniya}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 1124, // Example max height, adjust as needed
+                      },
+                    },
+                  }}
                   onChange={handleChange}
                 >
-                  {select &&
-                    select.zvaniyas.map((e: any) => (
-                      <MenuItem key={e.name} value={e.name}>
-                        {e.name}
-                      </MenuItem>
-                    ))}
+                  {ranksData.map((e: any) => (
+                    <MenuItem key={e.zvaniye} value={e.zvaniye}>
+                      {e.zvaniye}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <TextField
@@ -142,8 +149,6 @@ export default function TipModal({
                   spellCheck: "false",
                 }}
               />
-
-              
             </div>
           </div>
           <DialogActions>

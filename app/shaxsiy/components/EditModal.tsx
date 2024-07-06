@@ -47,7 +47,7 @@ export default function EditModal({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {latinToCyrillic("Batalyonni tahrirlang !")}
+          {latinToCyrillic("Ish profilingizni tahrirlang !")}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
           {isUser && (
@@ -57,7 +57,7 @@ export default function EditModal({
               fullWidth
               value={value.username}
               onChange={(e: any) => handleChange(e)}
-              label={latinToCyrillic("Batalyon nomi")}
+              label={latinToCyrillic("Foydalanuvchi nomi")}
               id="fullWidth"
             />
           )}

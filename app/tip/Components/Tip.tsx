@@ -8,6 +8,7 @@ import {
   Deleteworker,
   Gettips,
   Getworkers,
+  SearchWorkerByFIO,
   Updatetips,
   Updateworkers,
 } from "@/app/Api/Apis";
@@ -31,13 +32,14 @@ function Tips() {
   // Umumiy
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
-
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(20);
   // All ranks
   const [allRanks, setAllRanks] = React.useState<any[]>([]);
   const [filteredRanks, setFilteredRanks] = React.useState<any[]>([]);
 
   const getAllRanks = async () => {
-    const res = await Getworkers(JWT);
+    const res = await Getworkers(JWT, page + 1, rowsPerPage);
     setAllRanks(res.data);
     setFilteredRanks(res.data);
   };
@@ -125,14 +127,28 @@ function Tips() {
   const handleClose = () => {
     dispatch(setModalTip({ type: 0, open: false, id: 0, name: "" }));
   };
+  const searchWorkerByName = async (value: any) => {
+    const res = await SearchWorkerByFIO(JWT, value);
+
+    if (!res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    } else {
+      setAllRanks(res.data);
+      setFilteredRanks(res.data);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(search);
 
-    const filtered = allRanks.filter((rank) =>
-      rank.FIO.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilteredRanks(filtered);
+    searchWorkerByName(search);
   };
 
   const clearSearch = () => {
@@ -142,6 +158,17 @@ function Tips() {
 
   const router = useRouter();
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+    getAllRanks();
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   return (
     <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
       <div className="flex justify-between items-center">
@@ -163,7 +190,7 @@ function Tips() {
                   <CloseIcon color="error" />
                 </IconButton>
               ) : (
-                <IconButton type="submit">
+                <IconButton >
                   <PersonSearchIcon color="info" />
                 </IconButton>
               ),
@@ -178,7 +205,13 @@ function Tips() {
           {latinToCyrillic("Qo'shish")}
         </Button>
       </div>
-      <TipTab ranks={filteredRanks} />
+      <TipTab
+        page={page}
+        handleChangePage={handleChangePage}
+        handleChangeRowsPerPage={handleChangeRowsPerPage}
+        rowsPerPage={rowsPerPage}
+        ranks={filteredRanks}
+      />
       {open.open ? (
         <TipModal
           handleDelete={deleteAllRanks}

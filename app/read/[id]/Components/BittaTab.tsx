@@ -15,6 +15,7 @@ import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import Status from "@/app/topshiriq/Components/Status";
+import { Button } from "@mui/material";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -45,19 +46,19 @@ const columns: readonly Column[] = [
     id: "FIO",
     label: latinToCyrillic("Nazorat qilish muddati"),
     align: "center",
-    minWidth: 180,
+    minWidth: 100,
   },
 
   {
     id: "Otryad",
     label: latinToCyrillic("Xodimlar soni"),
-    minWidth: 180,
+    minWidth: 100,
     align: "center",
   },
   {
     id: "sanasi",
     label: latinToCyrillic("Topshiriq Sanasi"),
-    minWidth: 180,
+    minWidth: 280,
     align: "center",
   },
   {
@@ -106,7 +107,6 @@ export default function BittaTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
-  console.log(ranks);
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
@@ -162,16 +162,22 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                             i + 1
                           ) : e == 4 ? (
                             <>
-                              <div
-                                className={`font-bold ${
-                                  row.actions == "bajarilmoqda" ||
-                                  row.actions == "bajarilmagan"
-                                    ? "text-red-500"
-                                    : ""
-                                }`}
-                              >
-                                {row.sanasi}
-                              </div>
+                              {row.actions == "bajarilmagan" ? (
+                                <div className="flex gap-2  items-center">
+                                  <div className={`font-bold text-red-500`}>
+                                    {row.sanasi}
+                                  </div>
+                                  <Button variant="contained" color="info">
+                                    {latinToCyrillic("Uzaytirish")}
+                                  </Button>
+                                </div>
+                              ) : row.actions == "bajarilmoqda" ? (
+                                <div className={`font-bold text-red-500`}>
+                                  {row.sanasi}
+                                </div>
+                              ) : (
+                                <div className={`font-bold`}>{row.sanasi}</div>
+                              )}
                             </>
                           ) : e == 5 ? (
                             <>

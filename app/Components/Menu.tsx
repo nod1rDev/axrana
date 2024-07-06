@@ -118,10 +118,7 @@ export default function MenuHeader() {
           <PaymentsIcon />
           {latinToCyrillic("FIO")}
         </MenuItem>
-        <MenuItem onClick={() => otmoq("/coctav")} disableRipple>
-          <WorkspacePremiumIcon />
-          {latinToCyrillic("Zvaniya")}
-        </MenuItem>
+       
 
         
         {admin && (

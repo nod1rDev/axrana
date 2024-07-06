@@ -45,7 +45,7 @@ export default function EditUser({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {`${open.name}` + " ozgartrish kiriting !"}
+          {`${open.name}` + latinToCyrillic("batalyon nomini o'zgartiring!")}
         </DialogTitle>
         <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
           <TextField
@@ -54,7 +54,7 @@ export default function EditUser({
             fullWidth
             value={value.username}
             onChange={(e: any) => handleChange(e)}
-            label={latinToCyrillic("Foydalanuvchi nomi")}
+            label={latinToCyrillic("Batalyon nomi")}
             id="fullWidth"
           />
 

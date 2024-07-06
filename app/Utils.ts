@@ -23,8 +23,6 @@ export const extractNmae = (items: any): { name: string; summa: number }[] => {
   return items.map((item: any) => ({ name: item.name }));
 };
 
-
-
 type InputObject = {
   name: string;
   summa: number;
@@ -47,3 +45,26 @@ export const FiltDate = (date: any) => {
     `${date.$M + 1}`.length > 1 ? date.$M + 1 : `0${date.$M + 1}`
   }-${`${date.$D}`.length > 1 ? date.$D : `0${date.$D}`}`;
 };
+
+interface Rank {
+  kodZvaniya: number;
+  zvaniye: string;
+  sokrashenie: string;
+}
+
+export const ranksData: Rank[] = [
+  { kodZvaniya: 1, zvaniye: "Вольнонаемный", sokrashenie: "ВН" },
+  { kodZvaniya: 2, zvaniye: "Рядовой", sokrashenie: "РД" },
+  { kodZvaniya: 3, zvaniye: "Младший сержант", sokrashenie: "МС" },
+  { kodZvaniya: 4, zvaniye: "Сержант", sokrashenie: "СР" },
+  { kodZvaniya: 5, zvaniye: "Старший сержант", sokrashenie: "СС" },
+  { kodZvaniya: 6, zvaniye: "Лейтенант", sokrashenie: "ЛТ" },
+  { kodZvaniya: 12, zvaniye: "Старший лейтенант", sokrashenie: "СЛ" },
+  { kodZvaniya: 13, zvaniye: "Капитан", sokrashenie: "КН" },
+  { kodZvaniya: 14, zvaniye: "Майор", sokrashenie: "МР" },
+  { kodZvaniya: 15, zvaniye: "Подполковник", sokrashenie: "ПП" },
+  { kodZvaniya: 16, zvaniye: "Полковник", sokrashenie: "ПК" },
+  { kodZvaniya: 17, zvaniye: "Генерал майор", sokrashenie: "ГМ" },
+  { kodZvaniya: 18, zvaniye: "Генерал лейтенант", sokrashenie: "ГЛТ" },
+  { kodZvaniya: 19, zvaniye: "Генерал полковник", sokrashenie: "ГП" },
+];

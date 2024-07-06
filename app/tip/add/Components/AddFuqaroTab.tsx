@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GetCreateInfoWorker } from "@/app/Api/Apis";
 import { latinToCyrillic } from "./lotin";
+import { ranksData } from "@/app/Utils";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   "& .MuiTableCell-root": {
@@ -28,7 +29,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "number" | "FIO" | "Zvaniya"  | "actions";
+  id: "number" | "FIO" | "Zvaniya" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -44,7 +45,6 @@ const columns: readonly Column[] = [
   },
   { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
 
- 
   {
     id: "actions",
     label: latinToCyrillic("Amallar"),
@@ -58,7 +58,7 @@ interface Data {
   FIO: any;
 
   Zvaniya: any;
-  
+
   actions: any;
   id: number;
 }
@@ -68,11 +68,11 @@ function createData(
   FIO: any,
 
   Zvaniya: any,
- 
+
   actions: any,
   id: number
 ): Data {
-  return { number, FIO, Zvaniya,  actions, id };
+  return { number, FIO, Zvaniya, actions, id };
 }
 
 export default function AddFuqaroTab({
@@ -114,7 +114,7 @@ export default function AddFuqaroTab({
 
   const rows = ranks
     ? ranks.map((e: any, i: number) =>
-        createData(i + 1, e.FIO, e.zvaniya,  null, e._id)
+        createData(i + 1, e.FIO, e.zvaniya, null, e._id)
       )
     : [];
 
@@ -180,7 +180,7 @@ export default function AddFuqaroTab({
                               }}
                             />
                           </div>
-                        )  : index === 1 ? (
+                        ) : index === 1 ? (
                           <FormControl fullWidth>
                             <Select
                               labelId="otryad-select-label"
@@ -189,15 +189,11 @@ export default function AddFuqaroTab({
                               onChange={handleTwo}
                               value={row.Zvaniya}
                             >
-                              {select &&
-                                select.zvaniyas.map((zvaniyas: any) => (
-                                  <MenuItem
-                                    key={zvaniyas.name}
-                                    value={zvaniyas.name}
-                                  >
-                                    {zvaniyas.name}
-                                  </MenuItem>
-                                ))}
+                              {ranksData.map((e: any) => (
+                                <MenuItem key={e.zvaniye} value={e.zvaniye}>
+                                  {e.zvaniye}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         ) : index === 3 ? (

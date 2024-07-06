@@ -120,7 +120,6 @@ function ChangeShartnoma({ data }: { data: any }) {
       ...value,
       organs: filtOrgans,
     };
-    
 
     if (shartnoma.shartnomaNumber) {
       createShartnoman(shartnoma);
@@ -204,6 +203,11 @@ function ChangeShartnoma({ data }: { data: any }) {
     }
     return "";
   }
+
+  const handleRemoveOrgan = (index: number) => {
+    const updatedOrgans = organs.filter((_: any, i: number) => i !== index);
+    setOrgans(updatedOrgans);
+  };
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -252,7 +256,6 @@ function ChangeShartnoma({ data }: { data: any }) {
             name="timeLimit"
             autoComplete="off"
           />
-          
         </div>
         <div className="font-bold text-[28px] flex gap-3 mb-4">
           <Switch
@@ -323,17 +326,19 @@ function ChangeShartnoma({ data }: { data: any }) {
             </>
           )}
         </div>
-        <div className="font-bold mb-2 text-[28px]">{latinToCyrillic("Smeta")}</div>
+        <div className="font-bold mb-2 text-[28px]">
+          {latinToCyrillic("Smeta")}
+        </div>
         <TextField
-            id="topshiriqDate"
-            label={latinToCyrillic("Topshiriq Sanasi")}
-            sx={{ width: "30%" }}
-            onChange={handleChangeValue}
-            variant="outlined"
-            value={value.topshiriqDate}
-            name="topshiriqDate"
-            autoComplete="off"
-          />
+          id="topshiriqDate"
+          label={latinToCyrillic("Topshiriq Sanasi")}
+          sx={{ width: "30%" }}
+          onChange={handleChangeValue}
+          variant="outlined"
+          value={value.topshiriqDate}
+          name="topshiriqDate"
+          autoComplete="off"
+        />
         {organs?.map((e: any, index: any) => (
           <div
             key={index}
@@ -382,6 +387,12 @@ function ChangeShartnoma({ data }: { data: any }) {
                 name="workerNumber"
                 autoComplete="off"
               />
+              <IconButton
+                color="error"
+                onClick={() => handleRemoveOrgan(index)}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
             </div>
           </div>
         ))}

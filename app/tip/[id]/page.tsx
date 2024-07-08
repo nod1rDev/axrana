@@ -32,7 +32,7 @@ const Page = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState(false);
-  const [worker, setWorker] = useState();
+  const [worker, setWorker] = useState<any>();
   const [value, setValue] = useState<any>({
     date1: "",
     date: "",
@@ -54,7 +54,7 @@ const Page = () => {
   const getAllContract = async () => {
     const res = await GetTadbir(JWT, id);
     setSumma(res.AllTadbirSumma);
-    setWorker(res.worker.FIO);
+    setWorker(`${res.worker.zvaniya} ${res.worker.FIO} ${res.worker.batalyon}`);
 
     setData(res);
     setShartnomalar(res.data);
@@ -65,7 +65,7 @@ const Page = () => {
   const getSearchData = async () => {
     const res = await SearchTadbir(JWT, value, id);
     setSumma(res.AllTadbirSumma);
-    setWorker(res.worker.FIO);
+    setWorker(`${res.worker.zvaniya} ${res.worker.FIO} ${res.worker.batalyon}`);
 
     setData(res);
     setShartnomalar(res.data);

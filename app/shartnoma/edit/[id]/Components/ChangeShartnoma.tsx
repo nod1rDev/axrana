@@ -288,6 +288,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 variant="outlined"
                 value={value.buyurtmachi.address}
                 name="address"
+                multiline
                 autoComplete="off"
               />
               <TextField

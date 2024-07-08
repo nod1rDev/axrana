@@ -239,6 +239,7 @@ function CreateShartnoma({ language }: { language: any }) {
                 variant="outlined"
                 value={value.buyurtmachi.address}
                 name="address"
+                multiline
                 autoComplete="off"
               />
               <TextField

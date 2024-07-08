@@ -117,20 +117,20 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
               комиссиясига тақдим этиш учун жамоат тартибини сақлаш бўйича ёзма
               мажбуриятни тақдим этади.
             </p>
-            <p className="mb-0">
+            <p className="mb-0 pb-10">
               <span className="font-bold">3.5</span> «Буюртмачи» тадбир
               бошланишидан олдин уч календар куни ичида «Бажарувчи»га маълум
               қилган ҳолда тадбирни бекор қилиш ёки ўтказиш санасини ўзгартириш
               ҳуқуқига эга.
             </p>
-            <p className="mb-0 pb-12">
+            <p className="mb-0 pt-14">
               <span className="font-bold">3.6</span> «Буюртмачи» объект
               маъмурияти билан ҳамкорликда Миллий гвардия ва ИИО ходимларига
               оммавий тадбир ўтадиган бинонинг маъмурий омборхона ва бошқа
               хоналарини текширувдан ўтказиш ҳамда жамоат тартибини сақлаш учун
               тақдим этиш мажбуриятини ўз зиммасига олади.
             </p>
-            <p className="mb-0 pt-12 ">
+            <p className="mb-0  ">
               <span className="font-bold">3.7</span> «Буюртмачи» томон
               шартноманинг 3.3-бандида кўрсатилган мажбуриятларни тўлиқ
               бажармаган тақдирда ваколатли орган оммавий тадбирларни
@@ -230,19 +230,19 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
               7. Шартноманинг амал қилиш муддати ва шартномани бекор қилиш
               тартиблари
             </h2>
-            <p className="mb-0">
+            <p className="mb-0 pb-10">
               <span className="font-bold">7.1</span> Тарафларнинг юридик
               манзиллари, банк реквизитлари ўзгарган тақдирда, 2 кун ичида
               бир-бирларига ўзгарганлик ҳақида ёзма маълумот беришга
               мажбурдирлар.
             </p>
-            <p className="mb-0 pb-12">
+            <p className="mb-0 pt-10">
               <span className="font-bold">7.2</span> Мазкур шартномага
               киритилган барча ўзгартириш ва қўшимчалар ёзма шаклда тузилиб,
               белгиланган тартибда тарафларнинг ваколатли вакиллари томонидан
               имзоланган тақдирдагина амалда бўлади.
             </p>
-            <p className="mb-0 pt-12">
+            <p className="mb-0 ">
               <span className="font-bold">7.3</span> Ўтказиладиган дастур
               вақтига, иштирокчилар ва меҳмонларнинг сонига ўзгартиришлар
               киритилган тақдирда, тадбир бошланишидан олдин қўшимча келишув
@@ -273,13 +273,13 @@ const Documenttt = React.forwardRef(({ data }: any, ref: any) => {
                 <h2 className="text-lg text-center font-bold mb-2">
                   Буюртмачи:
                 </h2>
-                <p className="font-bold text-xl text-center">
+                <p className="font-bold text-xl mb-4 text-center">
                   {data.buyurtmachi?.name}
                 </p>
                 {data.buyurtmachi?.address && (
                   <div className="flex gap-2">
-                    <span className="font-bold text-xl">Манзил:</span>
-                    <p className=" text-start max-w-[400px]">{`${data.buyurtmachi?.address}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.accountNumber} СТИР: ${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.CTIR} `}</p>
+                    <span className="font-bold text-xl text-start">Манзил:</span>
+                    <p className=" text-start max-w-[320px]">{`${data.buyurtmachi?.address}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.accountNumber} СТИР: ${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.CTIR} `}</p>
                   </div>
                 )}
 

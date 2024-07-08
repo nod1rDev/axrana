@@ -32,6 +32,7 @@ const Page = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState(false);
+  const [worker, setWorker] = useState();
   const [value, setValue] = useState<any>({
     date1: "",
     date: "",
@@ -53,6 +54,7 @@ const Page = () => {
   const getAllContract = async () => {
     const res = await GetTadbir(JWT, id);
     setSumma(res.AllTadbirSumma);
+    setWorker(res.worker.FIO);
 
     setData(res);
     setShartnomalar(res.data);
@@ -63,6 +65,8 @@ const Page = () => {
   const getSearchData = async () => {
     const res = await SearchTadbir(JWT, value, id);
     setSumma(res.AllTadbirSumma);
+    setWorker(res.worker.FIO);
+
     setData(res);
     setShartnomalar(res.data);
   };
@@ -95,6 +99,9 @@ const Page = () => {
   return (
     <>
       <div className="w-[80%] flex flex-col mt-6 mx-auto">
+        <h1 className="flex justify-center font-bold mb-4 text-[32px]">
+          {worker && worker}
+        </h1>
         <div className="flex mb-5 justify-start">
           <Button
             startIcon={<ArrowBackIcon />}
@@ -105,6 +112,7 @@ const Page = () => {
             {"орқага"}
           </Button>
         </div>
+
         <div className="flex w-full justify-between mb-10">
           <div className="flex flex-col">
             <h1 className="text-[28px]  font-bold">

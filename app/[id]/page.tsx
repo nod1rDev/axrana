@@ -342,7 +342,7 @@ function page() {
                 {data.buyurtmachi?.address && (
                   <div className="flex gap-2">
                     <span className="font-bold text-xl">Манзил:</span>
-                    <p className=" text-start max-w-[400px] ">{`${data.buyurtmachi?.address}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.accountNumber} СТИР: ${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.CTIR} `}</p>
+                    <p className=" text-start max-w-[400px]  text-xl">{`${data.buyurtmachi?.address}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.accountNumber} СТИР: ${data.buyurtmachi?.MFIO}. х/р ${data.buyurtmachi?.CTIR} `}</p>
                   </div>
                 )}
                 <div className=" absolute top-[250px] left-[40px]">

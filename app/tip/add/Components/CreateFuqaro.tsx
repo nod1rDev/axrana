@@ -60,7 +60,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   const saqlsh = (e: any) => {
     e.preventDefault();
     if (createInp.FIO && createInp.zvaniya) {
-      if (validateFIO(createInp.FIO)) {
+      if (createInp.FIO) {
         setData([
           ...data,
           { ...createInp, _id: Math.ceil(Math.random() * 15415645488) },
@@ -155,16 +155,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
         )
       );
   };
-
-  function validateFIO(fio: any) {
-    // Regular expression to match the required pattern
-    const regex =
-      /^[A-Za-z]+(v|va|в|ва) [A-Za-z]+ [A-Za-z]+(ovich|ovna|ович|овна| огли|оғли|ўгли| қизи| ўғли|og'li|ивич|ivich| o'gli| ogli| qizi| o'g'li)$/;
-
-    // Test the input string against the regex
-    const trimStr = regex.test(fio.trim());
-    return trimStr;
-  }
 
   return (
     <form onSubmit={saqlsh} className="w-full mt-6 flex flex-col gap-4">

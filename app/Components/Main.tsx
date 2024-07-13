@@ -5,9 +5,9 @@ import Header from "./Header";
 function Main({ children }: { children: any }) {
   return (
     <>
-      <div className="flex flex-col max-w-full mx-auto">
-        <Header />
-        <div className="p-4 mt-16">{children}</div>
+      <div className="grid grid-cols-[300px_1fr] min-h-full min-w-full mx-auto">
+        <Header/>
+        <div className="">{children}</div>
       </div>
     </>
   );

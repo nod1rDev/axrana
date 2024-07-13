@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import ShartnomaCard from "./ShartnomaCard";
 import TextField from "@mui/material/TextField";
-import { GetAllShartnoma, SearchShartnoma } from "@/app/Api/Apis";
+
 import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import { filterContract, getAllContract } from "@/app/Api/Apis";
 
 function Shartnoma() {
   const [shartnomalar, setShartnomalar] = useState([]);
@@ -35,16 +36,17 @@ function Shartnoma() {
     setValue({ date1: filtDate, date2: filtDate });
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const getAllContract = async () => {
-    const res = await GetAllShartnoma(JWT, page + 1, rowsPerPage);
+  const getAllContractt = async () => {
+    const res = await getAllContract(JWT, page, rowsPerPage);
+
     setData(res);
     setShartnomalar(res.data);
   };
   useEffect(() => {
-    getAllContract();
+    getAllContractt();
   }, []);
   const getSearchData = async () => {
-    const res = await SearchShartnoma(JWT, value);
+    const res = await filterContract(JWT, value);
     setData(res);
     setShartnomalar(res.data);
   };
@@ -54,24 +56,24 @@ function Shartnoma() {
     if (!search) {
       getSearchData();
     } else {
-      getAllContract();
+      getAllContractt();
     }
   };
-
+  useEffect(() => {
+    getAllContractt();
+  }, [page, rowsPerPage]);
   const handleChangeValue = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    getAllContract();
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   return (
@@ -156,7 +158,7 @@ function Shartnoma() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50, 100]}
           component="div"
-          count={data?.count}
+          count={shartnomalar.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

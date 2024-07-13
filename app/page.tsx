@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { puJWT } from "./Redux/AuthSlice";
-import Othcot from "./Components/Othcot";
+
 import Shartnoma from "./shartnoma/Components/Shartnoma";
 import Topshiriq from "./topshiriq/Components/Topshiriq";
 function Page() {

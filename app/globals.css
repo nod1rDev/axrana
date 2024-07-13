@@ -22,7 +22,6 @@ input.no-autocomplete {
   display: flex;
   flex-direction: column;
   min-width: 15%;
-  
 }
 
 .mui-label {
@@ -61,4 +60,8 @@ input.no-autocomplete {
 
 .mui-menu-item:hover {
   background-color: #f0f0f0;
+}
+
+.menuButtun {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

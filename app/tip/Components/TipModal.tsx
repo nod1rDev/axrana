@@ -11,11 +11,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { GetCreateInfoWorker } from "@/app/Api/Apis";
+
 import { IconButton } from "@mui/material";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { cyrillicToLatin, latinToCyrillic } from "../add/Components/lotin";
 import { ranksData } from "@/app/Utils";
+import { getAllBatalyon } from "@/app/Api/Apis";
 
 export default function TipModal({
   value,
@@ -40,50 +41,25 @@ export default function TipModal({
   const [cyrillicText, setCyrillicText] = React.useState("");
   const [isLotin, setIsLotin] = React.useState(true);
 
-  const getSelect = async () => {
-    const res = await GetCreateInfoWorker(JWT);
-    setSelect(res);
-    // Set default values for selects if necessary
-  };
-
-  React.useEffect(() => {
-    getSelect();
-  }, []);
+  const adminStatus = useSelector((s: any) => s.auth.admin);
 
   const dispatch = useDispatch();
 
   const handleChange = (i: any) => {
-    if (i.target.name === "FIO") {
-      setValue({
-        ...value,
-        FIO: i.target.value,
-      });
-    } else if (i.target.name === "selectRank") {
-    } else if (i.target.name === "FIOkril") {
-    } else {
-      setValue({
-        ...value,
-        [i.target.name]: i.target.value,
-      });
-    }
+    setValue({
+      ...value,
+      [i.target.name]: i.target.value,
+    });
+  };
+  const getBatalyons = async () => {
+    const res = await getAllBatalyon(JWT);
+
+    setSelect(res.data);
   };
 
-  const handleChange2 = (i: any) => {
-    if (i.target.name === "FIO") {
-      setValue({
-        ...value,
-        FIO: i.target.value,
-      });
-    } else if (i.target.name === "selectRank") {
-    } else if (i.target.name === "FIOkril") {
-    } else {
-      setValue({
-        ...value,
-        [i.target.name]: i.target.value,
-      });
-    }
-  };
-
+  React.useEffect(() => {
+    getBatalyons();
+  }, []);
   const handleSubmite = async () => {
     handleSubmit();
   };
@@ -107,48 +83,88 @@ export default function TipModal({
           </DialogTitle>
           <div className="flex flex-row  min-w-[800px] p-4 gap-2 px-4">
             <div className="w-full flex justify-between gap-4">
-              <FormControl sx={{ width: "40%" }} fullWidth>
-                <InputLabel id="region-select-label">
-                  {latinToCyrillic("Zvaniya")}{" "}
-                </InputLabel>
-                <Select
-                  labelId="region-select-label"
-                  id="region-select"
-                  label={latinToCyrillic("Zvaniya")}
-                  name="zvaniya"
-                  value={value.zvaniya}
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 1124, // Example max height, adjust as needed
+              {adminStatus ? (
+                <FormControl sx={{ width: "40%" }} fullWidth>
+                  <InputLabel id="region-select-label">
+                    {latinToCyrillic("Batalyon")}{" "}
+                  </InputLabel>
+                  <Select
+                    labelId="region-select-label"
+                    id="region-select"
+                    label={latinToCyrillic("Batalyon")}
+                    name="batalyon"
+                    value={value.batalyon}
+                    MenuProps={{
+                      PaperProps: {
+                        style: {
+                          maxHeight: 1124, // Example max height, adjust as needed
+                        },
                       },
-                    },
-                  }}
+                    }}
+                    onChange={handleChange}
+                  >
+                    {select &&
+                      select.map((e: any) => (
+                        <MenuItem key={e.username} value={e.username}>
+                          {e.username}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              ) : (
+                ""
+              )}
+              <div
+                className={`flex gap-2 justify-between ${
+                  adminStatus ? "w-[60%]" : "w-[100%]"
+                }`}
+              >
+                <TextField
+                  label={latinToCyrillic("Familyasi")}
+                  value={value.lastname}
                   onChange={handleChange}
-                >
-                  {ranksData.map((e: any) => (
-                    <MenuItem key={e.zvaniye} value={e.zvaniye}>
-                      {e.zvaniye}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <TextField
-                label={latinToCyrillic("FIO")}
-                value={value.FIO}
-                onChange={handleChange}
-                fullWidth
-                name="FIO"
-                sx={{ width: "60%" }}
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck="false"
-                InputProps={{
-                  autoComplete: "off",
-                  autoCorrect: "off",
-                  spellCheck: "false",
-                }}
-              />
+                  fullWidth
+                  name="lastname"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                />
+                <TextField
+                  label={latinToCyrillic("Ismi")}
+                  value={value.firstname}
+                  onChange={handleChange}
+                  fullWidth
+                  name="firstname"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                />
+                <TextField
+                  label={latinToCyrillic("Sharifi")}
+                  value={value.fatherName}
+                  onChange={handleChange}
+                  fullWidth
+                  name="fatherName"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                  }}
+                />
+              </div>
             </div>
           </div>
           <DialogActions>

@@ -6,22 +6,26 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { DeleteShartnoma, GetStatus, UpdateDate } from "@/app/Api/Apis";
+
 import BittaTab from "./Components/BittaTab";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { setModalBitta } from "@/app/Redux/TipSlice";
 import BittaModal from "./Components/BittaModal";
+import { getContractById, paymentToContract } from "@/app/Api/Apis";
 function Page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
   const [count, setCount] = useState(0);
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = useState("");
+  const [payment, setPayment] = useState(false);
   const modal = useSelector((s: any) => s.tip.modal2);
   const getData = async () => {
-    const res = await GetStatus(JWT, id);
-    setData(res.data);
+    const res = await getContractById(JWT, id);
+    const payy = res.data[0].ispay;
+    setPayment(payy);
+    setData(res);
   };
 
   useEffect(() => {
@@ -72,7 +76,7 @@ function Page() {
     );
   };
   const updateDate = async () => {
-    const res = await UpdateDate(JWT, value, modal.shartnomaId, modal.organId);
+    const res: any = "salom";
 
     if (res.success) {
       dispatch(
@@ -114,10 +118,32 @@ function Page() {
   const otish = () => {
     router.push("/" + id);
   };
+  const pay = async () => {
+    const res = await paymentToContract(JWT, id);
+
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("To'lov muvofaqiyatli amalga oshirildi"),
+          status: "success",
+        })
+      );
+      getData();
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
 
   return (
     <>
-      <div className="w-[80%] mt-5 flex-col gap-6 mx-auto">
+      <div className="w-[95%] mt-5 flex-col gap-6 mx-auto">
         <div className="mb-6 flex justify-between w-full items-center">
           <Button
             startIcon={<ArrowBackIcon />}
@@ -131,12 +157,28 @@ function Page() {
           <h1 className="text-[28px] font-bold">
             {latinToCyrillic("Organlar Statusi")}
           </h1>
+          <div className="flex gap-2">
+            {payment ? (
+              <Button
+                color="secondary"
+                disabled
+                variant="contained"
+                onClick={pay}
+              >
+                {latinToCyrillic("To'lov qilingan")}
+              </Button>
+            ) : (
+              <Button color="secondary" variant="contained" onClick={pay}>
+                {latinToCyrillic("To'lov Qilmoq")}
+              </Button>
+            )}
 
-          <Button color="success" variant="contained" onClick={otish}>
-            {latinToCyrillic("Shartnomani ko'rish")}
-          </Button>
+            <Button color="success" variant="contained" onClick={otish}>
+              {latinToCyrillic("Shartnomani ko'rish")}
+            </Button>
+          </div>
         </div>
-        <BittaTab ranks={data} />
+        <BittaTab ranks={data.tasks} />
       </div>
       <BittaModal
         setValue={setValue}

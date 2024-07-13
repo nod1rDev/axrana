@@ -83,6 +83,7 @@ export default function MenuHeader() {
     handleClose();
   };
 
+
   const router = useRouter();
 
   const otmoq = (e: any) => {
@@ -118,9 +119,7 @@ export default function MenuHeader() {
           <PaymentsIcon />
           {latinToCyrillic("FIO")}
         </MenuItem>
-       
 
-        
         {admin && (
           <MenuItem onClick={() => otmoq("/names")} disableRipple>
             <SecurityIcon />

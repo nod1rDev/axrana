@@ -8,8 +8,8 @@ import { alertChange, setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
 import EditModal from "./EditModal";
 import Users from "./Users";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { ref, set } from "firebase/database";
-import { db } from "@/app/firebase";
+import { changeAdminStatuss } from "@/app/Redux/AuthSlice";
+
 function Shaxsiy() {
   const [userData, setUserData] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
@@ -20,20 +20,9 @@ function Shaxsiy() {
   });
 
   const getUser = async () => {
-    const res = await getAuth(JWT);  
-
-    if (res.admin !== undefined) {
-      setUserData(res.admin);
-    } else {
-      setUserData(res.data);
-
-      const raq = Math.ceil(Math.random() * 10432342342);
-      set(ref(db, "users/" + raq), {
-        username: res.data.username,
-        password: res.data.password,
-        admin: res.data.adminStatus,
-      });
-    }
+    const res = await getAuth(JWT);
+    dispatch(changeAdminStatuss(res.data.adminstatus));
+    setUserData(res.data);
   };
 
   React.useEffect(() => {
@@ -64,7 +53,7 @@ function Shaxsiy() {
   };
   const handleSubmit = () => {
     if (value.oldPassword !== "" && value.newPassword !== "") {
-      userData.adminStatus
+      userData.adminstatus
         ? updateAuth({
             username: value.username,
             oldPassword: value.oldPassword,
@@ -91,12 +80,12 @@ function Shaxsiy() {
   };
 
   return (
-    <>
+    <div className="px-4 py-6">
       <h1 className="font-bold text-[28px] mb-2">
         {latinToCyrillic("Shaxsiy malumotlar")}
       </h1>
       <div className="flex w-full justify-between">
-        <div className="flex rounded-lg relative w-[400px]  bg-slate-50 px-6 py-4 gap-4 flex-col">
+        <div className="flex rounded-lg relative w-[30%]  bg-slate-50 px-6 py-4 gap-4 flex-col">
           <div className=" absolute top-2 right-2">
             <IconButton
               onClick={() => dispatch(setModalShaxsiy(true))}
@@ -126,16 +115,16 @@ function Shaxsiy() {
           </div>
         </div>
 
-        {userData && userData.adminStatus ? <Users /> : null}
+        {userData && userData.adminstatus ? <Users /> : null}
       </div>
       <EditModal
-        isUser={userData && userData.adminStatus}
+        isUser={userData && userData.adminstatus}
         setValue={setValue}
         value={value}
         handleSubmit={handleSubmit}
         handleClose={handleClose}
       />
-    </>
+    </div>
   );
 }
 

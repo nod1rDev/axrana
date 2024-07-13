@@ -4,7 +4,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useRouter } from "next/navigation";
 import Status from "./Status";
 import { useSelector, useDispatch } from "react-redux";
-import { GetWorkerByOrgan1 } from "@/app/Api/Apis";
+
 import { setModalShowWorker } from "@/app/Redux/LavozimSlice";
 import { Button } from "@mui/material";
 import ShowWorkerModal from "@/app/[id]/ShowWorkerModal";
@@ -22,7 +22,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [workers, setWorkers] = useState([]);
   const GEtworkers = async () => {
-    const res = await GetWorkerByOrgan1(JWT, data.shartnoma_id, data.organ_id);
+    const res: any = "salom";
 
     if (res.success) {
       setWorkers(res.data);
@@ -47,7 +47,9 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   return (
     <>
       <div
-        onClick={() => (click ? router.push("/topshiriq/" + data.shartnoma_id) : null)}
+        onClick={() =>
+          click ? router.push("/topshiriq/" + data.shartnoma_id) : null
+        }
         className="w-full flex   cursor-pointer px-8 py-6 bg-[#f1faee] rounded-2xl justify-between items-center  hover:border hover:border-[#0096c7]"
       >
         <span className="font-bold text-center">
@@ -77,7 +79,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
           {click && <KeyboardArrowRightIcon fontSize="large" color="info" />}
         </div>
       </div>
-      <ShowWorkerModal ranks={workers} handleClose={hadleClose}/>
+      <ShowWorkerModal ranks={workers} handleClose={hadleClose} />
     </>
   );
 }

@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAuth } from "../Api/Apis";
-import { ref, set } from "firebase/database";
-import { db } from "../firebase";
+
 
 const AuthSlice = createSlice({
   name: "auth",
@@ -19,16 +17,16 @@ const AuthSlice = createSlice({
       state.JWT = payload;
     },
     setUser: (state, { payload }) => {
-      state.admin = payload.data?.adminStatus;
+      state.admin = payload.data?.adminstatus;
 
       state.user = payload;
     },
-    changeAdminStatus: (state, { payload }) => {
+    changeAdminStatuss: (state, { payload }) => {
       state.admin = payload;
     },
   },
 });
 
-export const { puJWT, setUser, changeAdminStatus } = AuthSlice.actions;
+export const { puJWT, setUser, changeAdminStatuss } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

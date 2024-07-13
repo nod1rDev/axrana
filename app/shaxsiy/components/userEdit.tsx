@@ -59,15 +59,6 @@ export default function EditUser({
           />
 
           <TextField
-            name="oldPassword"
-            error={value.oldPassword == ""}
-            fullWidth
-            value={value.oldPassword}
-            onChange={(e: any) => handleChange(e)}
-            label={latinToCyrillic("Amaldagi Parol")}
-            id="fullWidth"
-          />
-          <TextField
             fullWidth
             error={value.newPassword == ""}
             value={value.newPassword}

@@ -1,5 +1,5 @@
 "use client";
-import { GetNames, UpdateAuth, UpdateNames, getAuth } from "@/app/Api/Apis";
+
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -8,6 +8,7 @@ import { alertChange, setModalShaxsiy } from "@/app/Redux/ShaxsiySlice";
 import EditRaxbar from "./EditRaxbar";
 import { setModalRaxbar } from "@/app/Redux/names";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import { UpdateBXM, getAuth, getBXM } from "@/app/Api/Apis";
 
 function Raxbar() {
   const [userData, setUserData] = React.useState<any>();
@@ -22,7 +23,7 @@ function Raxbar() {
     setId(res.data.adminStatus);
   };
   const getUser = async () => {
-    const res = await GetNames(JWT);
+    const res = await getBXM(JWT);
     setUserData(res.data);
   };
 
@@ -36,7 +37,7 @@ function Raxbar() {
   }, [userData]);
   const dispatch = useDispatch();
   const updateAuth = async (value: any) => {
-    const res = await UpdateNames(JWT, {
+    const res = await UpdateBXM(JWT, {
       summa: value.summa,
     });
     if (res.success) {
@@ -77,15 +78,16 @@ function Raxbar() {
   const handleClose = () => {
     dispatch(setModalRaxbar(false));
   };
+  const admin = useSelector((s: any) => s.auth.admin);
 
   return (
-    <>
+    <div className="px-4 py-6">
       <h1 className="font-bold text-[28px] mb-2">
         {latinToCyrillic("BXM summasi")}{" "}
       </h1>
       <div className="flex w-full justify-between">
         <div className="flex rounded-lg relative w-[400px]  bg-slate-50 px-6 py-4 gap-4 flex-col">
-          {id && (
+          {admin && (
             <div className=" absolute top-0 right-0">
               <IconButton
                 onClick={() => dispatch(setModalRaxbar(true))}
@@ -113,7 +115,7 @@ function Raxbar() {
         handleSubmit={handleSubmit}
         handleClose={handleClose}
       />
-    </>
+    </div>
   );
 }
 

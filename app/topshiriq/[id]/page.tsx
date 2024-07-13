@@ -18,12 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import {
-  CreateWorkerForOrgan,
-  GetTopshiriqlar,
-  Getworkers,
-  Getworkers2,
-} from "@/app/Api/Apis";
+import { getAllTasks, getAllWorkers, pushWorkers } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -37,18 +32,17 @@ const Page = () => {
   const JWT = useSelector((s: any) => s.auth.JWT);
 
   const getData = async () => {
-    const res = await GetTopshiriqlar(JWT);
+    const res = await getAllTasks(JWT);
     const single = res.data.find((e: any) => e.shartnoma_id === id);
     setData(single);
   };
 
   const GetWorkers = async () => {
-    const res = await Getworkers2(JWT);
+    const res: any = getAllWorkers(JWT, null);
     const filData = res.data.map((e: any) => ({
-      zvaniya: e.zvaniya,
-      FIO: e.FIO,
+      FIO: e.fio,
       selected: false,
-      _id: e._id,
+      _id: e.id,
     }));
     setWorkers(filData);
     setFilteredWorkers(filData);
@@ -76,7 +70,7 @@ const Page = () => {
   const router = useRouter();
 
   const CreateWorker = async (value: any) => {
-    const res = await CreateWorkerForOrgan(JWT, value, id);
+    const res = await pushWorkers(JWT, value, id);
 
     if (res.success) {
       dispatch(
@@ -101,7 +95,7 @@ const Page = () => {
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e: any) => e.selected === true);
     const pureWorker = FiltWorker.map((e: any) => {
-      return { FIO: e.FIO, zvaniya: e.zvaniya };
+      return { fio: e.FIO };
     });
     if (pureWorker.length > 0) {
       CreateWorker(pureWorker);

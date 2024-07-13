@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { UpdateUsers, createAuth, getAuth } from "@/app/Api/Apis";
+import { createAuth, getAuth, updateBatalyon } from "@/app/Api/Apis";
 import { alertChange, setUserModal } from "@/app/Redux/ShaxsiySlice";
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -75,9 +75,9 @@ export default function Users() {
   });
   const [value2, setValue2] = React.useState<any>({
     username: null,
-    oldPassword: null,
     newPassword: null,
   });
+  
 
   const getUsers = async () => {
     const res = await getAuth(JWT);
@@ -140,10 +140,10 @@ export default function Users() {
   };
   const open = useSelector((s: any) => s.shax.userModal);
   const updateAuth = async (valuee: any) => {
-    const res = await UpdateUsers(JWT, valuee, open.id);
+    const res = await updateBatalyon(JWT, valuee, open.id);
     if (res.success) {
       handleClose();
-      setValue2({ username: null, oldPassword: null, newPassword: null });
+      setValue2({ username: null,  newPassword: null });
       dispatch(
         alertChange({
           open: true,
@@ -162,7 +162,7 @@ export default function Users() {
     }
   };
   const handleSubmite = () => {
-    if (value2.oldPassword !== "" && value2.newPassword !== "") {
+    if ( value2.newPassword !== "") {
       updateAuth(value2);
     } else {
       dispatch(
@@ -178,14 +178,14 @@ export default function Users() {
 
   return (
     <>
-      <Paper sx={{ width: "60%", overflow: "hidden" }}>
+      <Paper sx={{ width: "68%", overflow: "hidden" }}>
         <div className="w-full ">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
             {latinToCyrillic("Batalyon qoshish")}
           </h1>
           <form
             onSubmit={handleSubmit}
-            className="flex justify-between py-4 px-5"
+            className="flex justify-between gap-4 py-4 px-5"
           >
             <TextField
               id="outlined-basic"
@@ -193,7 +193,7 @@ export default function Users() {
               value={value.username}
               name="username"
               onChange={(e: any) => handleChange(e)}
-              sx={{ width: "350px" }}
+              fullWidth
               variant="outlined"
             />
             <TextField
@@ -202,20 +202,20 @@ export default function Users() {
               value={value.password}
               name="password"
               onChange={(e: any) => handleChange(e)}
-              sx={{ width: "350px" }}
+              fullWidth
               variant="outlined"
             />
             <Button
               color="primary"
               type="submit"
-              sx={{ width: "130px" }}
+              sx={{ width: "160px" }}
               variant="contained"
             >
               {latinToCyrillic("Qo'shish")}
             </Button>
           </form>
         </div>
-        <TableContainer sx={{ maxHeight: 400, overflow: "auto" }}>
+        <TableContainer sx={{ maxHeight: "100%", overflow: "auto" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>

@@ -15,7 +15,7 @@ import {
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 
 import { useSelector, useDispatch } from "react-redux";
-import { GetWorkerByOrgan, GetWorkerByOrgan1 } from "../Api/Apis";
+import { getWorkersForWatch } from "../Api/Apis";
 import { setModalShowWorker } from "../Redux/LavozimSlice";
 import ShowWorkerModal from "./ShowWorkerModal";
 // Define the data structure for a row
@@ -26,13 +26,14 @@ interface TableRowData {
   hours: number;
   rate: number;
   total: number;
+  chegirma: any;
 }
 
 // Style for bordered cells
 const BorderedTableCell = styled(TableCell)({
   border: "1px solid black",
   textAlign: "center",
-  padding: "8px",
+  padding: "4px",
 });
 
 const LeftBorderedTableRow = styled(TableRow)({
@@ -43,28 +44,31 @@ const BudgetTable: any = ({
   data1,
   raq,
   dataId,
+  address,
 }: {
   data1: any;
   raq: any;
   dataId: any;
+  address: any;
 }) => {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [worker, setWorker] = React.useState([]);
   const dispatch = useDispatch();
   const data: TableRowData[] = data1
-    ? data1.organs.map((organ: any) => {
+    ? data1.map((organ: any) => {
         return {
-          id: organ._id,
-          department: organ.name,
-          personnel: organ.workerNumber,
-          hours: organ.time,
-          rate: organ.timeMoney,
-          total: organ.allMoney,
+          id: organ.id,
+          department: organ.battalionname,
+          personnel: organ.workernumber,
+          hours: organ.tasktime,
+          rate: organ.timemoney,
+          total: organ.allmoney,
+          chegirma: organ.discountmoney,
         };
       })
     : [];
   const getOne = async (organId: any) => {
-    const res = await GetWorkerByOrgan1(JWT, dataId, organId);
+    const res = await getWorkersForWatch(JWT, organId, "task");
 
     setWorker(res.data);
     if (res.success) {
@@ -72,7 +76,7 @@ const BudgetTable: any = ({
     }
   };
   const getAll = async () => {
-    const res = await GetWorkerByOrgan(JWT, dataId);
+    const res = await getWorkersForWatch(JWT, dataId, "contract");
 
     setWorker(res.data);
     if (res.success) {
@@ -91,25 +95,25 @@ const BudgetTable: any = ({
   return (
     <>
       <Box>
-        <div className="flex  pb-6 justify-end flex-col gap-0">
-          <div className="font-bold text-[18px] flex justify-end">
-            {data1 && data1.date}
+        <div className="flex pb-6 justify-end flex-col gap-0">
+          <div className="font-bold text-[16px] flex justify-end">
+            {data1 && address.contractdate}
           </div>
-          <div className="font-bold text-[18px] flex justify-end">
+          <div className="font-bold text-[16px] flex justify-end">
             {data1 && raq + latinToCyrillic("-sonli qaror loyihasi")}
           </div>
         </div>
 
-        <h2 className="text-xl w-[90%] mx-auto text-center font-semibold mb-4">
+        <h2 className="text-16 w-[90%] mx-auto text-center font-semibold mb-4">
           Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва жамоат
           тартибини сақлашни ташкил этишда
         </h2>
 
-        <h2 className="text-2xl text-center font-bold mb-8">
+        <h2 className="text-16 text-center font-bold mb-8">
           ХАРАЖАТЛАР СМЕТАСИ
         </h2>
-        <TableContainer component={Paper}>
-          <Table>
+        <TableContainer component={Paper} style={{ width: "100%", overflowX: "auto" }}>
+          <Table style={{ width: "100%", tableLayout: "fixed" }}>
             <TableHead>
               <TableRow>
                 <BorderedTableCell>
@@ -136,6 +140,10 @@ const BudgetTable: any = ({
                   {" "}
                   {latinToCyrillic("Umumiy hisoblangan")}{" "}
                 </BorderedTableCell>
+                <BorderedTableCell>
+                  {" "}
+                  {latinToCyrillic("Chegirma")}{" "}
+                </BorderedTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -147,12 +155,15 @@ const BudgetTable: any = ({
                 <BorderedTableCell>5</BorderedTableCell>
                 <BorderedTableCell>6</BorderedTableCell>
                 <BorderedTableCell>6</BorderedTableCell>
+                <BorderedTableCell>7</BorderedTableCell>
               </LeftBorderedTableRow>
               {data.map((row: any, i: number) => (
                 <LeftBorderedTableRow key={row.id}>
-                  <div className="font-bold text-center">
-                    {i === 0 ? data1 && data1.address : null}
-                  </div>
+                  <BorderedTableCell>
+                    <div className="font-bold text-center">
+                      {i === 0 ? address.address && address.address : null}
+                    </div>
+                  </BorderedTableCell>
                   <BorderedTableCell>{row.department}</BorderedTableCell>
                   <BorderedTableCell>
                     <Button
@@ -160,7 +171,6 @@ const BudgetTable: any = ({
                       color="inherit"
                       variant="text"
                     >
-                      {" "}
                       {row.personnel}
                     </Button>
                   </BorderedTableCell>
@@ -174,6 +184,7 @@ const BudgetTable: any = ({
                   <BorderedTableCell>
                     {row.total.toLocaleString()}
                   </BorderedTableCell>
+                  <BorderedTableCell>{row.chegirma}</BorderedTableCell>
                 </LeftBorderedTableRow>
               ))}
               <LeftBorderedTableRow>
@@ -182,19 +193,21 @@ const BudgetTable: any = ({
                 </BorderedTableCell>
                 <BorderedTableCell>
                   <Button onClick={getAll} color="inherit" variant="text">
-                    {" "}
-                    {data1 && data1.allworkerNumber}
+                    {address && address.allworkernumber}
                   </Button>
                 </BorderedTableCell>
                 <BorderedTableCell></BorderedTableCell>
                 <BorderedTableCell>
-                  {data1 && data1.timeMoney}
+                  {address && address.timemoney}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {data1 && data1.allAllMoney}
+                  {address && address.allmoney}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {data1 && data1.allAllMoney}
+                  {address && address.allmoney}
+                </BorderedTableCell>
+                <BorderedTableCell>
+                  {address && address.discountmoney}
                 </BorderedTableCell>
               </LeftBorderedTableRow>
             </TableBody>

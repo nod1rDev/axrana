@@ -15,7 +15,7 @@ import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
 import { latinToCyrillic } from "../add/Components/lotin";
 import { useRouter } from "next/navigation";
-import TablePagination from '@mui/material/TablePagination';
+import TablePagination from "@mui/material/TablePagination";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -27,7 +27,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "FIO" | "Tuman" | "Otryad" | "actions";
+  id: "number" | "FIO" | "Otryad" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -36,12 +36,7 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
-  {
-    id: "Tuman",
-    label: latinToCyrillic("Zvaniya"),
-    minWidth: 100,
-    align: "center",
-  },
+
   { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
 
   {
@@ -62,7 +57,6 @@ interface Data {
   number: any;
   FIO: any;
 
-  Tuman: any;
   Otryad: any;
   actions: any;
   id: number;
@@ -72,7 +66,6 @@ function createData(
   number: any,
   FIO: any,
 
-  Tuman: any,
   Otryad: any,
   actions: any,
   id: number
@@ -81,7 +74,6 @@ function createData(
     number,
     FIO,
 
-    Tuman,
     Otryad,
     actions,
     id,
@@ -103,10 +95,10 @@ export default function TipTab({
 }) {
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
-        createData(i + 1, e.FIO, e.zvaniya, e.batalyon, null, e._id)
+        createData(i + 1, e.fio, e.username, null, e.id)
       )
     : [];
- 
+
   const dispatch = useDispatch();
   const router = useRouter();
   const admin = useSelector((s: any) => s.auth.admin);
@@ -152,7 +144,7 @@ export default function TipTab({
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 4 ? (
+                          ) : e == 3 ? (
                             <>
                               <IconButton
                                 onClick={(e) => {
@@ -164,7 +156,7 @@ export default function TipTab({
                                       id: row.id,
                                       name: row.FIO,
                                       FIO: row.FIO,
-                                      zvaniya: row.Tuman,
+                                      batalyon: row.Otryad,
                                     })
                                   );
                                 }}
@@ -189,6 +181,7 @@ export default function TipTab({
                                       open: true,
                                       id: row.id,
                                       name: row.FIO,
+                                      FIO: row.FIO,
                                     })
                                   );
                                 }}
@@ -214,9 +207,9 @@ export default function TipTab({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 20, 100,200,500]}
+        rowsPerPageOptions={[10, 20, 100, 200, 500]}
         component="div"
-        count={ranks.length}
+        count={ranks ? ranks.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

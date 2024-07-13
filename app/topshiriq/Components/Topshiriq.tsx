@@ -9,18 +9,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import {
-  GetAllShartnoma,
-  GetTopshiriqlar,
-  SearchByStatus,
-  SearchShartnoma,
-  SearchTopshiriq,
-} from "@/app/Api/Apis";
+import { getAllTasks } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import TopshiriqCard from "./TopshiriqCard";
-import Timerr from "./Timer";
 
 function Topshiriq() {
   const [data, setData] = useState<any>([]);
@@ -51,9 +44,8 @@ function Topshiriq() {
   const JWT = useSelector((s: any) => s.auth.JWT);
 
   const getTopshiriqApi = async () => {
-    const res = await GetTopshiriqlar(JWT);
+    const res = await getAllTasks(JWT);
     const filtData = filterAndSortTasks(res.data);
-    console.log(filtData);
 
     setData(filtData);
   };
@@ -73,7 +65,7 @@ function Topshiriq() {
   }, []);
 
   const getSearchData = async () => {
-    const res = await SearchTopshiriq(JWT, value);
+    const res: any = "salom";
     setData(res.data);
   };
 
@@ -94,7 +86,7 @@ function Topshiriq() {
   };
 
   const getByStatus = async (value: any) => {
-    const res = await SearchByStatus(JWT, value);
+    const res: any = "salom";
 
     setData(res.data);
   };

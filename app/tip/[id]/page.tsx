@@ -10,13 +10,7 @@ import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import {
-  CreateWorkerForOrgan,
-  GetTadbir,
-  GetTopshiriqlar,
-  Getworkers,
-  SearchTadbir,
-} from "@/app/Api/Apis";
+import { filterWorker, getWorkerInfo } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -52,9 +46,10 @@ const Page = () => {
   }, []);
 
   const getAllContract = async () => {
-    const res = await GetTadbir(JWT, id);
-    setSumma(res.AllTadbirSumma);
-    setWorker(`${res.worker.zvaniya} ${res.worker.FIO} ${res.worker.batalyon}`);
+    const res = await getWorkerInfo(JWT, id);
+
+    setSumma(res.allmoney);
+    setWorker(`${res.worker[0].fio} `);
 
     setData(res);
     setShartnomalar(res.data);
@@ -63,9 +58,9 @@ const Page = () => {
     getAllContract();
   }, []);
   const getSearchData = async () => {
-    const res = await SearchTadbir(JWT, value, id);
-    setSumma(res.AllTadbirSumma);
-    setWorker(`${res.worker.zvaniya} ${res.worker.FIO} ${res.worker.batalyon}`);
+    const res: any = filterWorker(JWT, id, value);
+    setSumma(res.allmoney);
+    setWorker(`${res.worker[0].fio} `);
 
     setData(res);
     setShartnomalar(res.data);

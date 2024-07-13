@@ -13,9 +13,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { loginAuth, SelectAuth } from "../Api/Apis";
+import { loginAuth } from "../Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
-import { changeAdminStatus, setUser } from "../Redux/AuthSlice";
+import { changeAdminStatuss, setUser } from "../Redux/AuthSlice";
 import { useRouter } from "next/navigation";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -24,9 +24,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { alertChange } from "../Redux/ShaxsiySlice";
 
-import { db } from "../firebase";
-import { ref, set } from "firebase/database";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
+import { TextField } from "@mui/material";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -39,7 +38,6 @@ export default function Login() {
   const admin = useSelector((s: any) => s.auth.admin);
   const login = async (username: any, password: any) => {
     const res = await loginAuth(username, password);
-  
 
     if (res.success) {
       dispatch(
@@ -52,10 +50,12 @@ export default function Login() {
       sessionStorage.setItem("token", res.token);
 
       sessionStorage.setItem("id", res.data.id);
-      res.data.adminStatus
+      res.data.adminstatus
         ? router.push("/shartnoma")
         : router.push("/topshiriq");
-      dispatch(changeAdminStatus(res.data.adminStatus));
+      console.log(res.data.adminstatus);
+
+      dispatch(changeAdminStatuss(res.data.adminstatus));
       setTimeout(() => window.location.reload(), 700);
     } else {
       dispatch(
@@ -93,16 +93,6 @@ export default function Login() {
     }
   };
   const router = useRouter();
-
-  const getAuth = async () => {
-    const res = await SelectAuth();
-
-    setData(res.data);
-  };
-
-  React.useEffect(() => {
-    getAuth();
-  }, []);
 
   React.useEffect(() => {
     const input: any = document.getElementById("myInput");
@@ -149,25 +139,19 @@ export default function Login() {
                   noValidate
                   sx={{ mt: 1 }}
                 >
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      {latinToCyrillic("Foydalanuvchi")}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={select}
-                      label={latinToCyrillic("Foydalanuvchi")}
-                      sx={{ background: "#E8F0FE" }}
-                      onChange={(e: any) => setSelect(e.target.value)}
-                    >
-                      {data
-                        ? data.map((e: any) => (
-                            <MenuItem value={e.username}>{e.username}</MenuItem>
-                          ))
-                        : []}
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    name="username"
+                    id="outlined-basic"
+                    sx={{
+                      backgroundColor: "whitesmoke",
+                      borderRadius: "5px",
+
+                      width: "100%",
+                    }}
+                    label={latinToCyrillic("Foydalanuvchi Nomi")}
+                    variant="outlined"
+                    onChange={(e: any) => setSelect(e.target.value)}
+                  />
                   <FormControl sx={{ width: "100%", mt: 2 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
                       {latinToCyrillic("Paroli")}

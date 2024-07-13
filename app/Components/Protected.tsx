@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { LinearProgress } from "@mui/material";
 import Login from "./Login";
 import { getAuth, loginAuth } from "../Api/Apis";
-import { setUser } from "../Redux/AuthSlice";
+import { changeAdminStatuss, setUser } from "../Redux/AuthSlice";
 import { useRouter } from "next/navigation";
 
 function Prodected({ children }: { children: any }) {
@@ -16,7 +16,7 @@ function Prodected({ children }: { children: any }) {
   useEffect(() => {
     const getUser = async () => {
       const userr = await getAuth(JWT);
-
+      dispatch(changeAdminStatuss(userr.data.adminstatus));
       dispatch(setUser(userr));
       setUserr(userr.success);
     };

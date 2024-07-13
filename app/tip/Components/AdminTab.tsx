@@ -10,10 +10,12 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { useDispatch } from "react-redux";
-import { setModalLocation } from "@/app/Redux/locationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
-import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import { latinToCyrillic } from "../add/Components/lotin";
+import { useRouter } from "next/navigation";
+import TablePagination from "@mui/material/TablePagination";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -25,7 +27,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "unvonNomi" | "unvonDate" | "actions";
+  id: "number" | "FIO" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -34,58 +36,66 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
-  {
-    id: "unvonNomi",
-    label: latinToCyrillic("Batalyon Nomi"),
-    align: "left",
-    minWidth: 300,
-  },
 
-  {
-    id: "unvonDate",
-    label: "",
-    minWidth: 180,
-    align: "center",
-  },
+  { id: "FIO", label: latinToCyrillic("FIO"), align: "left", minWidth: 180 },
+
   {
     id: "actions",
     label: latinToCyrillic("Amallar"),
-    minWidth: 300,
+    minWidth: 150,
     align: "right",
   },
 ];
 
 interface Data {
   number: any;
-  unvonNomi: any;
+  FIO: any;
 
-  unvonDate: any;
   actions: any;
   id: number;
 }
 
 function createData(
   number: any,
-  unvonNomi: any,
+  FIO: any,
 
-  unvonDate: any,
   actions: any,
   id: number
 ): Data {
-  return { number, unvonNomi, unvonDate, actions, id };
+  return {
+    number,
+    FIO,
+
+    actions,
+    id,
+  };
 }
 
-export default function LocationTab({ ranks }: { ranks: any }) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] =
-    React.useState(10000000000000000000000000000000000);
-
+export default function AdminTab({
+  ranks,
+  page,
+  handleChangePage,
+  rowsPerPage,
+  handleChangeRowsPerPage,
+}: {
+  ranks: any;
+  page: any;
+  handleChangePage: any;
+  rowsPerPage: any;
+  handleChangeRowsPerPage: any;
+}) {
   const rows = ranks
-    ? ranks.map((e: any) => createData(1, e.name, e.date, 5, e._id))
+    ? ranks.map((e: any, i: any) => createData(i + 1, e.fio, null, e.id))
     : [];
 
   const dispatch = useDispatch();
-
+  const router = useRouter();
+  const admin = useSelector((s: any) => s.auth.admin);
+  const otish = (id: any) => {
+    if (admin) {
+      router.push("/tip/" + id);
+    }
+  };
   return (
     <Paper sx={{ width: "100%" }}>
       <TableContainer sx={{ overflow: "auto", maxHeight: "70vh" }}>
@@ -108,26 +118,36 @@ export default function LocationTab({ ranks }: { ranks: any }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row: any, i: any) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={i}>
+                  <TableRow
+                    hover
+                    onClick={() => {
+                      otish(row.id);
+                    }}
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={i}
+                  >
                     {columns.map((column, e) => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 3 ? (
+                          ) : e == 2 ? (
                             <>
                               <IconButton
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   dispatch(
-                                    setModalLocation({
+                                    setModalTip({
                                       type: 1,
                                       open: true,
                                       id: row.id,
-                                      name: row.unvonNomi,
+                                      name: row.FIO,
+                                      FIO: row.FIO,
                                     })
-                                  )
-                                }
+                                  );
+                                }}
                                 aria-label="delete"
                                 size="medium"
                               >
@@ -141,17 +161,18 @@ export default function LocationTab({ ranks }: { ranks: any }) {
                                 sx={{ ml: 1 }}
                                 aria-label="delete"
                                 size="medium"
-                                onClick={() =>
+                                onClick={(e) => {
+                                  e.stopPropagation();
                                   dispatch(
-                                    setModalLocation({
+                                    setModalTip({
                                       type: 2,
                                       open: true,
                                       id: row.id,
-                                      name: row.unvonNomi,
-                                      summa: row.unvonNarxi,
+                                      name: row.FIO,
+                                      FIO: row.FIO,
                                     })
-                                  )
-                                }
+                                  );
+                                }}
                               >
                                 <RemoveCircleOutlineIcon
                                   fontSize="inherit"
@@ -173,6 +194,15 @@ export default function LocationTab({ ranks }: { ranks: any }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 20, 100, 200, 500]}
+        component="div"
+        count={ranks ? ranks.length : 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </Paper>
   );
 }

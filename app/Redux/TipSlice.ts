@@ -3,7 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const TipSlice = createSlice({
   name: "TIP",
   initialState: {
-    modal: { type: 0, open: false, id: 0, name: "" },
+    modal: {
+      type: 0,
+      open: false,
+      id: 0,
+      name: "",
+      FIO: "Bekzod Abdullayev Ibrohimovich",
+    },
     modal2: { open: false, shartnomaId: 0, organId: 0, sana: "" },
   },
   reducers: {
@@ -16,6 +22,6 @@ const TipSlice = createSlice({
   },
 });
 
-export const { setModalTip,setModalBitta } = TipSlice.actions;
+export const { setModalTip, setModalBitta } = TipSlice.actions;
 
 export default TipSlice.reducer;

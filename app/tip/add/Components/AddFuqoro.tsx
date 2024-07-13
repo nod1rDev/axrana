@@ -4,16 +4,17 @@ import AddFuqaroTab from "./AddFuqaroTab";
 import CreateFuqaro from "./CreateFuqaro";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
-import { Createworkers } from "@/app/Api/Apis";
+
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "./lotin";
+import { createWorker } from "@/app/Api/Apis";
 function AddFuqoro() {
   const [data, setData] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const router = useRouter();
   const create = async () => {
-    const res = await Createworkers(JWT, data);
+    const res = await createWorker(JWT, data);
     if (res.success) {
       dispatch(
         alertChange({

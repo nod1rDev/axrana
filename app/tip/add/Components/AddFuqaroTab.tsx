@@ -16,7 +16,6 @@ import { styled } from "@mui/system";
 import { TextField, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { GetCreateInfoWorker } from "@/app/Api/Apis";
 import { latinToCyrillic } from "./lotin";
 import { ranksData } from "@/app/Utils";
 
@@ -29,7 +28,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
 }));
 
 interface Column {
-  id: "number" | "FIO" | "Zvaniya" | "actions";
+  id: "number" | "lastname" | "firstname" | "fatherName" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -37,14 +36,25 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
-  {
-    id: "Zvaniya",
-    label: latinToCyrillic("Zvaniya"),
-    minWidth: 100,
-    align: "left",
-  },
-  { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
 
+  {
+    id: "lastname",
+    label: latinToCyrillic("Familyasi"),
+    align: "center",
+    minWidth: 180,
+  },
+  {
+    id: "firstname",
+    label: latinToCyrillic("Familyasi"),
+    align: "center",
+    minWidth: 180,
+  },
+  {
+    id: "fatherName",
+    label: latinToCyrillic("Sharifi"),
+    align: "center",
+    minWidth: 180,
+  },
   {
     id: "actions",
     label: latinToCyrillic("Amallar"),
@@ -55,24 +65,24 @@ const columns: readonly Column[] = [
 
 interface Data {
   number: any;
-  FIO: any;
+  lastname: any;
 
-  Zvaniya: any;
-
+  firstname: any;
+  fatherName: any;
   actions: any;
   id: number;
 }
 
 function createData(
   number: any,
-  FIO: any,
+  lastname: any,
 
-  Zvaniya: any,
-
+  firstname: any,
+  fatherName: any,
   actions: any,
   id: number
 ): Data {
-  return { number, FIO, Zvaniya, actions, id };
+  return { number, lastname, firstname, fatherName, actions, id };
 }
 
 export default function AddFuqaroTab({
@@ -90,15 +100,7 @@ export default function AddFuqaroTab({
   const [select, setSelect] = useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
 
-  const getSelect = async () => {
-    const res = await GetCreateInfoWorker(JWT);
 
-    setSelect(res);
-  };
-
-  useEffect(() => {
-    getSelect();
-  }, []);
 
   const handleLatinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -106,7 +108,7 @@ export default function AddFuqaroTab({
     if (active !== null) {
       setData((prevData: any) =>
         prevData.map((item: any) =>
-          item._id === active ? { ...item, FIO: value } : item
+          item._id === active ? { ...item, [e.target.name]: value } : item
         )
       );
     }
@@ -114,7 +116,7 @@ export default function AddFuqaroTab({
 
   const rows = ranks
     ? ranks.map((e: any, i: number) =>
-        createData(i + 1, e.FIO, e.zvaniya, null, e._id)
+        createData(i + 1, e.lastname, e.firstname, e.fatherName, null, e._id)
       )
     : [];
 
@@ -167,9 +169,10 @@ export default function AddFuqaroTab({
                         ) : index === 2 ? (
                           <div className="flex w-full items-center justify-between gap-3">
                             <TextField
-                              value={row.FIO}
+                              value={row.firstname}
                               onChange={handleLatinChange}
                               fullWidth
+                              name="firstname"
                               autoComplete="off"
                               autoCorrect="off"
                               spellCheck="false"
@@ -181,22 +184,40 @@ export default function AddFuqaroTab({
                             />
                           </div>
                         ) : index === 1 ? (
-                          <FormControl fullWidth>
-                            <Select
-                              labelId="otryad-select-label"
-                              id="otryad-select"
-                              name="zvaniya"
-                              onChange={handleTwo}
-                              value={row.Zvaniya}
-                            >
-                              {ranksData.map((e: any) => (
-                                <MenuItem key={e.zvaniye} value={e.zvaniye}>
-                                  {e.zvaniye}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
+                          <div className="flex w-full items-center justify-between gap-3">
+                            <TextField
+                              value={row.lastname}
+                              onChange={handleLatinChange}
+                              fullWidth
+                              name="lastname"
+                              autoComplete="off"
+                              autoCorrect="off"
+                              spellCheck="false"
+                              InputProps={{
+                                autoComplete: "off",
+                                autoCorrect: "off",
+                                spellCheck: "false",
+                              }}
+                            />
+                          </div>
                         ) : index === 3 ? (
+                          <div className="flex w-full items-center justify-between gap-3">
+                            <TextField
+                              value={row.fatherName}
+                              onChange={handleLatinChange}
+                              fullWidth
+                              name="fatherName"
+                              autoComplete="off"
+                              autoCorrect="off"
+                              spellCheck="false"
+                              InputProps={{
+                                autoComplete: "off",
+                                autoCorrect: "off",
+                                spellCheck: "false",
+                              }}
+                            />
+                          </div>
+                        ) : index === 4 ? (
                           <IconButton
                             onClick={() => {
                               setData((prevData: any) =>

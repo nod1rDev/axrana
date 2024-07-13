@@ -1,23 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, IconButton } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import {
-  Createtips,
-  Deletetip,
-  Deleteworker,
-  Gettips,
-  Getworkers,
-  SearchWorkerByFIO,
-  Updatetips,
-  Updateworkers,
+  deleteWorker,
+  getAllBatalyon,
+  getAllWorkers,
+  searchWorker,
+  updateWorker,
 } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 
-import { extractNmae } from "@/app/Utils";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import { setModalCoctav } from "@/app/Redux/CoctavsSlice";
 import { setModalTip } from "@/app/Redux/TipSlice";
@@ -27,26 +27,40 @@ import TipModal from "./TipModal";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
+import MenuBatalyon from "./MenuBatalyon";
+import AdminTab from "./AdminTab";
 
 function Tips() {
   // Umumiy
+  const admin = useSelector((s: any) => s.auth.admin);
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
+  const [batalyon, setBatalyon] = useState<any>({
+    username: "",
+    id: 0,
+  });
   // All ranks
   const [allRanks, setAllRanks] = React.useState<any[]>([]);
   const [filteredRanks, setFilteredRanks] = React.useState<any[]>([]);
 
   const getAllRanks = async () => {
-    const res = await Getworkers(JWT, page + 1, rowsPerPage);
-    setAllRanks(res.data);
-    setFilteredRanks(res.data);
+    if (admin) {
+      const res = await getAllWorkers(JWT, batalyon.id);
+      setAllRanks(res.data);
+      setFilteredRanks(res.data);
+    } else {
+      const res = await getAllWorkers(JWT, null);
+
+      setAllRanks(res.data);
+      setFilteredRanks(res.data);
+    }
   };
 
   React.useEffect(() => {
     getAllRanks();
-  }, []);
+  }, [batalyon?.id]);
 
   // Modal
   const open = useSelector((s: any) => s.tip.modal);
@@ -54,7 +68,7 @@ function Tips() {
   const [search, setSearch] = useState("");
 
   const deleteUnvon = async () => {
-    const res = await Deleteworker(JWT, open.id);
+    const res = await deleteWorker(JWT, open.id);
     if (res.success) {
       handleClose();
       dispatch(
@@ -79,9 +93,10 @@ function Tips() {
   const deleteAllRanks = () => {
     deleteUnvon();
   };
+  const [selector, setSlect] = useState([]);
 
   const EditUnvon = async (value: any) => {
-    const res = await Updateworkers(JWT, value, open.id);
+    const res = await updateWorker(JWT, open.id, value);
     if (res.success) {
       handleClose();
       dispatch(
@@ -102,16 +117,27 @@ function Tips() {
       );
     }
   };
+  function splitFIO(fio: string) {
+    const parts = fio?.split(" ");
 
+    return {
+      lastname: parts[0],
+      firstname: parts[1],
+      fatherName: parts[2],
+    };
+  }
   React.useEffect(() => {
+    const { lastname, firstname, fatherName } = splitFIO(open.FIO);
     setValu({
-      FIO: open.FIO,
-      zvaniya: open.zvaniya,
+      lastname: lastname,
+      firstname: firstname,
+      fatherName: fatherName,
+      batalyon: open.batalyon,
     });
   }, [open.open]);
 
   const handleSubmit = () => {
-    if (value.FIO && value.zvaniya) {
+    if (value.firstname) {
       EditUnvon(value);
     } else {
       dispatch(
@@ -125,10 +151,18 @@ function Tips() {
   };
 
   const handleClose = () => {
-    dispatch(setModalTip({ type: 0, open: false, id: 0, name: "" }));
+    dispatch(
+      setModalTip({
+        type: 0,
+        open: false,
+        id: 0,
+        name: "",
+        FIO: "Bekzod Abdullayev Ibrohimovich",
+      })
+    );
   };
   const searchWorkerByName = async (value: any) => {
-    const res = await SearchWorkerByFIO(JWT, value);
+    const res = await searchWorker(JWT, value);
 
     if (!res.success) {
       dispatch(
@@ -146,7 +180,6 @@ function Tips() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(search);
 
     searchWorkerByName(search);
   };
@@ -169,59 +202,159 @@ function Tips() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const getBatalyons = async () => {
+    const res = await getAllBatalyon(JWT);
+
+    setSlect(res.data);
+  };
+
+  useEffect(() => {
+    getBatalyons();
+  }, []);
+  const handleSelect = (e: any) => {
+    setBatalyon(e.target.value);
+  };
+
   return (
-    <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-      <div className="flex justify-between items-center">
-        <form onSubmit={handleSearch} className="flex items-center">
-          <TextField
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            fullWidth
-            label={latinToCyrillic("FIO orqali qidiring")}
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck="false"
-            InputProps={{
-              autoComplete: "off",
-              autoCorrect: "off",
-              spellCheck: "false",
-              endAdornment: search ? (
-                <IconButton onClick={clearSearch}>
-                  <CloseIcon color="error" />
-                </IconButton>
-              ) : (
-                <IconButton >
-                  <PersonSearchIcon color="info" />
-                </IconButton>
-              ),
-            }}
+    <>
+      {admin ? (
+        <>
+          {batalyon.id !== 0 ? (
+            <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+              <div className="flex justify-between items-center">
+                <div className="flex gap-4 items-center">
+                  <FormControl sx={{ width: "300px" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      {latinToCyrillic("Batalyon")}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={batalyon}
+                      label={latinToCyrillic("Batalyon")}
+                      onChange={handleSelect}
+                    >
+                      {selector &&
+                        selector.map((e: any) => (
+                          <MenuItem key={e.id} value={e}>
+                            {e.username}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+
+                  <form onSubmit={handleSearch} className="flex items-center">
+                    <TextField
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      fullWidth
+                      label={latinToCyrillic("FIO orqali qidiring")}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      InputProps={{
+                        autoComplete: "off",
+                        autoCorrect: "off",
+                        spellCheck: "false",
+                        endAdornment: search ? (
+                          <IconButton onClick={clearSearch}>
+                            <CloseIcon color="error" />
+                          </IconButton>
+                        ) : (
+                          <IconButton>
+                            <PersonSearchIcon color="info" />
+                          </IconButton>
+                        ),
+                      }}
+                    />
+                  </form>
+                </div>
+                <Button
+                  sx={{ width: "150px", height: "40px" }}
+                  onClick={() => router.push("/tip/add")}
+                  variant="contained"
+                >
+                  {latinToCyrillic("Qo'shish")}
+                </Button>
+              </div>
+              <TipTab
+                page={page}
+                handleChangePage={handleChangePage}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
+                rowsPerPage={rowsPerPage}
+                ranks={filteredRanks}
+              />
+              {open.open ? (
+                <TipModal
+                  handleDelete={deleteAllRanks}
+                  handleClose={handleClose}
+                  handleSubmit={handleSubmit}
+                  value={value}
+                  setValue={setValu}
+                />
+              ) : null}
+            </div>
+          ) : (
+            <MenuBatalyon data={selector} setBatalyon={setBatalyon} />
+          )}
+        </>
+      ) : (
+        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+          <div className="flex justify-between items-center">
+            <div className="flex gap-4 items-center">
+              <form onSubmit={handleSearch} className="flex items-center">
+                <TextField
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  fullWidth
+                  label={latinToCyrillic("FIO orqali qidiring")}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                    endAdornment: search ? (
+                      <IconButton onClick={clearSearch}>
+                        <CloseIcon color="error" />
+                      </IconButton>
+                    ) : (
+                      <IconButton>
+                        <PersonSearchIcon color="info" />
+                      </IconButton>
+                    ),
+                  }}
+                />
+              </form>
+            </div>
+            <Button
+              sx={{ width: "150px", height: "40px" }}
+              onClick={() => router.push("/tip/add")}
+              variant="contained"
+            >
+              {latinToCyrillic("Qo'shish")}
+            </Button>
+          </div>
+          <AdminTab
+            page={page}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            rowsPerPage={rowsPerPage}
+            ranks={filteredRanks}
           />
-        </form>
-        <Button
-          sx={{ width: "150px", height: "40px" }}
-          onClick={() => router.push("/tip/add")}
-          variant="contained"
-        >
-          {latinToCyrillic("Qo'shish")}
-        </Button>
-      </div>
-      <TipTab
-        page={page}
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        rowsPerPage={rowsPerPage}
-        ranks={filteredRanks}
-      />
-      {open.open ? (
-        <TipModal
-          handleDelete={deleteAllRanks}
-          handleClose={handleClose}
-          handleSubmit={handleSubmit}
-          value={value}
-          setValue={setValu}
-        />
-      ) : null}
-    </div>
+          {open.open ? (
+            <TipModal
+              handleDelete={deleteAllRanks}
+              handleClose={handleClose}
+              handleSubmit={handleSubmit}
+              value={value}
+              setValue={setValu}
+            />
+          ) : null}
+        </div>
+      )}
+    </>
   );
 }
 

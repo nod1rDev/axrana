@@ -27,7 +27,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "FIO" | "Tuman" | "Otryad" | "sanasi" | "actions";
+  id: "number" |  "Tuman" | "Otryad" | "sanasi" | "actions";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -42,12 +42,7 @@ const columns: readonly Column[] = [
     minWidth: 100,
     align: "center",
   },
-  {
-    id: "FIO",
-    label: latinToCyrillic("Nazorat qilish muddati"),
-    align: "center",
-    minWidth: 100,
-  },
+  
 
   {
     id: "Otryad",
@@ -71,7 +66,7 @@ const columns: readonly Column[] = [
 
 interface Data {
   number: any;
-  FIO: any;
+
 
   Tuman: any;
   Otryad: any;
@@ -83,7 +78,7 @@ interface Data {
 
 function createData(
   number: any,
-  FIO: any,
+ 
 
   Tuman: any,
   Otryad: any,
@@ -95,7 +90,7 @@ function createData(
 ): Data {
   return {
     number,
-    FIO,
+    
 
     Tuman,
     Otryad,
@@ -110,24 +105,24 @@ export default function BittaTab({ ranks }: { ranks: any }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
+ 
 
   const rows = ranks
     ? ranks.map((e: any, i: any) =>
         createData(
           i + 1,
-          e.time,
-          e.name,
-          e.workerNumber,
-          e.topshiriqDate,
-          e.bajarilmagan
+        
+          e.battalionname,
+          e.workernumber,
+          e.taskdate,
+          e.notdone
             ? "bajarilmagan"
-            : e.bajarilmoqda
+            : e.inprogress
             ? "bajarilmoqda"
-            : e.bajarilgan
+            : e.done
             ? "bajarildi"
             : "",
-
-          e._id,
+          e.id,
           e.shartnoma_id
         )
       )
@@ -164,7 +159,7 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                         <TableCell key={column.id} align={column.align}>
                           {e == 0 ? (
                             i + 1
-                          ) : e == 4 ? (
+                          ) : e == 3 ? (
                             <>
                               {row.actions == "bajarilmagan" ? (
                                 <div className="flex gap-2  items-center">
@@ -196,7 +191,7 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                                 <div className={`font-bold`}>{row.sanasi}</div>
                               )}
                             </>
-                          ) : e == 5 ? (
+                          ) : e == 4 ? (
                             <>
                               <div className="flex justify-end">
                                 <Status status={row.actions} />

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import LatCyrConverter, { latinToCyrillic } from "./lotin";
 import { useSelector, useDispatch } from "react-redux";
-import { GetCreateInfoWorker, URL, setExelFile } from "@/app/Api/Apis";
+import { URL } from "@/app/Api/Apis";
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { IconButton } from "@mui/material";
+import { IconButton, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ranksData } from "@/app/Utils";
 
@@ -31,23 +31,14 @@ const VisuallyHiddenInput = styled("input")({
 function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [createInp, setCreateInp] = useState({
-    FIO: "",
-
-    zvaniya: "",
+    lastname: "",
+    firstname: "",
+    fatherName: "",
   });
-  const [select, setSelect] = useState<any>({});
+
   const [clear, setClear] = useState(1);
   const [file, setFile] = useState<any>(null);
   const dispatch = useDispatch();
-
-  const getSelect = async () => {
-    const res = await GetCreateInfoWorker(JWT);
-    setSelect(res);
-  };
-
-  useEffect(() => {
-    getSelect();
-  }, []);
 
   const handleCreateChange = (i: any) => {
     const { name, value } = i.target;
@@ -59,15 +50,16 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
 
   const saqlsh = (e: any) => {
     e.preventDefault();
-    if (createInp.FIO && createInp.zvaniya) {
-      if (createInp.FIO) {
+    if (createInp.lastname) {
+      if (createInp.firstname) {
         setData([
           ...data,
           { ...createInp, _id: Math.ceil(Math.random() * 15415645488) },
         ]);
         setCreateInp({
-          FIO: "",
-          zvaniya: "",
+          lastname: "",
+          firstname: "",
+          fatherName: "",
         });
         setClear(clear + 213);
       } else {
@@ -155,6 +147,9 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
         )
       );
   };
+  const handleChange = (e: any) => {
+    setCreateInp({ ...createInp, [e.target.name]: e.target.value });
+  };
 
   return (
     <form onSubmit={saqlsh} className="w-full mt-6 flex flex-col gap-4">
@@ -188,32 +183,60 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       </div>
 
       <div className="w-full flex justify-between gap-5">
-        <FormControl sx={{ width: "40%" }} fullWidth>
-          <InputLabel id="region-select-label">
-            {latinToCyrillic("Zvaniya")}{" "}
-          </InputLabel>
-          <Select
-            labelId="region-select-label"
-            id="region-select"
-            label={latinToCyrillic("Zvaniya")}
-            name="zvaniya"
-            value={createInp.zvaniya}
-            onChange={handleCreateChange}
-          >
-            {ranksData.map((e: any) => (
-              <MenuItem key={e.zvaniye} value={e.zvaniye}>
-                {e.zvaniye}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <div className="w-[60%]">
-          <LatCyrConverter
-            clear={clear}
-            setValue={setCreateInp}
-            value={createInp}
-          />
-        </div>
+        <TextField
+          name="lastname"
+          sx={{ width: "33%" }}
+          onChange={handleChange}
+          id="outlined-basic"
+          value={createInp.lastname}
+          label={latinToCyrillic("Familyasi")}
+          variant="outlined"
+         
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          InputProps={{
+            autoComplete: "off",
+            autoCorrect: "off",
+            spellCheck: "false",
+          }}
+        />
+        <TextField
+          name="firstname"
+          sx={{ width: "33%" }}
+          onChange={handleChange}
+          value={createInp.firstname}
+          id="outlined-basic"
+          label={latinToCyrillic("Ismi")}
+          variant="outlined"
+         
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          InputProps={{
+            autoComplete: "off",
+            autoCorrect: "off",
+            spellCheck: "false",
+          }}
+        />
+         <TextField
+          name="fatherName"
+          sx={{ width: "33%" }}
+          onChange={handleChange}
+          value={createInp.fatherName}
+          id="outlined-basic"
+         
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="false"
+          InputProps={{
+            autoComplete: "off",
+            autoCorrect: "off",
+            spellCheck: "false",
+          }}
+          label={latinToCyrillic("Sharifi")}
+          variant="outlined"
+        />
       </div>
     </form>
   );

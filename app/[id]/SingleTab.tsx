@@ -26,6 +26,7 @@ interface TableRowData {
   hours: number;
   rate: number;
   total: number;
+  money: any;
   chegirma: any;
 }
 
@@ -63,6 +64,7 @@ const BudgetTable: any = ({
           hours: organ.tasktime,
           rate: organ.timemoney,
           total: organ.allmoney,
+          money: organ.money,
           chegirma: organ.discountmoney,
         };
       })
@@ -112,7 +114,10 @@ const BudgetTable: any = ({
         <h2 className="text-16 text-center font-bold mb-8">
           ХАРАЖАТЛАР СМЕТАСИ
         </h2>
-        <TableContainer component={Paper} style={{ width: "100%", overflowX: "auto" }}>
+        <TableContainer
+          component={Paper}
+          style={{ width: "100%", overflowX: "auto" }}
+        >
           <Table style={{ width: "100%", tableLayout: "fixed" }}>
             <TableHead>
               <TableRow>
@@ -138,11 +143,11 @@ const BudgetTable: any = ({
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {" "}
-                  {latinToCyrillic("Umumiy hisoblangan")}{" "}
+                  {latinToCyrillic("Chegirma")}{" "}
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {" "}
-                  {latinToCyrillic("Chegirma")}{" "}
+                  {latinToCyrillic("Umumiy hisoblangan")}{" "}
                 </BorderedTableCell>
               </TableRow>
             </TableHead>
@@ -155,7 +160,7 @@ const BudgetTable: any = ({
                 <BorderedTableCell>5</BorderedTableCell>
                 <BorderedTableCell>6</BorderedTableCell>
                 <BorderedTableCell>6</BorderedTableCell>
-                <BorderedTableCell>7</BorderedTableCell>
+                <BorderedTableCell>6</BorderedTableCell>
               </LeftBorderedTableRow>
               {data.map((row: any, i: number) => (
                 <LeftBorderedTableRow key={row.id}>
@@ -179,12 +184,12 @@ const BudgetTable: any = ({
                     {row.rate.toLocaleString()}
                   </BorderedTableCell>
                   <BorderedTableCell>
-                    {row.total.toLocaleString()}
+                    {row.money.toLocaleString()}
                   </BorderedTableCell>
+                  <BorderedTableCell>{row.chegirma}</BorderedTableCell>
                   <BorderedTableCell>
                     {row.total.toLocaleString()}
                   </BorderedTableCell>
-                  <BorderedTableCell>{row.chegirma}</BorderedTableCell>
                 </LeftBorderedTableRow>
               ))}
               <LeftBorderedTableRow>
@@ -201,13 +206,13 @@ const BudgetTable: any = ({
                   {address && address.timemoney}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.allmoney}
-                </BorderedTableCell>
-                <BorderedTableCell>
-                  {address && address.allmoney}
+                  {address && address.money}
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {address && address.discountmoney}
+                </BorderedTableCell>
+                <BorderedTableCell>
+                  {address && address.allmoney}
                 </BorderedTableCell>
               </LeftBorderedTableRow>
             </TableBody>

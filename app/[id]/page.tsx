@@ -36,11 +36,11 @@ function page() {
   const deleteItem = async () => {
     const res = await deleteContract(JWT, id);
 
-    if (res.delete) {
+    if (res.success) {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Shartnoma Ochirildi"),
+          message: latinToCyrillic("Shartnoma ochirildi"),
           status: "success",
         })
       );
@@ -496,9 +496,7 @@ function page() {
                 </div>
                 <div className="mb-4 flex  justify-between">
                   {" "}
-                  <p className="font-bold">{`${
-                    getCurrentYearAndMonth().year
-                  } йил «___»${getCurrentYearAndMonth().month}`}</p>
+                  <p className="font-bold">{data.contractdate}</p>
                   <p className="font-bold">Тошкент шаҳри</p>
                 </div>
                 <section className="mb-4">
@@ -749,12 +747,7 @@ function page() {
                       {data.clientaddress && (
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
-                          <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:
-Ўзбекистон Республикаси Молия   вазирлиги
-Ғазначилиги х/р ${data.treasuryaccount}
-ИНН: ${data.clientSTR} МФО: ${data.clientMFO} 
-Марказий банк Тошкент шахар ХККМ      
-`}</p>
+                          <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
                         </div>
                       )}
                       <div className=" absolute top-[250px] left-[40px]">

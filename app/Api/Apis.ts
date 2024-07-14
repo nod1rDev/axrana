@@ -194,8 +194,6 @@ export const deleteWorker = async (JWT: any, id: any) => {
 
 // contract
 export const createContract = async (JWT: any, value: any) => {
-  console.log(value);
-
   const res = await fetch(URL + "/contract/create", {
     method: "POST",
     headers: {
@@ -303,6 +301,21 @@ export const getContractById = async (JWT: any, id: any) => {
   return data;
 };
 
+export const updateContract = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/contract/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ ...value }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
 //tasks
 export const getAllTasks = async (JWT: any) => {
   const res = await fetch(URL + "/task/get/tasks", {
@@ -316,7 +329,33 @@ export const getAllTasks = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+export const filterTasks = async (JWT: any, status: any) => {
+  const res = await fetch(URL + `/task/filter/by/status?${status}=true`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
 
+  const data = await res.json();
+  return data;
+};
+
+export const searchTasks = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/task/filter/by/date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 // BXM
 export const getBXM = async (JWT: any) => {
   const res = await fetch(URL + "/bxm/get", {

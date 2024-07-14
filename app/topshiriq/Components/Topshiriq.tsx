@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { getAllTasks } from "@/app/Api/Apis";
+import { filterTasks, getAllTasks, searchTasks } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
@@ -64,7 +64,7 @@ function Topshiriq() {
   }, []);
 
   const getSearchData = async () => {
-    const res: any = "salom";
+    const res = await searchTasks(JWT, value);
     setData(res.data);
   };
 
@@ -85,7 +85,7 @@ function Topshiriq() {
   };
 
   const getByStatus = async (value: any) => {
-    const res: any = "salom";
+    const res = await filterTasks(JWT, value);
 
     setData(res.data);
   };
@@ -121,9 +121,9 @@ function Topshiriq() {
                 label={latinToCyrillic("Status")}
                 onChange={handleStatus}
               >
-                <MenuItem value={"bajarilgan"}>Bajarilgan</MenuItem>
-                <MenuItem value={"bajarilmoqda"}>Bajarilmoqda</MenuItem>
-                <MenuItem value={"bajarilmagan"}>Bajarilmagan</MenuItem>
+                <MenuItem value={"done"}>Bajarilgan</MenuItem>
+                <MenuItem value={"inProgress"}>Bajarilmoqda</MenuItem>
+                <MenuItem value={"notDone"}>Bajarilmagan</MenuItem>
               </Select>
             </FormControl>
             <TextField

@@ -10,7 +10,7 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getAllBatalyon } from "@/app/Api/Apis";
+import { createContract, getAllBatalyon, updateContract } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,7 +20,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-function ChangeShartnoma({ data }: { data: any }) {
+function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [value, setValue] = useState<any>({});
 
@@ -33,20 +33,83 @@ function ChangeShartnoma({ data }: { data: any }) {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  function convertDate(dateString: string): string {
+    // Oylik nomlar ro'yxati
+    const months: { [key: string]: string } = {
+      январь: "01",
+      февраль: "02",
+      март: "03",
+      апрель: "04",
+      май: "05",
+      июнь: "06",
+      июль: "07",
+      август: "08",
+      сентябрь: "09",
+      октябрь: "10",
+      ноябрь: "11",
+      декабрь: "12",
+    };
 
+    // Sanani bo'laklarga ajratish
+    const datePattern = /^(\d{2})-(\D+)\s(\d{4})-йил$/;
+    const match = dateString.match(datePattern);
+
+    if (!match) {
+      throw new Error("Invalid date format");
+    }
+
+    const [, day, month, year] = match;
+
+    // Oyni raqamli formatga o'zgartirish
+    const monthNumber = months[month.trim()];
+
+    if (!monthNumber) {
+      throw new Error("Invalid month name");
+    }
+
+    // Yangi formatga o'tkazish
+    return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
+  }
   useEffect(() => {
     GetOrganName();
   }, []);
+  useEffect(() => {
+    if (data && taskss) {
+      const pureData = {
+        contractNumber: data.contractnumber,
+        contractDate: convertDate(data.contractdate),
+        clientName: data.clientname,
+        clientAddress: data.clientaddress,
+        clientMFO: data.clientmfo, // faqat 5 ta kirita olishi kerak frontdan tosiq qoying
+        clientAccount: data.clientaccount, // faqat 20 ta kirita olishi kerak frontdan tosiq qoying
+        clientSTR: data.clientstr, //faqat 9 ta kirita olishi kerak frontdan tosiq qoying
+        treasuryAccount: data.treasuryaccount, //faqat 25 ta kirita olishi kerak frontdan tosiq qoying
+        timeLimit: data.timelimit,
+        address: data.address,
+        taskDate: data.taskdate,
+        taskTime: data.tasktime,
+      };
+      setValue(pureData);
 
+      const organ = taskss.map((e: any) => {
+        return {
+          id: e.id,
+          name: e.battalionname,
+          workerNumber: e.workernumber,
+        };
+      });
+
+      setOrgans(organ);
+    }
+  }, [data]);
   const createShartnoman = async (shartnoma: any) => {
-    const res = await createContract(JWT, shartnoma);
-    console.log(res, shartnoma);
+    const res = await updateContract(JWT, shartnoma, data.id);
 
     if (res.success) {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Shartnoma Qo'shildi"),
+          message: latinToCyrillic("Shartnoma Tahrirlandi"),
           status: "success",
         })
       );
@@ -159,7 +222,7 @@ function ChangeShartnoma({ data }: { data: any }) {
             id="contractNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
             sx={{ width: "30%" }}
-            value={value.contractNumber}
+            value={value.contractNumber || ""}
             onChange={handleChangeValue}
             variant="outlined"
             name="contractNumber"
@@ -171,7 +234,7 @@ function ChangeShartnoma({ data }: { data: any }) {
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.contractDate}
+            value={value.contractDate || ""}
             name="contractDate"
             autoComplete="off"
           />
@@ -181,7 +244,7 @@ function ChangeShartnoma({ data }: { data: any }) {
             sx={{ width: "40%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.address}
+            value={value.address || ""}
             name="address"
             autoComplete="off"
           />
@@ -195,7 +258,7 @@ function ChangeShartnoma({ data }: { data: any }) {
             sx={{ width: "100%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.timeLimit}
+            value={value.timeLimit || ""}
             name="timeLimit"
             autoComplete="off"
           />
@@ -215,7 +278,7 @@ function ChangeShartnoma({ data }: { data: any }) {
             sx={{ width: "16.6%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.clientName}
+            value={value.clientName || ""}
             name="clientName"
             autoComplete="off"
           />
@@ -227,7 +290,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 sx={{ width: "16.6%" }}
                 onChange={handleChangeValue}
                 variant="outlined"
-                value={value.clientAddress}
+                value={value.clientAddress || ""}
                 name="clientAddress"
                 multiline
                 autoComplete="off"
@@ -239,7 +302,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientAccount}
+                value={value.clientAccount || ""}
                 name="clientAccount"
                 autoComplete="off"
                 error={errors.clientAccount && count ? true : false}
@@ -252,7 +315,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientMFO}
+                value={value.clientMFO || ""}
                 name="clientMFO"
                 autoComplete="off"
                 error={errors.clientMFO && count ? true : false}
@@ -265,7 +328,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientSTR} // krilchada boladi keyin qilasiz hozir man ishlavoli
+                value={value.clientSTR || ""} // krilchada boladi keyin qilasiz hozir man ishlavoli
                 name="clientSTR"
                 autoComplete="off"
                 error={errors.clientSTR && count ? true : false}
@@ -278,7 +341,7 @@ function ChangeShartnoma({ data }: { data: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.treasuryAccount}
+                value={value.treasuryAccount || ""}
                 name="treasuryAccount"
                 autoComplete="off"
                 error={errors.treasuryAccount && count ? true : false}
@@ -302,18 +365,18 @@ function ChangeShartnoma({ data }: { data: any }) {
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.taskDate}
+            value={value.taskDate || ""}
             name="taskDate"
             autoComplete="off"
           />
           <TextField
             id="taskTime"
-            label={latinToCyrillic("Vazifa bajarish vaqti")}
+            label={latinToCyrillic("ommavit tadbir otkaziladigan vaqt")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
             type="number"
-            value={value.taskTime}
+            value={value.taskTime || ""}
             name="taskTime"
             autoComplete="off"
           />
@@ -325,7 +388,7 @@ function ChangeShartnoma({ data }: { data: any }) {
               sx={{ width: "30%" }}
               onChange={handleChangeValue}
               variant="outlined"
-              value={value.discount}
+              value={value.discount || ""}
               name="discount"
               autoComplete="off"
             />

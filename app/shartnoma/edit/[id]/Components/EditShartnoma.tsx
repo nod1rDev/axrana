@@ -9,10 +9,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ChangeShartnoma from "./ChangeShartnoma";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
-function EditShartnoma({ data }: { data: any }) {
+function EditShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const [isLotin, setIsLotin] = useState("uz");
   const router = useRouter();
- 
 
   return (
     <div className="w-[100%] mt-[5vh] mx-auto">
@@ -30,7 +29,7 @@ function EditShartnoma({ data }: { data: any }) {
 
         <div></div>
       </div>
-      <ChangeShartnoma data={data}  />
+      <ChangeShartnoma taskss={taskss} data={data} />
     </div>
   );
 }

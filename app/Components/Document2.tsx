@@ -4,29 +4,29 @@ import React, { useEffect, useRef, useState } from "react";
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
-    const getMonthNameInCyrillic = (month: number): string => {
-        const months = [
-          "Январь",
-          "Февраль",
-          "Март",
-          "Апрель",
-          "Май",
-          "Июнь",
-          "Июль",
-          "Август",
-          "Сентябрь",
-          "Октябрь",
-          "Ноябрь",
-          "Декабрь",
-        ];
-        return months[month];
-      };
+  const getMonthNameInCyrillic = (month: number): string => {
+    const months = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+    return months[month];
+  };
   const getCurrentYearAndMonth = (): any => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth(); // getMonth() returns 0-indexed month (0 = January, 11 = December)
     const monthName = getMonthNameInCyrillic(month);
-  
+
     return { year: year, month: monthName };
   };
   return (
@@ -43,9 +43,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
             </p>
           </div>
           <div className="mb-4 flex  justify-between">
-            <p className="font-bold">{`${
-              getCurrentYearAndMonth().year
-            } йил «___»${getCurrentYearAndMonth().month}`}</p>
+            <p className="font-bold">{data.contractdate}</p>
             <p className="font-bold text-[14px]">Тошкент шаҳри</p>
           </div>
           <section className="mb-5 text-[14px]">
@@ -300,12 +298,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     <span className="font-bold text-[16px] text-start">
                       Манзил:
                     </span>
-                    <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:
-Ўзбекистон Республикаси Молия   вазирлиги
-Ғазначилиги х/р ${data.treasuryaccount}
-ИНН: ${data.clientSTR} МФО: ${data.clientMFO} 
-Марказий банк Тошкент шахар ХККМ      
-`}</p>
+                    <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
                   </div>
                 )}
 

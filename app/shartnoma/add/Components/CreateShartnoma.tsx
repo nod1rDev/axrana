@@ -308,7 +308,7 @@ function CreateShartnoma({ language }: { language: any }) {
           />
           <TextField
             id="taskTime"
-            label={latinToCyrillic("Vazifa bajarish vaqti")}
+            label={latinToCyrillic("ommavit tadbir otkaziladigan vaqt")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"

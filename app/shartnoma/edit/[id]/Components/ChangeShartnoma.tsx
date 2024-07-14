@@ -290,7 +290,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 sx={{ width: "16.6%" }}
                 onChange={handleChangeValue}
                 variant="outlined"
-                value={value.clientAddress || ""}
+                value={value.clientAddress}
                 name="clientAddress"
                 multiline
                 autoComplete="off"
@@ -302,11 +302,19 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientAccount || ""}
+                value={value.clientAccount}
                 name="clientAccount"
                 autoComplete="off"
-                error={errors.clientAccount && count ? true : false}
-                helperText={errors.clientAccount}
+                error={
+                  value.clientAccount
+                    ? value.clientAccount.length !== 20
+                    : false && count
+                    ? true
+                    : false
+                }
+                helperText={`20 ta raqam kiriting sizda yana ${
+                  value.clientAccount ? 20 - value.clientAccount.length : 0
+                } ${20 - value.clientAccount?.length > -1 ? " son qoldi" : ""}`}
               />
               <TextField
                 id="buyurtmachi"
@@ -315,11 +323,19 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientMFO || ""}
+                value={value.clientMFO}
                 name="clientMFO"
                 autoComplete="off"
-                error={errors.clientMFO && count ? true : false}
-                helperText={errors.clientMFO}
+                error={
+                  value.clientMFO
+                    ? value.clientMFO.length !== 5
+                    : false && count
+                    ? true
+                    : false
+                }
+                helperText={`5 ta raqam kiriting sizda yana ${
+                  value.clientMFO ? 5 - value.clientMFO.length : 0
+                } ${5 - value.clientMFO?.length > -1 ? " son qoldi" : ""}`}
               />
               <TextField
                 id="buyurtmachi"
@@ -328,11 +344,19 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.clientSTR || ""} // krilchada boladi keyin qilasiz hozir man ishlavoli
+                value={value.clientSTR} // krilchada boladi keyin qilasiz hozir man ishlavoli
                 name="clientSTR"
                 autoComplete="off"
-                error={errors.clientSTR && count ? true : false}
-                helperText={errors.clientSTR}
+                error={
+                  value.clientSTR
+                    ? value.clientSTR.length !== 9
+                    : false && count
+                    ? true
+                    : false
+                }
+                helperText={`9 ta raqam kiriting sizda yana ${
+                  value.clientSTR ? 9 - value.clientSTR.length : 0
+                } ${9 - value.clientSTR?.length > -1 ? " son qoldi" : ""}`}
               />
               <TextField
                 id="buyurtmachi"
@@ -341,11 +365,21 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 onChange={handleChangeValue}
                 variant="outlined"
                 type="number"
-                value={value.treasuryAccount || ""}
+                value={value.treasuryAccount}
                 name="treasuryAccount"
                 autoComplete="off"
-                error={errors.treasuryAccount && count ? true : false}
-                helperText={errors.treasuryAccount}
+                error={
+                  value.treasuryAccount
+                    ? value.treasuryAccount.length !== 25
+                    : false && count
+                    ? true
+                    : false
+                }
+                helperText={`25 ta raqam kiriting sizda yana ${
+                  value.treasuryAccount ? 25 - value.treasuryAccount.length : 0
+                } ${
+                  25 - value.treasuryAccount?.length > -1 ? " son qoldi" : ""
+                }`}
               />
             </>
           )}

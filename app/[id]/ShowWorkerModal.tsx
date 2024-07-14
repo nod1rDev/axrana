@@ -12,7 +12,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
-
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 
@@ -50,28 +49,13 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
-  {
-    id: "Tuman",
-    label: latinToCyrillic("Zvaniya"),
-    minWidth: 100,
-    align: "center",
-  },
-  { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
 
-  {
-    id: "Otryad",
-    label: latinToCyrillic("Batalyon"),
-    minWidth: 180,
-    align: "center",
-  },
+  { id: "FIO", label: latinToCyrillic("FIO"), align: "left", minWidth: 480 },
 ];
 
 interface Data {
   number: any;
   FIO: any;
-
-  Tuman: any;
-  Otryad: any;
 
   id: number;
 }
@@ -80,17 +64,11 @@ function createData(
   number: any,
   FIO: any,
 
-  Tuman: any,
-  Otryad: any,
-
   id: number
 ): Data {
   return {
     number,
     FIO,
-
-    Tuman,
-    Otryad,
 
     id,
   };
@@ -110,14 +88,11 @@ export default function ShowWorkerModal({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
- 
 
   const rows =
     ranks !== "Hali batalyon topshiriqni bajarmadi" &&
     ranks !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
-      ? ranks.map((e: any, i: any) =>
-          createData(i + 1, e.FIO, e.zvaniya, e.batalyon, e._id)
-        )
+      ? ranks.map((e: any, i: any) => createData(i + 1, e.worker_name, e.i + 1))
       : [];
 
   const dispatch = useDispatch();
@@ -130,7 +105,7 @@ export default function ShowWorkerModal({
         onClose={handleClose}
         sx={{
           "& .MuiDialog-paper": {
-            maxWidth: "1200px", // Custom width here
+            maxWidth: "8000px", // Custom width here
           },
         }}
         aria-labelledby="responsive-dialog-title"
@@ -141,9 +116,9 @@ export default function ShowWorkerModal({
             ? latinToCyrillic(`Jami ${ranks.length} xodim mavjud`)
             : latinToCyrillic(ranks)}
         </DialogTitle>
-        <div className="flex flex-row  min-w-[1200px] p-4 gap-2 px-4">
-          <Paper sx={{ width: "100%" }}>
-            <TableContainer sx={{ overflow: "auto", maxHeight: "70vh" }}>
+        <div className="flex flex-row  min-w-[1000px] p-4 gap-2 px-4">
+          <Paper sx={{ width: "800%" }}>
+            <TableContainer sx={{ overflow: "auto", maxHeight: "100vh" }}>
               <Table stickyHeader aria-label="sticky table">
                 <CustomTableHead sx={{ background: "#edede9" }}>
                   <TableRow>

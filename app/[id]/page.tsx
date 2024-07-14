@@ -148,7 +148,7 @@ function page() {
               </Button>
             </div>
             {versiya ? (
-              <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4 font-serif text-justify">
+              <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  text-justify">
                 <h1 className="text-2xl font-bold mb-4 text-center">
                   Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш
                   ва жамоат тартибини сақлаш тўғрисида намунавий шартнома
@@ -484,7 +484,7 @@ function page() {
                 </div>
               </div>
             ) : (
-              <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4 font-serif text-justify">
+              <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  text-justify">
                 <h1 className="text-2xl font-bold mb-4 text-center">
                   Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш
                   ва жамоат тартибини сақлаш тўғрисида намунавий шартнома
@@ -747,7 +747,7 @@ function page() {
                       {data.clientaddress && (
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
-                          <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
+                          <p className=" text-start max-w-[400px]  text-lg  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
                         </div>
                       )}
                       <div className=" absolute top-[250px] left-[40px]">

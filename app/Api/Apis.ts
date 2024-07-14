@@ -431,3 +431,46 @@ export const filterWorker = async (JWT: any, id: any, value: any) => {
 
   return data;
 };
+
+// resoult
+
+export const createResult = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/result/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const getComand = async (JWT: any) => {
+  const res = await fetch(URL + "/result/get/command", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getByIdComand = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/result/get/battalion/workers/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

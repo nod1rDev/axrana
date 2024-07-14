@@ -31,7 +31,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
   };
   return (
     <>
-      <div ref={ref} className="   w-[100%]  font-serif text-justify">
+      <div ref={ref} className="   w-[100%]   text-justify">
         <div className="min-w-[100%] mx-auto mb-[3000000px]">
           <h1 className="text-[16px] font-bold mb-4 text-center">
             Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва
@@ -298,7 +298,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     <span className="font-bold text-[16px] text-start">
                       Манзил:
                     </span>
-                    <p className=" text-start max-w-[400px]  text-[14px]">{`ИНН:Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
+                    <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
                   </div>
                 )}
 
@@ -320,10 +320,8 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                   <span className="font-bold text-[14px]">Манзил:</span>
                   <p className=" text-start  text-[14px]">
                     Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
-                    <span className="font-bold">Банк реквизитлари:</span>{" "}
-                    Марказий банк Тошкент ш. ХККМ. МФО:00014. х/р 21 506 000 705
-                    131 158 003
-                    <span className="font-bold">СТИР:</span> 207 305 369
+                    Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:00014.
+                    х/р 21 506 000 705 131 158 003 СТИР: 207 305 369
                   </p>
                 </div>
 

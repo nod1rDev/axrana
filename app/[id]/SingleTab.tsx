@@ -34,6 +34,7 @@ interface TableRowData {
 const BorderedTableCell = styled(TableCell)({
   border: "1px solid black",
   textAlign: "center",
+  fontSize: "12px",
   padding: "4px",
 });
 
@@ -122,14 +123,14 @@ const BudgetTable: any = ({
             <TableHead>
               <TableRow>
                 <BorderedTableCell>
-                  {latinToCyrillic("Tadbir o'tkaziladigan joy nomi")}
+                  {latinToCyrillic("Tadbir o'tadigan joy nomi")}
                 </BorderedTableCell>
                 <BorderedTableCell>
                   Жалб этиладиган шахсий таркиб ваколатли давлат идоралари ёки
                   органлар номи
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {latinToCyrillic("Jami ishlatiladigan shaxsiy tarkib soni")}
+                  {latinToCyrillic("Jami ishlatilgan shaxsiy tarkib soni")}
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {latinToCyrillic("Ommaiy tadbir o'tkazish vaqti (soat)")}
@@ -164,15 +165,20 @@ const BudgetTable: any = ({
               </LeftBorderedTableRow>
               {data.map((row: any, i: number) => (
                 <LeftBorderedTableRow key={row.id}>
-                  <BorderedTableCell>
-                    <div className="font-bold text-center">
-                      {i === 0 ? address.address && address.address : null}
-                    </div>
-                  </BorderedTableCell>
+                  <div className="font-bold text-center">
+                    {i === 0 ? address.address && address.address : null}
+                  </div>
+
                   <BorderedTableCell>{row.department}</BorderedTableCell>
                   <BorderedTableCell>
                     <Button
-                      onClick={() => showModal(row.id)}
+                      onClick={() =>
+                        row.department !== "Toshkent Shahar IIBB" &&
+                        row.department !== "98162" &&
+                        row.department !== "98157"
+                          ? showModal(row.id)
+                          : ""
+                      }
                       color="inherit"
                       variant="text"
                     >

@@ -6,7 +6,7 @@ import { latinToCyrillic } from "../tip/add/Components/lotin";
 const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
   return (
     <>
-      <div ref={ref} className="   w-[100%]  font-serif text-justify">
+      <div ref={ref} className="   w-[100%]   text-justify">
         <div className="min-w-[100%] mx-auto mb-[3000000px]">
           <h1 className="text-[16px] font-bold mb-4 text-center">
             Оммавий тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва

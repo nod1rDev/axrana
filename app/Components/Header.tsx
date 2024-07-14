@@ -10,7 +10,7 @@ import { puJWT } from "../Redux/AuthSlice";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-
+import StorageIcon from '@mui/icons-material/Storage';
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const menuListAdmin = [
@@ -28,6 +28,11 @@ export default function Header() {
       name: "FIO",
       path: "/tip",
       icon: <PermIdentityIcon />,
+    },
+    {
+      name: "Otchot",
+      path: "/otchot",
+      icon: <StorageIcon />,
     },
     {
       name: "BXM",
@@ -53,7 +58,7 @@ export default function Header() {
   const notAdmin: any = menuListAdmin.slice(0, 3);
 
   return (
-    <div className="py-6 min-h-[100vh] flex flex-col bg-[#1976D2] text-white">
+    <div className="py-6 min-h-[100vh] w-[300px] fixed top-0 left-0 flex flex-col bg-[#1976D2] text-white">
       <div className="flex pl-3 gap-2 items-center">
         <img
           className="w-[54px] h-[54px] rounded-[999px]"
@@ -64,7 +69,7 @@ export default function Header() {
           {latinToCyrillic("Milliy Gvardiya")}
         </h1>
       </div>
-      <div className="min-w-[100vh] h-[1px] bg-white my-4"></div>
+      <div className="min-w-[300px] h-[1px] bg-white my-4"></div>
       <div className="flex flex-col px-3 gap-4">
         {admin
           ? menuListAdmin.map((e: any) => (
@@ -94,7 +99,9 @@ export default function Header() {
                 }`}
               >
                 {e.icon}
-                <h1 className="text-[20px] font-bold text-center">{latinToCyrillic(e.name)}</h1>
+                <h1 className="text-[20px] font-bold text-center">
+                  {latinToCyrillic(e.name)}
+                </h1>
               </button>
             ))}
         <button

@@ -109,7 +109,7 @@ export default function TipTab({
   };
   return (
     <Paper sx={{ width: "100%" }}>
-      <TableContainer sx={{ overflow: "auto", maxHeight: "70vh" }}>
+      <TableContainer sx={{ overflow: "auto", maxHeight: "78vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead sx={{ background: "#edede9" }}>
             <TableRow>

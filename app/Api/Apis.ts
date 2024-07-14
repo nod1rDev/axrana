@@ -80,14 +80,25 @@ export const getAuth = async (JWT: any) => {
 };
 
 // workers
-export const getAllWorkers = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/worker/get/" + id, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
+export const getAllWorkers = async (
+  JWT: any,
+  id: any,
+  page?: any,
+  limit?: any
+) => {
+  const res = await fetch(
+    URL +
+      "/worker/get/" +
+      id +
+      `?page=${page ? page : 1}&limit=${limit ? limit : 1000000}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await res.json();
   return data;
@@ -338,7 +349,7 @@ export const UpdateBXM = async (JWT: any, value: any) => {
 // worker_tasks
 
 export const pushWorkers = async (JWT: any, id: any, value: any) => {
-  const res = await fetch(URL + "/push/worker/" + id, {
+  const res = await fetch(URL + "/worker_task/push/worker/" + id, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

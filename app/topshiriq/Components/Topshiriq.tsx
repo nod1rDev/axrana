@@ -45,9 +45,8 @@ function Topshiriq() {
 
   const getTopshiriqApi = async () => {
     const res = await getAllTasks(JWT);
-    const filtData = filterAndSortTasks(res.data);
 
-    setData(filtData);
+    setData(res.data);
   };
   function formatDateToDDMMYYYY(date: Date): string {
     const day = String(date.getDate()).padStart(2, "0");
@@ -174,7 +173,7 @@ function Topshiriq() {
       <div className="flex flex-col gap-4">
         {data &&
           data.map((e: any) => (
-            <TopshiriqCard key={e._id} click={true} data={e} />
+            <TopshiriqCard key={e.id} click={true} data={e} />
           ))}
       </div>
     </div>

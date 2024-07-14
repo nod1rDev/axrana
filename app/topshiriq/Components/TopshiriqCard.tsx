@@ -29,12 +29,13 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
       dispatch(setModalShowWorker({ open: true }));
     }
   };
+
   useEffect(() => {
-    const filtStat = data.bajarilgan
+    const filtStat = data.done
       ? "bajarildi"
-      : data.bajarilmagan
+      : data.notdone
       ? "bajarilmagan"
-      : data.bajarilmoqda
+      : data.inprogress
       ? "bajarilmoqda"
       : "";
 
@@ -47,14 +48,10 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   return (
     <>
       <div
-        onClick={() =>
-          click ? router.push("/topshiriq/" + data.shartnoma_id) : null
-        }
+        onClick={() => (click ? router.push("/topshiriq/" + data.id) : null)}
         className="w-full flex   cursor-pointer px-8 py-6 bg-[#f1faee] rounded-2xl justify-between items-center  hover:border hover:border-[#0096c7]"
       >
-        <span className="font-bold text-center">
-          {data && data.buyurtmachi}
-        </span>
+        <span className="font-bold text-center">{data && data.clientname}</span>
         <span
           className={`font-bold ${
             status == "bajarilmoqda" || status == "bajarilmagan"
@@ -62,14 +59,14 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
               : ""
           }`}
         >
-          {data && data.topshiriqDate}
+          {data && data.taskdate}
         </span>
         {!click ? (
           <Button onClick={GEtworkers} variant="contained" color="info">
-            {data && data.workerNumber}
+            {data && data.workernumber}
           </Button>
         ) : (
-          <span>{data && data.workerNumber}</span>
+          <span>{data && data.workernumber}</span>
         )}
 
         <span>{data && data.address}</span>

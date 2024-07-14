@@ -47,11 +47,11 @@ function Tips() {
 
   const getAllRanks = async () => {
     if (admin) {
-      const res = await getAllWorkers(JWT, batalyon.id);
+      const res = await getAllWorkers(JWT, batalyon.id, page, rowsPerPage);
       setAllRanks(res.data);
       setFilteredRanks(res.data);
     } else {
-      const res = await getAllWorkers(JWT, null);
+      const res = await getAllWorkers(JWT, null, page, rowsPerPage);
 
       setAllRanks(res.data);
       setFilteredRanks(res.data);
@@ -200,7 +200,7 @@ function Tips() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);
-    setPage(0);
+    getAllRanks();
   };
   const getBatalyons = async () => {
     const res = await getAllBatalyon(JWT);

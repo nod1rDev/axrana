@@ -33,12 +33,13 @@ const Page = () => {
 
   const getData = async () => {
     const res = await getAllTasks(JWT);
-    const single = res.data.find((e: any) => e.shartnoma_id === id);
+    const single = res.data.find((e: any) => e.id === id);
     setData(single);
   };
 
   const GetWorkers = async () => {
-    const res: any = getAllWorkers(JWT, null);
+    const res = await getAllWorkers(JWT, null);
+
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
@@ -70,7 +71,9 @@ const Page = () => {
   const router = useRouter();
 
   const CreateWorker = async (value: any) => {
-    const res = await pushWorkers(JWT, value, id);
+    
+
+    const res = await pushWorkers(JWT, id, value);
 
     if (res.success) {
       dispatch(
@@ -97,6 +100,7 @@ const Page = () => {
     const pureWorker = FiltWorker.map((e: any) => {
       return { fio: e.FIO };
     });
+
     if (pureWorker.length > 0) {
       CreateWorker(pureWorker);
     } else {
@@ -139,7 +143,7 @@ const Page = () => {
         <div className="mb-6">
           <TopshiriqCard click={false} data={data} />
         </div>
-        {data && data.bajarilmoqda && (
+        {data && data.inprogress && (
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -204,10 +208,7 @@ const Page = () => {
                             inputProps={{ "aria-labelledby": labelId }}
                           />
                         </ListItemIcon>
-                        <ListItemText
-                          id={labelId}
-                          primary={`${value.zvaniya} ${value.FIO}`}
-                        />
+                        <ListItemText id={labelId} primary={`${value.FIO}`} />
                       </ListItemButton>
                     </ListItem>
                   );

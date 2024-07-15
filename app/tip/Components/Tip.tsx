@@ -183,9 +183,7 @@ function Tips() {
   };
   
 
-  useEffect(() => {
-    console.log(batalyon);
-  }, [batalyon]);
+ 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 

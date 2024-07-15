@@ -96,7 +96,7 @@ function Topshiriq() {
   };
 
   return (
-    <div className="w-[80%] mt-6 mx-auto">
+    <div className="w-[95%] mt-6 mx-auto">
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">

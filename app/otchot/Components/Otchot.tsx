@@ -38,7 +38,7 @@ function Otchot() {
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
-    const res = await getComand(JWT);
+    const res = await getComand(JWT, page, rowsPerPage);
 
     setData(res);
     setShartnomalar(res.data);
@@ -81,7 +81,7 @@ function Otchot() {
     <div className="w-[80%] flex flex-col mt-6 mx-auto">
       <div className="flex mb-5 justify-end">
         <Button
-          onClick={() => router.push("/shartnoma/add")}
+          onClick={() => router.push("/otchot/add")}
           variant="contained"
           size="large"
         >
@@ -91,14 +91,14 @@ function Otchot() {
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Otchotlar")}
+            {latinToCyrillic("Batalyon otchotlari")}
           </h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(
-                  "ta otchot mavjud"
+                  "ta batalyon otchot mavjud"
                 )} `
-              : latinToCyrillic("otchot mavjud emas")}
+              : latinToCyrillic("batalyon otchot mavjud emas")}
           </span>
         </div>
         <div className="flex flex-col">

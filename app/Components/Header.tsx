@@ -10,7 +10,7 @@ import { puJWT } from "../Redux/AuthSlice";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import StorageIcon from '@mui/icons-material/Storage';
+import StorageIcon from "@mui/icons-material/Storage";
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const menuListAdmin = [
@@ -26,11 +26,11 @@ export default function Header() {
     },
     {
       name: "FIO",
-      path: "/tip",
+      path: admin ? "/tip/batalyon" : "/tip",
       icon: <PermIdentityIcon />,
     },
     {
-      name: "Otchot",
+      name: "Batalyon otchot",
       path: "/otchot",
       icon: <StorageIcon />,
     },

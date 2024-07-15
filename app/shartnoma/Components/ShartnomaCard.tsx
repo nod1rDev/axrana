@@ -18,7 +18,7 @@ function ShartnomaCard({ data }: { data: any }) {
       </span>
       <span>{data && data.contractdate}</span>
       <span>{data && data.clientname}</span>
-
+      <span>{data && data.address}</span>
       <div>
         <KeyboardArrowRightIcon fontSize="large" color="info" />
       </div>

@@ -235,6 +235,19 @@ export const getAllContract = async (JWT: any, page: any, limet: any) => {
   const data = await res.json();
   return data;
 };
+
+export const getForBatalyon = async (JWT: any) => {
+  const res = await fetch(URL + `/contract/get/all/batalyon`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
 export const deleteContract = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/contract/delete/" + id, {
     method: "DELETE",
@@ -329,6 +342,19 @@ export const getAllTasks = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+
+export const getWorkersForTask = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/task/get/task/workers/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
 export const filterTasks = async (JWT: any, status: any) => {
   const res = await fetch(URL + `/task/filter/by/status?${status}=true`, {
     method: "GET",
@@ -350,6 +376,21 @@ export const searchTasks = async (JWT: any, value: any) => {
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const giveTime = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/contract/giving/time/to/task/" + id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ date: value }),
   });
 
   const data = await res.json();
@@ -449,14 +490,17 @@ export const createResult = async (JWT: any, value: any) => {
   return data;
 };
 
-export const getComand = async (JWT: any) => {
-  const res = await fetch(URL + "/result/get/command", {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
+export const getComand = async (JWT: any, page: any, limit: any) => {
+  const res = await fetch(
+    URL + `/result/get/command?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await res.json();
   return data;

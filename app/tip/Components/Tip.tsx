@@ -177,7 +177,10 @@ function Tips() {
       setFilteredRanks(res.data);
     }
   };
-
+  const batID = useSelector((s: any) => s.tip.batalyon);
+  useEffect(() => {
+    if (batID.id !== 0) setBatalyon(batID);
+  }, [batID.id]);
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -219,84 +222,69 @@ function Tips() {
     <>
       {admin ? (
         <>
-          {batalyon.id !== 0 ? (
-            <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-4 items-center">
-                  <FormControl sx={{ width: "300px" }}>
-                    <InputLabel id="demo-simple-select-label">
-                      {latinToCyrillic("Batalyon")}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={batalyon}
-                      label={latinToCyrillic("Batalyon")}
-                      onChange={handleSelect}
-                    >
-                      {selector &&
-                        selector.map((e: any) => (
-                          <MenuItem key={e.id} value={e}>
-                            {e.username}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-
-                  <form onSubmit={handleSearch} className="flex items-center">
-                    <TextField
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      fullWidth
-                      label={latinToCyrillic("FIO orqali qidiring")}
-                      autoComplete="off"
-                      autoCorrect="off"
-                      spellCheck="false"
-                      InputProps={{
-                        autoComplete: "off",
-                        autoCorrect: "off",
-                        spellCheck: "false",
-                        endAdornment: search ? (
-                          <IconButton onClick={clearSearch}>
-                            <CloseIcon color="error" />
-                          </IconButton>
-                        ) : (
-                          <IconButton>
-                            <PersonSearchIcon color="info" />
-                          </IconButton>
-                        ),
-                      }}
-                    />
-                  </form>
-                </div>
-                <Button
-                  sx={{ width: "150px", height: "40px" }}
-                  onClick={() => router.push("/tip/add")}
-                  variant="contained"
-                >
-                  {latinToCyrillic("Qo'shish")}
-                </Button>
-              </div>
-              <TipTab
-                page={page}
-                handleChangePage={handleChangePage}
-                handleChangeRowsPerPage={handleChangeRowsPerPage}
-                rowsPerPage={rowsPerPage}
-                ranks={filteredRanks}
-              />
-              {open.open ? (
-                <TipModal
-                  handleDelete={deleteAllRanks}
-                  handleClose={handleClose}
-                  handleSubmit={handleSubmit}
-                  value={value}
-                  setValue={setValu}
-                />
-              ) : null}
+          <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+            <div className="">
+              <Button
+                onClick={() => router.push("/tip/batalyon")}
+                color="success"
+                variant="contained"
+              >
+                {latinToCyrillic("Orqaga")}
+              </Button>
             </div>
-          ) : (
-            <MenuBatalyon data={selector} setBatalyon={setBatalyon} />
-          )}
+            <div className="flex justify-between items-center">
+              <div className="flex gap-4 items-center">
+                <form onSubmit={handleSearch} className="flex items-center">
+                  <TextField
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    fullWidth
+                    label={latinToCyrillic("FIO orqali qidiring")}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    InputProps={{
+                      autoComplete: "off",
+                      autoCorrect: "off",
+                      spellCheck: "false",
+                      endAdornment: search ? (
+                        <IconButton onClick={clearSearch}>
+                          <CloseIcon color="error" />
+                        </IconButton>
+                      ) : (
+                        <IconButton>
+                          <PersonSearchIcon color="info" />
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </form>
+              </div>
+              <Button
+                sx={{ width: "150px", height: "40px" }}
+                onClick={() => router.push("/tip/add")}
+                variant="contained"
+              >
+                {latinToCyrillic("Qo'shish")}
+              </Button>
+            </div>
+            <TipTab
+              page={page}
+              handleChangePage={handleChangePage}
+              handleChangeRowsPerPage={handleChangeRowsPerPage}
+              rowsPerPage={rowsPerPage}
+              ranks={filteredRanks}
+            />
+            {open.open ? (
+              <TipModal
+                handleDelete={deleteAllRanks}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                value={value}
+                setValue={setValu}
+              />
+            ) : null}
+          </div>
         </>
       ) : (
         <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">

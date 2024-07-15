@@ -29,7 +29,7 @@ const Page = () => {
   const [worker, setWorker] = useState<any>();
   const [value, setValue] = useState<any>({
     date1: "",
-    date: "",
+    date2: "",
   });
   function formatDateToDDMMYYYY(date: Date): string {
     const day = String(date.getDate()).padStart(2, "0");
@@ -58,9 +58,11 @@ const Page = () => {
     getAllContract();
   }, []);
   const getSearchData = async () => {
-    const res: any = filterWorker(JWT, id, value);
+    const res = await filterWorker(JWT, id, value);
+   
+    
     setSumma(res.allmoney);
-    setWorker(`${res.worker[0].fio} `);
+   
 
     setData(res);
     setShartnomalar(res.data);

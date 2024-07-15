@@ -10,7 +10,7 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getAllBatalyon, updateContract } from "@/app/Api/Apis";
+import { createContract, getAllBatalyon, getForBatalyon, updateContract } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -144,7 +144,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       const filtOrgans = organs.map((organ: any) => {
         return {
           name: organ.name,
-          workerNumber: organ.workerNumber,
+          workerNumber: +organ.workerNumber,
         };
       });
 
@@ -187,13 +187,13 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
       ...updatedOrgans[index],
-      [e.target.name]: +e.target.value,
+      [e.target.name]: e.target.value,
     };
     setOrgans(updatedOrgans);
   };
 
   const GetOrganName = async () => {
-    const res = await getAllBatalyon(JWT);
+    const res = await getForBatalyon(JWT);
     setWorker2(res.data);
   };
 

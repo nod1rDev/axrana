@@ -15,7 +15,7 @@ function CreateOtchot() {
   return (
     <div className="w-[90%] mt-[5vh] mx-auto">
       <div className="flex justify-center mb-6 text-[28px] font-bold">
-       {latinToCyrillic(" Otchot yaratish")} 
+       {latinToCyrillic("Batalyon otchot yaratish")} 
       </div>
       <div className="flex justify-between items-center w-full mb-6">
         <Button

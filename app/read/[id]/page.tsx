@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { setModalBitta } from "@/app/Redux/TipSlice";
 import BittaModal from "./Components/BittaModal";
-import { getContractById, paymentToContract } from "@/app/Api/Apis";
+import { getContractById, giveTime, paymentToContract } from "@/app/Api/Apis";
 function Page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -76,7 +76,7 @@ function Page() {
     );
   };
   const updateDate = async () => {
-    const res: any = "salom";
+    const res = await giveTime(JWT, value, modal.organId);
 
     if (res.success) {
       dispatch(

@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setModalShowWorker } from "@/app/Redux/LavozimSlice";
 import { Button } from "@mui/material";
 import ShowWorkerModal from "@/app/[id]/ShowWorkerModal";
+import { getWorkersForTask } from "@/app/Api/Apis";
 function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   const router = useRouter();
   const [status, setStatus] = useState<any>();
@@ -22,7 +23,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [workers, setWorkers] = useState([]);
   const GEtworkers = async () => {
-    const res: any = "salom";
+    const res = await getWorkersForTask(JWT, data.id);
 
     if (res.success) {
       setWorkers(res.data);
@@ -45,6 +46,8 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   const hadleClose = () => {
     dispatch(setModalShowWorker({ open: false }));
   };
+
+
   return (
     <>
       <div

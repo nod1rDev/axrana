@@ -11,6 +11,7 @@ const TipSlice = createSlice({
       FIO: "Bekzod Abdullayev Ibrohimovich",
     },
     modal2: { open: false, shartnomaId: 0, organId: 0, sana: "" },
+    batalyon: { username: "", id: 0 },
   },
   reducers: {
     setModalTip: (state, { payload }) => {
@@ -19,9 +20,12 @@ const TipSlice = createSlice({
     setModalBitta: (state, { payload }) => {
       state.modal2 = payload;
     },
+    setBatalyon: (state, { payload }) => {
+      state.batalyon = payload;
+    },
   },
 });
 
-export const { setModalTip, setModalBitta } = TipSlice.actions;
+export const { setModalTip, setModalBitta, setBatalyon } = TipSlice.actions;
 
 export default TipSlice.reducer;

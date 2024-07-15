@@ -48,10 +48,16 @@ function AddOtchot() {
     }
   };
   const saqlash = () => {
+    console.log(value);
+
     createResout();
   };
   const handleChangeValue = (e: any) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    if (e.target.name == "commandNumber") {
+      setValue({ ...value, [e.target.name]: +e.target.value });
+    }else{
+      setValue({ ...value, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -62,7 +68,7 @@ function AddOtchot() {
             id="date1"
             label={latinToCyrillic("Boshlanish sanasi")}
             sx={{ width: "25%" }}
-            value={value.date2}
+            value={value.date1}
             onChange={handleChangeValue}
             variant="outlined"
             name="date1"

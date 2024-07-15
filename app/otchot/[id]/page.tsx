@@ -143,10 +143,8 @@ function page() {
                   <p className="text-center text-xl w-[400px]">
                     O'zbekiston Respublikasi Milliy Gvardiyasining Toshkent
                     shahar bo'yicha boshqarma boshlig'ining
-                    <span className="text-red-600">
-                      {" " + data?.commanddate}
-                    </span>{" "}
-                    {" " + data?.commandnumber}-sonli buyrug'iga
+                    {" " + data?.commanddate} {" " + data?.commandnumber}-sonli
+                    buyrug'iga
                   </p>
                   <span className=" text-center w-[400px] text-xl">
                     1-ILOVA
@@ -156,11 +154,11 @@ function page() {
 
               <div className="w-[90%] mb-20 flex flex-col font-bold gap-1 mx-auto text-2xl">
                 <div className="text-center">
-                  <span className="text-red-600">{data?.date1 + " "}</span>
+                  {data?.date1 + " "}
                   {latinToCyrillic("kunidan")}
-                  <span className="text-red-600">
-                    {" " + data?.date2 + " "}
-                  </span>
+
+                  {" " + data?.date2 + " "}
+
                   {latinToCyrillic(
                     "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiylar xizmatchilar"
                   )}

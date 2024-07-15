@@ -11,7 +11,7 @@ const TipSlice = createSlice({
       FIO: "Bekzod Abdullayev Ibrohimovich",
     },
     modal2: { open: false, shartnomaId: 0, organId: 0, sana: "" },
-    batalyon: { username: "", id: 0 },
+    batalyon: { username: "", id: 2 },
   },
   reducers: {
     setModalTip: (state, { payload }) => {

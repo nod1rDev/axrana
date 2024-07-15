@@ -41,13 +41,17 @@ function Tips() {
     username: "",
     id: 0,
   });
+  const batID = useSelector((s: any) => s.tip.batalyon);
+  useEffect(() => {
+    setBatalyon(batID);
+  }, [batID.id]);
   // All ranks
   const [allRanks, setAllRanks] = React.useState<any[]>([]);
   const [filteredRanks, setFilteredRanks] = React.useState<any[]>([]);
 
   const getAllRanks = async () => {
     if (admin) {
-      const res = await getAllWorkers(JWT, batalyon.id, page, rowsPerPage);
+      const res = await getAllWorkers(JWT, batID.id, page, rowsPerPage);
       setAllRanks(res.data);
       setFilteredRanks(res.data);
     } else {
@@ -177,10 +181,11 @@ function Tips() {
       setFilteredRanks(res.data);
     }
   };
-  const batID = useSelector((s: any) => s.tip.batalyon);
+  
+
   useEffect(() => {
-    if (batID.id !== 0) setBatalyon(batID);
-  }, [batID.id]);
+    console.log(batalyon);
+  }, [batalyon]);
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 

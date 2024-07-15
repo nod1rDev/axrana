@@ -412,12 +412,9 @@ function page() {
                       <div className=" absolute top-[250px] left-[40px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
-                            Раҳбари: _________ _______________________
+                            Раҳбари: ____________ ________________________
                           </h1>
-                          <div className="flex   gap-36 justify-center items-center">
-                            <div>(имзо)</div>
-                            <div>(Ф.И.О.)</div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -442,13 +439,10 @@ function page() {
                       <div className=" absolute top-[250px] left-[40px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
-                            Раҳбари: ________ ________________
+                            Раҳбари: _____________ ______________________
                             <span className="font-[400]">А.Р. Ортиков</span>
                           </h1>
-                          <div className="flex    gap-32 justify-center items-center">
-                            <div>(имзо)</div>
-                            <div>(Ф.И.О.)</div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -755,10 +749,7 @@ function page() {
                           <h1 className="font-bold ">
                             Раҳбари: _________ _______________________
                           </h1>
-                          <div className="flex   gap-36 justify-center items-center">
-                            <div>(имзо)</div>
-                            <div>(Ф.И.О.)</div>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -786,10 +777,6 @@ function page() {
                             Раҳбари: ________ ________________
                             <span className="font-[400]">А.Р. Ортиков</span>
                           </h1>
-                          <div className="flex    gap-32 justify-center items-center">
-                            <div>(имзо)</div>
-                            <div>(Ф.И.О.)</div>
-                          </div>
                         </div>
                       </div>
                     </div>

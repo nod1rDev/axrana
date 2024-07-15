@@ -66,7 +66,7 @@ const BudgetTable: any = ({
           rate: organ.timemoney,
           total: organ.allmoney,
           money: organ.money,
-          chegirma: organ.discountmoney,
+          chegirma: organ.discountmoney ? organ.discountmoney : "___",
         };
       })
     : [];
@@ -215,7 +215,9 @@ const BudgetTable: any = ({
                   {address && address.money}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.discountmoney}
+                  {address && address.discountmoney
+                    ? address.discountmoney
+                    : "___"}
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {address && address.allmoney}

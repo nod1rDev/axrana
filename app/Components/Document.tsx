@@ -276,7 +276,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
 
                 <div className=" absolute top-[300px] left-[40px]">
                   <div className="flex flex-col">
-                    <h1 className="font-bold ">Раҳбари: ____________</h1>
+                    <h1 className="font-bold ">Раҳбари: ________ ______________________</h1>
                   </div>
                 </div>
               </div>

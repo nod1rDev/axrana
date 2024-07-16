@@ -87,6 +87,9 @@ function page() {
 
     return { year: year, month: monthName };
   };
+  function formatNumber(value: number): string {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
   return (
     <>
       {data && (
@@ -211,7 +214,7 @@ function page() {
                     этилган шартноманинг ажралмас қисми хисобланган смета
                     харажатлари асосида жами миқдори
                     <span className="font-bold text-red-500">
-                      {" " + data.allmoney} сўм
+                      {" " + formatNumber(+data.allmoney)} сўм
                     </span>{" "}
                     деб белгиланди.
                   </p>
@@ -406,7 +409,12 @@ function page() {
                       {data.clientaddress && (
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
-                          <p className=" text-start max-w-[400px]  text-xl">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.clientmfo}. х/р ${data.clientaccount} СТИР: ${data.clientstr}.  `}</p>
+                          <div className="flex flex-col">
+                            <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
+                            <span>МФО:${data.clientmfo}.</span>
+                            <span>х/р ${data.clientaccount}</span>
+                            <span>СТИР: ${data.clientstr}.</span>
+                          </div>{" "}
                         </div>
                       )}
                       <div className=" absolute top-[250px] left-[40px]">
@@ -414,7 +422,6 @@ function page() {
                           <h1 className="font-bold ">
                             Раҳбари: ____________ ________________________
                           </h1>
-                          
                         </div>
                       </div>
                     </div>
@@ -428,12 +435,16 @@ function page() {
                       </p>
                       <div className="flex gap-2">
                         <span className="font-bold text-xl">Манзил:</span>
-                        <p className=" text-start text-lg">
-                          Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                          17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
-                          ХККМ. МФО:00014. х/р 21 506 000 705 131 158 003 СТИР:
-                          207 305 369
-                        </p>
+                        <div className="flex flex-col">
+                          <p className=" text-start  ">
+                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
+                            17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
+                            ХККМ.
+                          </p>{" "}
+                          <span>МФО:00014.</span>
+                          <span>х/р 21 506 000 705 131 158 003</span>
+                          <span>СТИР: 207 305 369</span>
+                        </div>
                       </div>
 
                       <div className=" absolute top-[250px] left-[40px]">
@@ -442,7 +453,6 @@ function page() {
                             Раҳбари: _____________ ______________________
                             <span className="font-[400]">А.Р. Ортиков</span>
                           </h1>
-                          
                         </div>
                       </div>
                     </div>
@@ -542,7 +552,7 @@ function page() {
                     этилган шартноманинг ажралмас қисми хисобланган смета
                     харажатлари асосида жами миқдори
                     <span className="font-bold text-red-500">
-                      {" " + data.allmoney} сўм
+                      {" " + formatNumber(+data.allmoney)} сўм
                     </span>{" "}
                     деб белгиланди.
                   </p>
@@ -741,7 +751,17 @@ function page() {
                       {data.clientaddress && (
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
-                          <p className=" text-start max-w-[400px]  text-lg  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия   вазирлиги Ғазначилиги х/р ${data?.treasuryaccount} ИНН: ${data?.clientstr} МФО: ${data?.clientmfo} Марказий банк Тошкент шахар ХККМ  `}</p>
+                          <div className="flex flex-col">
+                            <p className=" text-start max-w-[400px]  ">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
+                            <span>
+                              Ғазначилиги х/р ${data?.treasuryaccount}
+                            </span>
+                            <span>ИНН: ${data?.clientstr}</span>
+                            <span>
+                              МФО: ${data?.clientmfo + " "} Марказий банк
+                              Тошкент шахар ХККМ{" "}
+                            </span>{" "}
+                          </div>
                         </div>
                       )}
                       <div className=" absolute top-[250px] left-[40px]">
@@ -749,7 +769,6 @@ function page() {
                           <h1 className="font-bold ">
                             Раҳбари: _________ _______________________
                           </h1>
-                          
                         </div>
                       </div>
                     </div>
@@ -763,12 +782,16 @@ function page() {
                       </p>
                       <div className="flex gap-2">
                         <span className="font-bold text-xl">Манзил:</span>
-                        <p className=" text-start text-lg">
-                          Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                          17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
-                          ХККМ. МФО:00014. х/р 21 506 000 705 131 158 003 СТИР:
-                          207 305 369
-                        </p>
+                        <div className="flex flex-col">
+                          <p className=" text-start  ">
+                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
+                            17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
+                            ХККМ.
+                          </p>{" "}
+                          <span>МФО:00014.</span>
+                          <span>х/р 21 506 000 705 131 158 003</span>
+                          <span>СТИР: 207 305 369</span>
+                        </div>
                       </div>
 
                       <div className=" absolute top-[250px] left-[40px]">

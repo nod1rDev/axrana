@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
+  function formatNumber(value: number): string {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
   return (
     <>
       <div ref={ref} className="   w-[100%]   text-justify">
@@ -67,7 +70,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
               бошқармаси томонидан тақдим этилган шартноманинг ажралмас қисми
               хисобланган смета харажатлари асосида жами миқдори
               <span className="font-bold text-red-500">
-                {" " + data.allmoney} сўм
+                {" " + formatNumber(+data.allmoney)} сўм
               </span>{" "}
               деб белгиланди.
             </p>
@@ -270,13 +273,20 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     <span className="font-bold text-[16px] text-start">
                       Манзил:
                     </span>
-                    <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:${data.clientmfo}. х/р ${data.clientaccount} СТИР: ${data.clientstr}.  `}</p>
+                    <div className="flex flex-col">
+                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
+                      <span>МФО:${data.clientmfo}.</span>
+                      <span>х/р ${data.clientaccount}</span>
+                      <span>СТИР: ${data.clientstr}.</span>
+                    </div>
                   </div>
                 )}
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[200px] left-[40px]">
                   <div className="flex flex-col">
-                    <h1 className="font-bold ">Раҳбари: ________ ______________________</h1>
+                    <h1 className="font-bold ">
+                      Раҳбари: ________ ______________________
+                    </h1>
                   </div>
                 </div>
               </div>
@@ -290,14 +300,18 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                 </p>
                 <div className="flex gap-2">
                   <span className="font-bold text-[14px]">Манзил:</span>
-                  <p className=" text-start  text-[14px]">
-                    Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
-                    Банк реквизитлари: Марказий банк Тошкент ш. ХККМ. МФО:00014.
-                    х/р 21 506 000 705 131 158 003 СТИР: 207 305 369
-                  </p>
+                  <div className="flex flex-col">
+                    <p className=" text-start  text-[14px]">
+                      Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
+                      Банк реквизитлари: Марказий банк Тошкент ш. ХККМ.
+                    </p>{" "}
+                    <span>МФО:00014.</span>
+                    <span>х/р 21 506 000 705 131 158 003</span>
+                    <span>СТИР: 207 305 369</span>
+                  </div>
                 </div>
 
-                <div className=" absolute top-[300px] [14px] left-[40px]">
+                <div className=" absolute top-[200px] [14px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold text-[14px] ">
                       Раҳбари:_____________

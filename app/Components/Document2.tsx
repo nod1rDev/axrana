@@ -66,10 +66,11 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
             </h2>
             <p className="mb-0">
               <span className="font-bold">1.1</span>«Буюртмачи»нинг топшириғига
-              мувофиқ, «Бажарувчи» <span>{data.timelimit}</span> гача
+              мувофиқ, «Бажарувчи»{" "}
+              <span className="font-bold">{data.timelimit}</span> гача
               тасдиқланган репертуарларига асосан{" "}
-              <span className="font-bold">"{data.address}"</span>
-              да ўтказиладиган оммавий тадбир вақтида фуқаролар хавфсизлигини ва
+              <span className="font-bold">"{data.address + "да"}"</span>
+              ўтказиладиган оммавий тадбир вақтида фуқаролар хавфсизлигини ва
               жамоат тартибини сақлаш бўйича мажбуриятни ўз зиммасига олади.
             </p>
           </section>
@@ -118,8 +119,9 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
               бўлимлари томонидан рўйхатга олинган кундан 2 кун ичида
               «Буюртмачи» тўловни <span className="font-bold">30%</span> амалга
               ошириш мажбуриятини олади ва «Бажарувчи» томонидан шартнома
-              талаблари тўлиқ бажарилгандан сўнг қолган 70% миқдори томонлар
-              имзолаган хисоб-фактурага асосан амалга оширилади
+              талаблари тўлиқ бажарилгандан сўнг қолган{" "}
+              <span className="font-bold">70%</span> миқдори томонлар имзолаган
+              хисоб-фактурага асосан амалга оширилади
             </p>
             <p className="mb-0">
               <span className="font-bold">3.4</span> «Бажарувчи» тўловнинг
@@ -295,9 +297,10 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     </span>
                     <div className="flex flex-col">
                       <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
-                      <span>Ғазначилиги х/р ${data?.treasuryaccount}</span>
-                      <span>ИНН: ${data?.clientstr}</span>
-                      <span>МФО: ${data?.clientmfo}</span>
+                      <span>Ғазначилиги х/р</span>
+                      <span>{data?.treasuryaccount}</span>
+                      <span>ИНН: {data?.clientstr}</span>
+                      <span>МФО: {data?.clientmfo}</span>
                       <span>Марказий банк Тошкент шахар ХККМ</span>
                     </div>
                   </div>
@@ -322,11 +325,22 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                   <div className="flex flex-col">
                     <p className=" text-start  text-[14px]">
                       Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
-                      Банк реквизитлари: Марказий банк Тошкент ш. ХККМ.
                     </p>{" "}
-                    <span>МФО:00014.</span>
-                    <span>х/р 21 506 000 705 131 158 003</span>
-                    <span>СТИР: 207 305 369</span>
+                    <span>
+                      <span className="font-bold">Банк реквизитлари:</span>{" "}
+                      Марказий банк Тошкент ш. ХККМ.
+                    </span>
+                    <span>
+                      <span className="font-bold">МФО:</span> 00014.
+                    </span>
+                    <span>
+                      {" "}
+                      <span className="font-bold">х/р:</span> 21 506 000 705 131
+                      158 003
+                    </span>
+                    <span>
+                      <span className="font-bold">СТИР:</span> 207 305 369
+                    </span>
                   </div>
                 </div>
 

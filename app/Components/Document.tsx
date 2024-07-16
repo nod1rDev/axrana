@@ -47,10 +47,13 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
             <p className="mb-0">
               <span className="font-bold">1.1</span> «Буюртмачи»нинг топшириғига
               мувофиқ «Бажарувчи»
-              <span className="font-bold">{data.timelimit}</span> гача
-              {data.address}да бўлиб ўтадиган тадбирлар бўйича ўтказиладиган
-              оммавий тадбир вақтида фуқаролар хавфсизлигини ва жамоат тартибини
-              сақлаш бўйича мажбуриятни ўз зиммасига олади.
+              <span className="font-bold">{data.timelimit}</span>гача
+              <span className="font-bold">
+                {" " + data.address + "да"}
+              </span>{" "}
+              бўлиб ўтадиган тадбирлар бўйича ўтказиладиган оммавий тадбир
+              вақтида фуқаролар хавфсизлигини ва жамоат тартибини сақлаш бўйича
+              мажбуриятни ўз зиммасига олади.
             </p>
           </section>
 
@@ -275,9 +278,9 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     </span>
                     <div className="flex flex-col">
                       <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
-                      <span>МФО:${data.clientmfo}.</span>
-                      <span>х/р ${data.clientaccount}</span>
-                      <span>СТИР: ${data.clientstr}.</span>
+                      <span>МФО:{data.clientmfo}.</span>
+                      <span>х/р {data.clientaccount}</span>
+                      <span>СТИР: {data.clientstr}.</span>
                     </div>
                   </div>
                 )}
@@ -303,11 +306,22 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                   <div className="flex flex-col">
                     <p className=" text-start  text-[14px]">
                       Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
-                      Банк реквизитлари: Марказий банк Тошкент ш. ХККМ.
                     </p>{" "}
-                    <span>МФО:00014.</span>
-                    <span>х/р 21 506 000 705 131 158 003</span>
-                    <span>СТИР: 207 305 369</span>
+                    <span>
+                      <span className="font-bold">Банк реквизитлари:</span>{" "}
+                      Марказий банк Тошкент ш. ХККМ.
+                    </span>
+                    <span>
+                      <span className="font-bold">МФО:</span> 00014.
+                    </span>
+                    <span>
+                      {" "}
+                      <span className="font-bold">х/р:</span> 21 506 000 705 131
+                      158 003
+                    </span>
+                    <span>
+                      <span className="font-bold">СТИР:</span> 207 305 369
+                    </span>
                   </div>
                 </div>
 

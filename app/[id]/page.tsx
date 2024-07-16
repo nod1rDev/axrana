@@ -190,7 +190,7 @@ function page() {
                   </h2>
                   <p className="mb-0">
                     1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»{" "}
-                    <span className="font-bold">{data.timeLimit}</span> гача{" "}
+                    <span className="font-bold">{data.timelimit}</span> гача{" "}
                     {data.address}да бўлиб ўтадиган тадбирлар бўйича
                     ўтказиладиган оммавий тадбир вақтида фуқаролар хавфсизлигини
                     ва жамоат тартибини сақлаш бўйича мажбуриятни ўз зиммасига
@@ -411,9 +411,9 @@ function page() {
                           <span className="font-bold text-xl">Манзил:</span>
                           <div className="flex flex-col">
                             <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
-                            <span>МФО:${data.clientmfo}.</span>
-                            <span>х/р ${data.clientaccount}</span>
-                            <span>СТИР: ${data.clientstr}.</span>
+                            <span>МФО:{data.clientmfo}.</span>
+                            <span>х/р {data.clientaccount}</span>
+                            <span>СТИР: {data.clientstr}.</span>
                           </div>
                         </div>
                       )}
@@ -436,14 +436,27 @@ function page() {
                       <div className="flex gap-2">
                         <span className="font-bold text-xl">Манзил:</span>
                         <div className="flex flex-col">
-                          <p className=" text-start  ">
+                          <p className=" text-start  text-[14px]">
                             Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                            17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
-                            ХККМ.
+                            17А-уй.
                           </p>{" "}
-                          <span>МФО:00014.</span>
-                          <span>х/р 21 506 000 705 131 158 003</span>
-                          <span>СТИР: 207 305 369</span>
+                          <span>
+                            <span className="font-bold">
+                              Банк реквизитлари:
+                            </span>{" "}
+                            Марказий банк Тошкент ш. ХККМ.
+                          </span>
+                          <span>
+                            <span className="font-bold">МФО:</span> 00014.
+                          </span>
+                          <span>
+                            {" "}
+                            <span className="font-bold">х/р:</span> 21 506 000
+                            705 131 158 003
+                          </span>
+                          <span>
+                            <span className="font-bold">СТИР:</span> 207 305 369
+                          </span>
                         </div>
                       </div>
 
@@ -507,9 +520,7 @@ function page() {
                   <p>
                     <span className="font-bold">{data.clientname}</span> номидан
                     _________ асосида фаолият юритувчи
-                    <span className="font-bold">
-                      ______________________
-                    </span>{" "}
+                    <span className="font-bold">______________________</span>
                     келгусида «Буюртмачи» деб номланувчи бир томондан ва
                     Ўзбекистон Республикаси Миллий гвардияси Тошкент шаҳри
                     бўйича бошқармаси номидан шартнома асосида фаолият юритувчи
@@ -527,12 +538,14 @@ function page() {
                     1. Шартнома предмети
                   </h2>
                   <p className="mb-0">
-                    1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»{" "}
-                    <span className="font-bold">{data.timeLimit}</span> гача{" "}
-                    {data.address}да бўлиб ўтадиган тадбирлар бўйича
-                    ўтказиладиган оммавий тадбир вақтида фуқаролар хавфсизлигини
-                    ва жамоат тартибини сақлаш бўйича мажбуриятни ўз зиммасига
-                    олади.
+                    1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»
+                    <span className="font-bold">{data.timelimit}</span>гача
+                    <span className="font-bold">
+                      {" " + data.address + "да"}
+                    </span>{" "}
+                    бўлиб ўтадиган тадбирлар бўйича ўтказиладиган оммавий тадбир
+                    вақтида фуқаролар хавфсизлигини ва жамоат тартибини сақлаш
+                    бўйича мажбуриятни ўз зиммасига олади.
                   </p>
                 </section>
 
@@ -753,11 +766,10 @@ function page() {
                           <span className="font-bold text-xl">Манзил:</span>
                           <div className="flex flex-col">
                             <p className=" text-start max-w-[400px]  ">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
-                            <span>
-                              Ғазначилиги х/р ${data?.treasuryaccount}
-                            </span>
-                            <span>ИНН: ${data?.clientstr}</span>
-                            <span>МФО: ${data?.clientmfo}</span>
+                            <span>Ғазначилиги х/р</span>
+                            <span>{data?.treasuryaccount}</span>
+                            <span>ИНН: {data?.clientstr}</span>
+                            <span>МФО: {data?.clientmfo}</span>
                             <span>Марказий банк Тошкент шахар ХККМ</span>
                           </div>
                         </div>
@@ -781,14 +793,27 @@ function page() {
                       <div className="flex gap-2">
                         <span className="font-bold text-xl">Манзил:</span>
                         <div className="flex flex-col">
-                          <p className=" text-start  ">
+                          <p className=" text-start  text-[14px]">
                             Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                            17А-уй. Банк реквизитлари: Марказий банк Тошкент ш.
-                            ХККМ.
+                            17А-уй.
                           </p>{" "}
-                          <span>МФО:00014.</span>
-                          <span>х/р 21 506 000 705 131 158 003</span>
-                          <span>СТИР: 207 305 369</span>
+                          <span>
+                            <span className="font-bold">
+                              Банк реквизитлари:
+                            </span>{" "}
+                            Марказий банк Тошкент ш. ХККМ.
+                          </span>
+                          <span>
+                            <span className="font-bold">МФО:</span> 00014.
+                          </span>
+                          <span>
+                            {" "}
+                            <span className="font-bold">х/р:</span> 21 506 000
+                            705 131 158 003
+                          </span>
+                          <span>
+                            <span className="font-bold">СТИР:</span> 207 305 369
+                          </span>
                         </div>
                       </div>
 

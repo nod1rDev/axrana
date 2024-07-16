@@ -16,6 +16,7 @@
     "@mui/x-date-pickers": "^7.7.1",
     "@reduxjs/toolkit": "^2.2.5",
     "dayjs": "^1.11.11",
+    "express": "^4.19.2",
     "firebase": "^10.12.2",
     "helmet": "^7.1.0",
     "next": "14.2.3",

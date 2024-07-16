@@ -165,7 +165,7 @@ const BudgetTable: any = ({
               </LeftBorderedTableRow>
               {data.map((row: any, i: number) => (
                 <LeftBorderedTableRow key={row.id}>
-                  <div className="font-bold text-center">
+                  <div className="font-bold text-[14px]  text-center">
                     {i === 0 ? address.address && address.address : null}
                   </div>
 

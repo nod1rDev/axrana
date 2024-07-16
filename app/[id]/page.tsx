@@ -414,7 +414,7 @@ function page() {
                             <span>МФО:${data.clientmfo}.</span>
                             <span>х/р ${data.clientaccount}</span>
                             <span>СТИР: ${data.clientstr}.</span>
-                          </div>{" "}
+                          </div>
                         </div>
                       )}
                       <div className=" absolute top-[250px] left-[40px]">
@@ -757,10 +757,8 @@ function page() {
                               Ғазначилиги х/р ${data?.treasuryaccount}
                             </span>
                             <span>ИНН: ${data?.clientstr}</span>
-                            <span>
-                              МФО: ${data?.clientmfo + " "} Марказий банк
-                              Тошкент шахар ХККМ{" "}
-                            </span>{" "}
+                            <span>МФО: ${data?.clientmfo}</span>
+                            <span>Марказий банк Тошкент шахар ХККМ</span>
                           </div>
                         </div>
                       )}

@@ -297,10 +297,8 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
                       <span>Ғазначилиги х/р ${data?.treasuryaccount}</span>
                       <span>ИНН: ${data?.clientstr}</span>
-                      <span>
-                        МФО: ${data?.clientmfo + " "} Марказий банк Тошкент
-                        шахар ХККМ{" "}
-                      </span>
+                      <span>МФО: ${data?.clientmfo}</span>
+                      <span>Марказий банк Тошкент шахар ХККМ</span>
                     </div>
                   </div>
                 )}

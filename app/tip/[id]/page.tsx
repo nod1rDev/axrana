@@ -59,10 +59,8 @@ const Page = () => {
   }, []);
   const getSearchData = async () => {
     const res = await filterWorker(JWT, id, value);
-   
-    
+
     setSumma(res.allmoney);
-   
 
     setData(res);
     setShartnomalar(res.data);
@@ -80,6 +78,7 @@ const Page = () => {
   const handleChangeValue = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
+  const admin = useSelector((e: any) => e.auth.admin);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -104,7 +103,7 @@ const Page = () => {
             startIcon={<ArrowBackIcon />}
             color="info"
             variant="contained"
-            onClick={() => router.push("/tip")}
+            onClick={() => (!admin ? router.push("/tip") : router.back())}
           >
             {"орқага"}
           </Button>

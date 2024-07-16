@@ -72,7 +72,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
               борасидаги хизмат нархи Миллий гвардия Тошкент шаҳри бўйича
               бошқармаси томонидан тақдим этилган шартноманинг ажралмас қисми
               хисобланган смета харажатлари асосида жами миқдори
-              <span className="font-bold text-red-500">
+              <span className="font-bold ">
                 {" " + formatNumber(+data.allmoney)} сўм
               </span>{" "}
               деб белгиланди.
@@ -277,10 +277,25 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       Манзил:
                     </span>
                     <div className="flex flex-col">
-                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
-                      <span>МФО:{data.clientmfo}.</span>
-                      <span>х/р {data.clientaccount}</span>
-                      <span>СТИР: {data.clientstr}.</span>
+                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}.  `}</p>
+                      <span>
+                        <span className="font-bold">Банк реквизитлари:</span>{" "}
+                        Марказий банк Тошкент ш. ХККМ
+                      </span>
+                      <span>
+                        {" "}
+                        <span className="font-bold">МФО:</span> {data.clientmfo}
+                        .
+                      </span>
+                      <span>
+                        {" "}
+                        <span className="font-bold">х/р</span>{" "}
+                        {data.clientaccount}
+                      </span>
+                      <span>
+                        <span className="font-bold">СТИР:</span>{" "}
+                        {data.clientstr}.
+                      </span>
                     </div>
                   </div>
                 )}

@@ -13,6 +13,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import StorageIcon from "@mui/icons-material/Storage";
 import TokenIcon from "@mui/icons-material/Token";
 import Link from "next/link";
+import DnsIcon from "@mui/icons-material/Dns";
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const menuListAdmin = [
@@ -30,6 +31,11 @@ export default function Header() {
       name: "FIO",
       path: admin ? "/tip/batalyon" : "/tip",
       icon: <PermIdentityIcon />,
+    },
+    {
+      name: "Otchot",
+      path: "/main",
+      icon: <DnsIcon />,
     },
     {
       name: "Maxsus otchot",

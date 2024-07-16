@@ -213,7 +213,7 @@ function page() {
                     гвардия Тошкент шаҳри бўйича бошқармаси томонидан тақдим
                     этилган шартноманинг ажралмас қисми хисобланган смета
                     харажатлари асосида жами миқдори
-                    <span className="font-bold text-red-500">
+                    <span className="font-bold ">
                       {" " + formatNumber(+data.allmoney)} сўм
                     </span>{" "}
                     деб белгиланди.
@@ -410,10 +410,27 @@ function page() {
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
                           <div className="flex flex-col">
-                            <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}. Банк реквизитлари: Марказий банк Тошкент ш. ХККМ`}</p>
-                            <span>МФО:{data.clientmfo}.</span>
-                            <span>х/р {data.clientaccount}</span>
-                            <span>СТИР: {data.clientstr}.</span>
+                            <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}.  `}</p>
+                            <span>
+                              <span className="font-bold">
+                                Банк реквизитлари:
+                              </span>{" "}
+                              Марказий банк Тошкент ш. ХККМ
+                            </span>
+                            <span>
+                              {" "}
+                              <span className="font-bold">МФО:</span>{" "}
+                              {data.clientmfo}.
+                            </span>
+                            <span>
+                              {" "}
+                              <span className="font-bold">х/р</span>{" "}
+                              {data.clientaccount}
+                            </span>
+                            <span>
+                              <span className="font-bold">СТИР:</span>{" "}
+                              {data.clientstr}.
+                            </span>
                           </div>
                         </div>
                       )}
@@ -564,7 +581,7 @@ function page() {
                     гвардия Тошкент шаҳри бўйича бошқармаси томонидан тақдим
                     этилган шартноманинг ажралмас қисми хисобланган смета
                     харажатлари асосида жами миқдори
-                    <span className="font-bold text-red-500">
+                    <span className="font-bold ">
                       {" " + formatNumber(+data.allmoney)} сўм
                     </span>{" "}
                     деб белгиланди.
@@ -765,12 +782,26 @@ function page() {
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
                           <div className="flex flex-col">
-                            <p className=" text-start max-w-[400px]  ">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
-                            <span>Ғазначилиги х/р</span>
+                            <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
+                            <span>Ўзбекистон Республикаси Молия вазирлиги</span>
+                            <span>
+                              <span className="font-bold">
+                                Банк реквизитлари:
+                              </span>{" "}
+                              Марказий банк Тошкент шахар ХККМ
+                            </span>
+                            <span className="font-bold">Ғазначилиги х/р</span>
                             <span>{data?.treasuryaccount}</span>
-                            <span>ИНН: {data?.clientstr}</span>
-                            <span>МФО: {data?.clientmfo}</span>
-                            <span>Марказий банк Тошкент шахар ХККМ</span>
+                            <span>
+                              {" "}
+                              <span className="font-bold">ИНН:</span>{" "}
+                              {data?.clientstr}
+                            </span>
+                            <span>
+                              {" "}
+                              <span className="font-bold">МФО:</span>{" "}
+                              {data?.clientmfo}
+                            </span>
                           </div>
                         </div>
                       )}

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
@@ -15,7 +15,7 @@ import { useReactToPrint } from "react-to-print";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { getByIdComand } from "@/app/Api/Apis";
+import { exel1, getByIdComand } from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 
@@ -27,6 +27,7 @@ function page() {
   const [versiya, setVersiya] = useState(true);
   const getData = async () => {
     const res = await getByIdComand(JWT, id);
+
     setTasks(res.data);
     setData(res.command[0]);
   };
@@ -89,6 +90,39 @@ function page() {
 
     return { year: year, month: monthName };
   };
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await exel1(JWT, tasks, id);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
+
   return (
     <>
       {data && (
@@ -110,21 +144,14 @@ function page() {
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">{data?.commandnumber}</h1>
               <div className="flex gap-3">
-                {/* <Button
-                  startIcon={<DeleteIcon />}
-                  color="error"
-                  variant="contained"
-                  onClick={() => deleteItem()}
-                >
-                  {"учириш"}
-                </Button> */}
-                {/* <Button
-                  onClick={() => router.push("/shartnoma/edit/" + id)}
-                  startIcon={<ModeEditOutlineIcon />}
+               
+                <Button
+                  onClick={downloadExcel}
+                  startIcon={<CloudDownloadIcon />}
                   variant="contained"
                 >
-                  {"таҳрирлаш"}
-                </Button> */}
+                  {"Excel"}
+                </Button>
                 <Button
                   onClick={handlePrint}
                   color="success"
@@ -136,7 +163,7 @@ function page() {
               </div>
             </div>
 
-            <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
+            <div className="container w-full rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
               <div className="flex justify-between mb-20 w-full">
                 <div className="flex-1"></div>
                 <div className="flex flex-col gap-2  ">

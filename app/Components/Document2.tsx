@@ -90,7 +90,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
               борасидаги хизмат нархи Миллий гвардия Тошкент шаҳри бўйича
               бошқармаси томонидан тақдим этилган шартноманинг ажралмас қисми
               хисобланган смета харажатлари асосида жами миқдори
-              <span className="font-bold text-red-500">
+              <span className="font-bold ">
                 {" " + formatNumber(+data.allmoney)} сўм
               </span>{" "}
               деб белгиланди.
@@ -296,12 +296,24 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       Манзил:
                     </span>
                     <div className="flex flex-col">
-                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress} :Ўзбекистон Республикаси Молия вазирлиги  `}</p>
-                      <span>Ғазначилиги х/р</span>
+                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
+                      <span>
+                        <span className="font-bold">Банк реквизитлари:</span>{" "}
+                        Марказий банк Тошкент шахар ХККМ
+                      </span>
+
+                      <span className="font-bold">Ғазначилиги х/р</span>
                       <span>{data?.treasuryaccount}</span>
-                      <span>ИНН: {data?.clientstr}</span>
-                      <span>МФО: {data?.clientmfo}</span>
-                      <span>Марказий банк Тошкент шахар ХККМ</span>
+                      <span>
+                        {" "}
+                        <span className="font-bold">ИНН:</span>{" "}
+                        {data?.clientstr}
+                      </span>
+                      <span>
+                        {" "}
+                        <span className="font-bold">МФО:</span>{" "}
+                        {data?.clientmfo}
+                      </span>
                     </div>
                   </div>
                 )}

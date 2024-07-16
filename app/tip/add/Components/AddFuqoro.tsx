@@ -39,13 +39,17 @@ function AddFuqoro() {
   const handleSave = () => {
     create();
   };
+  const admin = useSelector((s: any) => s.auth.admin);
   return (
     <div className="flex flex-col max-w-[80%] mx-auto">
       <div className=" mx-auto text-[28px] font-bold mb-4">
         {latinToCyrillic("Xodim qo'shish")}
       </div>
       <div className="mb-4">
-        <Button onClick={() => router.push("/tip")} variant="contained">
+        <Button
+          onClick={() => (!admin ? router.push("/tip") : router.back())}
+          variant="contained"
+        >
           {latinToCyrillic("Orqaga")}
         </Button>
       </div>

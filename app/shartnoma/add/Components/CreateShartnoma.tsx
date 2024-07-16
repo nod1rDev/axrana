@@ -5,12 +5,10 @@ import {
   Button,
   IconButton,
   FormControl,
-  Checkbox,
-  Autocomplete,
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getAllBatalyon, getForBatalyon } from "@/app/Api/Apis";
+import { createContract, getForBatalyon } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,18 +16,16 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 function CreateShartnoma({ language }: { language: any }) {
-  const JWT = useSelector((s: any) => s.auth.JWT);
+  const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = useState<any>({});
-
   const [errors, setErrors] = useState<any>({});
   const [smetaVal3, setSmetaVal3] = useState(false);
-  const [workers, setWorkers] = useState<any>(false);
-  const [worker2, setWorker2] = useState<any>([]);
-  const [organs, setOrgans] = useState<any>([]);
   const [count, setCount] = useState(false);
+  const [organs, setOrgans] = useState<any>([]);
+  const [worker2, setWorker2] = useState<any>([]);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,70 +36,53 @@ function CreateShartnoma({ language }: { language: any }) {
 
   const createShartnoman = async (shartnoma: any) => {
     const res = await createContract(JWT, shartnoma);
-
-    if (res.success) {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Shartnoma Qo'shildi"),
-          status: "success",
-        })
-      );
-      router.push("/shartnoma");
-    } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic(res.message),
-          status: "error",
-        })
-      );
-    }
+    const message = res.success
+      ? latinToCyrillic("Shartnoma Qo'shildi")
+      : latinToCyrillic(res.message);
+    dispatch(alertChange({ open: true, message, status: res.success ? "success" : "error" }));
+    if (res.success) router.push("/shartnoma");
   };
 
   const validate = () => {
+    const checks = [
+      { field: "clientMFO", length: 5, message: "5 ta raqam kiriting" },
+      { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
+      { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
+      { field: "treasuryAccount", length: 25, message: "25 ta raqam kiriting" },
+    ];
+
     let temp: any = {};
-    temp.clientMFO = value.clientMFO.length === 5 ? "" : "5 ta raqam kiriting";
-    temp.clientAccount =
-      value.clientAccount.length === 20 ? "" : "20 ta raqam kiriting";
-    temp.clientSTR = value.clientSTR.length === 9 ? "" : "9 ta raqam kiriting";
-    temp.treasuryAccount =
-      value.treasuryAccount.length === 25 ? "" : "25 ta raqam kiriting";
+    checks.forEach(({ field, length, message }) => {
+      temp[field] = value[field]?.length === length ? "" : message;
+    });
+
     setErrors(temp);
     return Object.values(temp).every((x) => x === "");
   };
 
   const saqlash = () => {
-    const chekcker = count ? validate() : true;
-
-    if (chekcker) {
-      const filtOrgans = organs.map((organ: any) => {
-        return {
-          name: organ.name,
-          workerNumber: +organ.workerNumber,
-        };
-      });
+    if (count ? validate() : true) {
+      const filtOrgans = organs.map((organ: any) => ({
+        name: organ.name,
+        workerNumber: +organ.workerNumber,
+      }));
 
       const shartnoma = { ...value, battalions: filtOrgans };
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);
       } else {
-        dispatch(
-          alertChange({
-            open: true,
-            message: latinToCyrillic("Malumotlarni toliq toldiring"),
-            status: "warning",
-          })
-        );
+        dispatch(alertChange({
+          open: true,
+          message: latinToCyrillic("Malumotlarni toliq toldiring"),
+          status: "warning",
+        }));
       }
     } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Malumotlarni to'g'ri kiriting"),
-          status: "error",
-        })
-      );
+      dispatch(alertChange({
+        open: true,
+        message: latinToCyrillic("Malumotlarni to'g'ri kiriting"),
+        status: "error",
+      }));
     }
   };
 
@@ -113,44 +92,29 @@ function CreateShartnoma({ language }: { language: any }) {
 
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
-    updatedOrgans[index] = {
-      ...updatedOrgans[index],
-      [e.target.name]: e.target.value,
-    };
-    setOrgans(updatedOrgans);
-  };
-  const handleChangeOrgans2 = (e: any, index: number) => {
-    const updatedOrgans = [...organs];
-    updatedOrgans[index] = {
-      ...updatedOrgans[index],
-      [e.target.name]: e.target.value,
-    };
+    updatedOrgans[index] = { ...updatedOrgans[index], [e.target.name]: e.target.value };
     setOrgans(updatedOrgans);
   };
 
   const GetOrganName = async () => {
     const res = await getForBatalyon(JWT);
-    
-    
     setWorker2(res.data);
   };
 
   const handleAddOrgan = () => {
-    setOrgans([
-      ...organs,
-      {
-        name: "",
-        time: "",
-        workers: [],
-        _id: Math.ceil(Math.random() * 10000),
-      },
-    ]);
+    setOrgans([...organs, { name: "", time: "", workers: [], _id: Math.ceil(Math.random() * 10000) }]);
   };
 
   const handleRemoveOrgan = (index: number) => {
-    const updatedOrgans = organs.filter((_: any, i: number) => i !== index);
-    setOrgans(updatedOrgans);
+    setOrgans(organs.filter((_: any, i: number) => i !== index));
   };
+
+  const validationFields = [
+    { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
+    { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
+    { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
+    { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+  ];
 
   return (
     <>
@@ -223,7 +187,7 @@ function CreateShartnoma({ language }: { language: any }) {
           {count && (
             <>
               <TextField
-                id="buyurtmachi"
+                id="clientAddress"
                 label={latinToCyrillic("Buyurtmachi Manzili")}
                 sx={{ width: "16.6%" }}
                 onChange={handleChangeValue}
@@ -233,92 +197,26 @@ function CreateShartnoma({ language }: { language: any }) {
                 multiline
                 autoComplete="off"
               />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi Xisob Raqami")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientAccount}
-                name="clientAccount"
-                autoComplete="off"
-                error={
-                  value.clientAccount
-                    ? value.clientAccount.length !== 20
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`20 ta raqam kiriting sizda yana ${
-                  value.clientAccount ? 20 - value.clientAccount.length : 0
-                } ${20 - value.clientAccount?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi MFO")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientMFO}
-                name="clientMFO"
-                autoComplete="off"
-                error={
-                  value.clientMFO
-                    ? value.clientMFO.length !== 5
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`5 ta raqam kiriting sizda yana ${
-                  value.clientMFO ? 5 - value.clientMFO.length : 0
-                } ${5 - value.clientMFO?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi STIR")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientSTR} // krilchada boladi keyin qilasiz hozir man ishlavoli
-                name="clientSTR"
-                autoComplete="off"
-                error={
-                  value.clientSTR
-                    ? value.clientSTR.length !== 9
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`9 ta raqam kiriting sizda yana ${
-                  value.clientSTR ? 9 - value.clientSTR.length : 0
-                } ${9 - value.clientSTR?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("G'aznachilik xisobi")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.treasuryAccount}
-                name="treasuryAccount"
-                autoComplete="off"
-                error={
-                  value.treasuryAccount
-                    ? value.treasuryAccount.length !== 25
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`25 ta raqam kiriting sizda yana ${
-                  value.treasuryAccount ? 25 - value.treasuryAccount.length : 0
-                } ${
-                  25 - value.treasuryAccount?.length > -1 ? " son qoldi" : ""
-                }`}
-              />
+              {validationFields.map(({ id, label, length }) => (
+                <TextField
+                  key={id}
+                  id={id}
+                  label={latinToCyrillic(label)}
+                  sx={{ width: "16.6%" }}
+                  onChange={handleChangeValue}
+                  variant="outlined"
+                  type="number"
+                  value={value[id]}
+                  name={id}
+                  autoComplete="off"
+                  error={value[id]?.length !== length && count}
+                  helperText={`${
+                    length - value[id]?.length > -1
+                      ? ` ${length - value[id]?.length} son qoldi`
+                      : ""
+                  }`}
+                />
+              ))}
             </>
           )}
         </div>
@@ -396,7 +294,7 @@ function CreateShartnoma({ language }: { language: any }) {
               id={`organ-workerNumber-${index}`}
               label={latinToCyrillic("Xodim Soni")}
               sx={{ width: "49%" }}
-              onChange={(e) => handleChangeOrgans2(e, index)}
+              onChange={(e) => handleChangeOrgans(e, index)}
               variant="outlined"
               type="number"
               value={organs[index].workerNumber}

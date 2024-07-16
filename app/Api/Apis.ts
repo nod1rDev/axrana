@@ -490,6 +490,34 @@ export const createResult = async (JWT: any, value: any) => {
   return data;
 };
 
+export const filterOtchot = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/result/filter/by/date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const filterOtchot2 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/special/filter/by/date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 export const getComand = async (JWT: any, page: any, limit: any) => {
   const res = await fetch(
     URL + `/result/get/command?page=${page}&limit=${limit}`,
@@ -508,6 +536,52 @@ export const getComand = async (JWT: any, page: any, limit: any) => {
 
 export const getByIdComand = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/result/get/battalion/workers/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+//spesific Result
+
+export const createResult2 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/special/create/commands", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const getComand2 = async (JWT: any, page: any, limit: any) => {
+  const res = await fetch(
+    URL + `/special/get/command?page=${page}&limit=${limit}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await res.json();
+  return data;
+};
+
+export const getByIdComan2 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/special/get/batalyon/and/contracts/" + id, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,

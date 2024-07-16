@@ -115,7 +115,7 @@ export default function Login() {
   return (
     <div className="max-w-full h-[100vh] login       bg-no-repeat bg-cover ">
       <div className="  flex items-center justify-center  ">
-        <div className="max-w-[400px]   bg-opacity-[15%] mt-[8%] rounded-lg bg-slate-50 ">
+        <div className="max-w-[30%]   bg-opacity-[15%] mt-[8%] rounded-lg bg-slate-50 ">
           <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -127,9 +127,13 @@ export default function Login() {
                   alignItems: "center",
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                  <LockOutlinedIcon />
-                </Avatar>
+                <div className="w-[54px] h-[54px] rounded-[999px] bg-white">
+                  <img
+                    className="w-[54px] h-[54px] rounded-[999px]"
+                    src="/icon-192x192.png"
+                    alt=""
+                  />
+                </div>
                 <Typography component="h1" fontWeight={"700"} variant="h5">
                   {latinToCyrillic("Milliy_Gvardiya")}
                 </Typography>

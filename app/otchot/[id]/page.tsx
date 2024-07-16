@@ -163,7 +163,9 @@ function page() {
                     "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiylar xizmatchilar"
                   )}
                 </div>
-                <div className="w-full text-center">{"RO'YHATI"}</div>
+                <div className="w-full text-center">
+                  {latinToCyrillic("RO'YHATI")}
+                </div>
               </div>
 
               <div className="w-[95%] mx-auto flex gap-10 flex-col">

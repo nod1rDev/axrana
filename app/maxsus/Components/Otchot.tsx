@@ -10,7 +10,13 @@ import TextField from "@mui/material/TextField";
 import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { filterContract, filterOtchot, getAllContract, getComand } from "@/app/Api/Apis";
+import {
+  filterContract,
+  filterOtchot2,
+  getAllContract,
+  getComand,
+  getComand2,
+} from "@/app/Api/Apis";
 import OtchotCard from "./OtchotCard";
 
 function Otchot() {
@@ -38,7 +44,7 @@ function Otchot() {
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
-    const res = await getComand(JWT, page, rowsPerPage);
+    const res = await getComand2(JWT, page, rowsPerPage);
 
     setData(res);
     setShartnomalar(res.data);
@@ -47,7 +53,7 @@ function Otchot() {
     getAllContractt();
   }, []);
   const getSearchData = async () => {
-    const res = await filterOtchot(JWT, value);
+    const res = await filterOtchot2(JWT, value);
     setData(res);
     setShartnomalar(res.data);
   };
@@ -81,7 +87,7 @@ function Otchot() {
     <div className="w-[80%] flex flex-col mt-6 mx-auto">
       <div className="flex mb-5 justify-end">
         <Button
-          onClick={() => router.push("/otchot/add")}
+          onClick={() => router.push("/maxsus/add")}
           variant="contained"
           size="large"
         >
@@ -91,14 +97,14 @@ function Otchot() {
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Batalyon otchotlari")}
+            {latinToCyrillic("Maxsus batalyon otchotlari")}
           </h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(
-                  "ta batalyon otchot mavjud"
+                  "ta Maxsus batalyon otchot mavjud"
                 )} `
-              : latinToCyrillic("batalyon otchot mavjud emas")}
+              : latinToCyrillic("Maxsus batalyon otchot mavjud emas")}
           </span>
         </div>
         <div className="flex flex-col">

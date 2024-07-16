@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TextField, IconButton } from "@mui/material";
+import { TextField, IconButton, Button } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import {
   deleteWorker,
   getAllBatalyon,
@@ -10,66 +11,69 @@ import {
   updateWorker,
 } from "@/app/Api/Apis";
 import { useSelector, useDispatch } from "react-redux";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-
-import { setModalCoctav } from "@/app/Redux/CoctavsSlice";
 import { setModalTip } from "@/app/Redux/TipSlice";
 import TipTab from "./TipTab";
-
 import TipModal from "./TipModal";
-import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
-import MenuBatalyon from "./MenuBatalyon";
 import AdminTab from "./AdminTab";
 
-function Tips() {
+function Tip() {
   // Umumiy
   const admin = useSelector((s: any) => s.auth.admin);
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(20);
-  const [batalyon, setBatalyon] = useState<any>({
-    username: "",
-    id: 0,
-  });
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [batalyon, setBatalyon] = useState<any>({ username: "", id: 0 });
   const batID = useSelector((s: any) => s.tip.batalyon);
+  const [allRanks, setAllRanks] = useState<any[]>([]);
+  const [filteredRanks, setFilteredRanks] = useState<any[]>([]);
+  const [search, setSearch] = useState("");
+  const [selector, setSelector] = useState([]);
+  const open = useSelector((s: any) => s.tip.modal);
+  const [value, setValue] = useState<any>({});
+  const [change, setChange] = useState(1);
+  const router = useRouter();
+
   useEffect(() => {
     setBatalyon(batID);
   }, [batID.id]);
-  // All ranks
-  const [allRanks, setAllRanks] = React.useState<any[]>([]);
-  const [filteredRanks, setFilteredRanks] = React.useState<any[]>([]);
 
   const getAllRanks = async () => {
-    if (admin) {
-      const res = await getAllWorkers(JWT, batID.id, page, rowsPerPage);
-      setAllRanks(res.data);
-      setFilteredRanks(res.data);
-    } else {
-      const res = await getAllWorkers(JWT, null, page, rowsPerPage);
-
-      setAllRanks(res.data);
-      setFilteredRanks(res.data);
+    try {
+      if (admin) {
+        const idd = sessionStorage.getItem("batalyonId");
+        const res = await getAllWorkers(JWT, idd, page, rowsPerPage);
+        setAllRanks(res.data);
+        setFilteredRanks(res.data);
+      } else {
+        const res = await getAllWorkers(JWT, null, page, rowsPerPage);
+        setAllRanks(res.data);
+        setFilteredRanks(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch ranks:", error);
     }
   };
 
-  React.useEffect(() => {
-    getAllRanks();
-  }, [batalyon?.id]);
+  useEffect(() => {
+    const handleReload = () => {
+      const [navigationEntry] = window.performance.getEntriesByType(
+        "navigation"
+      ) as PerformanceNavigationTiming[];
+      if (navigationEntry.type === "reload") {
+        getAllRanks();
+      }
+    };
 
-  // Modal
-  const open = useSelector((s: any) => s.tip.modal);
-  const [value, setValu] = React.useState<any>({});
-  const [search, setSearch] = useState("");
+    handleReload();
+    getAllRanks();
+  }, [batalyon?.id, page, rowsPerPage]);
+  useEffect(() => {
+    getAllRanks();
+  }, [batalyon?.id, page, rowsPerPage, change]);
 
   const deleteUnvon = async () => {
     const res = await deleteWorker(JWT, open.id);
@@ -97,7 +101,6 @@ function Tips() {
   const deleteAllRanks = () => {
     deleteUnvon();
   };
-  const [selector, setSlect] = useState([]);
 
   const EditUnvon = async (value: any) => {
     const res = await updateWorker(JWT, open.id, value);
@@ -121,18 +124,19 @@ function Tips() {
       );
     }
   };
+
   function splitFIO(fio: string) {
     const parts = fio?.split(" ");
-
     return {
       lastname: parts[0],
       firstname: parts[1],
       fatherName: parts[2],
     };
   }
-  React.useEffect(() => {
+
+  useEffect(() => {
     const { lastname, firstname, fatherName } = splitFIO(open.FIO);
-    setValu({
+    setValue({
       lastname: lastname,
       firstname: firstname,
       fatherName: fatherName,
@@ -165,9 +169,9 @@ function Tips() {
       })
     );
   };
+
   const searchWorkerByName = async (value: any) => {
     const res = await searchWorker(JWT, value);
-
     if (!res.success) {
       dispatch(
         alertChange({
@@ -181,12 +185,9 @@ function Tips() {
       setFilteredRanks(res.data);
     }
   };
-  
 
- 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-
     searchWorkerByName(search);
   };
 
@@ -194,8 +195,6 @@ function Tips() {
     setSearch("");
     setFilteredRanks(allRanks);
   };
-
-  const router = useRouter();
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -208,15 +207,16 @@ function Tips() {
     setRowsPerPage(+event.target.value);
     getAllRanks();
   };
+
   const getBatalyons = async () => {
     const res = await getAllBatalyon(JWT);
-
-    setSlect(res.data);
+    setSelector(res.data);
   };
 
   useEffect(() => {
     getBatalyons();
   }, []);
+
   const handleSelect = (e: any) => {
     setBatalyon(e.target.value);
   };
@@ -224,71 +224,69 @@ function Tips() {
   return (
     <>
       {admin ? (
-        <>
-          <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-            <div className="">
-              <Button
-                onClick={() => router.push("/tip/batalyon")}
-                color="success"
-                variant="contained"
-              >
-                {latinToCyrillic("Orqaga")}
-              </Button>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex gap-4 items-center">
-                <form onSubmit={handleSearch} className="flex items-center">
-                  <TextField
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    fullWidth
-                    label={latinToCyrillic("FIO orqali qidiring")}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    spellCheck="false"
-                    InputProps={{
-                      autoComplete: "off",
-                      autoCorrect: "off",
-                      spellCheck: "false",
-                      endAdornment: search ? (
-                        <IconButton onClick={clearSearch}>
-                          <CloseIcon color="error" />
-                        </IconButton>
-                      ) : (
-                        <IconButton>
-                          <PersonSearchIcon color="info" />
-                        </IconButton>
-                      ),
-                    }}
-                  />
-                </form>
-              </div>
-              <Button
-                sx={{ width: "150px", height: "40px" }}
-                onClick={() => router.push("/tip/add")}
-                variant="contained"
-              >
-                {latinToCyrillic("Qo'shish")}
-              </Button>
-            </div>
-            <TipTab
-              page={page}
-              handleChangePage={handleChangePage}
-              handleChangeRowsPerPage={handleChangeRowsPerPage}
-              rowsPerPage={rowsPerPage}
-              ranks={filteredRanks}
-            />
-            {open.open ? (
-              <TipModal
-                handleDelete={deleteAllRanks}
-                handleClose={handleClose}
-                handleSubmit={handleSubmit}
-                value={value}
-                setValue={setValu}
-              />
-            ) : null}
+        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+          <div className="">
+            <Button
+              onClick={() => router.push("/tip/batalyon")}
+              color="success"
+              variant="contained"
+            >
+              {latinToCyrillic("Orqaga")}
+            </Button>
           </div>
-        </>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-4 items-center">
+              <form onSubmit={handleSearch} className="flex items-center">
+                <TextField
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  fullWidth
+                  label={latinToCyrillic("FIO orqali qidiring")}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck="false"
+                  InputProps={{
+                    autoComplete: "off",
+                    autoCorrect: "off",
+                    spellCheck: "false",
+                    endAdornment: search ? (
+                      <IconButton onClick={clearSearch}>
+                        <CloseIcon color="error" />
+                      </IconButton>
+                    ) : (
+                      <IconButton>
+                        <PersonSearchIcon color="info" />
+                      </IconButton>
+                    ),
+                  }}
+                />
+              </form>
+            </div>
+            <Button
+              sx={{ width: "150px", height: "40px" }}
+              onClick={() => router.push("/tip/add")}
+              variant="contained"
+            >
+              {latinToCyrillic("Qo'shish")}
+            </Button>
+          </div>
+          <TipTab
+            page={page}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            rowsPerPage={rowsPerPage}
+            ranks={filteredRanks}
+          />
+          {open.open ? (
+            <TipModal
+              handleDelete={deleteAllRanks}
+              handleClose={handleClose}
+              handleSubmit={handleSubmit}
+              value={value}
+              setValue={setValue}
+            />
+          ) : null}
+        </div>
       ) : (
         <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
           <div className="flex justify-between items-center">
@@ -340,7 +338,7 @@ function Tips() {
               handleClose={handleClose}
               handleSubmit={handleSubmit}
               value={value}
-              setValue={setValu}
+              setValue={setValue}
             />
           ) : null}
         </div>
@@ -349,4 +347,4 @@ function Tips() {
   );
 }
 
-export default Tips;
+export default Tip;

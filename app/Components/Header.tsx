@@ -11,6 +11,8 @@ import { latinToCyrillic } from "../tip/add/Components/lotin";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import StorageIcon from "@mui/icons-material/Storage";
+import TokenIcon from "@mui/icons-material/Token";
+import Link from "next/link";
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const menuListAdmin = [
@@ -28,6 +30,11 @@ export default function Header() {
       name: "FIO",
       path: admin ? "/tip/batalyon" : "/tip",
       icon: <PermIdentityIcon />,
+    },
+    {
+      name: "Maxsus otchot",
+      path: "/maxsus",
+      icon: <TokenIcon />,
     },
     {
       name: "Batalyon otchot",
@@ -59,16 +66,21 @@ export default function Header() {
 
   return (
     <div className="py-6 min-h-[100vh] w-[300px] fixed top-0 left-0 flex flex-col bg-[#1976D2] text-white">
-      <div className="flex pl-3 gap-2 items-center">
-        <img
-          className="w-[54px] h-[54px] rounded-[999px]"
-          src="/icon-192x192.png"
-          alt=""
-        />
-        <h1 className="text-[26px] font-bold">
-          {latinToCyrillic("Milliy Gvardiya")}
-        </h1>
-      </div>
+      <Link href={"/"}>
+        <div className="flex pl-3 gap-2 items-center">
+          <div className="w-[54px] h-[54px] rounded-[999px] bg-white">
+            <img
+              className="w-[54px] h-[54px] rounded-[999px]"
+              src="/icon-192x192.png"
+              alt=""
+            />
+          </div>
+
+          <h1 className="text-[26px] font-bold">
+            {latinToCyrillic("Milliy Gvardiya")}
+          </h1>
+        </div>
+      </Link>
       <div className="min-w-[300px] h-[1px] bg-white my-4"></div>
       <div className="flex flex-col px-3 gap-4">
         {admin

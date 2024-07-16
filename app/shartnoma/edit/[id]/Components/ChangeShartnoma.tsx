@@ -10,7 +10,12 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getAllBatalyon, getForBatalyon, updateContract } from "@/app/Api/Apis";
+import {
+  createContract,
+  getAllBatalyon,
+  getForBatalyon,
+  updateContract,
+} from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -103,6 +108,8 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     }
   }, [data]);
   const createShartnoman = async (shartnoma: any) => {
+    console.log(shartnoma);
+
     const res = await updateContract(JWT, shartnoma, data.id);
 
     if (res.success) {
@@ -126,13 +133,18 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   };
 
   const validate = () => {
+    const checks = [
+      { field: "clientMFO", length: 5, message: "5 ta raqam kiriting" },
+      { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
+      { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
+      { field: "treasuryAccount", length: 25, message: "25 ta raqam kiriting" },
+    ];
+
     let temp: any = {};
-    temp.clientMFO = value.clientMFO.length === 5 ? "" : "5 ta raqam kiriting";
-    temp.clientAccount =
-      value.clientAccount.length === 20 ? "" : "20 ta raqam kiriting";
-    temp.clientSTR = value.clientSTR.length === 9 ? "" : "9 ta raqam kiriting";
-    temp.treasuryAccount =
-      value.treasuryAccount.length === 25 ? "" : "25 ta raqam kiriting";
+    checks.forEach(({ field, length, message }) => {
+      temp[field] = value[field]?.length === length ? "" : message;
+    });
+
     setErrors(temp);
     return Object.values(temp).every((x) => x === "");
   };
@@ -175,6 +187,12 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
+  const validationFields = [
+    { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
+    { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
+    { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
+    { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+  ];
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
@@ -285,7 +303,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           {count && (
             <>
               <TextField
-                id="buyurtmachi"
+                id="clientAddress"
                 label={latinToCyrillic("Buyurtmachi Manzili")}
                 sx={{ width: "16.6%" }}
                 onChange={handleChangeValue}
@@ -295,92 +313,26 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 multiline
                 autoComplete="off"
               />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi Xisob Raqami")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientAccount}
-                name="clientAccount"
-                autoComplete="off"
-                error={
-                  value.clientAccount
-                    ? value.clientAccount.length !== 20
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`20 ta raqam kiriting sizda yana ${
-                  value.clientAccount ? 20 - value.clientAccount.length : 0
-                } ${20 - value.clientAccount?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi MFO")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientMFO}
-                name="clientMFO"
-                autoComplete="off"
-                error={
-                  value.clientMFO
-                    ? value.clientMFO.length !== 5
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`5 ta raqam kiriting sizda yana ${
-                  value.clientMFO ? 5 - value.clientMFO.length : 0
-                } ${5 - value.clientMFO?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("Buyurtmachi STIR")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.clientSTR} // krilchada boladi keyin qilasiz hozir man ishlavoli
-                name="clientSTR"
-                autoComplete="off"
-                error={
-                  value.clientSTR
-                    ? value.clientSTR.length !== 9
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`9 ta raqam kiriting sizda yana ${
-                  value.clientSTR ? 9 - value.clientSTR.length : 0
-                } ${9 - value.clientSTR?.length > -1 ? " son qoldi" : ""}`}
-              />
-              <TextField
-                id="buyurtmachi"
-                label={latinToCyrillic("G'aznachilik xisobi")}
-                sx={{ width: "16.6%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                type="number"
-                value={value.treasuryAccount}
-                name="treasuryAccount"
-                autoComplete="off"
-                error={
-                  value.treasuryAccount
-                    ? value.treasuryAccount.length !== 25
-                    : false && count
-                    ? true
-                    : false
-                }
-                helperText={`25 ta raqam kiriting sizda yana ${
-                  value.treasuryAccount ? 25 - value.treasuryAccount.length : 0
-                } ${
-                  25 - value.treasuryAccount?.length > -1 ? " son qoldi" : ""
-                }`}
-              />
+              {validationFields.map(({ id, label, length }) => (
+                <TextField
+                  key={id}
+                  id={id}
+                  label={latinToCyrillic(label)}
+                  sx={{ width: "16.6%" }}
+                  onChange={handleChangeValue}
+                  variant="outlined"
+                  type="number"
+                  value={value[id]}
+                  name={id}
+                  autoComplete="off"
+                  error={value[id]?.length !== length && count}
+                  helperText={`${
+                    length - value[id]?.length > -1
+                      ? ` ${length - value[id]?.length} son qoldi`
+                      : ""
+                  }`}
+                />
+              ))}
             </>
           )}
         </div>

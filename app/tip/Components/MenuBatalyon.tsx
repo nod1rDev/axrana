@@ -16,7 +16,7 @@ export default function MenuBatalyon({ data }: { data: any }) {
   const router = useRouter();
   const handleClick = (item: any) => {
     dispatch(setBatalyon(item));
-
+    sessionStorage.setItem("batalyonId", item.id);
     router.push("/tip");
   };
 

@@ -13,10 +13,8 @@ const Document3 = React.forwardRef(({ data, tasks }: any, ref: any) => {
             <p className="text-center  w-[300px]">
               O'zbekiston Respublikasi Milliy Gvardiyasining Toshkent shahar
               bo'yicha boshqarma boshlig'ining
-              
-                {" " + data?.commanddate}
-              {" "}
-              {" " + data?.commandnumber}-sonli buyrug'iga
+              {" " + data?.commanddate} {" " + data?.commandnumber}-sonli
+              buyrug'iga
             </p>
             <span className=" text-center w-[300px] text-lg ">1-ILOVA</span>
           </div>
@@ -31,11 +29,15 @@ const Document3 = React.forwardRef(({ data, tasks }: any, ref: any) => {
               "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiylar xizmatchilar"
             )}
           </div>
-          <div className="w-full text-center">{"RO'YHATI"}</div>
+          <div className="w-full text-center">
+            {" "}
+            {latinToCyrillic("RO'YHATI")}
+          </div>
         </div>
 
         <div className="w-[100%] mx-auto flex gap-10 flex-col">
-          {tasks && tasks.map((e: any) => <WorkerAndBatalyon sal={true} data={e} />)}
+          {tasks &&
+            tasks.map((e: any) => <WorkerAndBatalyon sal={true} data={e} />)}
         </div>
       </div>
     </>

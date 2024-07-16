@@ -5,12 +5,13 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 function WorkerAndBatalyon({ data, sal }: { data: any; sal?: boolean }) {
   return (
     <div className="w-full">
-      <h1
-        className={`w-full text-center mb-1 text-lg ${sal ? "" : "font-[600]"}`}
-      >
-        {data?.batalyonName + " " + latinToCyrillic("harbiy qisim:")} 
+      <h1 className={`w-full text-center   text-lg `}>
+        {data?.batalyonName + " " + latinToCyrillic("harbiy qisim")}
       </h1>
-      <WorkerTab sal={sal} data={data.workers} />
+      <div className="my-4">
+        <WorkerTab here={true} data={data} />
+      </div>
+      
     </div>
   );
 }

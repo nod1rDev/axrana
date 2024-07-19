@@ -1,3 +1,4 @@
+"use client"
 // components/LatCyrConverter.tsx
 import { useEffect, useState } from "react";
 import { TextField, Button, Container, Box, IconButton } from "@mui/material";

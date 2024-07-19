@@ -633,3 +633,60 @@ export const getExcel = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+
+// Acount Number
+export const getAllAcount = async (JWT: any) => {
+  const res = await fetch(URL + "/account/number/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const deleteAcount = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/account/number/delete/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const createAcount = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/account/number/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const updateAcount = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/account/number/update/1" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

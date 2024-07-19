@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import {
-  Box,
-  Button,
-  IconButton,
-  FormControl,
-  Switch,
-} from "@mui/material";
+import { Box, Button, IconButton, FormControl, Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getForBatalyon } from "@/app/Api/Apis";
+import { createContract, getAllAcount, getForBatalyon } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -39,9 +33,25 @@ function CreateShartnoma({ language }: { language: any }) {
     const message = res.success
       ? latinToCyrillic("Shartnoma Qo'shildi")
       : latinToCyrillic(res.message);
-    dispatch(alertChange({ open: true, message, status: res.success ? "success" : "error" }));
+    dispatch(
+      alertChange({
+        open: true,
+        message,
+        status: res.success ? "success" : "error",
+      })
+    );
     if (res.success) router.push("/shartnoma");
   };
+  const [acount, setAcount] = useState([]);
+
+  useEffect(() => {
+    const getAcount = async () => {
+      const res = await getAllAcount(JWT);
+
+      setAcount(res.data);
+    };
+    getAcount();
+  }, []);
 
   const validate = () => {
     const checks = [
@@ -71,18 +81,22 @@ function CreateShartnoma({ language }: { language: any }) {
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);
       } else {
-        dispatch(alertChange({
-          open: true,
-          message: latinToCyrillic("Malumotlarni toliq toldiring"),
-          status: "warning",
-        }));
+        dispatch(
+          alertChange({
+            open: true,
+            message: latinToCyrillic("Malumotlarni toliq toldiring"),
+            status: "warning",
+          })
+        );
       }
     } else {
-      dispatch(alertChange({
-        open: true,
-        message: latinToCyrillic("Malumotlarni to'g'ri kiriting"),
-        status: "error",
-      }));
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Malumotlarni to'g'ri kiriting"),
+          status: "error",
+        })
+      );
     }
   };
 
@@ -92,7 +106,10 @@ function CreateShartnoma({ language }: { language: any }) {
 
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
-    updatedOrgans[index] = { ...updatedOrgans[index], [e.target.name]: e.target.value };
+    updatedOrgans[index] = {
+      ...updatedOrgans[index],
+      [e.target.name]: e.target.value,
+    };
     setOrgans(updatedOrgans);
   };
 
@@ -102,7 +119,15 @@ function CreateShartnoma({ language }: { language: any }) {
   };
 
   const handleAddOrgan = () => {
-    setOrgans([...organs, { name: "", time: "", workers: [], _id: Math.ceil(Math.random() * 10000) }]);
+    setOrgans([
+      ...organs,
+      {
+        name: "",
+        time: "",
+        workers: [],
+        _id: Math.ceil(Math.random() * 10000),
+      },
+    ]);
   };
 
   const handleRemoveOrgan = (index: number) => {
@@ -157,13 +182,33 @@ function CreateShartnoma({ language }: { language: any }) {
             label={latinToCyrillic(
               "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
             )}
-            sx={{ width: "100%" }}
+            sx={{ width: "70%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.timeLimit}
             name="timeLimit"
             autoComplete="off"
           />
+          <FormControl sx={{ width: "30%" }}>
+            <InputLabel id="demo-simple-select-label">
+              {latinToCyrillic("Hisob Raqam")}
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={value.accountNumber}
+              name="accountNumber"
+              label={latinToCyrillic("Hisob Raqam")}
+              onChange={handleChangeValue}
+            >
+              {acount &&
+                acount.map((e: any) => (
+                  <MenuItem key={e.accountnumber} value={e.accountnumber}>
+                    {e.accountnumber}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
         </div>
         <div className="font-bold text-[28px] flex gap-3 mb-4">
           <Switch

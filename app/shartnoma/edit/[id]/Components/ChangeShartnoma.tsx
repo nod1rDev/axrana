@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   createContract,
+  getAllAcount,
   getAllBatalyon,
   getForBatalyon,
   updateContract,
@@ -93,6 +94,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         address: data.address,
         taskDate: data.taskdate,
         taskTime: data.tasktime,
+        accountNumber: data.accountnumber,
       };
       setValue(pureData);
 
@@ -232,6 +234,16 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     setOrgans(updatedOrgans);
   };
 
+  const [acount, setAcount] = useState([]);
+  useEffect(() => {
+    const getAcount = async () => {
+      const res = await getAllAcount(JWT);
+
+      setAcount(res.data);
+    };
+    getAcount();
+  }, []);
+
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -273,13 +285,33 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             label={latinToCyrillic(
               "Bajaruchi fuqorolar xavsizligini va jamoat tartibini saqlash muddati"
             )}
-            sx={{ width: "100%" }}
+            sx={{ width: "70%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.timeLimit || ""}
+            value={value.timeLimit}
             name="timeLimit"
             autoComplete="off"
           />
+          <FormControl sx={{ width: "30%" }}>
+            <InputLabel id="demo-simple-select-label">
+              {latinToCyrillic("Hisob Raqam")}
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={value.accountNumber}
+              name="accountNumber"
+              label={latinToCyrillic("Hisob Raqam")}
+              onChange={handleChangeValue}
+            >
+              {acount &&
+                acount.map((e: any) => (
+                  <MenuItem key={e.accountnumber} value={e.accountnumber}>
+                    {e.accountnumber}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
         </div>
         <div className="font-bold text-[28px] flex gap-3 mb-4">
           <Switch

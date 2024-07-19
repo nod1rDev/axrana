@@ -14,6 +14,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import TokenIcon from "@mui/icons-material/Token";
 import Link from "next/link";
 import DnsIcon from "@mui/icons-material/Dns";
+import MenuBar from "./MenuBar";
 
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
@@ -107,20 +108,22 @@ export default function Header() {
       <div className="flex flex-col px-3 gap-4">
         {admin
           ? menuListAdmin.map((e: any) => (
-              <button
-                key={e.path}
-                onClick={() => handleClick(e.path)}
-                className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
-                  active === e.path
-                    ? "bg-white text-[#1976D2] transform scale-105"
-                    : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
-                }`}
-              >
-                {e.icon}
-                <h1 className="text-[20px] font-bold text-center">
-                  {latinToCyrillic(e.name)}
-                </h1>
-              </button>
+              <>
+                <button
+                  key={e.path}
+                  onClick={() => handleClick(e.path)}
+                  className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
+                    active === e.path
+                      ? "bg-white text-[#1976D2] transform scale-105"
+                      : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
+                  }`}
+                >
+                  {e.icon}
+                  <h1 className="text-[20px] font-bold text-center">
+                    {latinToCyrillic(e.name)}
+                  </h1>
+                </button>
+              </>
             ))
           : notAdmin.map((e: any) => (
               <button
@@ -138,23 +141,14 @@ export default function Header() {
                 </h1>
               </button>
             ))}
-
-        <select
-          value={selectedMenu}
-          onChange={handleSelectChange}
-          className="bg-[#1976D2] text-white text-[20px] mb-14 font-bold px-4 py-2 rounded-xl transition-all duration-300 focus:outline-none"
-        >
-          {spravichniItems.map((e: any) => (
-            <option
-              className="text-[20px] font-bold "
-              key={e.path}
-              value={e.path}
-            >
-              {latinToCyrillic(e.name)}
-            </option>
-          ))}
-        </select>
-
+        {admin ? (
+          <div className="mb-10">
+            {" "}
+            <MenuBar />
+          </div>
+        ) : (
+          ""
+        )}
         <button
           onClick={AuthOut}
           className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}

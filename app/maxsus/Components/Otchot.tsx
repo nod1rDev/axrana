@@ -164,7 +164,7 @@ function Otchot() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50, 100]}
           component="div"
-          count={shartnomalar.length}
+          count={shartnomalar ? shartnomalar.length : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

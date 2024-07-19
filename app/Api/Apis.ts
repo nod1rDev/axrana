@@ -719,3 +719,29 @@ export const getExcelWorker2 = async (JWT: any, id: any) => {
   const data = await res.blob();
   return data;
 };
+
+export const deleteData1 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/result/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const deleteData2 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/special/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

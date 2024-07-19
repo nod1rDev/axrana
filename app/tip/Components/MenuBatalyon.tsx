@@ -23,7 +23,7 @@ export default function MenuBatalyon({ data }: { data: any }) {
   return (
     <>
       <h1 className="text-[28px] mt-10 font-bold mx-auto text-center mb-4">
-        Batalyon tanlang
+        {latinToCyrillic("Bataly'on tanlang")}
       </h1>
 
       <div className="w-[80%] mb-10 mx-auto flex flex-col gap-4">

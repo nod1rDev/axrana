@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // components/LatCyrConverter.tsx
 import { useEffect, useState } from "react";
 import { TextField, Button, Container, Box, IconButton } from "@mui/material";
@@ -71,24 +71,23 @@ export const latinToCyrillic = (latin: string): string => {
     Ye: "Е",
     YE: "Е",
     ye: "е",
-
     Yo: "Ё",
     YO: "Ё",
     yo: "ё",
-
     Yu: "Ю",
     YU: "Ю",
     yu: "ю",
-
     Ya: "Я",
     YA: "Я",
     ya: "я",
-
     " ": " ",
+    "y'": "ы",
+    "Y'": "Ы",
+    "'": "ь",
   };
 
   return latin.replace(
-    /sh|Sh|SH|ch|Ch|CH|g'|G'|o'|O'|Ye|YE|ye|Yo|YO|yo|Yu|YU|yu|Ya|YA|ya|./g,
+    /sh|Sh|SH|ch|Ch|CH|g'|G'|o'|O'|Ye|YE|ye|Yo|YO|yo|Yu|YU|yu|Ya|YA|ya|y'|Y'|'|./g,
     (char) => map[char] || char
   );
 };

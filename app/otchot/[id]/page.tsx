@@ -15,7 +15,7 @@ import { useReactToPrint } from "react-to-print";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { exel1, getByIdComand } from "@/app/Api/Apis";
+import { deleteData1, exel1, getByIdComand } from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 
@@ -122,7 +122,27 @@ function page() {
       );
     }
   };
-
+  const deleteData = async () => {
+    const res = await deleteData1(JWT, id);
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Otchot ochirlidi"),
+          status: "success",
+        })
+      );
+      router.push("/otchot");
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
   return (
     <>
       {data && (
@@ -144,7 +164,14 @@ function page() {
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">{data?.commandnumber}</h1>
               <div className="flex gap-3">
-               
+                <Button
+                  onClick={deleteData}
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  variant="contained"
+                >
+                  {latinToCyrillic("O'chirish")}
+                </Button>
                 <Button
                   onClick={downloadExcel}
                   startIcon={<CloudDownloadIcon />}

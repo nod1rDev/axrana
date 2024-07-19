@@ -40,12 +40,12 @@ export default function Header() {
       icon: <DnsIcon />,
     },
     {
-      name: "Maxsus otchot",
+      name: "Hamkor otchot",
       path: "/maxsus",
       icon: <TokenIcon />,
     },
     {
-      name: "Batalyon otchot",
+      name: "Bataly'on otchot",
       path: "/otchot",
       icon: <StorageIcon />,
     },

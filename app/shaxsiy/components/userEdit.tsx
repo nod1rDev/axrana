@@ -54,7 +54,7 @@ export default function EditUser({
             fullWidth
             value={value.username}
             onChange={(e: any) => handleChange(e)}
-            label={latinToCyrillic("Batalyon nomi")}
+            label={latinToCyrillic("Bataly'on nomi")}
             id="fullWidth"
           />
 

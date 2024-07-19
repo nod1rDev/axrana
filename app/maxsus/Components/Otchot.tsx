@@ -45,6 +45,7 @@ function Otchot() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
     const res = await getComand2(JWT, page, rowsPerPage);
+    
 
     setData(res);
     setShartnomalar(res.data);
@@ -97,14 +98,16 @@ function Otchot() {
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Maxsus batalyon otchotlari")}
+            {latinToCyrillic("Hamkorlikdagi boshqarmalar")}
           </h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(
-                  "ta Maxsus batalyon otchot mavjud"
+                  "ta hamkorlikdagi boshqarmalar otchot mavjud"
                 )} `
-              : latinToCyrillic("Maxsus batalyon otchot mavjud emas")}
+              : latinToCyrillic(
+                  "Hamkorlikdagi boshqarmalar otchot mavjud emas"
+                )}
           </span>
         </div>
         <div className="flex flex-col">

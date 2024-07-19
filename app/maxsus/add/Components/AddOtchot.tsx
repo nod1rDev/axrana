@@ -10,7 +10,12 @@ import {
   Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, createResult, createResult2, getAllBatalyon } from "@/app/Api/Apis";
+import {
+  createContract,
+  createResult,
+  createResult2,
+  getAllBatalyon,
+} from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -36,7 +41,7 @@ function AddOtchot() {
           status: "success",
         })
       );
-      router.push("/otchot");
+      router.push("/maxsus");
     } else {
       dispatch(
         alertChange({
@@ -55,7 +60,7 @@ function AddOtchot() {
   const handleChangeValue = (e: any) => {
     if (e.target.name == "commandNumber") {
       setValue({ ...value, [e.target.name]: +e.target.value });
-    }else{
+    } else {
       setValue({ ...value, [e.target.name]: e.target.value });
     }
   };

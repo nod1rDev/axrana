@@ -27,13 +27,13 @@ const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 170 },
   {
     id: "FoydalanuvchiNomi",
-    label: latinToCyrillic("Batalyon Nomi"),
+    label: latinToCyrillic("Bataly'on Nomi"),
     align: "left",
     minWidth: 100,
   },
   {
     id: "FoydalanuvchiParoli",
-    label: latinToCyrillic("Batalyon Paroli"),
+    label: latinToCyrillic("Bataly'on Paroli"),
     minWidth: 170,
     align: "center",
   },
@@ -109,7 +109,7 @@ export default function Users() {
         dispatch(
           alertChange({
             open: true,
-            message: latinToCyrillic("Batalyon qoshildi"),
+            message: latinToCyrillic("Bataly'on qoshildi"),
             status: "success",
           })
         );
@@ -181,7 +181,7 @@ export default function Users() {
       <Paper sx={{ width: "68%", overflow: "hidden" }}>
         <div className="w-full ">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
-            {latinToCyrillic("Batalyon qoshish")}
+            {latinToCyrillic("Bataly'on qoshish")}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -189,7 +189,7 @@ export default function Users() {
           >
             <TextField
               id="outlined-basic"
-              label={latinToCyrillic("Batalyon Nomi")}
+              label={latinToCyrillic("Bataly'on Nomi")}
               value={value.username}
               name="username"
               onChange={(e: any) => handleChange(e)}
@@ -198,7 +198,7 @@ export default function Users() {
             />
             <TextField
               id="outlined-basic"
-              label={latinToCyrillic("Batalyon Paroli")}
+              label={latinToCyrillic("Bataly'on Paroli")}
               value={value.password}
               name="password"
               onChange={(e: any) => handleChange(e)}

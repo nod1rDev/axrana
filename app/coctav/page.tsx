@@ -7,13 +7,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, FormHelperText } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createAcount,
   createAuth,
+  deleteAcount,
   getAllAcount,
   getAuth,
+  updateAcount,
   updateBatalyon,
 } from "@/app/Api/Apis";
 import { alertChange, setUserModal } from "@/app/Redux/ShaxsiySlice";
@@ -38,7 +40,7 @@ const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 10 },
   {
     id: "FoydalanuvchiNomi",
-    label: latinToCyrillic("Hsiob raqami"),
+    label: latinToCyrillic("Hisob raqami"),
     align: "left",
     minWidth: 900,
   },
@@ -69,26 +71,25 @@ function createData(
   return { number, FoydalanuvchiNomi, actions, id };
 }
 
-export default function page() {
+export default function Page() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
   const [users, setUsers] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = React.useState<any>({
-    accountnumber: "",
+    accountNumber: "",
   });
   const [value2, setValue2] = React.useState<any>({
-    accountnumber: "",
+    accountNumber: "",
   });
+  const [accountError, setAccountError] = React.useState<string | null>(null);
+  const [remainingChars, setRemainingChars] = React.useState<number>(20);
 
   const getUsers = async () => {
     const res = await getAllAcount(JWT);
-
     setUsers(res.data);
   };
-
-
 
   React.useEffect(() => {
     getUsers();
@@ -101,7 +102,7 @@ export default function page() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (value.accountnumber) {
+    if (value.accountNumber.length >= 20) {
       const res = await createAcount(JWT, value);
       if (res.success) {
         dispatch(
@@ -120,31 +121,40 @@ export default function page() {
           })
         );
       }
-
       getUsers();
+    } else {
+      setAccountError(
+        `Hisob raqami kamida 20 ta belgidan iborat bo'lishi kerak. Qolgan belgilari: ${
+          20 - value.accountNumber.length
+        }`
+      );
     }
-    setValue({
-      accountnumber: "",
-    });
   };
-React.useEffect(()=>{},[])
+
   const handleChange = (e: any) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
+    const newValue = e.target.value;
+    setValue({ ...value, [e.target.name]: newValue });
+    if (e.target.name === "accountNumber") {
+      setRemainingChars(20 - newValue.length);
+      setAccountError(null);
+    }
   };
 
   const handleClose = () => {
     dispatch(setModalCoctav({ open: false, name: "" }));
   };
-  const open = useSelector((s: any) => s.coctav.userModal);
+
+  const open = useSelector((s: any) => s.coctav.modal);
+
   const updateAuth = async (valuee: any) => {
-    const res = await updateBatalyon(JWT, valuee, open.id);
+    const res = await updateAcount(JWT, valuee, +open.id);
     if (res.success) {
       handleClose();
-      setValue2({ accountnumber: null });
+      setValue2({ accountNumber: null });
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Parol tahrirlandi"),
+          message: latinToCyrillic("Hisob raqami tahrirlandi"),
           status: "success",
         })
       );
@@ -158,8 +168,9 @@ React.useEffect(()=>{},[])
       );
     }
   };
+
   const handleSubmite = () => {
-    if (value2.newPassword !== "") {
+    if (value2.accountNumber !== "") {
       updateAuth(value2);
     } else {
       dispatch(
@@ -170,36 +181,66 @@ React.useEffect(()=>{},[])
         })
       );
     }
-    setTimeout(() => getUsers(), 500);
   };
 
-  const handleDelete = () => {};
+  const deleteData = async () => {
+    const res = await deleteAcount(JWT, +open.id);
+    console.log(open.id);
+
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Hisob Raqam ochirildi"),
+          status: "success",
+        })
+      );
+      handleClose();
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
+
+  const handleDelete = () => {
+    deleteData();
+  };
+
+  React.useEffect(() => {
+    setValue2({ accountNumber: open.name });
+  }, [open.name]);
 
   return (
     <>
       <Paper sx={{ width: "95%", mx: "auto", mt: "20px", overflow: "hidden" }}>
-        <div className="w-full ">
+        <div className="w-full">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
             {latinToCyrillic("Hisob qo'shing")}
           </h1>
           <form
             onSubmit={handleSubmit}
-            className="flex justify-between gap-4 py-4 px-5"
+            className="flex justify-between items-start gap-4 py-4 px-5"
           >
             <TextField
               id="outlined-basic"
               label={latinToCyrillic("Hisob raqami")}
-              value={value.accountnumber}
-              name="accountnumber"
-              onChange={(e: any) => handleChange(e)}
+              value={value.accountNumber}
+              name="accountNumber"
+              onChange={handleChange}
               fullWidth
               variant="outlined"
+              error={!!accountError}
+              helperText={accountError || `Qolgan belgilari: ${remainingChars}`}
             />
-
             <Button
               color="primary"
               type="submit"
-              sx={{ width: "160px" }}
+              sx={{ width: "160px", height: "54px" }}
               variant="contained"
             >
               {latinToCyrillic("Qo'shish")}
@@ -229,12 +270,11 @@ React.useEffect(()=>{},[])
                     <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                       {columns.map((column, e) => {
                         const value = row[column.id];
-
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {e == 0 ? (
+                            {e === 0 ? (
                               i + 1
-                            ) : e == 2 ? (
+                            ) : e === 2 ? (
                               <>
                                 <IconButton
                                   onClick={() =>

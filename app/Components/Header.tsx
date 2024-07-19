@@ -14,6 +14,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import TokenIcon from "@mui/icons-material/Token";
 import Link from "next/link";
 import DnsIcon from "@mui/icons-material/Dns";
+
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
   const menuListAdmin = [
@@ -47,15 +48,25 @@ export default function Header() {
       path: "/otchot",
       icon: <StorageIcon />,
     },
+  ];
+
+  const spravichniItems = [
+    {
+      name: "Hisob raqami",
+      path: "/coctav",
+      icon: <StorageIcon />,
+    },
     {
       name: "BXM",
       path: "/names",
       icon: <AccountBalanceIcon />,
     },
   ];
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [active, setActive] = React.useState<string>(menuListAdmin[0].path);
+  const [selectedMenu, setSelectedMenu] = React.useState<string>("");
 
   const AuthOut = () => {
     sessionStorage.setItem("token", "out");
@@ -66,6 +77,12 @@ export default function Header() {
   const handleClick = (path: string) => {
     setActive(path);
     router.push(path);
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const path = e.target.value;
+    setSelectedMenu(path);
+    handleClick(path);
   };
 
   const notAdmin: any = menuListAdmin.slice(0, 3);
@@ -81,7 +98,6 @@ export default function Header() {
               alt=""
             />
           </div>
-
           <h1 className="text-[26px] font-bold">
             {latinToCyrillic("Milliy Gvardiya")}
           </h1>
@@ -122,6 +138,23 @@ export default function Header() {
                 </h1>
               </button>
             ))}
+
+        <select
+          value={selectedMenu}
+          onChange={handleSelectChange}
+          className="bg-[#1976D2] text-white text-[20px] mb-14 font-bold px-4 py-2 rounded-xl transition-all duration-300 focus:outline-none"
+        >
+          {spravichniItems.map((e: any) => (
+            <option
+              className="text-[20px] font-bold "
+              key={e.path}
+              value={e.path}
+            >
+              {latinToCyrillic(e.name)}
+            </option>
+          ))}
+        </select>
+
         <button
           onClick={AuthOut}
           className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}

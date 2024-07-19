@@ -7,6 +7,7 @@ import {
   deleteWorker,
   getAllBatalyon,
   getAllWorkers,
+  getExcelWorker2,
   searchWorker,
   updateWorker,
 } from "@/app/Api/Apis";
@@ -19,7 +20,7 @@ import { latinToCyrillic } from "../../add/Components/lotin";
 import TipTab from "../../Components/TipTab";
 import TipModal from "@/app/Components/ExitModal";
 import AdminTab from "../../Components/AdminTab";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 function page() {
   const { id } = useParams();
   // Umumiy
@@ -211,18 +212,58 @@ function page() {
   const handleSelect = (e: any) => {
     setBatalyon(e.target.value);
   };
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await getExcelWorker2(JWT, id);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
 
   return (
     <>
       {admin ? (
         <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="">
+          <div className="flex justify-between">
             <Button
               onClick={() => router.push("/tip/batalyon")}
               color="success"
               variant="contained"
             >
               {latinToCyrillic("Orqaga")}
+            </Button>
+            <Button
+              onClick={downloadExcel}
+              startIcon={<CloudDownloadIcon />}
+              variant="contained"
+              color="success"
+            >
+              {"Excel"}
             </Button>
           </div>
           <div className="flex justify-between items-center">

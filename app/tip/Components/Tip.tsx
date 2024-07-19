@@ -7,9 +7,11 @@ import {
   deleteWorker,
   getAllBatalyon,
   getAllWorkers,
+  getExcelWorker1,
   searchWorker,
   updateWorker,
 } from "@/app/Api/Apis";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { setModalTip } from "@/app/Redux/TipSlice";
@@ -18,7 +20,7 @@ import TipModal from "./TipModal";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
 import AdminTab from "./AdminTab";
-
+ 
 function Tip() {
   // Umumiy
   const admin = useSelector((s: any) => s.auth.admin);
@@ -221,11 +223,44 @@ function Tip() {
     setBatalyon(e.target.value);
   };
 
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await getExcelWorker1(JWT);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
+
   return (
     <>
       {admin ? (
         <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="">
+          <div className="flex justify-between">
             <Button
               onClick={() => router.push("/tip/batalyon")}
               color="success"
@@ -233,6 +268,7 @@ function Tip() {
             >
               {latinToCyrillic("Orqaga")}
             </Button>
+          
           </div>
           <div className="flex justify-between items-center">
             <div className="flex gap-4 items-center">

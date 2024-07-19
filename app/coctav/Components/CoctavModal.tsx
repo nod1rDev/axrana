@@ -56,7 +56,7 @@ export default function CoctavModal({
               fullWidth
               value={value.accountNumber}
               onChange={(e: any) => handleChange(e)}
-              label="Otryad Nomi"
+              label="Hisob Raqami"
               id="fullWidth"
             />
           </div>
@@ -79,7 +79,7 @@ export default function CoctavModal({
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle id="responsive-dialog-title">
-            {`"${open.name}"` + " " + "ushbu otryadni ochirishni istaysizmi ?"}
+            {`"${open.name}"` + " " + "ushbu Hisob raqamni ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

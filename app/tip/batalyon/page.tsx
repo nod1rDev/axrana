@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MenuBatalyon from "../Components/MenuBatalyon";
-import { getAllBatalyon } from "@/app/Api/Apis";
-import { useSelector } from "react-redux";
+import { getAllBatalyon, getExcelWorker1 } from "@/app/Api/Apis";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { alertChange } from "@/app/Redux/ShaxsiySlice";
 function page() {
   const [select, setSelect] = useState();
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -19,11 +20,55 @@ function page() {
   useEffect(() => {
     getBatalyons();
   }, []);
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await getExcelWorker1(JWT);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
+  const router = useRouter();
   return (
     <div>
-      
-      <MenuBatalyon data={select} />
+      <div className="flex flex-col ">
+        <div className="flex justify-end py-4 px-4">
+          <Button
+            onClick={downloadExcel}
+            startIcon={<CloudDownloadIcon />}
+            variant="contained"
+            color="success"
+          >
+            {"Excel"}
+          </Button>
+        </div>
+        <MenuBatalyon data={select} />
+      </div>
     </div>
   );
 }

@@ -650,7 +650,7 @@ export const getAllAcount = async (JWT: any) => {
 
 export const deleteAcount = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/account/number/delete/" + id, {
-    method: "GET",
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + JWT,
       "Content-Type": "application/json",
@@ -677,7 +677,7 @@ export const createAcount = async (JWT: any, value: any) => {
 };
 
 export const updateAcount = async (JWT: any, value: any, id: any) => {
-  const res = await fetch(URL + "/account/number/update/1" + id, {
+  const res = await fetch(URL + "/account/number/update/" + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -688,5 +688,34 @@ export const updateAcount = async (JWT: any, value: any, id: any) => {
 
   const data = await res.json();
 
+  return data;
+};
+
+export const getExcelWorker1 = async (JWT: any) => {
+  const res = await fetch(URL + "/worker/excel/create", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.blob();
+  return data;
+};
+
+export const getExcelWorker2 = async (JWT: any, id: any) => {
+  const res = await fetch(
+    URL + "/worker/excel/create?battalion=true&id=" + id,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await res.blob();
   return data;
 };

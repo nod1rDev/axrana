@@ -351,7 +351,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       158 003
                     </span>
                     <span>
-                      <span className="font-bold">СТИР:</span> 207 305 369
+                      <span className="font-bold">СТИР:</span> {data?.accountnumber}
                     </span>
                   </div>
                 </div>

@@ -81,8 +81,8 @@ export const latinToCyrillic = (latin: string): string => {
     YA: "Я",
     ya: "я",
     " ": " ",
-    "y'": "ы",
-    "Y'": "Ы",
+    "y'": "ь",
+    "Y'": "ь",
     "'": "ь",
   };
 

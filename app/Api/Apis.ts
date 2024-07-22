@@ -327,7 +327,7 @@ export const updateContract = async (JWT: any, value: any, id: any) => {
 };
 
 //tasks
-export const getAllTasks = async (JWT: any, page: any, limit: any) => {
+export const getAllTasks = async (JWT: any, page?: any, limit?: any) => {
   const res = await fetch(URL + `/task/get/tasks?page=${page}&limit=${limit}`, {
     method: "GET",
     headers: {

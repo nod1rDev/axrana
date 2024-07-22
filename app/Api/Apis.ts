@@ -36,6 +36,21 @@ export const UpdateAuth = async (JWT: any, value: any) => {
 
   return data;
 };
+
+export const UpdateAuth2 = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/auth/update/batalyon/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ ...value }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 export const updateBatalyon = async (JWT: any, id: any, value: any) => {
   const res = await fetch(URL + "/auth/update/batalyon/" + id, {
     method: "PUT",

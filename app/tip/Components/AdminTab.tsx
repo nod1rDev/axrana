@@ -115,83 +115,81 @@ export default function AdminTab({
             </TableRow>
           </CustomTableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage)
-              .map((row: any, i: any) => {
-                return (
-                  <TableRow
-                    hover
-                    onClick={() => {
-                      otish(row.id);
-                    }}
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={i}
-                  >
-                    {columns.map((column, e) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {e == 0 ? (
-                            i + 1
-                          ) : e == 2 ? (
-                            <>
-                              <IconButton
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(
-                                    setModalTip({
-                                      type: 1,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO,
-                                      FIO: row.FIO,
-                                    })
-                                  );
-                                }}
-                                aria-label="delete"
-                                size="medium"
-                              >
-                                <ModeEditOutlineIcon
-                                  fontSize="inherit"
-                                  color="info"
-                                />
-                              </IconButton>
+            {rows.map((row: any, i: any) => {
+              return (
+                <TableRow
+                  hover
+                  onClick={() => {
+                    otish(row.id);
+                  }}
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={i}
+                >
+                  {columns.map((column, e) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {e == 0 ? (
+                          i + 1
+                        ) : e == 2 ? (
+                          <>
+                            <IconButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(
+                                  setModalTip({
+                                    type: 1,
+                                    open: true,
+                                    id: row.id,
+                                    name: row.FIO,
+                                    FIO: row.FIO,
+                                  })
+                                );
+                              }}
+                              aria-label="delete"
+                              size="medium"
+                            >
+                              <ModeEditOutlineIcon
+                                fontSize="inherit"
+                                color="info"
+                              />
+                            </IconButton>
 
-                              <IconButton
-                                sx={{ ml: 1 }}
-                                aria-label="delete"
-                                size="medium"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(
-                                    setModalTip({
-                                      type: 2,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO,
-                                      FIO: row.FIO,
-                                    })
-                                  );
-                                }}
-                              >
-                                <RemoveCircleOutlineIcon
-                                  fontSize="inherit"
-                                  color="error"
-                                />
-                              </IconButton>
-                            </>
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+                            <IconButton
+                              sx={{ ml: 1 }}
+                              aria-label="delete"
+                              size="medium"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(
+                                  setModalTip({
+                                    type: 2,
+                                    open: true,
+                                    id: row.id,
+                                    name: row.FIO,
+                                    FIO: row.FIO,
+                                  })
+                                );
+                              }}
+                            >
+                              <RemoveCircleOutlineIcon
+                                fontSize="inherit"
+                                color="error"
+                              />
+                            </IconButton>
+                          </>
+                        ) : column.format && typeof value === "number" ? (
+                          column.format(value)
+                        ) : (
+                          value
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

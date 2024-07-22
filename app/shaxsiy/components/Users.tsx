@@ -96,7 +96,7 @@ export default function Users() {
   }, []);
 
   const rows = users
-    ? users.map((e: any) => createData(1, e.username, e.password, null, e._id))
+    ? users.map((e: any) => createData(1, e.username, e.password, null, e.id))
     : [];
   const dispatch = useDispatch();
 
@@ -139,7 +139,9 @@ export default function Users() {
   };
   const open = useSelector((s: any) => s.shax.userModal);
   const updateAuth = async (valuee: any) => {
-    const res = await updateBatalyon(JWT, valuee, open.id);
+    console.log(open);
+
+    const res = await updateBatalyon(JWT, open.id, valuee);
     if (res.success) {
       handleClose();
       setValue2({ username: null, newPassword: null });

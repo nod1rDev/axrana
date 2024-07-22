@@ -86,7 +86,7 @@ export default function MenuBar2() {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        {latinToCyrillic("Otchotlar")}
+        {latinToCyrillic("Otchot")}
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -106,8 +106,8 @@ export default function MenuBar2() {
         >
           <div className="flex items-center  w-full">
             <DonutSmallIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {latinToCyrillic("Umumiy otchot")}
+            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+              Бригада умумий ҳисобот
             </span>
           </div>
         </MenuItem>
@@ -120,8 +120,8 @@ export default function MenuBar2() {
         >
           <div className="flex items-center  w-full">
             <DnsIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {latinToCyrillic("Otchot")}
+            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+              батальон умумий ҳисобот
             </span>
           </div>
         </MenuItem>
@@ -134,8 +134,8 @@ export default function MenuBar2() {
         >
           <div className="flex items-center  w-full">
             <TokenIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {latinToCyrillic("Hamkor otchot")}
+            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+              Бригада ҳисобот
             </span>
           </div>
         </MenuItem>
@@ -148,8 +148,8 @@ export default function MenuBar2() {
         >
           <div className="flex items-center  w-full">
             <StorageIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {latinToCyrillic("Bataly'on otchot")}
+            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
+              батальон ҳисобот
             </span>
           </div>
         </MenuItem>

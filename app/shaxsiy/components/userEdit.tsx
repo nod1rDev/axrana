@@ -26,6 +26,8 @@ export default function EditUser({
   const open = useSelector((s: any) => s.shax.userModal);
 
   const handleChange = (e: any) => {
+    
+
     setValue({
       ...value,
       [e.target.name]: e.target.value,

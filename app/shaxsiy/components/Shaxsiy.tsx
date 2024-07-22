@@ -1,5 +1,5 @@
 "use client";
-import { UpdateAuth, getAuth } from "@/app/Api/Apis";
+import { UpdateAuth, UpdateAuth2, getAuth } from "@/app/Api/Apis";
 import { IconButton } from "@mui/material";
 import React from "react";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -29,6 +29,7 @@ function Shaxsiy() {
     getUser();
   }, []);
   const dispatch = useDispatch();
+
   const updateAuth = async (valuee: any) => {
     const res = await UpdateAuth(JWT, valuee);
     if (res.success) {
@@ -51,28 +52,52 @@ function Shaxsiy() {
       );
     }
   };
-  const handleSubmit = () => {
-    if (value.oldPassword !== "" && value.newPassword !== "") {
-      userData.adminstatus
-        ? updateAuth({
-            username: value.username,
-            oldPassword: value.oldPassword,
-            newPassword: value.newPassword,
-          })
-        : updateAuth({
-            oldPassword: value.oldPassword,
-            newPassword: value.newPassword,
-          });
+  const open = useSelector((s: any) => s.shax.modal);
+
+  const updateAuth2 = async (valuee: any) => {
+    const res = await UpdateAuth2(JWT, valuee, open.id);
+    if (res.success) {
+      handleClose();
+      setValue({ username: null, oldPassword: null, newPassword: null });
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Password tahrirlandi"),
+          status: "success",
+        })
+      );
     } else {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Bosh qatorlarni to'ldiring!"),
-          status: "warning",
+          message: latinToCyrillic(res.message),
+          status: "error",
         })
       );
     }
+  };
+  const adminS = useSelector((s: any) => s.auth.admin);
+  const handleSubmit = () => {
+    adminS
+      ? updateAuth({
+          username: value.username,
+          oldPassword: value.oldPassword,
+          newPassword: value.newPassword,
+        })
+      : updateAuth({
+          oldPassword: value.oldPassword,
+          newPassword: value.newPassword,
+        });
+
     setTimeout(() => getUser(), 500);
+  };
+  const handleSubmit2 = () => {
+    console.log(value);
+    
+    updateAuth2({
+      oldPassword: value.oldPassword,
+      newPassword: value.newPassword,
+    });
   };
 
   const handleClose = () => {

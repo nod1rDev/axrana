@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import LatCyrConverter, { latinToCyrillic } from "./lotin";
 import { useSelector, useDispatch } from "react-redux";
-import { URL } from "@/app/Api/Apis";
+
 import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,6 +15,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconButton, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ranksData } from "@/app/Utils";
+import { URL } from "@/app/Api/Apis";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -125,7 +126,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
               status: "success",
             })
           );
-          console.log(admin);
 
           !admin ? router.push("/tip") : router.back();
         } else {
@@ -173,9 +173,13 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             />
           </Button>
           {file && (
-            <IconButton onClick={handleSubmit} size="large" aria-label="upload">
-              <SaveIcon fontSize="inherit" color="info" />
-            </IconButton>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              color="secondary"
+            >
+              {latinToCyrillic("Fileni Yuklash")}
+            </Button>
           )}
         </div>
         <Button type="submit" variant="contained">

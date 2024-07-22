@@ -152,13 +152,13 @@ export default function Login() {
 
                       width: "100%",
                     }}
-                    label={latinToCyrillic("Foydalanuvchi Nomi")}
+                    label={latinToCyrillic("Login")}
                     variant="outlined"
                     onChange={(e: any) => setSelect(e.target.value)}
                   />
                   <FormControl sx={{ width: "100%", mt: 2 }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">
-                      {latinToCyrillic("Paroli")}
+                      {latinToCyrillic("Parol")}
                     </InputLabel>
                     <OutlinedInput
                       sx={{
@@ -179,7 +179,7 @@ export default function Login() {
                           </IconButton>
                         </InputAdornment>
                       }
-                      label={latinToCyrillic("Paroli")}
+                      label={latinToCyrillic("Parol")}
                       name="password"
                       id="outlined-adornment-password"
                     />

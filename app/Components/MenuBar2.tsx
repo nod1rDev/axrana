@@ -9,7 +9,7 @@ import StorageIcon from "@mui/icons-material/Storage"; // Icon for Hisob raqami
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter } from "next/navigation";
 import DnsIcon from "@mui/icons-material/Dns";
-import DonutSmallIcon from '@mui/icons-material/DonutSmall';
+import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 import TokenIcon from "@mui/icons-material/Token";
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -99,6 +99,20 @@ export default function MenuBar2() {
       >
         <MenuItem
           onClick={() => {
+            router.push("/umumiy");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <DonutSmallIcon />
+            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
+              {latinToCyrillic("Umumiy otchot")}
+            </span>
+          </div>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             router.push("/main");
             handleClose();
           }}
@@ -136,20 +150,6 @@ export default function MenuBar2() {
             <StorageIcon />
             <span style={{ fontSize: "20px", fontWeight: "bold" }}>
               {latinToCyrillic("Bataly'on otchot")}
-            </span>
-          </div>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            router.push("/umumiy");
-            handleClose();
-          }}
-          disableRipple
-        >
-          <div className="flex items-center  w-full">
-            <DonutSmallIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-              {latinToCyrillic("Umumiy otchot")}
             </span>
           </div>
         </MenuItem>

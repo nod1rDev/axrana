@@ -742,3 +742,85 @@ export const deleteData2 = async (JWT: any, id: any) => {
   const data = await res.json();
   return data;
 };
+
+export const getBatalyonUmumiy = async (JWT: any) => {
+  const res = await fetch(URL + "/special/get/battalions", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getBatalyonUmumiyData = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/special/get/data/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getBatalyonUmumiySearch = async (
+  JWT: any,
+  id: any,
+  status: any
+) => {
+  const res = await fetch(
+    URL + `/special/get/data/filter/by/status/${id}?${status}=true`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await res.json();
+  return data;
+};
+export const searchByDateUmumiy = async (JWT: any, id: any, value: any) => {
+  const res = await fetch(URL + "/special/get/data/filter/by/date/" + id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const searchByDateUmumiy2 = async (
+  JWT: any,
+  id: any,
+  value: any,
+  status: any
+) => {
+  const res = await fetch(
+    URL + `/special/get/data/filter/date/and/status/${id}?${status}=true`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + JWT,
+      },
+      body: JSON.stringify(value),
+    }
+  );
+
+  const data = await res.json();
+
+  return data;
+};

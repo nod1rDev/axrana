@@ -8,124 +8,227 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from "@mui/icons-material/Search";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import { useReactToPrint } from "react-to-print";
 
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { deleteData2, getByIdComan2, getByIdComand } from "@/app/Api/Apis";
+import {
+  deleteData2,
+  getBatalyonUmumiyData,
+  getBatalyonUmumiySearch,
+  getByIdComan2,
+  getByIdComand,
+  searchByDateUmumiy,
+  searchByDateUmumiy2,
+} from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 import Document4 from "./Components/Document3";
+import WorkerTab from "./Components/WorkerTab";
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import WorkerTab2 from "./Components/WorkerTab2";
 
 function page() {
   const { id } = useParams();
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>();
   const [tasks, setTasks] = useState([]);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [text, setText] = useState<any>();
-  const [versiya, setVersiya] = useState(true);
+  const [status, setStatus] = useState("");
+  const [search, setSearch] = useState(false);
+  const [searchStatus, setSearchStatus] = useState(false);
+  const [value, setValue] = useState<any>({
+    date1: "",
+    date2: "",
+  });
   const getData = async () => {
-    const res = await getByIdComan2(JWT, id);
-    console.log(res);
+    const res = await getBatalyonUmumiyData(JWT, id);
+    
 
-    setText(res.commandDate[0]);
-    setData(res.data);
+    setText(res.data.batalyonName);
+    setData(res);
+    setSearchStatus(false);
   };
 
   useEffect(() => {
     getData();
   }, []);
-  const dispatch = useDispatch();
 
-  const router = useRouter();
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: (): any => componentRef.current,
-  });
-  const deleteData = async () => {
-    const res = await deleteData2(JWT, id);
-    if (res.success) {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Otchot ochirlidi"),
-          status: "success",
-        })
-      );
-      router.push("/maxsus");
+  function formatDateToDDMMYYYY(date: Date): string {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() 0-indexed
+    const year = date.getFullYear();
+
+    return `${day}.${month}.${year}`;
+  }
+
+  useEffect(() => {
+    const date = new Date();
+    const filtDate = formatDateToDDMMYYYY(date);
+    setValue({ date1: filtDate, date2: filtDate });
+    getData();
+  }, []);
+
+  const getSearchData = async () => {
+    const res = await searchByDateUmumiy(JWT, id, value);
+    setData(res);
+    setSearchStatus(false);
+  };
+  const getSearchDataAndStatus = async () => {
+    const res = await searchByDateUmumiy2(JWT, id, value, status);
+    setData(res);
+    setSearchStatus(true);
+  };
+
+  const searchData = () => {
+    setSearch(!search);
+    if (!search) {
+      if (!status) {
+        getSearchData();
+      } else {
+        getSearchDataAndStatus();
+      }
     } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic(res.message),
-          status: "error",
-        })
-      );
+      getData();
     }
+  };
+
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue({
+      ...value,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const getByStatus = async (value: any) => {
+    const res = await getBatalyonUmumiySearch(JWT, id, value);
+    setSearchStatus(true);
+    setData(res);
+  };
+  const router = useRouter();
+  const handleStatus = (e: any) => {
+    setSearch(true);
+    setStatus(e.target.value);
+    getByStatus(e.target.value);
   };
   return (
     <>
       {data && (
         <>
-          <div className=" hidden">
-            <Document4 data={data} ref={componentRef} />
-          </div>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
             <div className="mb-6">
               <Button
                 startIcon={<ArrowBackIcon />}
                 color="info"
                 variant="contained"
-                onClick={() => router.push("/maxsus")}
+                onClick={() => router.back()}
               >
                 {"орқага"}
               </Button>
             </div>
-            <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
+            <div className="rounded-lg w-full mb-5  px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">
-                {latinToCyrillic("Hamkorlikdagi boshqarmalar")}
+                {latinToCyrillic("Umumiy Otchot")}
               </h1>
-              <div className="flex gap-3">
-                <Button
-                  onClick={deleteData}
-                  color="error"
-                  startIcon={<DeleteIcon />}
-                  variant="contained"
-                >
-                  {latinToCyrillic("O'chirish")}
-                </Button>
-                <Button
-                  onClick={handlePrint}
-                  color="success"
-                  startIcon={<LocalPrintshopIcon />}
-                  variant="contained"
-                >
-                  {latinToCyrillic("Chop etish")}
-                </Button>
+              <div className="flex flex-col">
+                <div className="flex justify-end text-[28px]  font-bold">
+                  {latinToCyrillic("Filter")}
+                </div>
+                <div className="flex items-center gap-4">
+                  <FormControl sx={{ width: "200px" }}>
+                    <InputLabel id="demo-simple-select-label">
+                      {latinToCyrillic("Status")}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label={latinToCyrillic("Status")}
+                      onChange={handleStatus}
+                    >
+                      <MenuItem value={"pay"}>
+                        {latinToCyrillic("To'langan")}
+                      </MenuItem>
+                      <MenuItem value={"notPay"}>
+                        {latinToCyrillic("To'lanmagan")}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    id="date1"
+                    label={latinToCyrillic("Sana 1")}
+                    sx={{ width: "200px" }}
+                    onChange={handleChangeValue}
+                    variant="outlined"
+                    value={value.date1}
+                    name="date1"
+                    autoComplete="off"
+                  />
+
+                  <TextField
+                    id="date2"
+                    label={latinToCyrillic("Sana 2")}
+                    sx={{ width: "200px" }}
+                    onChange={handleChangeValue}
+                    variant="outlined"
+                    value={value.date2}
+                    name="date2"
+                    autoComplete="off"
+                  />
+
+                  {search ? (
+                    <IconButton
+                      size="large"
+                      sx={{ width: "60px", height: "60px" }}
+                      aria-label="delete"
+                      onClick={searchData}
+                    >
+                      <CloseIcon fontSize="inherit" color="error" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      size="large"
+                      sx={{ width: "60px", height: "60px" }}
+                      aria-label="search"
+                      onClick={searchData}
+                    >
+                      <SearchIcon fontSize="inherit" color="info" />
+                    </IconButton>
+                  )}
+                </div>
               </div>
             </div>
 
             <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
-              <div className="w-[90%] mb-20 flex flex-col font-bold gap-1 mx-auto text-2xl">
-                <div className="text-center">
-                  {text?.date1 + " "}
-                  {latinToCyrillic("kunidan")}
-
-                  {" " + text?.date2 + " "}
-
-                  {latinToCyrillic(
-                    "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiylar xizmatchilar"
-                  )}
-                </div>
-                <div className="w-full text-center">
-                  {latinToCyrillic("RO'YHATI")}
-                </div>
-              </div>
               <div className="w-[95%] mx-auto flex gap-10 flex-col">
-                {data && data.map((e: any) => <WorkerAndBatalyon data={e} />)}
+                <div className="w-full">
+                  <h1 className={`w-full text-center   text-lg `}>
+                    {data.data.batalyonName +
+                      " " +
+                      latinToCyrillic("harbiy qisim")}
+                  </h1>
+                  <div className="my-4">
+                    {searchStatus ? (
+                      <WorkerTab2
+                        here={true}
+                        data={data.data}
+                        summa={data.summa}
+                      />
+                    ) : (
+                      <WorkerTab here={true} data={data.data} />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

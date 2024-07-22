@@ -24,23 +24,6 @@ function Topshiriq() {
     date2: "",
   });
 
-  function filterAndSortTasks(
-    tasks: {
-      bajarilmagan?: boolean;
-      bajarilmoqda?: boolean;
-      bajarilgan?: boolean;
-    }[]
-  ): {
-    bajarilmagan?: boolean;
-    bajarilmoqda?: boolean;
-    bajarilgan?: boolean;
-  }[] {
-    const notStarted = tasks.filter((task) => task.bajarilmagan);
-    const inProgress = tasks.filter((task) => task.bajarilmoqda);
-    const completed = tasks.filter((task) => task.bajarilgan);
-
-    return [...notStarted, ...inProgress, ...completed];
-  }
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -135,9 +118,16 @@ function Topshiriq() {
                 label={latinToCyrillic("Status")}
                 onChange={handleStatus}
               >
-                <MenuItem value={"done"}>Bajarilgan</MenuItem>
-                <MenuItem value={"inProgress"}>Bajarilmoqda</MenuItem>
-                <MenuItem value={"notDone"}>Bajarilmagan</MenuItem>
+                <MenuItem value={"done"}>
+                  {latinToCyrillic("Bajarilgan")}
+                </MenuItem>
+                <MenuItem value={"inProgress"}>
+                  {" "}
+                  {latinToCyrillic("Bajarilmoqda")}{" "}
+                </MenuItem>
+                <MenuItem value={"notDone"}>
+                  {latinToCyrillic("Bajarilmagan")}{" "}
+                </MenuItem>
               </Select>
             </FormControl>
             <TextField

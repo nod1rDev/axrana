@@ -19,8 +19,16 @@ interface TableProps {
   here: boolean;
 }
 
-const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
-  
+const WorkerTab2 = ({
+  data,
+  summa,
+  here,
+}: {
+  data: any;
+  summa: any;
+  here: boolean;
+}) => {
+  console.log(data);
 
   return (
     <table className="w-full border border-[#000] border-collapse">
@@ -49,7 +57,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
         </thead>
       )}
       <tbody>
-        {data?.payContracts.map((item: any, index: number) => (
+        {data.map((item: any, index: number) => (
           <tr key={index}>
             <td className="border border-[#000] w-[5%] text-center">
               {item.contractnumber}
@@ -78,41 +86,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
               " " +
-             data?.summa +
-              " " +
-              latinToCyrillic("so'm")}
-          </td>
-        </tr>
-        {data?.notPayContracts.map((item: any, index: number) => (
-          <tr key={index}>
-            <td className="border border-[#000] w-[5%] text-center">
-              {item.contractnumber}
-            </td>
-            <td className="border border-[#000] w-[15%] text-center">
-              {item.taskdate}
-            </td>
-            <td className="border border-[#000] w-[20%] text-center">
-              {item.clientname}
-            </td>
-            <td className="border border-[#000] w-[20%] text-center">
-              {item.address}
-            </td>
-            <td className="border border-[#000] w-[5%] text-center">
-              {item.workernumber}
-            </td>
-            <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
-            </td>
-          </tr>
-        ))}
-        <tr>
-          <td
-            colSpan={6}
-            className="border border-[#000] text-right pr-2 font-bold"
-          >
-            {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +
-              " " +
-              data?.notPaySumma +
+              summa +
               " " +
               latinToCyrillic("so'm")}
           </td>
@@ -122,4 +96,4 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
   );
 };
 
-export default WorkerTab;
+export default WorkerTab2;

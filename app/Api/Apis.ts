@@ -87,10 +87,7 @@ export const getAllWorkers = async (
   limit?: any
 ) => {
   const res = await fetch(
-    URL +
-      "/worker/get/" +
-      id +
-      `?page=${page ? page : 1}&limit=${limit ? limit : 1000000}`,
+    URL + "/worker/get/" + id + `?page=${page}&limit=${limit}`,
     {
       method: "GET",
       headers: {
@@ -330,8 +327,8 @@ export const updateContract = async (JWT: any, value: any, id: any) => {
 };
 
 //tasks
-export const getAllTasks = async (JWT: any) => {
-  const res = await fetch(URL + "/task/get/tasks", {
+export const getAllTasks = async (JWT: any, page: any, limit: any) => {
+  const res = await fetch(URL + `/task/get/tasks?page=${page}&limit=${limit}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,

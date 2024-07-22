@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getWorkersForWatch } from "../Api/Apis";
 import { setModalShowWorker } from "../Redux/LavozimSlice";
 import ShowWorkerModal from "./ShowWorkerModal";
+import { formatNumber } from "../Utils";
 // Define the data structure for a row
 interface TableRowData {
   id: number;
@@ -185,16 +186,18 @@ const BudgetTable: any = ({
                       {row.personnel}
                     </Button>
                   </BorderedTableCell>
-                  <BorderedTableCell>{row.hours}</BorderedTableCell>
                   <BorderedTableCell>
-                    {row.rate.toLocaleString()}
+                    {formatNumber(row.hours)}
                   </BorderedTableCell>
                   <BorderedTableCell>
-                    {row.money.toLocaleString()}
+                    {formatNumber(row.rate)}
+                  </BorderedTableCell>
+                  <BorderedTableCell>
+                    {formatNumber(row.money)}
                   </BorderedTableCell>
                   <BorderedTableCell>{row.chegirma}</BorderedTableCell>
                   <BorderedTableCell>
-                    {row.total.toLocaleString()}
+                    {formatNumber(row.total)}
                   </BorderedTableCell>
                 </LeftBorderedTableRow>
               ))}
@@ -204,23 +207,23 @@ const BudgetTable: any = ({
                 </BorderedTableCell>
                 <BorderedTableCell>
                   <Button onClick={getAll} color="inherit" variant="text">
-                    {address && address.allworkernumber}
+                    {address && formatNumber(address.allworkernumber)}
                   </Button>
                 </BorderedTableCell>
                 <BorderedTableCell></BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.timemoney}
+                  {address && formatNumber(address.timemoney)}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.money}
+                  {address && formatNumber(address.money)}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.discountmoney
+                  {address && formatNumber(address.discountmoney)
                     ? address.discountmoney
                     : "___"}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && address.allmoney}
+                  {address && formatNumber(address.allmoney)}
                 </BorderedTableCell>
               </LeftBorderedTableRow>
             </TableBody>

@@ -56,7 +56,7 @@ export default function Login() {
       console.log(res.data.adminstatus);
 
       dispatch(changeAdminStatuss(res.data.adminstatus));
-      setTimeout(() => window.location.reload(), 700);
+      setTimeout(() => window.location.reload(), 1000);
     } else {
       dispatch(
         alertChange({

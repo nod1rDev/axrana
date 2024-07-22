@@ -26,6 +26,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
     // Matn rangini o'zgartirish
   },
 }));
+
 interface Column {
   id: "number" | "FIO" | "Otryad" | "actions";
   label: string;
@@ -36,9 +37,7 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
-
   { id: "FIO", label: latinToCyrillic("FIO"), align: "center", minWidth: 180 },
-
   {
     id: "Otryad",
     label: latinToCyrillic("Batalyon"),
@@ -56,7 +55,6 @@ const columns: readonly Column[] = [
 interface Data {
   number: any;
   FIO: any;
-
   Otryad: any;
   actions: any;
   id: number;
@@ -65,23 +63,16 @@ interface Data {
 function createData(
   number: any,
   FIO: any,
-
   Otryad: any,
   actions: any,
   id: number
 ): Data {
-  return {
-    number,
-    FIO,
-
-    Otryad,
-    actions,
-    id,
-  };
+  return { number, FIO, Otryad, actions, id };
 }
 
 export default function TipTab({
   ranks,
+  data,
   page,
   handleChangePage,
   rowsPerPage,
@@ -89,26 +80,27 @@ export default function TipTab({
 }: {
   ranks: any;
   page: any;
+  data: any;
   handleChangePage: any;
   rowsPerPage: any;
   handleChangeRowsPerPage: any;
 }) {
-  const rows = ranks
-    ? ranks.map((e: any, i: any) =>
-        createData(i + 1, e.fio, e.username, null, e.id)
-      )
-    : [];
+  const rows = ranks.map((e: any, i: any) =>
+    createData(i + 1, e.fio, e.username, null, e.id)
+  );
 
   const dispatch = useDispatch();
   const router = useRouter();
   const admin = useSelector((s: any) => s.auth.admin);
+
   const otish = (id: any) => {
     if (admin) {
       router.push("/tip/" + id);
     }
   };
+
   return (
-    <Paper sx={{ width: "100%" }}>
+    <Paper sx={{ width: "100%", mb: 10 }}>
       <TableContainer sx={{ overflow: "auto", maxHeight: "78vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead sx={{ background: "#edede9" }}>
@@ -125,91 +117,87 @@ export default function TipTab({
             </TableRow>
           </CustomTableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row: any, i: any) => {
-                return (
-                  <TableRow
-                    hover
-                    onClick={() => {
-                      otish(row.id);
-                    }}
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={i}
-                  >
-                    {columns.map((column, e) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {e == 0 ? (
-                            i + 1
-                          ) : e == 3 ? (
-                            <>
-                              <IconButton
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(
-                                    setModalTip({
-                                      type: 1,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO,
-                                      FIO: row.FIO,
-                                      batalyon: row.Otryad,
-                                    })
-                                  );
-                                }}
-                                aria-label="delete"
-                                size="medium"
-                              >
-                                <ModeEditOutlineIcon
-                                  fontSize="inherit"
-                                  color="info"
-                                />
-                              </IconButton>
+            {rows.map((row: any, i: any) => {
+              return (
+                <TableRow
+                  hover
+                  onClick={() => otish(row.id)}
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={i}
+                >
+                  {columns.map((column, e) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {e === 0 ? (
+                          i + 1
+                        ) : e === 3 ? (
+                          <>
+                            <IconButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(
+                                  setModalTip({
+                                    type: 1,
+                                    open: true,
+                                    id: row.id,
+                                    name: row.FIO,
+                                    FIO: row.FIO,
+                                    batalyon: row.Otryad,
+                                  })
+                                );
+                              }}
+                              aria-label="edit"
+                              size="medium"
+                            >
+                              <ModeEditOutlineIcon
+                                fontSize="inherit"
+                                color="info"
+                              />
+                            </IconButton>
 
-                              <IconButton
-                                sx={{ ml: 1 }}
-                                aria-label="delete"
-                                size="medium"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  dispatch(
-                                    setModalTip({
-                                      type: 2,
-                                      open: true,
-                                      id: row.id,
-                                      name: row.FIO,
-                                      FIO: row.FIO,
-                                    })
-                                  );
-                                }}
-                              >
-                                <RemoveCircleOutlineIcon
-                                  fontSize="inherit"
-                                  color="error"
-                                />
-                              </IconButton>
-                            </>
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+                            <IconButton
+                              sx={{ ml: 1 }}
+                              aria-label="delete"
+                              size="medium"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                dispatch(
+                                  setModalTip({
+                                    type: 2,
+                                    open: true,
+                                    id: row.id,
+                                    name: row.FIO,
+                                    FIO: row.FIO,
+                                  })
+                                );
+                              }}
+                            >
+                              <RemoveCircleOutlineIcon
+                                fontSize="inherit"
+                                color="error"
+                              />
+                            </IconButton>
+                          </>
+                        ) : column.format && typeof value === "number" ? (
+                          column.format(value)
+                        ) : (
+                          value
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 20, 100, 200, 500]}
         component="div"
-        count={ranks ? ranks.length : 0}
+        count={data ? data.count : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

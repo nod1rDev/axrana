@@ -39,33 +39,23 @@ function page() {
   const [value, setValue] = useState<any>({});
   const [change, setChange] = useState(1);
   const router = useRouter();
+  const [data, setData] = useState();
 
   useEffect(() => {
     setBatalyon(batID);
   }, [batID.id]);
 
   const getAllRanks = async () => {
-    const res = await getAllWorkers(JWT, id, page, rowsPerPage);
+    const res = await getAllWorkers(JWT, id, page + 1, rowsPerPage);
+
+    setData(res);
     setAllRanks(res.data);
     setFilteredRanks(res.data);
   };
 
   useEffect(() => {
-    const handleReload = () => {
-      const [navigationEntry] = window.performance.getEntriesByType(
-        "navigation"
-      ) as PerformanceNavigationTiming[];
-      if (navigationEntry.type === "reload") {
-        getAllRanks();
-      }
-    };
-
-    handleReload();
     getAllRanks();
-  }, [batalyon?.id, page, rowsPerPage]);
-  useEffect(() => {
-    getAllRanks();
-  }, [batalyon?.id, page, rowsPerPage, change]);
+  }, [page, rowsPerPage]);
 
   const deleteUnvon = async () => {
     const res = await deleteWorker(JWT, open.id);
@@ -190,14 +180,12 @@ function page() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    getAllRanks();
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);
-    getAllRanks();
   };
 
   const getBatalyons = async () => {
@@ -247,134 +235,78 @@ function page() {
 
   return (
     <>
-      {admin ? (
-        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="flex justify-between">
-            <Button
-              onClick={() => router.push("/tip/batalyon")}
-              color="success"
-              variant="contained"
-            >
-              {latinToCyrillic("Orqaga")}
-            </Button>
-            <Button
-              onClick={downloadExcel}
-              startIcon={<CloudDownloadIcon />}
-              variant="contained"
-              color="success"
-            >
-              {"Excel"}
-            </Button>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4 items-center">
-              <form onSubmit={handleSearch} className="flex items-center">
-                <TextField
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  fullWidth
-                  label={latinToCyrillic("FIO orqali qidiring")}
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                    endAdornment: search ? (
-                      <IconButton onClick={clearSearch}>
-                        <CloseIcon color="error" />
-                      </IconButton>
-                    ) : (
-                      <IconButton>
-                        <PersonSearchIcon color="info" />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </form>
-            </div>
-            <Button
-              sx={{ width: "150px", height: "40px" }}
-              onClick={() => router.push("/tip/add")}
-              variant="contained"
-            >
-              {latinToCyrillic("Qo'shish")}
-            </Button>
-          </div>
-          <TipTab
-            page={page}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            rowsPerPage={rowsPerPage}
-            ranks={filteredRanks}
-          />
-          {open.open ? (
-            <TipModal
-              handleDelete={deleteAllRanks}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              value={value}
-              setValue={setValue}
-            />
-          ) : null}
+      <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+        <div className="flex justify-between">
+          <Button
+            onClick={() => router.push("/tip/batalyon")}
+            color="success"
+            variant="contained"
+          >
+            {latinToCyrillic("Orqaga")}
+          </Button>
+          <Button
+            onClick={downloadExcel}
+            startIcon={<CloudDownloadIcon />}
+            variant="contained"
+            color="success"
+          >
+            {"Excel"}
+          </Button>
         </div>
-      ) : (
-        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4 items-center">
-              <form onSubmit={handleSearch} className="flex items-center">
-                <TextField
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  fullWidth
-                  label={latinToCyrillic("FIO orqali qidiring")}
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                    endAdornment: search ? (
-                      <IconButton onClick={clearSearch}>
-                        <CloseIcon color="error" />
-                      </IconButton>
-                    ) : (
-                      <IconButton>
-                        <PersonSearchIcon color="info" />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </form>
-            </div>
-            <Button
-              sx={{ width: "150px", height: "40px" }}
-              onClick={() => router.push("/tip/add")}
-              variant="contained"
-            >
-              {latinToCyrillic("Qo'shish")}
-            </Button>
+        <div className="flex justify-between items-center">
+          <div className="flex gap-4 items-center">
+            <form onSubmit={handleSearch} className="flex items-center">
+              <TextField
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                fullWidth
+                label={latinToCyrillic("FIO orqali qidiring")}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                InputProps={{
+                  autoComplete: "off",
+                  autoCorrect: "off",
+                  spellCheck: "false",
+                  endAdornment: search ? (
+                    <IconButton onClick={clearSearch}>
+                      <CloseIcon color="error" />
+                    </IconButton>
+                  ) : (
+                    <IconButton>
+                      <PersonSearchIcon color="info" />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </form>
           </div>
-          <AdminTab
-            page={page}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            rowsPerPage={rowsPerPage}
-            ranks={filteredRanks}
-          />
-          {open.open ? (
-            <TipModal
-              handleDelete={deleteAllRanks}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              value={value}
-              setValue={setValue}
-            />
-          ) : null}
+          <Button
+            sx={{ width: "150px", height: "40px" }}
+            onClick={() => router.push("/tip/add")}
+            variant="contained"
+          >
+            {latinToCyrillic("Qo'shish")}
+          </Button>
         </div>
-      )}
+        <TipTab
+          data={data}
+          page={page}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          ranks={filteredRanks}
+        />
+        {open.open ? (
+          <TipModal
+            handleDelete={deleteAllRanks}
+            handleClose={handleClose}
+            handleSubmit={handleSubmit}
+            value={value}
+            setValue={setValue}
+          />
+        ) : null}
+      </div>
     </>
   );
 }

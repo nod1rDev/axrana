@@ -10,13 +10,14 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { filterTasks, getAllTasks, searchTasks } from "@/app/Api/Apis";
-import { IconButton } from "@mui/material";
+import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import TopshiriqCard from "./TopshiriqCard";
 
 function Topshiriq() {
   const [data, setData] = useState<any>([]);
+  const [data2, setData2] = useState<any>();
   const [search, setSearch] = useState(false);
   const [value, setValue] = useState<any>({
     date1: "",
@@ -40,14 +41,19 @@ function Topshiriq() {
 
     return [...notStarted, ...inProgress, ...completed];
   }
-
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(0);
   const JWT = useSelector((s: any) => s.auth.JWT);
 
   const getTopshiriqApi = async () => {
-    const res = await getAllTasks(JWT);
-
+    const res = await getAllTasks(JWT, page + 1, rowsPerPage);
+    setData2(res);
     setData(res.data);
   };
+
+  useEffect(() => {
+    getTopshiriqApi();
+  }, [page, rowsPerPage]);
   function formatDateToDDMMYYYY(date: Date): string {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() 0-indexed
@@ -93,6 +99,14 @@ function Topshiriq() {
     setSearch(true);
 
     getByStatus(e.target.value);
+  };
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
   };
 
   return (
@@ -176,6 +190,16 @@ function Topshiriq() {
             <TopshiriqCard key={e.id} click={true} data={e} />
           ))}
       </div>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        component="div"
+        count={data2 ? data2.count : 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage={latinToCyrillic("Qatorlar")}
+      />
     </div>
   );
 }

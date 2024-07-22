@@ -8,8 +8,10 @@ import {
   Checkbox,
   Autocomplete,
   Switch,
+  InputAdornment,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import PercentIcon from "@mui/icons-material/Percent";
 import {
   createContract,
   getAllAcount,
@@ -96,6 +98,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         taskTime: data.tasktime,
         accountNumber: data.accountnumber,
       };
+
       setValue(pureData);
 
       const organ = taskss.map((e: any) => {
@@ -288,7 +291,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             sx={{ width: "70%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.timeLimit}
+            value={value.timeLimit || ""}
             name="timeLimit"
             autoComplete="off"
           />
@@ -299,7 +302,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={value.accountNumber}
+              value={value.accountNumber || ""}
               name="accountNumber"
               label={latinToCyrillic("Hisob Raqam")}
               onChange={handleChangeValue}
@@ -407,6 +410,13 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
               onChange={handleChangeValue}
               variant="outlined"
               value={value.discount || ""}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PercentIcon />
+                  </InputAdornment>
+                ),
+              }}
               name="discount"
               autoComplete="off"
             />

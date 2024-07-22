@@ -96,7 +96,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
     }
   };
   const router = useRouter();
-
+  const admin = useSelector((s: any) => s.auth.admin);
   const handleSubmit = async () => {
     if (!file) return;
 
@@ -113,7 +113,7 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
       redirect: "follow",
     };
 
-    fetch(URL + "/worker/create/excel", requestOptions)
+    fetch(URL + "/worker/import/excel", requestOptions)
       .then((response) => response.text())
       .then((result: any) => {
         const res = textToJson(result);
@@ -125,8 +125,9 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
               status: "success",
             })
           );
+          console.log(admin);
 
-          router.push("/tip");
+          !admin ? router.push("/tip") : router.back();
         } else {
           dispatch(
             alertChange({
@@ -191,7 +192,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           value={createInp.lastname}
           label={latinToCyrillic("Familyasi")}
           variant="outlined"
-         
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"
@@ -209,7 +209,6 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
           id="outlined-basic"
           label={latinToCyrillic("Ismi")}
           variant="outlined"
-         
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"
@@ -219,13 +218,12 @@ function CreateFuqaro({ data, setData }: { data: any; setData: any }) {
             spellCheck: "false",
           }}
         />
-         <TextField
+        <TextField
           name="fatherName"
           sx={{ width: "33%" }}
           onChange={handleChange}
           value={createInp.fatherName}
           id="outlined-basic"
-         
           autoComplete="off"
           autoCorrect="off"
           spellCheck="false"

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
+import { formatString } from "../Utils";
 const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
   const getMonthNameInCyrillic = (month: number): string => {
     const months = [
@@ -119,7 +120,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
               бўлимлари томонидан рўйхатга олинган кундан 2 кун ичида
               «Буюртмачи» тўловни <span className="font-bold">30%</span> амалга
               ошириш мажбуриятини олади ва «Бажарувчи» томонидан шартнома
-              талаблари тўлиқ бажарилгандан сўнг қолган{" "}
+              талаблари тўлиқ бажарилгандан сўнг қолган
               <span className="font-bold">70%</span> миқдори томонлар имзолаган
               хисоб-фактурага асосан амалга оширилади
             </p>
@@ -351,7 +352,7 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       158 003
                     </span>
                     <span>
-                      <span className="font-bold">СТИР:</span> {data?.accountnumber}
+                      <span className="font-bold">СТИР:</span> {formatString(data?.accountnumber)}
                     </span>
                   </div>
                 </div>

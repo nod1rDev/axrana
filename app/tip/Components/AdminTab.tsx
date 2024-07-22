@@ -72,6 +72,7 @@ function createData(
 }
 
 export default function AdminTab({
+  data,
   ranks,
   page,
   handleChangePage,
@@ -79,15 +80,15 @@ export default function AdminTab({
   handleChangeRowsPerPage,
 }: {
   ranks: any;
+  data: any;
   page: any;
   handleChangePage: any;
   rowsPerPage: any;
   handleChangeRowsPerPage: any;
 }) {
-  const rows = ranks
-    ? ranks.map((e: any, i: any) => createData(i + 1, e.fio, null, e.id))
-    : [];
-
+  const rows = ranks.map((e: any, i: any) =>
+    createData(i + 1, e.fio, null, e.id)
+  );
   const dispatch = useDispatch();
   const router = useRouter();
   const admin = useSelector((s: any) => s.auth.admin);
@@ -115,7 +116,7 @@ export default function AdminTab({
           </CustomTableHead>
           <TableBody>
             {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .slice(page * rowsPerPage)
               .map((row: any, i: any) => {
                 return (
                   <TableRow
@@ -197,7 +198,7 @@ export default function AdminTab({
       <TablePagination
         rowsPerPageOptions={[10, 20, 100, 200, 500]}
         component="div"
-        count={ranks ? ranks.length : 0}
+        count={data ? data.count : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

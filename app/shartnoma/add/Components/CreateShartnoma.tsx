@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Box, Button, IconButton, FormControl, Switch } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  FormControl,
+  Switch,
+  InputAdornment,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createContract, getAllAcount, getForBatalyon } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -11,7 +18,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
+import PercentIcon from "@mui/icons-material/Percent";
 function CreateShartnoma({ language }: { language: any }) {
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = useState<any>({});
@@ -303,6 +310,13 @@ function CreateShartnoma({ language }: { language: any }) {
               sx={{ width: "30%" }}
               onChange={handleChangeValue}
               variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PercentIcon />
+                  </InputAdornment>
+                ),
+              }}
               value={value.discount}
               name="discount"
               autoComplete="off"

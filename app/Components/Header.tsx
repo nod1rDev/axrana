@@ -15,6 +15,7 @@ import TokenIcon from "@mui/icons-material/Token";
 import Link from "next/link";
 import DnsIcon from "@mui/icons-material/Dns";
 import MenuBar from "./MenuBar";
+import MenuBar2 from "./MenuBar2";
 
 export default function Header() {
   const admin = useSelector((s: any) => s.auth.admin);
@@ -33,34 +34,6 @@ export default function Header() {
       name: "FIO",
       path: admin ? "/tip/batalyon" : "/tip",
       icon: <PermIdentityIcon />,
-    },
-    {
-      name: "Otchot",
-      path: "/main",
-      icon: <DnsIcon />,
-    },
-    {
-      name: "Hamkor otchot",
-      path: "/maxsus",
-      icon: <TokenIcon />,
-    },
-    {
-      name: "Bataly'on otchot",
-      path: "/otchot",
-      icon: <StorageIcon />,
-    },
-  ];
-
-  const spravichniItems = [
-    {
-      name: "Hisob raqami",
-      path: "/coctav",
-      icon: <StorageIcon />,
-    },
-    {
-      name: "BXM",
-      path: "/names",
-      icon: <AccountBalanceIcon />,
     },
   ];
 
@@ -142,8 +115,12 @@ export default function Header() {
               </button>
             ))}
         {admin ? (
+          <div className="mb-0">
+            <MenuBar2 />
+          </div>
+        ) : null}
+        {admin ? (
           <div className="mb-10">
-            {" "}
             <MenuBar />
           </div>
         ) : (

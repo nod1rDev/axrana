@@ -25,6 +25,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin"; // Correct import
 import { setModalCoctav } from "../Redux/CoctavsSlice";
 import CoctavModal from "./Components/CoctavModal";
+import { formatString } from "../Utils";
 
 interface Column {
   id: "number" | "FoydalanuvchiNomi" | "nima" | "actions";
@@ -318,9 +319,9 @@ export default function Page() {
                                 </IconButton>
                               </>
                             ) : column.format && typeof value === "number" ? (
-                              column.format(value)
+                              column.format(formatString(value))
                             ) : (
-                              value
+                              formatString(value)
                             )}
                           </TableCell>
                         );

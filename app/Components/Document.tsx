@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
+import { formatString } from "../Utils";
 const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
   function formatNumber(value: number): string {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -336,7 +337,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                     </span>
                     <span>
                       <span className="font-bold">СТИР:</span>{" "}
-                      {data?.accountnumber}
+                      {formatString(data?.accountnumber)}
                     </span>
                   </div>
                 </div>

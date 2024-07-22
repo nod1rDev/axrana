@@ -3,14 +3,6 @@ import React, { useEffect, useState } from "react";
 import { TextField, IconButton, Button } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import {
-  deleteWorker,
-  getAllBatalyon,
-  getAllWorkers,
-  getExcelWorker1,
-  searchWorker,
-  updateWorker,
-} from "@/app/Api/Apis";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -20,9 +12,16 @@ import TipModal from "./TipModal";
 import { useRouter } from "next/navigation";
 import { latinToCyrillic } from "../add/Components/lotin";
 import AdminTab from "./AdminTab";
- 
+import {
+  deleteWorker,
+  getAllBatalyon,
+  getAllWorkers,
+  getExcelWorker1,
+  searchWorker,
+  updateWorker,
+} from "@/app/Api/Apis";
+
 function Tip() {
-  // Umumiy
   const admin = useSelector((s: any) => s.auth.admin);
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -38,6 +37,7 @@ function Tip() {
   const [value, setValue] = useState<any>({});
   const [change, setChange] = useState(1);
   const router = useRouter();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setBatalyon(batID);
@@ -45,37 +45,19 @@ function Tip() {
 
   const getAllRanks = async () => {
     try {
-      if (admin) {
-        const idd = sessionStorage.getItem("batalyonId");
-        const res = await getAllWorkers(JWT, idd, page, rowsPerPage);
-        setAllRanks(res.data);
-        setFilteredRanks(res.data);
-      } else {
-        const res = await getAllWorkers(JWT, null, page, rowsPerPage);
-        setAllRanks(res.data);
-        setFilteredRanks(res.data);
-      }
+      const idd = admin ? sessionStorage.getItem("batalyonId") : null;
+      const res = await getAllWorkers(JWT, idd, page, rowsPerPage);
+      setData(res);
+      setAllRanks(res.data);
+      setFilteredRanks(res.data);
     } catch (error) {
       console.error("Failed to fetch ranks:", error);
     }
   };
 
   useEffect(() => {
-    const handleReload = () => {
-      const [navigationEntry] = window.performance.getEntriesByType(
-        "navigation"
-      ) as PerformanceNavigationTiming[];
-      if (navigationEntry.type === "reload") {
-        getAllRanks();
-      }
-    };
-
-    handleReload();
     getAllRanks();
   }, [batalyon?.id, page, rowsPerPage]);
-  useEffect(() => {
-    getAllRanks();
-  }, [batalyon?.id, page, rowsPerPage, change]);
 
   const deleteUnvon = async () => {
     const res = await deleteWorker(JWT, open.id);
@@ -200,14 +182,12 @@ function Tip() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    getAllRanks();
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);
-    getAllRanks();
   };
 
   const getBatalyons = async () => {
@@ -226,14 +206,10 @@ function Tip() {
   const downloadExcel = async () => {
     try {
       const excelBlob = await getExcelWorker1(JWT);
-
-      // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
-
-      // <a> elementi yaratish va yuklab olishni amalga oshirish
       const a = document.createElement("a");
       a.href = url;
-      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      a.download = "excel_file.xlsx";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -242,7 +218,7 @@ function Tip() {
         alertChange({
           open: true,
           message: latinToCyrillic("Excel file yuklandi"),
-          status: "sucess",
+          status: "success",
         })
       );
     } catch (error) {
@@ -258,127 +234,71 @@ function Tip() {
 
   return (
     <>
-      {admin ? (
-        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="flex justify-between">
+      <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-4 items-center">
+            <form onSubmit={handleSearch} className="flex items-center">
+              <TextField
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                fullWidth
+                label={latinToCyrillic("FIO orqali qidiring")}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                InputProps={{
+                  autoComplete: "off",
+                  autoCorrect: "off",
+                  spellCheck: "false",
+                  endAdornment: search ? (
+                    <IconButton onClick={clearSearch}>
+                      <CloseIcon color="error" />
+                    </IconButton>
+                  ) : (
+                    <IconButton>
+                      <PersonSearchIcon color="info" />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </form>
+          </div>
+          <div className="flex gap-4">
             <Button
-              onClick={() => router.push("/tip/batalyon")}
+              sx={{ width: "150px", height: "40px" }}
+              onClick={() => router.push("/tip/add")}
+              variant="contained"
+            >
+              {latinToCyrillic("Qo'shish")}
+            </Button>
+            <Button
+              onClick={downloadExcel}
+              startIcon={<CloudDownloadIcon />}
+              variant="contained"
               color="success"
-              variant="contained"
             >
-              {latinToCyrillic("Orqaga")}
-            </Button>
-          
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4 items-center">
-              <form onSubmit={handleSearch} className="flex items-center">
-                <TextField
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  fullWidth
-                  label={latinToCyrillic("FIO orqali qidiring")}
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                    endAdornment: search ? (
-                      <IconButton onClick={clearSearch}>
-                        <CloseIcon color="error" />
-                      </IconButton>
-                    ) : (
-                      <IconButton>
-                        <PersonSearchIcon color="info" />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </form>
-            </div>
-            <Button
-              sx={{ width: "150px", height: "40px" }}
-              onClick={() => router.push("/tip/add")}
-              variant="contained"
-            >
-              {latinToCyrillic("Qo'shish")}
+              {"Excel"}
             </Button>
           </div>
-          <TipTab
-            page={page}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            rowsPerPage={rowsPerPage}
-            ranks={filteredRanks}
-          />
-          {open.open ? (
-            <TipModal
-              handleDelete={deleteAllRanks}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              value={value}
-              setValue={setValue}
-            />
-          ) : null}
         </div>
-      ) : (
-        <div className="flex gap-4 relative max-w-[95%] mx-auto pt-5 flex-col">
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4 items-center">
-              <form onSubmit={handleSearch} className="flex items-center">
-                <TextField
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  fullWidth
-                  label={latinToCyrillic("FIO orqali qidiring")}
-                  autoComplete="off"
-                  autoCorrect="off"
-                  spellCheck="false"
-                  InputProps={{
-                    autoComplete: "off",
-                    autoCorrect: "off",
-                    spellCheck: "false",
-                    endAdornment: search ? (
-                      <IconButton onClick={clearSearch}>
-                        <CloseIcon color="error" />
-                      </IconButton>
-                    ) : (
-                      <IconButton>
-                        <PersonSearchIcon color="info" />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </form>
-            </div>
-            <Button
-              sx={{ width: "150px", height: "40px" }}
-              onClick={() => router.push("/tip/add")}
-              variant="contained"
-            >
-              {latinToCyrillic("Qo'shish")}
-            </Button>
-          </div>
-          <AdminTab
-            page={page}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            rowsPerPage={rowsPerPage}
-            ranks={filteredRanks}
+        <AdminTab
+          data={data}
+          page={page}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          ranks={allRanks}
+        />
+        {open.open ? (
+          <TipModal
+            handleDelete={deleteAllRanks}
+            handleClose={handleClose}
+            handleSubmit={handleSubmit}
+            value={value}
+            setValue={setValue}
           />
-          {open.open ? (
-            <TipModal
-              handleDelete={deleteAllRanks}
-              handleClose={handleClose}
-              handleSubmit={handleSubmit}
-              value={value}
-              setValue={setValue}
-            />
-          ) : null}
-        </div>
-      )}
+        ) : null}
+      </div>
     </>
   );
 }

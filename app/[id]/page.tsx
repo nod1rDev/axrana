@@ -17,6 +17,7 @@ import Documenttt from "../Components/Document";
 import { deleteContract, getToPrint } from "../Api/Apis";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import Document2 from "../Components/Document2";
+import { formatString } from "../Utils";
 function page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -87,7 +88,7 @@ function page() {
 
     return { year: year, month: monthName };
   };
-  function formatNumber(value: number): string {
+   function formatNumber(value: number): string {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
   return (
@@ -473,7 +474,7 @@ function page() {
                           </span>
                           <span>
                             <span className="font-bold">СТИР:</span>{" "}
-                            {data?.accountnumber}
+                            {formatString(data?.accountnumber)}
                           </span>
                         </div>
                       </div>
@@ -612,8 +613,9 @@ function page() {
                     томонидан рўйхатга олинган кундан 2 кун ичида «Буюртмачи»
                     тўловни <span className="font-bold">30%</span> амалга ошириш
                     мажбуриятини олади ва «Бажарувчи» томонидан шартнома
-                    талаблари тўлиқ бажарилгандан сўнг қолган 70% миқдори
-                    томонлар имзолаган хисоб-фактурага асосан амалга оширилади
+                    талаблари тўлиқ бажарилгандан сўнг қолган{" "}
+                    <span className="font-bold">70%</span> миқдори томонлар
+                    имзолаган хисоб-фактурага асосан амалга оширилади
                   </p>
                   <p className="mb-0">
                     <span className="">3.4</span> «Бажарувчи» тўловнинг амалга
@@ -845,7 +847,7 @@ function page() {
                           </span>
                           <span>
                             <span className="font-bold">СТИР:</span>{" "}
-                            {data?.accountnumber}
+                            {formatString(data?.accountnumber)}
                           </span>
                         </div>
                       </div>

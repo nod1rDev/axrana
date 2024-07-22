@@ -77,7 +77,6 @@ export default function Users() {
     username: null,
     newPassword: null,
   });
-  
 
   const getUsers = async () => {
     const res = await getAuth(JWT);
@@ -143,7 +142,7 @@ export default function Users() {
     const res = await updateBatalyon(JWT, valuee, open.id);
     if (res.success) {
       handleClose();
-      setValue2({ username: null,  newPassword: null });
+      setValue2({ username: null, newPassword: null });
       dispatch(
         alertChange({
           open: true,
@@ -162,7 +161,7 @@ export default function Users() {
     }
   };
   const handleSubmite = () => {
-    if ( value2.newPassword !== "") {
+    if (value2.newPassword !== "") {
       updateAuth(value2);
     } else {
       dispatch(
@@ -246,15 +245,27 @@ export default function Users() {
                             ) : e == 3 ? (
                               <>
                                 <IconButton
-                                  onClick={() =>
-                                    dispatch(
-                                      setUserModal({
-                                        open: true,
-                                        id: row.id,
-                                        name: row.FoydalanuvchiNomi,
-                                      })
-                                    )
-                                  }
+                                  onClick={() => {
+                                    if (row.FoydalanuvchiNomi !== "98162") {
+                                      if (row.FoydalanuvchiNomi !== "98157") {
+                                        if (
+                                          row.FoydalanuvchiNomi !==
+                                          "Toshkent Shahar IIBB"
+                                        ) {
+                                          dispatch(
+                                            setUserModal({
+                                              open: true,
+                                              id: row.id,
+                                              name: row.FoydalanuvchiNomi,
+                                            })
+                                          );
+                                        } else {
+                                        }
+                                      } else {
+                                      }
+                                    } else {
+                                    }
+                                  }}
                                   aria-label="delete"
                                   size="medium"
                                 >

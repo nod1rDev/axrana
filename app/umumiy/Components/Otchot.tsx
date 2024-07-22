@@ -4,15 +4,22 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import ShartnomaCard from "./ShartnomaCard";
+
 import TextField from "@mui/material/TextField";
 
 import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { filterContract, getAllContract } from "@/app/Api/Apis";
+import {
+  filterContract,
+  filterOtchot2,
+  getAllContract,
+  getComand,
+  getComand2,
+} from "@/app/Api/Apis";
+import OtchotCard from "./OtchotCard";
 
-function Shartnoma() {
+function Otchot() {
   const [shartnomalar, setShartnomalar] = useState([]);
   const [data, setData] = useState<any>();
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -37,7 +44,7 @@ function Shartnoma() {
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
-    const res = await getAllContract(JWT, page, rowsPerPage);
+    const res = await getComand2(JWT, page, rowsPerPage);
 
     setData(res);
     setShartnomalar(res.data);
@@ -46,7 +53,7 @@ function Shartnoma() {
     getAllContractt();
   }, []);
   const getSearchData = async () => {
-    const res = await filterContract(JWT, value);
+    const res = await filterOtchot2(JWT, value);
     setData(res);
     setShartnomalar(res.data);
   };
@@ -77,10 +84,10 @@ function Shartnoma() {
   };
 
   return (
-    <div className="w-[80%] flex flex-col mt-6 mx-auto">
+    <div className="w-[90%] flex flex-col mt-6 mx-auto">
       <div className="flex mb-5 justify-end">
         <Button
-          onClick={() => router.push("/shartnoma/add")}
+          onClick={() => router.push("/maxsus/add")}
           variant="contained"
           size="large"
         >
@@ -90,14 +97,16 @@ function Shartnoma() {
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
           <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Shartnomalar")}
+            {latinToCyrillic(" Umumiy otchot")}
           </h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(
-                  "ta shartnoma mavjud"
+                  "ta hamkorlikdagi boshqarmalar otchot mavjud"
                 )} `
-              : latinToCyrillic("Shartnoma mavjud emas")}
+              : latinToCyrillic(
+                  "Hamkorlikdagi boshqarmalar otchot mavjud emas"
+                )}
           </span>
         </div>
         <div className="flex flex-col">
@@ -150,15 +159,14 @@ function Shartnoma() {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        {shartnomalar &&
-          shartnomalar.map((e: any) => <ShartnomaCard data={e} />)}
+        {shartnomalar && shartnomalar.map((e: any) => <OtchotCard data={e} />)}
       </div>
 
       <div className="flex justify-end mt-4">
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50, 100]}
           component="div"
-          count={data ? data.count : 0}
+          count={shartnomalar ? shartnomalar.length : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -170,4 +178,4 @@ function Shartnoma() {
   );
 }
 
-export default Shartnoma;
+export default Otchot;

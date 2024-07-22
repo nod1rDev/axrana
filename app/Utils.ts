@@ -68,3 +68,29 @@ export const ranksData: Rank[] = [
   { kodZvaniya: 18, zvaniye: "Генерал лейтенант", sokrashenie: "ГЛТ" },
   { kodZvaniya: 19, zvaniye: "Генерал полковник", sokrashenie: "ГП" },
 ];
+
+export function formatString(input: any): any {
+  if (input) {
+    
+
+    // Ensure the string is at least two characters long
+    if (input.length < 2) {
+      return input;
+    }
+
+    // Split the first two characters and join with a space
+    let result = input.slice(0, 2);
+
+    // Process the remaining characters in chunks of three
+    const remaining = input.slice(2);
+    for (let i = 0; i < remaining.length; i += 3) {
+      result += " " + remaining.slice(i, i + 3);
+    }
+
+    return result;
+  }
+}
+
+export function formatNumber(value: number): any {
+  if (value) return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}

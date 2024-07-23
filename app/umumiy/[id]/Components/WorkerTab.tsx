@@ -20,6 +20,8 @@ interface TableProps {
 }
 
 const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
+  console.log(data);
+
   return (
     <table className="w-full border border-[#000] border-collapse">
       {here && (
@@ -31,14 +33,17 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <th className="border border-[#000] font-[500] w-[15%] text-center">
               {latinToCyrillic("Tadbir Sanasi")}
             </th>
-            <th className="border border-[#000] font-[500] w-[20%] text-center">
+            <th className="border border-[#000] font-[500] w-[18%] text-center">
               {latinToCyrillic("Buyurtmachi ismi")}
             </th>
-            <th className="border border-[#000] font-[500]  w-[20%] text-center">
+            <th className="border border-[#000] font-[500]  w-[18%] text-center">
               {latinToCyrillic("Manzil")}
             </th>
             <th className="border border-[#000] font-[500] w-[5%] text-center">
               {latinToCyrillic("Xodimlar soni")}
+            </th>
+            <th className="border border-[#000] font-[500] w-[5%] text-center">
+              {latinToCyrillic("Vaqt")}
             </th>
             <th className="border border-[#000] font-[500] text-center w-[15%]">
               {latinToCyrillic("Jami summa")}
@@ -55,14 +60,17 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[15%] text-center">
               {item.taskdate}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[18%] text-center">
               {item.clientname}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[18%] text-center">
               {item.address}
             </td>
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
+            </td>
+            <td className="border border-[#000] w-[8%] text-center">
+              {item.tasktime}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
               {formatNumber(item.allmoney)}
@@ -71,7 +79,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
         ))}
         <tr>
           <td
-            colSpan={6}
+            colSpan={7}
             className="border border-[#000] text-right pr-2 font-bold"
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
@@ -89,14 +97,17 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[15%] text-center">
               {item.taskdate}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[18%] text-center">
               {item.clientname}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[18%] text-center">
               {item.address}
             </td>
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
+            </td>
+            <td className="border border-[#000] w-[5%] text-center">
+              {item.tasktime}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
               {formatNumber(item.allmoney)}
@@ -105,7 +116,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
         ))}
         <tr>
           <td
-            colSpan={6}
+            colSpan={7}
             className="border border-[#000] text-right pr-2 font-bold"
           >
             {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +

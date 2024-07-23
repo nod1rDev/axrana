@@ -20,8 +20,6 @@ interface TableProps {
 }
 
 const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
-  
-
   return (
     <table className="w-full border border-[#000] border-collapse">
       {here && (
@@ -67,7 +65,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
               {item.workernumber}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
+              {formatNumber(item.allmoney)}
             </td>
           </tr>
         ))}
@@ -78,7 +76,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
               " " +
-             data?.summa +
+              formatNumber(data?.summa) +
               " " +
               latinToCyrillic("so'm")}
           </td>
@@ -101,7 +99,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
               {item.workernumber}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
+              {formatNumber(item.allmoney)}
             </td>
           </tr>
         ))}
@@ -112,7 +110,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
           >
             {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +
               " " +
-              data?.notPaySumma +
+              formatNumber(data?.notPaySumma) +
               " " +
               latinToCyrillic("so'm")}
           </td>

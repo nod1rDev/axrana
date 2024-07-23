@@ -38,7 +38,7 @@ const Page = () => {
   };
 
   const GetWorkers = async () => {
-    const res = await getAllWorkers(JWT, null);
+    const res = await getAllWorkers(JWT, null, 1, 1000000);
 
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
@@ -71,8 +71,6 @@ const Page = () => {
   const router = useRouter();
 
   const CreateWorker = async (value: any) => {
-    
-
     const res = await pushWorkers(JWT, id, value);
 
     if (res.success) {
@@ -183,6 +181,14 @@ const Page = () => {
                     }}
                   />
                 </form>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ mt: 5 }}
+                  onClick={handleSubmit}
+                >
+                  {latinToCyrillic("Saqlash")}
+                </Button>
               </div>
               <List
                 sx={{
@@ -214,16 +220,6 @@ const Page = () => {
                   );
                 })}
               </List>
-
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ mt: 5 }}
-                fullWidth
-                onClick={handleSubmit}
-              >
-                {latinToCyrillic("Saqlash")}
-              </Button>
             </AccordionDetails>
           </Accordion>
         )}

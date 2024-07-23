@@ -15,6 +15,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import TadbirCard from "./Components/TadbirCard";
+import { formatNumber } from "@/app/Utils";
 
 const Page = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const Page = () => {
     date1: "",
     date2: "",
   });
+
   function formatDateToDDMMYYYY(date: Date): string {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() 0-indexed
@@ -115,13 +117,10 @@ const Page = () => {
               {latinToCyrillic("Tadbirlardan oladigan maoshi")}
             </h1>
             <span className=" text-red-500 ml-3  font-bold">
-              {summa + " " + latinToCyrillic("sum")}
+              {formatNumber(summa) + " " + latinToCyrillic("sum")}
             </span>
           </div>
           <div className="flex flex-col">
-            <div className="flex justify-end text-[28px]  font-bold">
-              {latinToCyrillic("Filter")}
-            </div>
             <div className="flex  items-center gap-4">
               <TextField
                 id="date1"

@@ -86,7 +86,7 @@ export default function MenuBar2() {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        {latinToCyrillic("Otchot")}
+        {latinToCyrillic("Hisobot")}
       </Button>
       <StyledMenu
         id="demo-customized-menu"

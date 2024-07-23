@@ -1,4 +1,5 @@
 // components/Table.tsx
+import { formatNumber } from "@/app/Utils";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import React from "react";
 
@@ -70,7 +71,7 @@ const WorkerTab = ({
               {item.workernumber}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
+              {formatNumber(item.allmoney)}
             </td>
           </tr>
         ))}
@@ -81,7 +82,7 @@ const WorkerTab = ({
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
               " " +
-              data.summa +
+              formatNumber(data.summa) +
               " " +
               latinToCyrillic("so'm")}
           </td>
@@ -104,7 +105,7 @@ const WorkerTab = ({
               {item.workernumber}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
+              {formatNumber(item.allmoney)}
             </td>
           </tr>
         ))}
@@ -115,7 +116,7 @@ const WorkerTab = ({
           >
             {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +
               " " +
-              data.notPaySumma +
+              formatNumber(data.notPaySumma) +
               " " +
               latinToCyrillic("so'm")}
           </td>

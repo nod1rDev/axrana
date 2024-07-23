@@ -104,9 +104,6 @@ function Topshiriq() {
           </span>
         </div>
         <div className="flex flex-col">
-          <div className="flex justify-end text-[28px]  font-bold">
-            {latinToCyrillic("Filter")}
-          </div>
           <div className="flex items-center gap-4">
             <FormControl sx={{ width: "200px" }}>
               <InputLabel id="demo-simple-select-label">

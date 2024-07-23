@@ -1,4 +1,5 @@
 // components/Table.tsx
+import { formatNumber } from "@/app/Utils";
 import React from "react";
 
 interface TableProps {
@@ -40,7 +41,7 @@ const WorkerTab = ({ data, sal }: { data: any; sal?: any }) => {
                   : "border-[2px]     text-xl pb-4"
               }  border-[#000] text-center w-[25%]`}
             >
-              {item.allsumma}
+              {formatNumber(item.allsumma)}
             </td>
           </tr>
         ))}

@@ -131,7 +131,7 @@ export default function AdminTab({
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {e == 0 ? (
-                          i + 1
+                          page * rowsPerPage + i + 1
                         ) : e == 2 ? (
                           <>
                             <IconButton

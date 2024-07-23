@@ -86,7 +86,7 @@ export default function TipTab({
   handleChangeRowsPerPage: any;
 }) {
   const rows = ranks.map((e: any, i: any) =>
-    createData(i + 1, e.fio, e.username, null, e.id)
+    createData(page + 1 * rowsPerPage + i + 1, e.fio, e.username, null, e.id)
   );
 
   const dispatch = useDispatch();
@@ -131,7 +131,7 @@ export default function TipTab({
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {e === 0 ? (
-                          i + 1
+                          page * rowsPerPage + i + 1
                         ) : e === 3 ? (
                           <>
                             <IconButton
@@ -195,7 +195,7 @@ export default function TipTab({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 20, 100, 200, 500]}
+        rowsPerPageOptions={[10, 20, 100, 200]}
         component="div"
         count={data ? data.count : 0}
         rowsPerPage={rowsPerPage}

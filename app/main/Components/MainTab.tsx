@@ -1,4 +1,5 @@
 // components/Table.tsx
+import { formatNumber } from "@/app/Utils";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import React from "react";
 
@@ -46,7 +47,7 @@ const MaiTab = ({ data }: TableProps) => {
               {item.Tolanmagan_summa}
             </td>
             <td className="border border-[#000] px-2 py-1">
-              {item.Umumiy_summa}
+              {formatNumber(item.Umumiy_summa)}
             </td>
           </tr>
         ))}

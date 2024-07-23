@@ -71,8 +71,6 @@ export const ranksData: Rank[] = [
 
 export function formatString(input: any): any {
   if (input) {
-    
-
     // Ensure the string is at least two characters long
     if (input.length < 2) {
       return input;
@@ -91,6 +89,10 @@ export function formatString(input: any): any {
   }
 }
 
-export function formatNumber(value: number): any {
-  if (value) return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+export function formatNumber(value: any): any {
+  if (value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  } else {
+    return 0;
+  }
 }

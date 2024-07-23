@@ -139,9 +139,7 @@ function page() {
             <div className="rounded-lg w-full mb-5  px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">Бригада умумий ҳисобот</h1>
               <div className="flex flex-col">
-                <div className="flex justify-end text-[28px]  font-bold">
-                  {latinToCyrillic("Filter")}
-                </div>
+              
                 <div className="flex items-center gap-4">
                   <FormControl sx={{ width: "200px" }}>
                     <InputLabel id="demo-simple-select-label">

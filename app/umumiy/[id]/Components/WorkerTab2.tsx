@@ -28,7 +28,7 @@ const WorkerTab2 = ({
   summa: any;
   here: boolean;
 }) => {
-  console.log(data);
+
 
   return (
     <table className="w-full border border-[#000] border-collapse">
@@ -75,7 +75,7 @@ const WorkerTab2 = ({
               {item.workernumber}
             </td>
             <td className="border border-[#000] text-center w-[15%]">
-              {item.allmoney}
+              {formatNumber(item.allmoney)}
             </td>
           </tr>
         ))}
@@ -86,7 +86,7 @@ const WorkerTab2 = ({
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
               " " +
-              summa +
+              formatNumber(summa) +
               " " +
               latinToCyrillic("so'm")}
           </td>

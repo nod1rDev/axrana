@@ -218,8 +218,8 @@ const BudgetTable: any = ({
                   {address && formatNumber(address.money)}
                 </BorderedTableCell>
                 <BorderedTableCell>
-                  {address && formatNumber(address.discountmoney)
-                    ? address.discountmoney
+                  {address && address.discountmoney
+                    ? formatNumber(address.discountmoney)
                     : "___"}
                 </BorderedTableCell>
                 <BorderedTableCell>

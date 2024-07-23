@@ -10,7 +10,12 @@ import TextField from "@mui/material/TextField";
 import { IconButton, TablePagination } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { filterContract, filterOtchot, getAllContract, getComand } from "@/app/Api/Apis";
+import {
+  filterContract,
+  filterOtchot,
+  getAllContract,
+  getComand,
+} from "@/app/Api/Apis";
 import OtchotCard from "./OtchotCard";
 
 function Otchot() {
@@ -90,9 +95,7 @@ function Otchot() {
       </div>
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
-          <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Bataly'on otchotlari")}
-          </h1>
+          <h1 className="text-[28px]  font-bold">батальон ҳисобот</h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(

@@ -73,9 +73,7 @@ function page() {
         <>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
-              <h1 className="text-[24px] font-bold">
-                {latinToCyrillic("Otchot")}
-              </h1>
+              <h1 className="text-[24px] font-bold">батальон умумий ҳисобот</h1>
               <div className="flex gap-3">
                 <Button
                   onClick={downloadExcel}

@@ -45,7 +45,6 @@ function Otchot() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
     const res = await getComand2(JWT, page, rowsPerPage);
-    
 
     setData(res);
     setShartnomalar(res.data);
@@ -97,9 +96,7 @@ function Otchot() {
       </div>
       <div className="flex w-full justify-between mb-10">
         <div className="flex flex-col">
-          <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Hamkorlikdagi boshqarmalar")}
-          </h1>
+          <h1 className="text-[28px]  font-bold"> Бригада ҳисобот</h1>
           <span className=" text-slate-400 text-[14px] mt-[-8px]">
             {shartnomalar
               ? `${shartnomalar.length} ${latinToCyrillic(

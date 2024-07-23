@@ -54,7 +54,6 @@ function page() {
   });
   const getData = async () => {
     const res = await getBatalyonUmumiyData(JWT, id);
-    
 
     setText(res.data.batalyonName);
     setData(res);
@@ -138,9 +137,7 @@ function page() {
               </Button>
             </div>
             <div className="rounded-lg w-full mb-5  px-6 py-4 flex justify-between items-center">
-              <h1 className="text-[24px] font-bold">
-                {latinToCyrillic("Umumiy Otchot")}
-              </h1>
+              <h1 className="text-[24px] font-bold">Бригада умумий ҳисобот</h1>
               <div className="flex flex-col">
                 <div className="flex justify-end text-[28px]  font-bold">
                   {latinToCyrillic("Filter")}

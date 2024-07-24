@@ -839,3 +839,18 @@ export const searchByDateUmumiy2 = async (
 
   return data;
 };
+
+export const searchByClintName = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/contract/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};

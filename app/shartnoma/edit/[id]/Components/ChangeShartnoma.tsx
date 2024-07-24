@@ -357,15 +357,11 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   onChange={handleChangeValue}
                   variant="outlined"
                   type="number"
-                  value={value[id]}
+                  value={value[id] || ""}
                   name={id}
                   autoComplete="off"
-                  error={value[id]?.length !== length && count}
-                  helperText={`${
-                    length - value[id]?.length > -1
-                      ? ` ${length - value[id]?.length} son qoldi`
-                      : ""
-                  }`}
+                  error={!!errors[id]}
+                  helperText={errors[id] ? latinToCyrillic(errors[id]) : ""}
                 />
               ))}
             </>

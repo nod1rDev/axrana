@@ -19,6 +19,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import PercentIcon from "@mui/icons-material/Percent";
+
 function CreateShartnoma({ language }: { language: any }) {
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = useState<any>({});
@@ -34,6 +35,20 @@ function CreateShartnoma({ language }: { language: any }) {
   useEffect(() => {
     GetOrganName();
   }, []);
+  useEffect(() => {
+    if (language?.clientname) {
+      setValue({
+        clientName: language.clientname,
+        clientAddress: language.clientaddress,
+        clientMFO: language.clientmfo,
+        clientAccount: language.clientaccount,
+        clientSTR: language.clientstr,
+        treasuryAccount: language.treasuryaccount,
+        address: language.address,
+        timeLimit: language.timelimit,
+      });
+    }
+  }, [language]);
 
   const createShartnoman = async (shartnoma: any) => {
     const res = await createContract(JWT, shartnoma);
@@ -49,12 +64,12 @@ function CreateShartnoma({ language }: { language: any }) {
     );
     if (res.success) router.push("/shartnoma");
   };
+
   const [acount, setAcount] = useState([]);
 
   useEffect(() => {
     const getAcount = async () => {
       const res = await getAllAcount(JWT);
-
       setAcount(res.data);
     };
     getAcount();
@@ -156,7 +171,7 @@ function CreateShartnoma({ language }: { language: any }) {
             id="contractNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
             sx={{ width: "30%" }}
-            value={value.contractNumber}
+            value={value.contractNumber || ""}
             onChange={handleChangeValue}
             variant="outlined"
             name="contractNumber"
@@ -168,7 +183,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.contractDate}
+            value={value.contractDate || ""}
             name="contractDate"
             autoComplete="off"
           />
@@ -178,7 +193,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "40%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.address}
+            value={value.address || ""}
             name="address"
             autoComplete="off"
           />
@@ -192,7 +207,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "70%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.timeLimit}
+            value={value.timeLimit || ""}
             name="timeLimit"
             autoComplete="off"
           />
@@ -203,7 +218,7 @@ function CreateShartnoma({ language }: { language: any }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={value.accountNumber}
+              value={value.accountNumber || ""}
               name="accountNumber"
               label={latinToCyrillic("Hisob Raqam")}
               onChange={handleChangeValue}
@@ -232,7 +247,7 @@ function CreateShartnoma({ language }: { language: any }) {
             sx={{ width: "16.6%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.clientName}
+            value={value.clientName || ""}
             name="clientName"
             autoComplete="off"
           />
@@ -244,7 +259,7 @@ function CreateShartnoma({ language }: { language: any }) {
                 sx={{ width: "16.6%" }}
                 onChange={handleChangeValue}
                 variant="outlined"
-                value={value.clientAddress}
+                value={value.clientAddress || ""}
                 name="clientAddress"
                 multiline
                 autoComplete="off"
@@ -258,15 +273,11 @@ function CreateShartnoma({ language }: { language: any }) {
                   onChange={handleChangeValue}
                   variant="outlined"
                   type="number"
-                  value={value[id]}
+                  value={value[id] || ""}
                   name={id}
                   autoComplete="off"
-                  error={value[id]?.length !== length && count}
-                  helperText={`${
-                    length - value[id]?.length > -1
-                      ? ` ${length - value[id]?.length} son qoldi`
-                      : ""
-                  }`}
+                  error={!!errors[id]}
+                  helperText={errors[id] ? latinToCyrillic(errors[id]) : ""}
                 />
               ))}
             </>
@@ -280,14 +291,14 @@ function CreateShartnoma({ language }: { language: any }) {
           />{" "}
           <span>{latinToCyrillic("Smeta")}</span>
         </div>
-        <div className="flex w-full  gap-4 mb-4">
+        <div className="flex w-full gap-4 mb-4">
           <TextField
             id="taskDate"
             label={latinToCyrillic("Vazifa bajarish sanasi")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
-            value={value.taskDate}
+            value={value.taskDate || ""}
             name="taskDate"
             autoComplete="off"
           />
@@ -298,7 +309,7 @@ function CreateShartnoma({ language }: { language: any }) {
             onChange={handleChangeValue}
             variant="outlined"
             type="number"
-            value={value.taskTime}
+            value={value.taskTime || ""}
             name="taskTime"
             autoComplete="off"
           />
@@ -317,7 +328,7 @@ function CreateShartnoma({ language }: { language: any }) {
                   </InputAdornment>
                 ),
               }}
-              value={value.discount}
+              value={value.discount || ""}
               name="discount"
               autoComplete="off"
             />

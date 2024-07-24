@@ -9,7 +9,12 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { createContract, getAllAcount, getForBatalyon } from "@/app/Api/Apis";
+import {
+  createContract,
+  getAllAcount,
+  getForBatalyon,
+  searchByClintName,
+} from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { useRouter } from "next/navigation";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,7 +25,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import PercentIcon from "@mui/icons-material/Percent";
 
-function CreateShartnoma({ language }: { language: any }) {
+function CreateShartnoma() {
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = useState<any>({});
   const [errors, setErrors] = useState<any>({});
@@ -28,6 +33,7 @@ function CreateShartnoma({ language }: { language: any }) {
   const [count, setCount] = useState(false);
   const [organs, setOrgans] = useState<any>([]);
   const [worker2, setWorker2] = useState<any>([]);
+  const [data, setData] = useState<any>();
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -36,19 +42,19 @@ function CreateShartnoma({ language }: { language: any }) {
     GetOrganName();
   }, []);
   useEffect(() => {
-    if (language?.clientname) {
+    if (data?.clientname) {
       setValue({
-        clientName: language.clientname,
-        clientAddress: language.clientaddress,
-        clientMFO: language.clientmfo,
-        clientAccount: language.clientaccount,
-        clientSTR: language.clientstr,
-        treasuryAccount: language.treasuryaccount,
-        address: language.address,
-        timeLimit: language.timelimit,
+        clientName: data.clientname,
+        clientAddress: data.clientaddress,
+        clientMFO: data.clientmfo,
+        clientAccount: data.clientaccount,
+        clientSTR: data.clientstr,
+        treasuryAccount: data.treasuryaccount,
+        address: data.address,
+        timeLimit: data.timelimit,
       });
     }
-  }, [language]);
+  }, [data]);
 
   const createShartnoman = async (shartnoma: any) => {
     const res = await createContract(JWT, shartnoma);
@@ -163,6 +169,34 @@ function CreateShartnoma({ language }: { language: any }) {
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
   ];
 
+  const getData = async () => {
+    const newVal = { clientName: value.clientName };
+    const res = await searchByClintName(JWT, newVal);
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Buyurtmachi malumotlari keldi"),
+          status: "success",
+        })
+      );
+      setData(res.data);
+    } else {
+      setValue({ clientName: "" });
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Buyurtmachi malumotlari topilmadi"),
+          status: "error",
+        })
+      );
+    }
+  };
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    getData();
+  };
+
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -241,16 +275,18 @@ function CreateShartnoma({ language }: { language: any }) {
           <span>{latinToCyrillic("Buyurtmachi")}</span>
         </div>
         <div className="flex gap-4 mb-4">
-          <TextField
-            id="clientName"
-            label={latinToCyrillic("Buyurtmachi Nomi")}
-            sx={{ width: "16.6%" }}
-            onChange={handleChangeValue}
-            variant="outlined"
-            value={value.clientName || ""}
-            name="clientName"
-            autoComplete="off"
-          />
+          <form className="w-[16.6%]" onSubmit={handleSubmit}>
+            <TextField
+              id="clientName"
+              label={latinToCyrillic("Buyurtmachi Nomi")}
+              sx={{ width: "100%" }}
+              onChange={handleChangeValue}
+              variant="outlined"
+              value={value.clientName || ""}
+              name="clientName"
+              autoComplete="off"
+            />
+          </form>
           {count && (
             <>
               <TextField

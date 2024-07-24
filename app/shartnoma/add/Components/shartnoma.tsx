@@ -20,38 +20,7 @@ function Shartnoma() {
   });
   const [data, setData] = useState<any>();
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const handleChangeValue = (e: any) => {
-    setValue({ [e.target.name]: e.target.value });
-  };
-  const dispatch = useDispatch();
-  const getData = async () => {
-    
 
-    const res = await searchByClintName(JWT, value);
-    if (res.success) {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Buyurtmachi malumotlari keldi"),
-          status: "sucess",
-        })
-      );
-      setData(res.data);
-    } else {
-      setValue({ clientName: "" });
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Buyurtmachi malumotlari topilmadi"),
-          status: "error",
-        })
-      );
-    }
-  };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    getData();
-  };
   return (
     <div className="w-[90%] mt-[5vh] mx-auto">
       <div className="flex justify-center mb-6 text-[28px] font-bold">
@@ -66,29 +35,9 @@ function Shartnoma() {
           {latinToCyrillic("Orqaga")}
         </Button>
 
-        <div>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id="clientName"
-              label={latinToCyrillic("Buyurtmachi Ismi Orqali qidiring...")}
-              sx={{ width: "400px" }}
-              onChange={handleChangeValue}
-              variant="outlined"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon color="info" />
-                  </InputAdornment>
-                ),
-              }}
-              value={value.clientName}
-              name="clientName"
-              autoComplete="off"
-            />
-          </form>
-        </div>
+        <div></div>
       </div>
-      <CreateShartnoma language={data} />
+      <CreateShartnoma />
     </div>
   );
 }

@@ -39,14 +39,9 @@ function Tip() {
   const router = useRouter();
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    setBatalyon(batID);
-  }, [batID.id]);
-
   const getAllRanks = async () => {
     try {
-      const idd = admin ? sessionStorage.getItem("batalyonId") : null;
-      const res = await getAllWorkers(JWT, idd, page, rowsPerPage);
+      const res = await getAllWorkers(JWT, null, page, rowsPerPage);
       setData(res);
       setAllRanks(res.data);
       setFilteredRanks(res.data);
@@ -189,15 +184,6 @@ function Tip() {
   ) => {
     setRowsPerPage(+event.target.value);
   };
-
-  const getBatalyons = async () => {
-    const res = await getAllBatalyon(JWT);
-    setSelector(res.data);
-  };
-
-  useEffect(() => {
-    getBatalyons();
-  }, []);
 
   const handleSelect = (e: any) => {
     setBatalyon(e.target.value);

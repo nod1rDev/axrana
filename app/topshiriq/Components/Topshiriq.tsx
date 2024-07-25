@@ -24,7 +24,7 @@ function Topshiriq() {
     date2: "",
   });
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(20);
   const [page, setPage] = React.useState(0);
   const JWT = useSelector((s: any) => s.auth.JWT);
 
@@ -178,7 +178,7 @@ function Topshiriq() {
           ))}
       </div>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
+        rowsPerPageOptions={[5, 10, 20, 50, 100]}
         component="div"
         count={data2 ? data2.count : 0}
         rowsPerPage={rowsPerPage}

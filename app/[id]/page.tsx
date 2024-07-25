@@ -88,7 +88,7 @@ function page() {
 
     return { year: year, month: monthName };
   };
-   function formatNumber(value: number): string {
+  function formatNumber(value: number): string {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
   return (
@@ -123,6 +123,13 @@ function page() {
                   onClick={() => deleteItem()}
                 >
                   {"учириш"}
+                </Button>
+                <Button
+                  onClick={() => router.push("/shartnoma/editInfo/" + id)}
+                  startIcon={<ModeEditOutlineIcon />}
+                  variant="contained"
+                >
+                  {latinToCyrillic("shartnomani malumotlari")}
                 </Button>
                 <Button
                   onClick={() => router.push("/shartnoma/edit/" + id)}

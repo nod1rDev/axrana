@@ -281,13 +281,7 @@ function page() {
               />
             </form>
           </div>
-          <Button
-            sx={{ width: "150px", height: "40px" }}
-            onClick={() => router.push("/tip/add")}
-            variant="contained"
-          >
-            {latinToCyrillic("Qo'shish")}
-          </Button>
+          
         </div>
         <TipTab
           data={data}

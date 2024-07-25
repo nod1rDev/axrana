@@ -341,6 +341,21 @@ export const updateContract = async (JWT: any, value: any, id: any) => {
   return data;
 };
 
+export const updateContract2 = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/contract/update/info/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ ...value }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
 //tasks
 export const getAllTasks = async (JWT: any, page?: any, limit?: any) => {
   const res = await fetch(URL + `/task/get/tasks?page=${page}&limit=${limit}`, {
@@ -848,6 +863,51 @@ export const searchByClintName = async (JWT: any, value: any) => {
       Authorization: "Bearer " + JWT,
     },
     body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const searchByNumber1 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/contract/search/by/number", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ contractNumber: value }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const searchByClintName1 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/contract/search/by/client/name", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ clientName: value }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const searchByAddress1 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/contract/search/by/address", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ address: value }),
   });
 
   const data = await res.json();

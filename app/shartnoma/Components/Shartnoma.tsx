@@ -7,17 +7,32 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import ShartnomaCard from "./ShartnomaCard";
 import TextField from "@mui/material/TextField";
 
-import { IconButton, TablePagination } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TablePagination,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
-import { filterContract, getAllContract } from "@/app/Api/Apis";
+import {
+  filterContract,
+  getAllContract,
+  searchByAddress1,
+  searchByClintName1,
+  searchByNumber1,
+} from "@/app/Api/Apis";
 
 function Shartnoma() {
   const [shartnomalar, setShartnomalar] = useState([]);
   const [data, setData] = useState<any>();
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(20);
   const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState(false);
+  const [value2, setValue2] = useState("");
+  const [serarchTip, setSearchTip] = useState(1);
   const [value, setValue] = useState<any>({
     date1: "",
     date: "",
@@ -37,7 +52,7 @@ function Shartnoma() {
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
-    const res = await getAllContract(JWT, page, rowsPerPage);
+    const res = await getAllContract(JWT, page + 1, rowsPerPage);
 
     setData(res);
     setShartnomalar(res.data);
@@ -51,11 +66,34 @@ function Shartnoma() {
     setShartnomalar(res.data);
   };
   const router = useRouter();
+  const getData2 = async () => {
+    if (serarchTip == 1) {
+      const res = await searchByNumber1(JWT, value2);
+      setData(res);
+      setShartnomalar(res.data);
+    } else if (serarchTip == 2) {
+      const res = await searchByClintName1(JWT, value2);
+      setData(res);
+      setShartnomalar(res.data);
+    } else {
+      const res = await searchByAddress1(JWT, value2);
+      setData(res);
+      setShartnomalar(res.data);
+    }
+  };
   const searchData = () => {
     setSearch(!search);
     if (!search) {
-      getSearchData();
+      if (value2) {
+        getData2();
+      } else {
+        getSearchData();
+      }
     } else {
+      setValue2("");
+      const date = new Date();
+      const filtDate = formatDateToDDMMYYYY(date);
+      setValue({ date1: filtDate, date2: filtDate });
       getAllContractt();
     }
   };
@@ -100,8 +138,36 @@ function Shartnoma() {
               : latinToCyrillic("Shartnoma mavjud emas")}
           </span>
         </div>
-        <div className="flex flex-col">
-         
+        <div className="flex gap-10">
+          <div className="flex gap-2 ">
+            <TextField
+              id="date1"
+              label={latinToCyrillic("Qidiring")}
+              sx={{ width: "200px" }}
+              onChange={(e: any) => setValue2(e.target.value)}
+              variant="outlined"
+              value={value2}
+              autoComplete="off"
+            />
+            <FormControl sx={{ width: "200px" }}>
+              <InputLabel id="demo-simple-select-label">
+                {latinToCyrillic("Filter turi")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={serarchTip}
+                label={latinToCyrillic("Filter turi")}
+                onChange={(e: any) => setSearchTip(e.target.value)}
+              >
+                <MenuItem value={1}>
+                  {latinToCyrillic("Shartnoma raqami")}
+                </MenuItem>
+                <MenuItem value={2}>{latinToCyrillic("Klint ismi")}</MenuItem>
+                <MenuItem value={3}>{latinToCyrillic("Manzil")}</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
           <div className="flex  items-center gap-4">
             <TextField
               id="date1"
@@ -154,7 +220,7 @@ function Shartnoma() {
 
       <div className="flex justify-end mt-4">
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          rowsPerPageOptions={[5, 10, 20, 50, 100]}
           component="div"
           count={data ? data.count : 0}
           rowsPerPage={rowsPerPage}

@@ -195,7 +195,9 @@ const BudgetTable: any = ({
                   <BorderedTableCell>
                     {formatNumber(row.money)}
                   </BorderedTableCell>
-                  <BorderedTableCell>{row.chegirma}</BorderedTableCell>
+                  <BorderedTableCell>
+                    {formatNumber(row.chegirma)}
+                  </BorderedTableCell>
                   <BorderedTableCell>
                     {formatNumber(row.total)}
                   </BorderedTableCell>

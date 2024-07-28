@@ -114,7 +114,7 @@ function CreateShartnoma() {
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
         accountNumber: +value.accountNumber,
-       
+        taskTimeLimit: +value.taskTimeLimit,
         battalions: filtOrgans,
       };
       if (shartnoma.contractNumber) {
@@ -361,25 +361,38 @@ function CreateShartnoma() {
             name="taskTime"
             autoComplete="off"
           />
+          <TextField
+            id="taskTimeLimit"
+            type="number"
+            label={latinToCyrillic("Time limit")}
+            sx={{ width: "30%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.taskTimeLimit || ""}
+            name="taskTimeLimit"
+            autoComplete="off"
+          />
           {smetaVal3 && (
-            <TextField
-              id="discount"
-              type="number"
-              label={latinToCyrillic("Chegirma")}
-              sx={{ width: "30%" }}
-              onChange={handleChangeValue}
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PercentIcon />
-                  </InputAdornment>
-                ),
-              }}
-              value={value.discount || ""}
-              name="discount"
-              autoComplete="off"
-            />
+            <>
+              <TextField
+                id="discount"
+                type="number"
+                label={latinToCyrillic("Chegirma")}
+                sx={{ width: "30%" }}
+                onChange={handleChangeValue}
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PercentIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                value={value.discount || ""}
+                name="discount"
+                autoComplete="off"
+              />
+            </>
           )}
         </div>
         {organs.map((organ: any, index: number) => (

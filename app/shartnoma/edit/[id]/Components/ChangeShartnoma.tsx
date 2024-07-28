@@ -94,6 +94,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         treasuryAccount: data.treasuryaccount, //faqat 25 ta kirita olishi kerak frontdan tosiq qoying
         timeLimit: data.timelimit,
         address: data.address,
+        taskTimeLimit: data.taskTimeLimit,
         taskDate: data.taskdate,
         taskTime: data.tasktime,
         accountNumber: data.accountnumber,
@@ -174,7 +175,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
         accountNumber: +value.accountNumber,
-
+        taskTimeLimit: +value.taskTimeLimit,
         battalions: filtOrgans,
       };
       if (shartnoma.contractNumber) {
@@ -407,6 +408,17 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             type="number"
             value={value.taskTime || ""}
             name="taskTime"
+            autoComplete="off"
+          />
+          <TextField
+            id="taskTimeLimit"
+            type="number"
+            label={latinToCyrillic("Time limit")}
+            sx={{ width: "30%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.taskTimeLimit || ""}
+            name="taskTimeLimit"
             autoComplete="off"
           />
           {smetaVal3 && (

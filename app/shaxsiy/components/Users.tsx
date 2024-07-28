@@ -254,13 +254,17 @@ export default function Users() {
                                           row.FoydalanuvchiNomi !==
                                           "Toshkent Shahar IIBB"
                                         ) {
-                                          dispatch(
-                                            setUserModal({
-                                              open: true,
-                                              id: row.id,
-                                              name: row.FoydalanuvchiNomi,
-                                            })
-                                          );
+                                          if (
+                                            row.FoydalanuvchiNomi !==
+                                            "Тошкент шаҳар МГ"
+                                          )
+                                            dispatch(
+                                              setUserModal({
+                                                open: true,
+                                                id: row.id,
+                                                name: row.FoydalanuvchiNomi,
+                                              })
+                                            );
                                         } else {
                                         }
                                       } else {

@@ -176,7 +176,8 @@ const BudgetTable: any = ({
                       onClick={() =>
                         row.department !== "Toshkent Shahar IIBB" &&
                         row.department !== "98162" &&
-                        row.department !== "98157"
+                        row.department !== "98157" &&
+                        row.department !== "Тошкент шаҳар МГ"
                           ? showModal(row.id)
                           : ""
                       }

@@ -32,18 +32,16 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [value, setValue] = useState<any>({});
-
   const [errors, setErrors] = useState<any>({});
   const [smetaVal3, setSmetaVal3] = useState(false);
   const [workers, setWorkers] = useState<any>(false);
   const [worker2, setWorker2] = useState<any>([]);
   const [organs, setOrgans] = useState<any>([]);
   const [count, setCount] = useState(false);
-
   const router = useRouter();
   const dispatch = useDispatch();
+
   function convertDate(dateString: string): string {
-    // Oylik nomlar ro'yxati
     const months: { [key: string]: string } = {
       январь: "01",
       февраль: "02",
@@ -59,7 +57,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       декабрь: "12",
     };
 
-    // Sanani bo'laklarga ajratish
     const datePattern = /^(\d{2})-(\D+)\s(\d{4})-йил$/;
     const match = dateString.match(datePattern);
 
@@ -68,20 +65,19 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     }
 
     const [, day, month, year] = match;
-
-    // Oyni raqamli formatga o'zgartirish
     const monthNumber = months[month.trim()];
 
     if (!monthNumber) {
       throw new Error("Invalid month name");
     }
 
-    // Yangi formatga o'tkazish
     return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
   }
+
   useEffect(() => {
     GetOrganName();
   }, []);
+
   useEffect(() => {
     if (data && taskss) {
       const pureData = {
@@ -89,10 +85,10 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         contractDate: convertDate(data.contractdate),
         clientName: data.clientname,
         clientAddress: data.clientaddress,
-        clientMFO: data.clientmfo, // faqat 5 ta kirita olishi kerak frontdan tosiq qoying
-        clientAccount: data.clientaccount, // faqat 20 ta kirita olishi kerak frontdan tosiq qoying
-        clientSTR: data.clientstr, //faqat 9 ta kirita olishi kerak frontdan tosiq qoying
-        treasuryAccount: data.treasuryaccount, //faqat 25 ta kirita olishi kerak frontdan tosiq qoying
+        clientMFO: data.clientmfo,
+        clientAccount: data.clientaccount,
+        clientSTR: data.clientstr,
+        treasuryAccount: data.treasuryaccount,
         timeLimit: data.timelimit,
         address: data.address,
         accountNumber: data.accountnumber,
@@ -111,9 +107,8 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       setOrgans(organ);
     }
   }, [data]);
-  const createShartnoman = async (shartnoma: any) => {
-    
 
+  const createShartnoman = async (shartnoma: any) => {
     const res = await updateContract2(JWT, shartnoma, data.id);
 
     if (res.success) {
@@ -166,7 +161,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
       const shartnoma = { ...value };
       if (shartnoma.contractNumber) {
-        createShartnoman(shartnoma)
+        createShartnoman(shartnoma);
       } else {
         dispatch(
           alertChange({
@@ -197,6 +192,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
   ];
+
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
@@ -205,6 +201,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     };
     setOrgans(updatedOrgans);
   };
+
   const handleChangeOrgans2 = (e: any, index: number) => {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
@@ -240,7 +237,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   useEffect(() => {
     const getAcount = async () => {
       const res = await getAllAcount(JWT);
-
       setAcount(res.data);
     };
     getAcount();
@@ -347,7 +343,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 multiline
                 autoComplete="off"
               />
-              {validationFields.map(({ id, label, length }) => (
+             {validationFields.map(({ id, label, length }) => (
                 <TextField
                   key={id}
                   id={id}

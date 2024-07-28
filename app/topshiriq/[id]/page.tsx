@@ -23,13 +23,26 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 
-const Page = () => {
-  const { id } = useParams();
-  const [data, setData] = useState<any>([]);
-  const [workers, setWorkers] = useState([]);
-  const [filteredWorkers, setFilteredWorkers] = useState([]);
-  const [search, setSearch] = useState("");
-  const JWT = useSelector((s: any) => s.auth.JWT);
+interface Worker {
+  FIO: string;
+  selected: boolean;
+  tasktime: string;
+  taskdate: string;
+  _id: string;
+}
+
+interface Task {
+  id: string;
+  inprogress: boolean;
+}
+
+const Page: React.FC = () => {
+  const { id } = useParams() as { id: string };
+  const [data, setData] = useState<Task | null>(null);
+  const [workers, setWorkers] = useState<Worker[]>([]);
+  const [filteredWorkers, setFilteredWorkers] = useState<Worker[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const JWT = useSelector((state: any) => state.auth.JWT);
 
   const getData = async () => {
     const res = await getAllTasks(JWT);
@@ -37,12 +50,13 @@ const Page = () => {
     setData(single);
   };
 
-  const GetWorkers = async () => {
+  const getWorkers = async () => {
     const res = await getAllWorkers(JWT, null, 1, 1000000);
-
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
+      tasktime: "",
+      taskdate: "",
       _id: e.id,
     }));
     setWorkers(filData);
@@ -51,18 +65,44 @@ const Page = () => {
 
   useEffect(() => {
     getData();
-    GetWorkers();
+    getWorkers();
   }, []);
 
   const handleToggle = (id: string) => {
-    setWorkers((prevWorkers: any) =>
-      prevWorkers.map((worker: any) =>
+    setWorkers((prevWorkers) =>
+      prevWorkers.map((worker) =>
         worker._id === id ? { ...worker, selected: !worker.selected } : worker
       )
     );
-    setFilteredWorkers((prevFiltered: any) =>
-      prevFiltered.map((worker: any) =>
+    setFilteredWorkers((prevFiltered) =>
+      prevFiltered.map((worker) =>
         worker._id === id ? { ...worker, selected: !worker.selected } : worker
+      )
+    );
+  };
+
+  const handleTaskTimeChange = (id: string, value: string) => {
+    setWorkers((prevWorkers) =>
+      prevWorkers.map((worker) =>
+        worker._id === id ? { ...worker, tasktime: value } : worker
+      )
+    );
+    setFilteredWorkers((prevFiltered) =>
+      prevFiltered.map((worker) =>
+        worker._id === id ? { ...worker, tasktime: value } : worker
+      )
+    );
+  };
+
+  const handleTaskDateChange = (id: string, value: string) => {
+    setWorkers((prevWorkers) =>
+      prevWorkers.map((worker) =>
+        worker._id === id ? { ...worker, taskdate: value } : worker
+      )
+    );
+    setFilteredWorkers((prevFiltered) =>
+      prevFiltered.map((worker) =>
+        worker._id === id ? { ...worker, taskdate: value } : worker
       )
     );
   };
@@ -70,7 +110,7 @@ const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const CreateWorker = async (value: any) => {
+  const createWorker = async (value: any) => {
     const res = await pushWorkers(JWT, id, value);
 
     if (res.success) {
@@ -94,13 +134,13 @@ const Page = () => {
   };
 
   const handleSubmit = () => {
-    const FiltWorker = workers.filter((e: any) => e.selected === true);
-    const pureWorker = FiltWorker.map((e: any) => {
-      return { fio: e.FIO };
+    const FiltWorker = workers.filter((e) => e.selected);
+    const pureWorker = FiltWorker.map((e) => {
+      return { fio: e.FIO, taskdate: e.taskdate, tasktime: +e.tasktime };
     });
 
     if (pureWorker.length > 0) {
-      CreateWorker(pureWorker);
+      createWorker(pureWorker);
     } else {
       dispatch(
         alertChange({
@@ -114,7 +154,7 @@ const Page = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const filtered = workers.filter((worker: any) =>
+    const filtered = workers.filter((worker) =>
       worker.FIO.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredWorkers(filtered);
@@ -139,7 +179,7 @@ const Page = () => {
           </Button>
         </div>
         <div className="mb-6">
-          <TopshiriqCard click={false} data={data} />
+          {data && <TopshiriqCard click={false} data={data} />}
         </div>
         {data && data.inprogress && (
           <Accordion>
@@ -197,17 +237,14 @@ const Page = () => {
                   bgcolor: "background.paper",
                 }}
               >
-                {filteredWorkers.map((value: any) => {
+                {filteredWorkers.map((value: Worker) => {
                   const labelId = `checkbox-list-label-${value._id}`;
                   return (
                     <ListItem key={value._id} disablePadding>
-                      <ListItemButton
-                        role={undefined}
-                        onClick={() => handleToggle(value._id)}
-                        dense
-                      >
+                      <ListItemButton role={undefined}>
                         <ListItemIcon>
                           <Checkbox
+                            onClick={() => handleToggle(value._id)}
                             edge="start"
                             checked={value.selected}
                             disableRipple
@@ -215,6 +252,27 @@ const Page = () => {
                           />
                         </ListItemIcon>
                         <ListItemText id={labelId} primary={`${value.FIO}`} />
+                        <div className="flex gap-5">
+                          <TextField
+                            id="outlined-basic"
+                            label={latinToCyrillic("Topshiriq mudati")}
+                            variant="outlined"
+                            type="number"
+                            value={value.tasktime}
+                            onChange={(e) =>
+                              handleTaskTimeChange(value._id, e.target.value)
+                            }
+                          />
+                          <TextField
+                            id="outlined-basic"
+                            label={latinToCyrillic("Topshiriq vaqti")}
+                            variant="outlined"
+                            value={value.taskdate}
+                            onChange={(e) =>
+                              handleTaskDateChange(value._id, e.target.value)
+                            }
+                          />
+                        </div>
                       </ListItemButton>
                     </ListItem>
                   );

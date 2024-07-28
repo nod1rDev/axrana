@@ -26,11 +26,11 @@ export default function RootLayout({
           <link rel="icon" href="/icon-192x192.png" />
         </head>
         <body id="body" className={`max-w-full mx-auto ${inter.className}`}>
-          {/* <Prodected>
+          <Prodected>
             <Main>{children}</Main>
           </Prodected>
-          <Alertt /> */}
-          sayt ishlamayapti
+          <Alertt />
+        
         </body>
       </html>
     </StoreProvider>

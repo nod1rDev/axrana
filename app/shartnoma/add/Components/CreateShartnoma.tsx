@@ -105,7 +105,11 @@ function CreateShartnoma() {
         workerNumber: +organ.workerNumber,
       }));
 
-      const shartnoma = { ...value, battalions: filtOrgans };
+      const shartnoma = {
+        ...value,
+        contractNumber: +value.contractNumber,
+        battalions: filtOrgans,
+      };
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);
       } else {

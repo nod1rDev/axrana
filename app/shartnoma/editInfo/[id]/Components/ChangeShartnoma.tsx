@@ -159,7 +159,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         };
       });
 
-      const shartnoma = { ...value };
+      const shartnoma = { ...value, contractNumber: +value.contractNumber };
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);
       } else {
@@ -343,7 +343,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 multiline
                 autoComplete="off"
               />
-             {validationFields.map(({ id, label, length }) => (
+              {validationFields.map(({ id, label, length }) => (
                 <TextField
                   key={id}
                   id={id}

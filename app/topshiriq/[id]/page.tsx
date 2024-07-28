@@ -192,7 +192,10 @@ const Page: React.FC = () => {
     setFilteredWorkers(workers);
   };
 
-  const memoizedFilteredWorkers = useMemo(() => filteredWorkers, [filteredWorkers]);
+  const memoizedFilteredWorkers = useMemo(
+    () => filteredWorkers,
+    [filteredWorkers]
+  );
 
   return (
     <div className="w-[80%] mt-5 flex-col gap-6 mx-auto">
@@ -221,7 +224,10 @@ const Page: React.FC = () => {
           <AccordionDetails>
             <div className="flex flex-col pb-5 border-b  gap-3">
               <h1 className="font-bold">{latinToCyrillic("Filter")}</h1>
-              <form onSubmit={handleSearch} className="flex items-center w-full">
+              <form
+                onSubmit={handleSearch}
+                className="flex items-center w-full"
+              >
                 <TextField
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -255,7 +261,13 @@ const Page: React.FC = () => {
                 {latinToCyrillic("Saqlash")}
               </Button>
             </div>
-            <List sx={{ width: "100%", maxWidth: "100%", bgcolor: "background.paper" }}>
+            <List
+              sx={{
+                width: "100%",
+                maxWidth: "100%",
+                bgcolor: "background.paper",
+              }}
+            >
               {memoizedFilteredWorkers.map((value: Worker) => {
                 const labelId = `checkbox-list-label-${value._id}`;
                 return (
@@ -274,7 +286,7 @@ const Page: React.FC = () => {
                       <div className="flex gap-5">
                         <TextField
                           id="outlined-basic"
-                          label={latinToCyrillic("Topshiriq mudati")}
+                          label={latinToCyrillic("Sana")}
                           variant="outlined"
                           type="number"
                           value={value.tasktime}
@@ -284,7 +296,7 @@ const Page: React.FC = () => {
                         />
                         <TextField
                           id="outlined-basic"
-                          label={latinToCyrillic("Topshiriq vaqti")}
+                          label={latinToCyrillic("Vaqti")}
                           variant="outlined"
                           value={value.taskdate}
                           onChange={(e) =>

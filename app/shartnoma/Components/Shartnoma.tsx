@@ -126,7 +126,7 @@ function Shartnoma() {
   };
   const dispatch = useDispatch();
   const downloadExcel = async () => {
-    console.log(value3);
+    
 
     try {
       const excelBlob = await getExcelContract3(JWT, value3);

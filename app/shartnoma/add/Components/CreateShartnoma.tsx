@@ -113,7 +113,7 @@ function CreateShartnoma() {
         clientSTR: +value.clientSTR,
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
-        accountNumber: +value.accountNumber,
+     
         taskTimeLimit: +value.taskTimeLimit,
         battalions: filtOrgans,
       };

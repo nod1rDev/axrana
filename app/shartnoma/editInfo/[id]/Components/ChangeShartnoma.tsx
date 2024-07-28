@@ -167,7 +167,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientSTR: +value.clientSTR,
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
-        accountNumber: +value.accountNumber,
+     
       };
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);

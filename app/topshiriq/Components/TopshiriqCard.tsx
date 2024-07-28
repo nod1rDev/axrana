@@ -84,6 +84,9 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
           {data && data.tasktime}
         </span>
+        <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          {data && data.timelimit}
+        </span>
         <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
           {data && data.address}
         </span>

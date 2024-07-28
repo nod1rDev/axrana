@@ -174,7 +174,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientSTR: +value.clientSTR,
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
-        accountNumber: +value.accountNumber,
+     
         taskTimeLimit: +value.taskTimeLimit,
         battalions: filtOrgans,
       };

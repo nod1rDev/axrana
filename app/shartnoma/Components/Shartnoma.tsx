@@ -20,7 +20,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
   filterContract,
   getAllContract,
-  getExcelContract,
+  getExcelContract3,
   searchByAddress1,
   searchByClintName1,
   searchByNumber1,
@@ -127,7 +127,7 @@ function Shartnoma() {
   const dispatch = useDispatch();
   const downloadExcel = async () => {
     try {
-      const excelBlob = await getExcelContract(JWT, value);
+      const excelBlob = await getExcelContract3(JWT, value);
 
       // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
@@ -208,7 +208,7 @@ function Shartnoma() {
               name="date2"
               autoComplete="off"
             />
-            <Button variant="contained" onClick={handleSubmit3}>
+            <Button variant="contained" onClick={downloadExcel}>
               вақт оралиғидаги шартномалар
             </Button>
           </div>

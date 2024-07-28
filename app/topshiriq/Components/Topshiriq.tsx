@@ -177,7 +177,7 @@ function Topshiriq() {
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
           <span className="font-bold text-left w-[180px] ">
-            {latinToCyrillic("Xaridor ismi")}
+            {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
             className={`font-bold w-[160px] overflow-hidden text-ellipsis whitespace-nowrap ${

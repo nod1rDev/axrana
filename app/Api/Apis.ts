@@ -915,7 +915,7 @@ export const searchByAddress1 = async (JWT: any, value: any) => {
   return data;
 };
 
-export const getExcelContract = async (JWT: any, value: any) => {
+export const getExcelContract3 = async (JWT: any, value: any) => {
   const res = await fetch(URL + "/contract/create/excel/for/report", {
     method: "POST",
     headers: {

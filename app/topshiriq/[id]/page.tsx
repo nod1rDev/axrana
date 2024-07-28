@@ -210,12 +210,12 @@ const Page: React.FC = () => {
         </Button>
       </div>
       <div className="mb-6 flex-col gap-4">
-      <div className="w-full mb-4 flex cursor-pointer px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
+      <div className="w-full flex cursor-pointer px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
           <span className="font-bold text-left w-[160px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
           <span className="font-bold text-left w-[180px] ">
-            {latinToCyrillic("Xaridor ismi")}
+            {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
             className={`font-bold w-[160px] overflow-hidden text-ellipsis whitespace-nowrap ${
@@ -233,6 +233,9 @@ const Page: React.FC = () => {
 
           <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Topshiriq vaqti")}
+          </span>
+          <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+            {latinToCyrillic("Time limit")}
           </span>
           <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Topshiriq manzili")}

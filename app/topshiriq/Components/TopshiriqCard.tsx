@@ -59,10 +59,10 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         onClick={() => (click ? router.push("/topshiriq/" + data.id) : null)}
         className="w-full flex cursor-pointer px-8 py-6 bg-[#f1faee] rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]"
       >
-         <span className="font-bold text-left w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+         <span className="font-bold text-left w-[170px] overflow-hidden text-ellipsis whitespace-nowrap">
           {data && data.contractnumber}
         </span>
-        <span className="font-bold text-left w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
+        <span className="font-bold text-left w-[250px] overflow-hidden text-ellipsis whitespace-nowrap">
           {data && data.clientname}
         </span>
         <span
@@ -79,13 +79,16 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
             {data && data.workernumber}
           </Button>
         ) : (
-          <span className="w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">{data && data.workernumber}</span>
+          <span className="w-[160px] text-center overflow-hidden text-ellipsis whitespace-nowrap">{data && data.workernumber}</span>
         )}
+        <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          {data && data.tasktime}
+        </span>
         <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
           {data && data.address}
         </span>
 
-        <div className="flex items-center">
+        <div className="flex w-[100px]   justify-end">
           <Status status={status} />
           {click && <KeyboardArrowRightIcon fontSize="large" color="info" />}
         </div>

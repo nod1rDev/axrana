@@ -108,6 +108,13 @@ function CreateShartnoma() {
       const shartnoma = {
         ...value,
         contractNumber: +value.contractNumber,
+        clientMFO: +value.clientMFO,
+        treasuryAccount: +value.treasuryAccount,
+        clientSTR: +value.clientSTR,
+        clientAccount: +value.clientAccount,
+        taskTime: +value.taskTime,
+        accountNumber: +value.accountNumber,
+       
         battalions: filtOrgans,
       };
       if (shartnoma.contractNumber) {
@@ -209,6 +216,7 @@ function CreateShartnoma() {
             id="contractNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
             sx={{ width: "30%" }}
+            type="number"
             value={value.contractNumber || ""}
             onChange={handleChangeValue}
             variant="outlined"

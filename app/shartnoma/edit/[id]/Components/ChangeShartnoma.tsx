@@ -168,6 +168,13 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       const shartnoma = {
         ...value,
         contractNumber: +value.contractNumber,
+        clientMFO: +value.clientMFO,
+        treasuryAccount: +value.treasuryAccount,
+        clientSTR: +value.clientSTR,
+        clientAccount: +value.clientAccount,
+        taskTime: +value.taskTime,
+        accountNumber: +value.accountNumber,
+
         battalions: filtOrgans,
       };
       if (shartnoma.contractNumber) {
@@ -262,6 +269,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             value={value.contractNumber || ""}
             onChange={handleChangeValue}
             variant="outlined"
+            type="number"
             name="contractNumber"
             autoComplete="off"
           />

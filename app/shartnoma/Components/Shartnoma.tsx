@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import ShartnomaCard from "./ShartnomaCard";
 import TextField from "@mui/material/TextField";
@@ -20,10 +20,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
   filterContract,
   getAllContract,
+  getExcelContract,
   searchByAddress1,
   searchByClintName1,
   searchByNumber1,
 } from "@/app/Api/Apis";
+import { alertChange } from "@/app/Redux/ShaxsiySlice";
 
 function Shartnoma() {
   const [shartnomalar, setShartnomalar] = useState([]);
@@ -34,6 +36,10 @@ function Shartnoma() {
   const [value2, setValue2] = useState("");
   const [serarchTip, setSearchTip] = useState(1);
   const [value, setValue] = useState<any>({
+    date1: "",
+    date: "",
+  });
+  const [value3, setValue3] = useState<any>({
     date1: "",
     date: "",
   });
@@ -49,6 +55,7 @@ function Shartnoma() {
     const date = new Date();
     const filtDate = formatDateToDDMMYYYY(date);
     setValue({ date1: filtDate, date2: filtDate });
+    setValue3({ date1: filtDate, date2: filtDate });
   }, []);
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
@@ -104,6 +111,10 @@ function Shartnoma() {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
+  const handleChangeValue3 = (e: any) => {
+    setValue3({ ...value, [e.target.name]: e.target.value });
+  };
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -113,9 +124,45 @@ function Shartnoma() {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
+  const dispatch = useDispatch();
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await getExcelContract(JWT, value);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
+  const handleSubmit3 = () => {
+    downloadExcel();
+  };
 
   return (
-    <div className="w-[80%] flex flex-col mt-6 mx-auto">
+    <div className="w-[95%] flex flex-col mt-6 mx-auto">
       <div className="flex mb-5 justify-end">
         <Button
           onClick={() => router.push("/shartnoma/add")}
@@ -126,20 +173,48 @@ function Shartnoma() {
         </Button>
       </div>
       <div className="flex w-full justify-between mb-10">
-        <div className="flex flex-col">
-          <h1 className="text-[28px]  font-bold">
-            {latinToCyrillic("Shartnomalar")}
-          </h1>
-          <span className=" text-slate-400 text-[14px] mt-[-8px]">
-            {shartnomalar
-              ? `${shartnomalar.length} ${latinToCyrillic(
-                  "ta shartnoma mavjud"
-                )} `
-              : latinToCyrillic("Shartnoma mavjud emas")}
-          </span>
+        <div className="flex flex-col gap-4">
+          <div className="flex-col">
+            <h1 className="text-[28px]  font-bold">
+              {latinToCyrillic("Shartnomalar")}
+            </h1>
+            <span className=" text-slate-400 text-[14px] mt-[-8px]">
+              {shartnomalar
+                ? `${shartnomalar.length} ${latinToCyrillic(
+                    "ta shartnoma mavjud"
+                  )} `
+                : latinToCyrillic("Shartnoma mavjud emas")}
+            </span>
+          </div>
+          <div className="flex  items-center gap-4">
+            <TextField
+              id="date1"
+              label={latinToCyrillic("Sana 1")}
+              sx={{ width: "200px" }}
+              onChange={handleChangeValue3}
+              variant="outlined"
+              value={value3.date1}
+              name="date1"
+              autoComplete="off"
+            />
+
+            <TextField
+              id="date2"
+              label={latinToCyrillic("Sana 2")}
+              sx={{ width: "200px" }}
+              onChange={handleChangeValue3}
+              variant="outlined"
+              value={value3.date2}
+              name="date2"
+              autoComplete="off"
+            />
+            <Button variant="contained" onClick={handleSubmit3}>
+              вақт оралиғидаги шартномалар
+            </Button>
+          </div>
         </div>
-        <div className="flex gap-10">
-          <div className="flex gap-2 ">
+        <div className="flex gap-10  ">
+          <div className="flex gap-2 items-center">
             <TextField
               id="date1"
               label={latinToCyrillic("Qidiring")}

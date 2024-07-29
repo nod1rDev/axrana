@@ -53,7 +53,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
   const handleClose = () => {
     dispatch(setModalShowWorker({ open: false }));
   };
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState<any>();
 
   const getData = async () => {
     const res = await getInfo(JWT, active);
@@ -118,7 +118,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         >
           {!click && (
             <Button
-              color="secondary"
+              color="info"
               variant="contained"
               onClick={(event) => {
                 event.stopPropagation();
@@ -135,7 +135,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         </div>
       </div>
       <ShowWorkerModal ranks={workers} handleClose={handleClose} />
-      <ModalN1 data={info} />
+      <ModalN1 data={info[0]} />
     </>
   );
 }

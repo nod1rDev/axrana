@@ -4,6 +4,7 @@ import Status from "../../Components/Status";
 
 const TaskDetails: React.FC<any> = ({ data }) => {
   const [status, setStatus] = useState<any>();
+  
 
   useEffect(() => {
     if (data) {

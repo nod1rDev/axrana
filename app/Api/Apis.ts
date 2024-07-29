@@ -66,14 +66,19 @@ export const updateBatalyon = async (JWT: any, id: any, value: any) => {
   return data;
 };
 
-export const createAuth = async (JWT: any, username: any, password: any) => {
+export const createAuth = async (
+  JWT: any,
+  username: any,
+  password: any,
+  status: any
+) => {
   const res = await fetch(URL + "/auth/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, status }),
   });
 
   const data = await res.json();

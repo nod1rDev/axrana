@@ -6,7 +6,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createAuth,
@@ -109,7 +116,12 @@ export default function Users() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (value.username && value.password) {
-      const res = await createAuth(JWT, value.username, value.password);
+      const res = await createAuth(
+        JWT,
+        value.username,
+        value.password,
+        value.status
+      );
       if (res.success) {
         dispatch(
           alertChange({
@@ -235,6 +247,24 @@ export default function Users() {
               fullWidth
               variant="outlined"
             />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                {latinToCyrillic("Status")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={value.status || ""}
+                name="status"
+                label={latinToCyrillic("Status")}
+                onChange={handleChange}
+              >
+                <MenuItem value={1}>{latinToCyrillic("Admin")}</MenuItem>
+                <MenuItem value={2}>
+                  {latinToCyrillic("Foydalanuvchi")}
+                </MenuItem>
+              </Select>
+            </FormControl>
             <Button
               color="primary"
               type="submit"

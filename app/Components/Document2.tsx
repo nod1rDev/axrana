@@ -302,9 +302,14 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                         <span className="font-bold">Банк реквизитлари:</span>{" "}
                         Марказий банк Тошкент шахар ХККМ
                       </span>
-
                       <span className="font-bold">Ғазначилиги х/р</span>
-                      <span>{formatString(data?.treasuryaccount)}</span>
+                      <span>
+                        {formatString(
+                          data?.treasuryaccount
+                            ? data?.treasuryaccount
+                            : data?.treasuryaccount27
+                        )}
+                      </span>
                       <span>
                         {" "}
                         <span className="font-bold">ИНН:</span>{" "}
@@ -347,13 +352,12 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       <span className="font-bold">МФО:</span> 00014.
                     </span>
                     <span>
-                      <span className="font-bold">х/р: </span>{" "}
+                      <span className="font-bold">х/р : </span>{" "}
                       {formatString(data?.accountnumber)}
                     </span>
                     <span>
                       {" "}
-                      <span className="font-bold">СТИР: </span> 21 506 000 705
-                      131 158 003
+                      <span className="font-bold"> СТИР: </span> 207 305 369
                     </span>
                   </div>
                 </div>

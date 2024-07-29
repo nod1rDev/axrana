@@ -283,6 +283,14 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                         <span className="font-bold">Банк реквизитлари:</span>{" "}
                         Марказий банк Тошкент ш. ХККМ
                       </span>
+                      <span className="font-bold">Ғазначилиги х/р</span>
+                            <span>
+                              {formatString(
+                                data?.treasuryaccount
+                                  ? data?.treasuryaccount
+                                  : data?.treasuryaccount27
+                              )}
+                            </span>
                       <span>
                         {" "}
                         <span className="font-bold">МФО:</span> {data.clientmfo}
@@ -320,26 +328,29 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                 <div className="flex gap-2">
                   <span className="font-bold text-[14px]">Манзил:</span>
                   <div className="flex flex-col">
-                    <p className=" text-start  text-[14px]">
-                      Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси, 17А-уй.
-                    </p>{" "}
-                    <span>
-                      <span className="font-bold">Банк реквизитлари:</span>{" "}
-                      Марказий банк Тошкент ш. ХККМ.
-                    </span>
-                    <span>
-                      <span className="font-bold">МФО:</span> 00014.
-                    </span>
-                    <span>
-                      <span className="font-bold">х/р: </span>{" "}
-                      {formatString(data?.accountnumber)}
-                    </span>
-                    <span>
-                      {" "}
-                      <span className="font-bold">СТИР: </span> 21 506 000 705
-                      131 158 003
-                    </span>
-                  </div>
+                          <p className=" text-start  text-[14px]">
+                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
+                            17А-уй.
+                          </p>{" "}
+                          <span>
+                            <span className="font-bold">
+                              Банк реквизитлари:
+                            </span>{" "}
+                            Марказий банк Тошкент ш. ХККМ.
+                          </span>
+                          <span>
+                            <span className="font-bold">МФО:</span> 00014.
+                          </span>
+                          <span>
+                            <span className="font-bold">х/р : </span>{" "}
+                            {formatString(data?.accountnumber)}
+                          </span>
+                          <span>
+                            {" "}
+                            <span className="font-bold"> СТИР: </span> 207 305
+                            369
+                          </span>
+                        </div>
                 </div>
 
                 <div className=" absolute top-[300px] [14px] left-[40px]">

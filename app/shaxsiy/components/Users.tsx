@@ -8,13 +8,19 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button, TextField } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { createAuth, getAuth, updateBatalyon } from "@/app/Api/Apis";
+import {
+  createAuth,
+  deleteUser,
+  getAuth,
+  updateBatalyon,
+} from "@/app/Api/Apis";
 import { alertChange, setUserModal } from "@/app/Redux/ShaxsiySlice";
 import IconButton from "@mui/material/IconButton";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import EditUser from "./userEdit";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
+import { Delete } from "@mui/icons-material";
 interface Column {
   id: "number" | "FoydalanuvchiNomi" | "FoydalanuvchiParoli" | "actions";
   label: string;
@@ -132,6 +138,29 @@ export default function Users() {
 
   const handleChange = (e: any) => {
     setValue({ ...value, [e.target.name]: e.target.value });
+  };
+  const handleDelete = async () => {
+    const res = await deleteUser(JWT, open.id);
+
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Foydalanuvchi ochirildi"),
+          status: "success",
+        })
+      );
+      handleClose();
+      getUsers();
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
   };
 
   const handleClose = () => {
@@ -260,6 +289,7 @@ export default function Users() {
                                           )
                                             dispatch(
                                               setUserModal({
+                                                type: 1,
                                                 open: true,
                                                 id: row.id,
                                                 name: row.FoydalanuvchiNomi,
@@ -280,6 +310,41 @@ export default function Users() {
                                     color="info"
                                   />
                                 </IconButton>
+                                <IconButton
+                                  onClick={() => {
+                                    if (row.FoydalanuvchiNomi !== "98162") {
+                                      if (row.FoydalanuvchiNomi !== "98157") {
+                                        if (
+                                          row.FoydalanuvchiNomi !==
+                                          "Toshkent Shahar IIBB"
+                                        ) {
+                                          if (
+                                            row.FoydalanuvchiNomi !==
+                                            "Тошкент шаҳар МГ"
+                                          )
+                                            dispatch(
+                                              setUserModal({
+                                                type: 2,
+                                                open: true,
+                                                id: row.id,
+                                                name: row.FoydalanuvchiNomi,
+                                              })
+                                            );
+                                        } else {
+                                        }
+                                      } else {
+                                      }
+                                    } else {
+                                    }
+                                  }}
+                                  aria-label="delete"
+                                  size="medium"
+                                >
+                                  <RemoveCircleOutlineIcon
+                                    fontSize="inherit"
+                                    color="error"
+                                  />
+                                </IconButton>
                               </>
                             ) : column.format && typeof value === "number" ? (
                               column.format(value)
@@ -297,6 +362,7 @@ export default function Users() {
         </TableContainer>
       </Paper>
       <EditUser
+        handleDelete={handleDelete}
         handleClose={handleClose}
         handleSubmit={handleSubmite}
         value={value2}

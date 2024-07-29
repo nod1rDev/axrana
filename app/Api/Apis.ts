@@ -204,6 +204,19 @@ export const deleteWorker = async (JWT: any, id: any) => {
   return data;
 };
 
+export const deleteUser = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/auth/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
 // contract
 export const createContract = async (JWT: any, value: any) => {
   const res = await fetch(URL + "/contract/create", {

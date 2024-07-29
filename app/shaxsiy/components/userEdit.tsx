@@ -14,11 +14,13 @@ export default function EditUser({
   setValue,
   handleSubmit,
   handleClose,
+  handleDelete,
 }: {
   value: any;
   setValue: any;
   handleSubmit: any;
   handleClose: any;
+  handleDelete: any;
 }) {
   const theme = useTheme();
 
@@ -26,8 +28,6 @@ export default function EditUser({
   const open = useSelector((s: any) => s.shax.userModal);
 
   const handleChange = (e: any) => {
-    
-
     setValue({
       ...value,
       [e.target.name]: e.target.value,
@@ -40,47 +40,73 @@ export default function EditUser({
 
   return (
     <React.Fragment>
-      <Dialog
-        fullScreen={fullScreen}
-        open={open.open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <DialogTitle id="responsive-dialog-title">
-          {`${open.name}` + latinToCyrillic("batalyon nomini o'zgartiring!")}
-        </DialogTitle>
-        <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
-          <TextField
-            name="username"
-            error={value.username == ""}
-            fullWidth
-            value={value.username}
-            onChange={(e: any) => handleChange(e)}
-            label={latinToCyrillic("Bataly'on nomi")}
-            id="fullWidth"
-          />
+      {open.type == 1 ? (
+        <Dialog
+          fullScreen={fullScreen}
+          open={open.open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {`${open.name}` + latinToCyrillic("batalyon nomini o'zgartiring!")}
+          </DialogTitle>
+          <div className="flex flex-row justify-between w-[600px] gap-2 px-4">
+            <TextField
+              name="username"
+              error={value.username == ""}
+              fullWidth
+              value={value.username}
+              onChange={(e: any) => handleChange(e)}
+              label={latinToCyrillic("Bataly'on nomi")}
+              id="fullWidth"
+            />
 
-          <TextField
-            fullWidth
-            error={value.newPassword == ""}
-            value={value.newPassword}
-            onChange={(e: any) => handleChange(e)}
-            name="newPassword"
-            label={latinToCyrillic("Yangi Parol")}
-            id="fullWidth"
-          />
-        </div>
-        <DialogActions>
-          <div className="flex justify-between w-full mt-3 pb-2">
-            <Button variant="contained" color="inherit" onClick={handleClose}>
-              {latinToCyrillic("Orqaga")}
-            </Button>
-            <Button onClick={handleSubmite} color="info" variant="contained">
-              {latinToCyrillic("Saqlash")}
-            </Button>
+            <TextField
+              fullWidth
+              error={value.newPassword == ""}
+              value={value.newPassword}
+              onChange={(e: any) => handleChange(e)}
+              name="newPassword"
+              label={latinToCyrillic("Yangi Parol")}
+              id="fullWidth"
+            />
           </div>
-        </DialogActions>
-      </Dialog>
+          <DialogActions>
+            <div className="flex justify-between w-full mt-3 pb-2">
+              <Button variant="contained" color="inherit" onClick={handleClose}>
+                {latinToCyrillic("Orqaga")}
+              </Button>
+              <Button onClick={handleSubmite} color="info" variant="contained">
+                {latinToCyrillic("Saqlash")}
+              </Button>
+            </div>
+          </DialogActions>
+        </Dialog>
+      ) : (
+        <Dialog
+          fullScreen={fullScreen}
+          open={open.open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            {`"${open.name}"` +
+              " " +
+              "ushbu Foydalanuvchini ochirishni istaysizmi ?"}
+          </DialogTitle>
+          <div className="w-[300px] mt-5"></div>
+          <DialogActions>
+            <div className="flex justify-between w-full mt-3 pb-2">
+              <Button variant="contained" color="inherit" onClick={handleClose}>
+                Orqaga
+              </Button>
+              <Button onClick={handleDelete} color="error" variant="contained">
+                {"O'chirish"}
+              </Button>
+            </div>
+          </DialogActions>
+        </Dialog>
+      )}
     </React.Fragment>
   );
 }

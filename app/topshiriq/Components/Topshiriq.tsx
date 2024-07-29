@@ -193,13 +193,13 @@ function Topshiriq() {
             {latinToCyrillic("Xodimlar soni")}
           </span>
 
-          <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[160px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Topshiriq vaqti")}
           </span>
-          <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[130px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Time limit")}
           </span>
-          <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[300px]  overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Manzili")}
           </span>
 

@@ -84,14 +84,7 @@ function page() {
               >
                 {"орқага"}
               </Button>
-              <Button
-                onClick={handlePrint}
-                color="success"
-                startIcon={<LocalPrintshopIcon />}
-                variant="contained"
-              >
-                {latinToCyrillic("Chop etish")}
-              </Button>
+              
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold"> Бригада ҳисобот</h1>

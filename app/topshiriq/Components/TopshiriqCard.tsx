@@ -59,12 +59,11 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
     const res = await getInfo(JWT, active);
     console.log(res.task);
 
-    setInfo(res.task);
+    setInfo(res.task[0]);
   };
   React.useEffect(() => {
     if (active > 0) {
       getData();
-
     }
   }, [active]);
 
@@ -135,7 +134,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
         </div>
       </div>
       <ShowWorkerModal ranks={workers} handleClose={handleClose} />
-      <ModalN1 data={info[0]} />
+      <ModalN1 data={info} />
     </>
   );
 }

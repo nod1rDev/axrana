@@ -186,7 +186,7 @@ export default function Page() {
 
   const deleteData = async () => {
     const res = await deleteAcount(JWT, +open.id);
-    console.log(open.id);
+    
 
     if (res.success) {
       dispatch(

@@ -27,6 +27,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { formatString } from "@/app/Utils";
 
 function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const JWT = useSelector((s: any) => s.auth.JWT);
@@ -93,11 +94,12 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientSTR: data.clientstr, //faqat 9 ta kirita olishi kerak frontdan tosiq qoying
         treasuryAccount: data.treasuryaccount, //faqat 25 ta kirita olishi kerak frontdan tosiq qoying
         timeLimit: data.timelimit,
+        treasuryaccount27: data.treasuryaccount27,
         address: data.address,
         taskTimeLimit: data.taskTimeLimit,
         taskDate: data.taskdate,
         taskTime: data.tasktime,
-        accountNumber: data.accountnumber,
+        accountNumber: formatString(data.accountnumber),
       };
 
       setValue(pureData);
@@ -126,7 +128,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           status: "success",
         })
       );
-      router.push("/shartnoma");
+      router.push("/" + data.id);
     } else {
       dispatch(
         alertChange({
@@ -144,11 +146,20 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
       { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
       { field: "treasuryAccount", length: 25, message: "25 ta raqam kiriting" },
+      {
+        field: "treasuryaccount27",
+        length: 27,
+        message: "27 ta raqam kiriting",
+      },
     ];
 
     let temp: any = {};
     checks.forEach(({ field, length, message }) => {
-      temp[field] = value[field]?.length === length ? "" : message;
+      if (value[field]?.length !== length) {
+        temp[field] = message;
+      } else {
+        temp[field] = "";
+      }
     });
 
     setErrors(temp);
@@ -174,7 +185,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientSTR: +value.clientSTR,
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
-     
+
         taskTimeLimit: +value.taskTimeLimit,
         battalions: filtOrgans,
       };
@@ -209,6 +220,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
@@ -372,11 +384,12 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   value={value[field.id] || ""}
                   name={field.id}
                   autoComplete="off"
+                  inputProps={{ maxLength: 27 }}
                   error={Boolean(errors[field.id])}
                   helperText={
                     errors[field.id] ||
                     `${
-                      field.length - (value[field.id]?.length || 0)
+                      field.length - (value[field.id]?.length || field.length)
                     } ${latinToCyrillic("ta raqam kiriting")}`
                   }
                 />

@@ -347,12 +347,13 @@ const Document2 = React.forwardRef(({ data, tasks }: any, ref: any) => {
                       <span className="font-bold">МФО:</span> 00014.
                     </span>
                     <span>
-                      {" "}
-                      <span className="font-bold">х/р:</span> 21 506 000 705 131
-                      158 003
+                      <span className="font-bold">х/р: </span>{" "}
+                      {formatString(data?.accountnumber)}
                     </span>
                     <span>
-                      <span className="font-bold">СТИР:</span> {formatString(data?.accountnumber)}
+                      {" "}
+                      <span className="font-bold">СТИР: </span> 21 506 000 705
+                      131 158 003
                     </span>
                   </div>
                 </div>

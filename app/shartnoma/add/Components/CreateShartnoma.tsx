@@ -13,6 +13,7 @@ import {
   createContract,
   getAllAcount,
   getForBatalyon,
+  getToPrint,
   searchByClintName,
 } from "@/app/Api/Apis";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -68,7 +69,9 @@ function CreateShartnoma() {
         status: res.success ? "success" : "error",
       })
     );
-    if (res.success) router.push("/shartnoma");
+    if (res.success) {
+      router.push("/" + res.data.id);
+    }
   };
 
   const [acount, setAcount] = useState([]);
@@ -87,6 +90,11 @@ function CreateShartnoma() {
       { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
       { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
       { field: "treasuryAccount", length: 25, message: "25 ta raqam kiriting" },
+      {
+        field: "treasuryaccount27",
+        length: 27,
+        message: "27 ta raqam kiriting",
+      },
     ];
 
     let temp: any = {};
@@ -178,6 +186,7 @@ function CreateShartnoma() {
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
 
   const getData = async () => {

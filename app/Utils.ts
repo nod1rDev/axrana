@@ -75,12 +75,13 @@ export function formatString(input: any): any {
     if (input.length < 2) {
       return input;
     }
+    console.log(input.toString());
 
     // Split the first two characters and join with a space
-    let result = input.slice(0, 2);
+    let result = input.toString().slice(0, 2);
 
     // Process the remaining characters in chunks of three
-    const remaining = input.slice(2);
+    const remaining = input.toString().slice(2);
     for (let i = 0; i < remaining.length; i += 3) {
       result += " " + remaining.slice(i, i + 3);
     }

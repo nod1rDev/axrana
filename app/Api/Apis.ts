@@ -798,6 +798,19 @@ export const getBatalyonUmumiyData = async (JWT: any, id: any) => {
   const data = await res.json();
   return data;
 };
+
+export const getInfo = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/task/get/info/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
 export const getBatalyonUmumiySearch = async (
   JWT: any,
   id: any,

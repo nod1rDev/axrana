@@ -22,7 +22,9 @@ import { getAllTasks, getAllWorkers, pushWorkers } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
-
+import { setModalN1 } from "@/app/Redux/CoctavsSlice";
+import ModalN1 from "./Components/pastki";
+import PermDeviceInformationIcon from '@mui/icons-material/PermDeviceInformation';
 interface Worker {
   FIO: string;
   selected: boolean;
@@ -208,9 +210,10 @@ const Page: React.FC = () => {
         >
           {"орқага"}
         </Button>
+        
       </div>
       <div className="mb-6 flex-col gap-4">
-      <div className="w-full flex cursor-pointer mb-4 px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
+        <div className="w-full flex cursor-pointer mb-4 px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
           <span className="font-bold text-left w-[180px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
@@ -241,7 +244,9 @@ const Page: React.FC = () => {
             {latinToCyrillic("Manzili")}
           </span>
 
-          <div className="flex items-center text-center">{latinToCyrillic("Status")}</div>
+          <div className="flex items-center text-center">
+            {latinToCyrillic("Status")}
+          </div>
         </div>
         {data && <TopshiriqCard click={false} data={data} />}
       </div>
@@ -345,6 +350,7 @@ const Page: React.FC = () => {
           </AccordionDetails>
         </Accordion>
       )}
+      
     </div>
   );
 };

@@ -1,153 +1,54 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Checkbox,
-  IconButton,
-  ListItemButton,
-  ListItemText,
-  TextField,
-} from "@mui/material";
-import React, { useCallback } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import CloseIcon from "@mui/icons-material/Close";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import debounce from "lodash/debounce";
+"use client";
+import * as React from "react";
 
-interface Worker {
-  FIO: string;
-  selected: boolean;
-  tasktime: string;
-  taskdate: string;
-  _id: string;
-}
+import Button from "@mui/material/Button";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import TextField from "@mui/material/TextField";
+import DialogTitle from "@mui/material/DialogTitle";
 
-interface CustomAccordionProps {
-  handleSearch: (e: React.FormEvent) => void;
-  search: string;
-  setSearch: (value: string) => void;
-  clearSearch: () => void;
-  handleSubmit: () => void;
-  filteredWorkers: Worker[];
-  handleToggle: (id: string) => void;
-  handleTaskTimeChange: (id: string, value: string) => void;
-  handleTaskDateChange: (id: string, value: string) => void;
-}
+import { useTheme } from "@mui/material/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { setModalN1 } from "@/app/Redux/CoctavsSlice";
+import { getInfo } from "@/app/Api/Apis";
+import TaskDetails from "./TsskDetails";
 
-const CustomAccordion: React.FC<CustomAccordionProps> = ({
-  handleSearch,
-  search,
-  setSearch,
-  clearSearch,
-  handleSubmit,
-  filteredWorkers,
-  handleToggle,
-  handleTaskTimeChange,
-  handleTaskDateChange,
-}) => {
-  const debouncedHandleTaskTimeChange = useCallback(
-    debounce((id: string, value: string) => handleTaskTimeChange(id, value), 0),
-    []
-  );
+export default function ModalN1({ data }: any) {
+  const theme = useTheme();
 
-  const debouncedHandleTaskDateChange = useCallback(
-    debounce(
-      (id: string, value: string) => handleTaskDateChange(id, value),
-      300
-    ),
-    []
-  );
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const open = useSelector((s: any) => s.coctav.modalN1);
+  const dispatch = useDispatch();
+  const handleClose = () => {
+    dispatch(setModalN1({ open: false, id: 0 }));
+  };
 
   return (
-    <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1-content"
-        id="panel1-header"
+    <React.Fragment>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open.open}
+        onClose={handleClose}
+        sx={{
+          "& .MuiDialog-paper": {
+            maxWidth: "1200px", // Custom width here
+          },
+        }}
+        aria-labelledby="responsive-dialog-title"
       >
-        {latinToCyrillic("Hodim qo'shish")}
-      </AccordionSummary>
-      <AccordionDetails>
-        <div className="flex flex-col pb-5 border-b gap-3">
-          <h1 className="font-bold">{latinToCyrillic("Filter")}</h1>
-          <form onSubmit={handleSearch} className="flex items-center w-full">
-            <TextField
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              fullWidth
-              label={latinToCyrillic("FIO orqali qidiring")}
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck="false"
-              InputProps={{
-                autoComplete: "off",
-                autoCorrect: "off",
-                spellCheck: "false",
-                endAdornment: search ? (
-                  <IconButton onClick={clearSearch}>
-                    <CloseIcon color="error" />
-                  </IconButton>
-                ) : (
-                  <IconButton type="submit">
-                    <PersonSearchIcon color="info" />
-                  </IconButton>
-                ),
-              }}
-            />
-          </form>
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ mt: 5 }}
-            onClick={handleSubmit}
-          >
-            {latinToCyrillic("Saqlash")}
-          </Button>
+        <DialogTitle id="responsive-dialog-title"></DialogTitle>
+        <div className="flex flex-col min-w-[1200px] gap-2 px-4">
+          <TaskDetails data={data} />
         </div>
-        <div className="w-full">
-          {filteredWorkers.map((value: Worker) => {
-            const labelId = `checkbox-list-label-${value._id}`;
-            return (
-              <div className="flex w-full justify-between" key={value._id}>
-                <Checkbox
-                  onClick={() => handleToggle(value._id)}
-                  edge="start"
-                  checked={value.selected}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-                <ListItemText id={labelId} primary={`${value.FIO}`} />
-
-                <div className="flex gap-5">
-                  <TextField
-                    id="outlined-basic"
-                    label={latinToCyrillic("Topshiriq mudati")}
-                    variant="outlined"
-                    type="number"
-                    value={value.tasktime}
-                    onChange={(e) =>
-                      debouncedHandleTaskTimeChange(value._id, e.target.value)
-                    }
-                  />
-                  <TextField
-                    id="outlined-basic"
-                    label={latinToCyrillic("Topshiriq vaqti")}
-                    variant="outlined"
-                    value={value.taskdate}
-                    onChange={(e) =>
-                      debouncedHandleTaskDateChange(value._id, e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </AccordionDetails>
-    </Accordion>
+        <DialogActions>
+          <div className="flex justify-between w-full mt-3 pb-2">
+            <Button variant="contained" color="info" onClick={handleClose}>
+              Orqaga
+            </Button>
+          </div>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
-};
-
-export default CustomAccordion;
+}

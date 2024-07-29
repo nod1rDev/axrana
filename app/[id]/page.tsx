@@ -801,11 +801,11 @@ function page() {
                               Марказий банк Тошкент шахар ХККМ
                             </span>
                             <span className="font-bold">Ғазначилиги х/р</span>
-                            <span>{data?.treasuryaccount}</span>
+                            <span>{formatString(data?.treasuryaccount)}</span>
                             <span>
                               {" "}
                               <span className="font-bold">ИНН:</span>{" "}
-                              {data?.clientstr}
+                              {formatString(data?.clientstr)}
                             </span>
                             <span>
                               {" "}

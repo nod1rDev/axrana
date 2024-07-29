@@ -138,12 +138,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       { field: "clientMFO", length: 5, message: "5 ta raqam kiriting" },
       { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
       { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
-      { field: "treasuryAccount", length: 25, message: "25 ta raqam kiriting" },
-      {
-        field: "treasuryaccount27",
-        length: 27,
-        message: "27 ta raqam kiriting",
-      },
+    
     ];
 
     let temp: any = {};
@@ -205,8 +200,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
-    { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
-    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
+
   ];
 
   const handleChangeOrgans = (e: any, index: number) => {
@@ -381,6 +375,24 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   }
                 />
               ))}
+              <TextField
+                label={latinToCyrillic("G'aznachilik xisobi")}
+                sx={{ width: "31%" }}
+                onChange={handleChangeValue}
+                variant="outlined"
+                value={value.treasuryaccount || ""}
+                name="treasuryaccount"
+                autoComplete="off"
+              />
+              <TextField
+                label={latinToCyrillic("G'aznachilik xisobi 2")}
+                sx={{ width: "31%" }}
+                onChange={handleChangeValue}
+                variant="outlined"
+                value={value.treasuryaccount27 || ""}
+                name="treasuryaccount27"
+                autoComplete="off"
+              />
             </>
           )}
         </div>

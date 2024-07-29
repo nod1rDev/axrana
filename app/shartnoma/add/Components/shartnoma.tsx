@@ -126,7 +126,6 @@ function Shartnoma() {
             <VisuallyHiddenInput
               type="file"
               hidden
-             
               onChange={handleFileChange}
             />
           </Button>
@@ -140,9 +139,6 @@ function Shartnoma() {
             </Button>
           )}
         </div>
-        <Button type="submit" variant="contained">
-          {latinToCyrillic("Qo'shish")}
-        </Button>
       </div>
       <CreateShartnoma />
     </div>

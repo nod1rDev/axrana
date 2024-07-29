@@ -119,7 +119,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           status: "success",
         })
       );
-      router.push("/shartnoma");
+      router.push("/" + data.id);
     } else {
       dispatch(
         alertChange({
@@ -167,7 +167,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         clientSTR: +value.clientSTR,
         clientAccount: +value.clientAccount,
         taskTime: +value.taskTime,
-     
       };
       if (shartnoma.contractNumber) {
         createShartnoman(shartnoma);

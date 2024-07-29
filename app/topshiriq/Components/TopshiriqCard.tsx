@@ -57,14 +57,14 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
 
   const getData = async () => {
     const res = await getInfo(JWT, active);
-    console.log(res.data);
+    console.log(res.task);
 
-    setInfo(res.data);
+    setInfo(res.task);
   };
   React.useEffect(() => {
     if (active > 0) {
       getData();
-      dispatch(setModalN1({ open: true, id: data.id }));
+
     }
   }, [active]);
 
@@ -122,6 +122,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
               variant="contained"
               onClick={(event) => {
                 event.stopPropagation();
+                dispatch(setModalN1({ open: true, id: data.id }));
                 setActive(data.id);
               }}
             >

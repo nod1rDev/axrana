@@ -215,7 +215,7 @@ const BudgetTable: any = ({
                 </BorderedTableCell>
                 <BorderedTableCell></BorderedTableCell>
                 <BorderedTableCell>
-                  {address && formatNumber(address.timemoney)}
+                 
                 </BorderedTableCell>
                 <BorderedTableCell>
                   {address && formatNumber(address.money)}

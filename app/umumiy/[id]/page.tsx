@@ -121,12 +121,19 @@ function page() {
     setStatus(e.target.value);
     getByStatus(e.target.value);
   };
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: (): any => componentRef.current,
+  });
   return (
     <>
+      <div className=" hidden">
+        <Document4 data={data} searchStatus={searchStatus} ref={componentRef} />
+      </div>
       {data && (
         <>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
-            <div className="mb-6">
+            <div className="mb-6 justify-between flex w-full">
               <Button
                 startIcon={<ArrowBackIcon />}
                 color="info"
@@ -135,11 +142,18 @@ function page() {
               >
                 {"орқага"}
               </Button>
+              <Button
+                onClick={handlePrint}
+                color="success"
+                startIcon={<LocalPrintshopIcon />}
+                variant="contained"
+              >
+                {latinToCyrillic("Chop etish")}
+              </Button>
             </div>
             <div className="rounded-lg w-full mb-5  px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">Бригада умумий ҳисобот</h1>
               <div className="flex flex-col">
-              
                 <div className="flex items-center gap-4">
                   <FormControl sx={{ width: "200px" }}>
                     <InputLabel id="demo-simple-select-label">

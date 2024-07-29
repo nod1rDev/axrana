@@ -18,6 +18,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import { deleteData1, exel1, getByIdComand } from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
+import Document7 from "./Components/Document3";
 
 function page() {
   const { id } = useParams();
@@ -148,10 +149,10 @@ function page() {
       {data && (
         <>
           <div className=" hidden">
-            <Document3 tasks={tasks} data={data} ref={componentRef} />
+            <Document7 tasks={tasks} data={data} ref={componentRef} />
           </div>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
-            <div className="mb-6">
+            <div className="mb-6 justify-between flex w-full">
               <Button
                 startIcon={<ArrowBackIcon />}
                 color="info"
@@ -159,6 +160,14 @@ function page() {
                 onClick={() => router.push("/otchot")}
               >
                 {"орқага"}
+              </Button>
+              <Button
+                onClick={handlePrint}
+                color="success"
+                startIcon={<LocalPrintshopIcon />}
+                variant="contained"
+              >
+                {latinToCyrillic("Chop etish")}
               </Button>
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">

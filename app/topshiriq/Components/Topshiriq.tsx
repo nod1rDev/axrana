@@ -200,7 +200,7 @@ function Topshiriq() {
             {latinToCyrillic("Time limit")}
           </span>
           <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Topshiriq manzili")}
+            {latinToCyrillic("Manzili")}
           </span>
 
           <div className="flex items-center text-center">{latinToCyrillic("Status")}</div>

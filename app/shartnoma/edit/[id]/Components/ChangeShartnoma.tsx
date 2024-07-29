@@ -361,20 +361,24 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                 multiline
                 autoComplete="off"
               />
-              {validationFields.map(({ id, label, length }) => (
+              {validationFields.map((field) => (
                 <TextField
-                  key={id}
-                  id={id}
-                  label={latinToCyrillic(label)}
-                  sx={{ width: "16.6%" }}
+                  key={field.id}
+                  id={field.id}
+                  label={latinToCyrillic(field.label)}
+                  sx={{ width: "31%" }}
                   onChange={handleChangeValue}
                   variant="outlined"
-                  type="number"
-                  value={value[id] || ""}
-                  name={id}
+                  value={value[field.id] || ""}
+                  name={field.id}
                   autoComplete="off"
-                  error={!!errors[id]}
-                  helperText={errors[id] ? latinToCyrillic(errors[id]) : ""}
+                  error={Boolean(errors[field.id])}
+                  helperText={
+                    errors[field.id] ||
+                    `${
+                      field.length - (value[field.id]?.length || 0)
+                    } ${latinToCyrillic("ta raqam kiriting")}`
+                  }
                 />
               ))}
             </>

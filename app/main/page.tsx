@@ -17,6 +17,7 @@ import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import { excel2, exel1, getByIdComand, getExcel } from "@/app/Api/Apis";
 import MaiTab from "./Components/MainTab";
+import Document5 from "./Components/Document5";
 
 function page() {
   const [data, setData] = useState<any>([]);
@@ -66,15 +67,21 @@ function page() {
       );
     }
   };
-
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: (): any => componentRef.current,
+  });
   return (
     <>
+      <div className=" hidden">
+        <Document5 data={tasks} ref={componentRef} />
+      </div>
       {data && (
         <>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">батальон умумий ҳисобот</h1>
-              <div className="flex gap-3">
+              <div className="flex justify-between gap-3">
                 <Button
                   onClick={downloadExcel}
                   startIcon={<CloudDownloadIcon />}
@@ -82,10 +89,18 @@ function page() {
                 >
                   {"Excel"}
                 </Button>
+                <Button
+                  onClick={handlePrint}
+                  color="success"
+                  startIcon={<LocalPrintshopIcon />}
+                  variant="contained"
+                >
+                  {latinToCyrillic("Chop etish")}
+                </Button>
               </div>
             </div>
 
-            <div className="container w-full rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
+            <div className="container w-full rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto   flex flex-col">
               <h1 className="font-bold my-6 text-center text-[18px]">
                 {latinToCyrillic("RO'YHAT")}
               </h1>

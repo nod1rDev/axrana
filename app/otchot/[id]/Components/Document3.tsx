@@ -3,7 +3,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import React, { useEffect, useRef, useState } from "react";
 import WorkerAndBatalyon from "./WorkerAndBatalyon";
 
-const Document3 = React.forwardRef(({ data, tasks }: any, ref: any) => {
+const Document7 = React.forwardRef(({ data, tasks }: any, ref: any) => {
   return (
     <>
       <div ref={ref} className="w-full  flex flex-col">
@@ -44,4 +44,4 @@ const Document3 = React.forwardRef(({ data, tasks }: any, ref: any) => {
   );
 });
 
-export default Document3;
+export default Document7;

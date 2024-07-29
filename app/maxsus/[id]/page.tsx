@@ -19,6 +19,7 @@ import { deleteData2, getByIdComan2, getByIdComand } from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 import Document4 from "./Components/Document3";
+import Document6 from "./Components/Document3";
 
 function page() {
   const { id } = useParams();
@@ -71,10 +72,10 @@ function page() {
       {data && (
         <>
           <div className=" hidden">
-            <Document4 data={data} ref={componentRef} />
+            <Document6 data={data} text={text} ref={componentRef} />
           </div>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
-            <div className="mb-6">
+            <div className="mb-6 flex justify-between w-full">
               <Button
                 startIcon={<ArrowBackIcon />}
                 color="info"
@@ -82,6 +83,14 @@ function page() {
                 onClick={() => router.push("/maxsus")}
               >
                 {"орқага"}
+              </Button>
+              <Button
+                onClick={handlePrint}
+                color="success"
+                startIcon={<LocalPrintshopIcon />}
+                variant="contained"
+              >
+                {latinToCyrillic("Chop etish")}
               </Button>
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">

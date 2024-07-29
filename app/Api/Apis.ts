@@ -916,8 +916,6 @@ export const searchByAddress1 = async (JWT: any, value: any) => {
 };
 
 export const getExcelContract3 = async (JWT: any, value: any) => {
-  
-
   const res = await fetch(URL + "/contract/create/excel/for/report", {
     method: "POST",
     headers: {
@@ -927,7 +925,9 @@ export const getExcelContract3 = async (JWT: any, value: any) => {
     body: JSON.stringify(value),
   });
 
-  const data = await res.blob();
-
-  return data;
+  if (res.status === 200) {
+    return res; // Status 200 bo'lsa, javob qaytariladi
+  } else {
+    throw new Error("Excel faylini yuklashda xatolik");
+  }
 };

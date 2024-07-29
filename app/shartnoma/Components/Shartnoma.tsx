@@ -126,29 +126,39 @@ function Shartnoma() {
   };
   const dispatch = useDispatch();
   const downloadExcel = async () => {
-    
-
     try {
-      const excelBlob = await getExcelContract3(JWT, value3);
+      const response = await getExcelContract3(JWT, value3);
 
-      // URL yaratish
-      const url = window.URL.createObjectURL(excelBlob);
+      if (response.status === 200) {
+        const excelBlob = await response.blob(); // Javobni blob formatida olish
 
-      // <a> elementi yaratish va yuklab olishni amalga oshirish
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Excel file yuklandi"),
-          status: "sucess",
-        })
-      );
+        // URL yaratish
+        const url = window.URL.createObjectURL(excelBlob);
+
+        // <a> elementi yaratish va yuklab olishni amalga oshirish
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        dispatch(
+          alertChange({
+            open: true,
+            message: latinToCyrillic("Excel file yuklandi"),
+            status: "success",
+          })
+        );
+      } else {
+        dispatch(
+          alertChange({
+            open: true,
+            message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+            status: "error",
+          })
+        );
+      }
     } catch (error) {
       dispatch(
         alertChange({

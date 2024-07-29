@@ -7,7 +7,7 @@ function Main({ children }: { children: any }) {
     <>
       <div className="flex min-h-full min-w-full mx-auto">
         <Header />
-        <div className="overflow-y-auto ml-[300px] w-full">{children}</div>
+        <div className="overflow-y-auto ml-[300px] w-full pb-14">{children}</div>
       </div>
     </>
   );

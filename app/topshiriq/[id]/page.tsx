@@ -187,7 +187,14 @@ const Page: React.FC = () => {
   };
   const findWorker = async () => {
     const res = await searchWorker(JWT, search);
-    setFilteredWorkers(res.data);
+    const filData = res.data.map((e: any) => ({
+      FIO: e.fio,
+      selected: false,
+      tasktime: "",
+      taskdate: "",
+      _id: e.id,
+    }));
+    setFilteredWorkers(filData);
   };
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,7 +204,7 @@ const Page: React.FC = () => {
 
   const clearSearch = () => {
     setSearch("");
-    setFilteredWorkers(workers);
+    getWorkers();
   };
 
   const memoizedFilteredWorkers = useMemo(

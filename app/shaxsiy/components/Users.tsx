@@ -261,7 +261,7 @@ export default function Users() {
               >
                 <MenuItem value={1}>{latinToCyrillic("Hamkorlik birgada")}</MenuItem>
                 <MenuItem value={2}>
-                  {latinToCyrillic("Batalon")}
+                  {latinToCyrillic("Batay'on")}
                 </MenuItem>
               </Select>
             </FormControl>

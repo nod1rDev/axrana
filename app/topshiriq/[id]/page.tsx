@@ -137,11 +137,7 @@ const Page: React.FC = () => {
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e) => e.selected);
     const pureWorker = FiltWorker.map((e) => {
-      return {
-        fio: e.FIO,
-        taskdate: infoData.taskdate,
-        tasktime: +infoData.tasktime,
-      };
+      return { fio: e.FIO, taskdate: infoData.taskdate, tasktime: +infoData.tasktime };
     });
 
     if (pureWorker.length > 0) {

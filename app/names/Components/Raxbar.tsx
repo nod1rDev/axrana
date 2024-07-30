@@ -38,7 +38,7 @@ function Raxbar() {
   const dispatch = useDispatch();
   const updateAuth = async (value: any) => {
     const res = await UpdateBXM(JWT, {
-      summa: value.summa,
+      summa: +value.summa,
     });
     if (res.success) {
       handleClose();

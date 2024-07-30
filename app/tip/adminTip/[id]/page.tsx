@@ -175,7 +175,7 @@ function page() {
 
   const clearSearch = () => {
     setSearch("");
-    setFilteredRanks(allRanks);
+    getAllRanks();
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -281,7 +281,6 @@ function page() {
               />
             </form>
           </div>
-          
         </div>
         <TipTab
           data={data}

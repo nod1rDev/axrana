@@ -121,6 +121,19 @@ export const getAllWorkers = async (
   return data;
 };
 
+export const getAllWorkers2 = async (JWT: any) => {
+  const res = await fetch(URL + "/worker/for/push", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
 export const getWorkerById = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/worker/get/one/" + id, {
     method: "GET",

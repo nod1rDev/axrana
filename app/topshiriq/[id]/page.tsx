@@ -18,13 +18,19 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import { getAllTasks, getAllWorkers, pushWorkers } from "@/app/Api/Apis";
+import {
+  getAllTasks,
+  getAllWorkers,
+  getAllWorkers2,
+  pushWorkers,
+} from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { setModalN1 } from "@/app/Redux/CoctavsSlice";
 import ModalN1 from "./Components/pastki";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
+
 interface Worker {
   FIO: string;
   selected: boolean;
@@ -38,7 +44,7 @@ interface Task {
   inprogress: boolean;
 }
 
-// Debounce funksiyasini yaratish
+// Debounce function
 const debounce = (func: Function, delay: number) => {
   let timeoutId: NodeJS.Timeout;
   return (...args: any) => {
@@ -58,7 +64,10 @@ const Page: React.FC = () => {
   const [filteredWorkers, setFilteredWorkers] = useState<Worker[]>([]);
   const [search, setSearch] = useState<string>("");
   const JWT = useSelector((state: any) => state.auth.JWT);
-
+  const [infoData, setInfoData] = useState({
+    tasktime: "",
+    taskdate: "",
+  });
   const getData = async () => {
     const res = await getAllTasks(JWT);
     const single = res.data.find((e: any) => e.id === id);
@@ -66,7 +75,7 @@ const Page: React.FC = () => {
   };
 
   const getWorkers = async () => {
-    const res = await getAllWorkers(JWT, null, 1, 100);
+    const res = await getAllWorkers2(JWT);
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
@@ -97,46 +106,6 @@ const Page: React.FC = () => {
     );
   }, []);
 
-  const debouncedHandleTaskTimeChange = useCallback(
-    debounce((id: string, value: string) => {
-      setWorkers((prevWorkers) =>
-        prevWorkers.map((worker) =>
-          worker._id === id ? { ...worker, tasktime: value } : worker
-        )
-      );
-      setFilteredWorkers((prevFiltered) =>
-        prevFiltered.map((worker) =>
-          worker._id === id ? { ...worker, tasktime: value } : worker
-        )
-      );
-    }, 0.1),
-    []
-  );
-
-  const debouncedHandleTaskDateChange = useCallback(
-    debounce((id: string, value: string) => {
-      setWorkers((prevWorkers) =>
-        prevWorkers.map((worker) =>
-          worker._id === id ? { ...worker, taskdate: value } : worker
-        )
-      );
-      setFilteredWorkers((prevFiltered) =>
-        prevFiltered.map((worker) =>
-          worker._id === id ? { ...worker, taskdate: value } : worker
-        )
-      );
-    }, 0.1),
-    []
-  );
-
-  const handleTaskTimeChange = (id: string, value: string) => {
-    debouncedHandleTaskTimeChange(id, value);
-  };
-
-  const handleTaskDateChange = (id: string, value: string) => {
-    debouncedHandleTaskDateChange(id, value);
-  };
-
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -162,11 +131,17 @@ const Page: React.FC = () => {
       );
     }
   };
-
+  const handleChageInfoData = (e: any) => {
+    setInfoData({ ...infoData, [e.target.name]: e.target.value });
+  };
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e) => e.selected);
     const pureWorker = FiltWorker.map((e) => {
-      return { fio: e.FIO, taskdate: e.taskdate, tasktime: +e.tasktime };
+      return {
+        fio: e.FIO,
+        taskdate: infoData.taskdate,
+        tasktime: +infoData.tasktime,
+      };
     });
 
     if (pureWorker.length > 0) {
@@ -207,7 +182,7 @@ const Page: React.FC = () => {
           variant="contained"
           onClick={() => router.push("/topshiriq")}
         >
-          {"орқага"}
+          {latinToCyrillic("орқага")}
         </Button>
       </div>
       <div className="mb-6 flex-col gap-4">
@@ -219,11 +194,7 @@ const Page: React.FC = () => {
             {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
-            className={`font-bold w-[200px] text-center overflow-hidden text-ellipsis whitespace-nowrap ${
-              status === "bajarilmoqda" || status === "bajarilmagan"
-                ? "text-red-500"
-                : ""
-            }`}
+            className={`font-bold w-[200px] text-center overflow-hidden text-ellipsis whitespace-nowrap `}
           >
             {latinToCyrillic("Topshiriq sanasi")}
           </span>
@@ -297,6 +268,26 @@ const Page: React.FC = () => {
                 {latinToCyrillic("Saqlash")}
               </Button>
             </div>
+            <div className="flex justify-end py-2 gap-5">
+              <TextField
+                autoComplete="off"
+                label={latinToCyrillic("Vaqt")}
+                variant="outlined"
+                sx={{ width: 400 }}
+                name="tasktime"
+                value={infoData.tasktime}
+                onChange={handleChageInfoData}
+              />
+              <TextField
+                autoComplete="off"
+                label={latinToCyrillic("Sana")}
+                variant="outlined"
+                name="taskdate"
+                sx={{ width: 400 }}
+                value={infoData.taskdate}
+                onChange={handleChageInfoData}
+              />
+            </div>
             <List
               sx={{
                 width: "100%",
@@ -305,43 +296,23 @@ const Page: React.FC = () => {
               }}
             >
               <div className="flex flex-col gap-4">
-              {memoizedFilteredWorkers.map((value: Worker) => {
-                const labelId = `checkbox-list-label-${value._id}`;
-                return (
-                  <ListItem key={value._id} disablePadding>
-                    <ListItemIcon>
-                      <Checkbox
-                        onClick={() => handleToggle(value._id)}
-                        edge="start"
-                        checked={value.selected}
-                        disableRipple
-                        inputProps={{ "aria-labelledby": labelId }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={`${value.FIO}`} />
-                    <div className="flex gap-5">
-                      <TextField
-                        id="outlined-basic"
-                        label={latinToCyrillic("Vaqt")}
-                        variant="outlined"
-                        value={value.tasktime}
-                        onChange={(e) =>
-                          handleTaskTimeChange(value._id, e.target.value)
-                        }
-                      />
-                      <TextField
-                        id="outlined-basic"
-                        label={latinToCyrillic("Sana")}
-                        variant="outlined"
-                        value={value.taskdate}
-                        onChange={(e) =>
-                          handleTaskDateChange(value._id, e.target.value)
-                        }
-                      />
-                    </div>
-                  </ListItem>
-                );
-              })}
+                {memoizedFilteredWorkers.map((value: Worker) => {
+                  const labelId = `checkbox-list-label-${value._id}`;
+                  return (
+                    <ListItem key={value._id} disablePadding>
+                      <ListItemIcon>
+                        <Checkbox
+                          onClick={() => handleToggle(value._id)}
+                          edge="start"
+                          checked={value.selected}
+                          disableRipple
+                          inputProps={{ "aria-labelledby": labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={`${value.FIO}`} />
+                    </ListItem>
+                  );
+                })}
               </div>
             </List>
           </AccordionDetails>

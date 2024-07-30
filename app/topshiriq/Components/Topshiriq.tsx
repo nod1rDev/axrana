@@ -180,11 +180,7 @@ function Topshiriq() {
             {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
-            className={`font-bold w-[230px] text-center overflow-hidden text-ellipsis whitespace-nowrap ${
-              status === "bajarilmoqda" || status === "bajarilmagan"
-                ? "text-red-500"
-                : ""
-            }`}
+            className={`font-bold w-[230px] text-center overflow-hidden text-ellipsis whitespace-nowrap `}
           >
             {latinToCyrillic("Topshiriq sanasi")}
           </span>

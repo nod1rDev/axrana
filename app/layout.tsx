@@ -24,13 +24,16 @@ export default function RootLayout({
       <html lang="en">
         <head>
           <link rel="icon" href="/icon-192x192.png" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap"
+            rel="stylesheet"
+          />
         </head>
-        <body id="body" className={`max-w-full mx-auto ${inter.className}`}>
+        <body id="body" className={`max-w-full mx-auto ${inter.className}`} style={{ fontFamily: "'Times New Roman', serif" }}>
           <Prodected>
             <Main>{children}</Main>
           </Prodected>
           <Alertt />
-        
         </body>
       </html>
     </StoreProvider>

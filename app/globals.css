@@ -10,6 +10,9 @@ input.no-autocomplete {
   background-color: #f9f9f9; /* Light gray background */
   border: 1px solid #ccc; /* Light gray border */
 }
+body {
+  font-family: "Times New Roman";
+}
 .login {
   background: url(https://st2.depositphotos.com/1017986/8614/i/450/depositphotos_86146310-stock-photo-close-up-of-euro-paper.jpg)
       no-repeat,

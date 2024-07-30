@@ -188,7 +188,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
 
           <section className="mb-5 text-[14px]">
             <h2 className="text-[14px] text-center font-semibold mb-0">
-              6. Коррупсияга қарши қўшимча шартлар
+              6. Коррупцияга қарши қўшимча шартлар
             </h2>
             <p className="mb-0">
               <span className="font-bold">6.1</span> Тарафларнинг шартнома
@@ -198,7 +198,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
             </p>
             <p className="mb-0">
               <span className="font-bold">6.2</span> Тарафлар шартномадаги
-              коррупсияга қарши қўшимча шартларда белгиланган коррупсиянинг
+              Коррупцияга қарши қўшимча шартларда белгиланган коррупсиянинг
               олдини олиш чораларини тан олади ва уларга риоя этилиши бўйича
               ҳамкорликни таъминлайдилар.
             </p>
@@ -213,7 +213,7 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
               кафолатлайди.
             </p>
             <p className="mb-0">
-              <span className="font-bold">6.4</span> Коррупсияга оид
+              <span className="font-bold">6.4</span> Коррупцияга оид
               ҳуқуқбузурлик содир қилиш учун таъмагирлик қилиш, ундаш, тазйиқ
               ўтказиш ёки таҳдид қилиш. Ушбу ҳолат бўйича бир тараф иккинчи
               тарафни ҳамда ваколатли давлат оргаларини дарҳол хабардор қилиши

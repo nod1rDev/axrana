@@ -259,9 +259,9 @@ export default function Users() {
                 label={latinToCyrillic("Status")}
                 onChange={handleChange}
               >
-                <MenuItem value={1}>{latinToCyrillic("Admin")}</MenuItem>
+                <MenuItem value={1}>{latinToCyrillic("Hamkorlik birgada")}</MenuItem>
                 <MenuItem value={2}>
-                  {latinToCyrillic("Foydalanuvchi")}
+                  {latinToCyrillic("Batalon")}
                 </MenuItem>
               </Select>
             </FormControl>

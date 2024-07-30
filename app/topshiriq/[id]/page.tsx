@@ -18,12 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import {
-  getAllTasks,
-  getAllWorkers,
-  pushWorkers,
-  searchWorker,
-} from "@/app/Api/Apis";
+import { getAllTasks, getAllWorkers, pushWorkers } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
@@ -71,7 +66,7 @@ const Page: React.FC = () => {
   };
 
   const getWorkers = async () => {
-    const res = await getAllWorkers(JWT, null, 1, 10000);
+    const res = await getAllWorkers(JWT, null, 1, 100);
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
@@ -79,6 +74,8 @@ const Page: React.FC = () => {
       taskdate: "",
       _id: e.id,
     }));
+    console.log(filData);
+
     setWorkers(filData);
     setFilteredWorkers(filData);
   };
@@ -185,26 +182,16 @@ const Page: React.FC = () => {
       );
     }
   };
-  const findWorker = async () => {
-    const res = await searchWorker(JWT, search);
-    const filData = res.data.map((e: any) => ({
-      FIO: e.fio,
-      selected: false,
-      tasktime: "",
-      taskdate: "",
-      _id: e.id,
-    }));
-    setFilteredWorkers(filData);
-  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-
-    findWorker();
+    const filtered = workers.filter((worker) => worker.FIO.includes(search));
+    setFilteredWorkers(filtered);
   };
 
   const clearSearch = () => {
     setSearch("");
-    getWorkers();
+    setFilteredWorkers(workers);
   };
 
   const memoizedFilteredWorkers = useMemo(

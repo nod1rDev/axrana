@@ -120,7 +120,7 @@ export default function Users() {
         JWT,
         value.username,
         value.password,
-        value.status
+        value.status == 1 ? true : false
       );
       if (res.success) {
         dispatch(

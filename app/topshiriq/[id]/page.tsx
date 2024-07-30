@@ -74,7 +74,6 @@ const Page: React.FC = () => {
       taskdate: "",
       _id: e.id,
     }));
-    console.log(filData);
 
     setWorkers(filData);
     setFilteredWorkers(filData);
@@ -305,46 +304,45 @@ const Page: React.FC = () => {
                 bgcolor: "background.paper",
               }}
             >
+              <div className="flex flex-col gap-4">
               {memoizedFilteredWorkers.map((value: Worker) => {
                 const labelId = `checkbox-list-label-${value._id}`;
                 return (
                   <ListItem key={value._id} disablePadding>
-                    <ListItemButton role={undefined}>
-                      <ListItemIcon>
-                        <Checkbox
-                          onClick={() => handleToggle(value._id)}
-                          edge="start"
-                          checked={value.selected}
-                          disableRipple
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </ListItemIcon>
-                      <ListItemText id={labelId} primary={`${value.FIO}`} />
-                      <div className="flex gap-5">
-                        <TextField
-                          id="outlined-basic"
-                          label={latinToCyrillic("Vaqt")}
-                          variant="outlined"
-                          type="number"
-                          value={value.tasktime}
-                          onChange={(e) =>
-                            handleTaskTimeChange(value._id, e.target.value)
-                          }
-                        />
-                        <TextField
-                          id="outlined-basic"
-                          label={latinToCyrillic("Sana")}
-                          variant="outlined"
-                          value={value.taskdate}
-                          onChange={(e) =>
-                            handleTaskDateChange(value._id, e.target.value)
-                          }
-                        />
-                      </div>
-                    </ListItemButton>
+                    <ListItemIcon>
+                      <Checkbox
+                        onClick={() => handleToggle(value._id)}
+                        edge="start"
+                        checked={value.selected}
+                        disableRipple
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={`${value.FIO}`} />
+                    <div className="flex gap-5">
+                      <TextField
+                        id="outlined-basic"
+                        label={latinToCyrillic("Vaqt")}
+                        variant="outlined"
+                        value={value.tasktime}
+                        onChange={(e) =>
+                          handleTaskTimeChange(value._id, e.target.value)
+                        }
+                      />
+                      <TextField
+                        id="outlined-basic"
+                        label={latinToCyrillic("Sana")}
+                        variant="outlined"
+                        value={value.taskdate}
+                        onChange={(e) =>
+                          handleTaskDateChange(value._id, e.target.value)
+                        }
+                      />
+                    </div>
                   </ListItem>
                 );
               })}
+              </div>
             </List>
           </AccordionDetails>
         </Accordion>

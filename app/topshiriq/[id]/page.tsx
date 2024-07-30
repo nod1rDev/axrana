@@ -18,13 +18,18 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import { getAllTasks, getAllWorkers, pushWorkers } from "@/app/Api/Apis";
+import {
+  getAllTasks,
+  getAllWorkers,
+  pushWorkers,
+  searchWorker,
+} from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { setModalN1 } from "@/app/Redux/CoctavsSlice";
 import ModalN1 from "./Components/pastki";
-import PermDeviceInformationIcon from '@mui/icons-material/PermDeviceInformation';
+import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 interface Worker {
   FIO: string;
   selected: boolean;
@@ -66,7 +71,7 @@ const Page: React.FC = () => {
   };
 
   const getWorkers = async () => {
-    const res = await getAllWorkers(JWT, null, 1, 100);
+    const res = await getAllWorkers(JWT, null, 1, 10000);
     const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
@@ -180,13 +185,14 @@ const Page: React.FC = () => {
       );
     }
   };
-
+  const findWorker = async () => {
+    const res = await searchWorker(JWT, search);
+    setFilteredWorkers(res.data);
+  };
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const filtered = workers.filter((worker) =>
-      worker.FIO.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilteredWorkers(filtered);
+
+    findWorker();
   };
 
   const clearSearch = () => {
@@ -210,7 +216,6 @@ const Page: React.FC = () => {
         >
           {"орқага"}
         </Button>
-        
       </div>
       <div className="mb-6 flex-col gap-4">
         <div className="w-full flex cursor-pointer mb-4 px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
@@ -350,7 +355,6 @@ const Page: React.FC = () => {
           </AccordionDetails>
         </Accordion>
       )}
-      
     </div>
   );
 };

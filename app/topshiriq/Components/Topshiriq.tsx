@@ -173,33 +173,33 @@ function Topshiriq() {
       </div>
       <div className="flex flex-col gap-4">
         <div className="w-full flex cursor-pointer px-8 py-6 bg-[#1976D2] text-white rounded-2xl justify-between items-center hover:border hover:border-[#0096c7]">
-          <span className="font-bold text-left w-[155px] overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="font-bold text-left w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
-          <span className="font-bold text-left w-[180px] ">
+          <span className="font-bold text-left w-[200px] ">
             {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
-            className={`font-bold w-[230px] text-center overflow-hidden text-ellipsis whitespace-nowrap `}
+            className={`font-bold w-[240px] text-right  overflow-hidden text-ellipsis whitespace-nowrap `}
           >
             {latinToCyrillic("Topshiriq sanasi")}
           </span>
 
-          <span className="w-[140px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[260px] text-right  overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Xodimlar soni")}
           </span>
 
-          <span className="w-[160px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[180px] text-right  overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Topshiriq vaqti")}
           </span>
-          <span className="w-[130px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[130px]  text-right overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Time limit")}
           </span>
-          <span className="w-[300px]  overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[300px]   overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Manzili")}
           </span>
 
-          <div className="flex items-center text-center">{latinToCyrillic("Status")}</div>
+          <div className="flex items-center ">{latinToCyrillic("Status")}</div>
         </div>
         {data &&
           data.map((e: any) => (

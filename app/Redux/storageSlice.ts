@@ -7,6 +7,7 @@ const storageSlice = createSlice({
     boshliq: { open: false, id: 0, name: "" },
     manzil: { open: false, id: 0, name: "" },
     bank: { open: false, id: 0, name: "" },
+    Mfo: { open: false, id: 0, name: "" },
   },
   reducers: {
     setModalShahar: (state, { payload }) => {
@@ -21,8 +22,16 @@ const storageSlice = createSlice({
     setModalBank: (state, { payload }) => {
       state.bank = payload;
     },
+    setModalMfo: (state, { payload }) => {
+      state.Mfo = payload;
+    },
   },
 });
-export const { setModalShahar, setModalboshliq, setModalManzil, setModalBank } =
-  storageSlice.actions;
+export const {
+  setModalShahar,
+  setModalboshliq,
+  setModalManzil,
+  setModalBank,
+  setModalMfo,
+} = storageSlice.actions;
 export default storageSlice.reducer;

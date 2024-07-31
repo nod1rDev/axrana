@@ -1192,3 +1192,56 @@ export const getAllBank = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+//mfo
+export const createMfo = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/mfo/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const updateMfo = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/mfo/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const deleteMfo = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/mfo/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getAllMfo = async (JWT: any) => {
+  const res = await fetch(URL + "/mfo/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

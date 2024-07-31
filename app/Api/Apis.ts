@@ -975,3 +975,112 @@ export const getExcelContract3 = async (JWT: any, value: any) => {
     throw new Error("Excel faylini yuklashda xatolik");
   }
 };
+
+//excutor
+export const createShahar = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/executors/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const updateShahar = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/executors/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const deleteShahar = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/executors/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getAllShahar = async (JWT: any) => {
+  const res = await fetch(URL + "/executors/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+//leader
+
+export const createBoshliq = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/leaders/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const updateBoshliq = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/leaders/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const deleteBoshliq = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/leaders/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getAllBoshliq = async (JWT: any) => {
+  const res = await fetch(URL + "/leaders/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

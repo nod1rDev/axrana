@@ -76,12 +76,14 @@ const Page: React.FC = () => {
 
   const getWorkers = async () => {
     const res = await getAllWorkers2(JWT);
-    const filData = res.data.map((e: any) => ({
+    console.log(res);
+
+    const filData = res.data.map((e: any, i: number) => ({
       FIO: e.fio,
       selected: false,
       tasktime: "",
       taskdate: "",
-      _id: e.id,
+      _id: i + 1,
     }));
 
     setWorkers(filData);
@@ -137,7 +139,11 @@ const Page: React.FC = () => {
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e) => e.selected);
     const pureWorker = FiltWorker.map((e) => {
-      return { fio: e.FIO, taskdate: infoData.taskdate, tasktime: +infoData.tasktime };
+      return {
+        fio: e.FIO,
+        taskdate: infoData.taskdate,
+        tasktime: +infoData.tasktime,
+      };
     });
 
     if (pureWorker.length > 0) {

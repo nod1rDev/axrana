@@ -93,7 +93,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        accountNumber: data.accountnumber,
+        accountNumber: removeSpaces(data.accountnumber),
       };
 
       setValue(pureData);

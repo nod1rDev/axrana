@@ -8,7 +8,8 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance"; // Icon for
 import StorageIcon from "@mui/icons-material/Storage"; // Icon for Hisob raqami
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter } from "next/navigation";
-
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -38,7 +39,7 @@ const StyledMenu = styled((props: MenuProps) => (
     },
     "& .MuiMenuItem-root": {
       "& .MuiSvgIcon-root": {
-        fontSize: 24,
+        fontSize: 18,
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1.5),
       },
@@ -104,7 +105,7 @@ export default function MenuBar() {
         >
           <div className="flex items-center  w-full">
             <AccountBalanceIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
               {latinToCyrillic("BXM")}
             </span>
           </div>
@@ -118,8 +119,37 @@ export default function MenuBar() {
         >
           <div className="flex items-center  w-full">
             <StorageIcon />
-            <span style={{ fontSize: "20px", fontWeight: "bold" }}>
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
               {latinToCyrillic("Hisob Raqami")}
+            </span>
+          </div>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/shahar");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <CollectionsBookmarkIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Ijrochi")}
+            </span>
+          </div>
+        </MenuItem>
+         
+        <MenuItem
+          onClick={() => {
+            router.push("/boshliq");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <InterpreterModeIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Boshliq")}
             </span>
           </div>
         </MenuItem>

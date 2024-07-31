@@ -12,11 +12,15 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   createAcount,
   createAuth,
+  createShahar,
   deleteAcount,
+  deleteShahar,
   getAllAcount,
+  getAllShahar,
   getAuth,
   updateAcount,
   updateBatalyon,
+  updateShahar,
 } from "@/app/Api/Apis";
 import { alertChange, setUserModal } from "@/app/Redux/ShaxsiySlice";
 import IconButton from "@mui/material/IconButton";
@@ -25,7 +29,8 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin"; // Correct import
 import { setModalCoctav } from "../Redux/CoctavsSlice";
 import CoctavModal from "./Components/CoctavModal";
-import { formatString } from "../Utils";
+
+import { setModalShahar } from "../Redux/storageSlice";
 
 interface Column {
   id: "number" | "FoydalanuvchiNomi" | "nima" | "actions";
@@ -41,7 +46,7 @@ const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 10 },
   {
     id: "FoydalanuvchiNomi",
-    label: latinToCyrillic("Hisob raqami"),
+    label: latinToCyrillic("Ijrochi"),
     align: "left",
     minWidth: 900,
   },
@@ -79,16 +84,16 @@ export default function Page() {
   const [users, setUsers] = React.useState<any>();
   const JWT = useSelector((state: any) => state.auth.JWT);
   const [value, setValue] = React.useState<any>({
-    accountNumber: "",
+    executor: "",
   });
   const [value2, setValue2] = React.useState<any>({
-    accountNumber: "",
+    executor: "",
   });
   const [accountError, setAccountError] = React.useState<string | null>(null);
   const [remainingChars, setRemainingChars] = React.useState<number>(20);
 
   const getUsers = async () => {
-    const res = await getAllAcount(JWT);
+    const res = await getAllShahar(JWT);
     setUsers(res.data);
   };
 
@@ -97,30 +102,24 @@ export default function Page() {
   }, []);
 
   const rows = users
-    ? users.map((e: any) => createData(1, e.accountnumber, null, e.id))
+    ? users.map((e: any) => createData(1, e.executor, null, e.id))
     : [];
   const dispatch = useDispatch();
-  function removeSpaces(str: any) {
-    console.log(str);
 
-    const pureStr = str.replace(/\s+/g, "");
-
-    return formatString(pureStr);
-  }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (value.accountNumber.length >= 20) {
-      const pureVal = { accountNumber: removeSpaces(value.accountNumber) };
-      const res = await createAcount(JWT, pureVal);
+    if (value.executor) {
+      const pureVal = { executor: value.executor };
+      const res = await createShahar(JWT, pureVal);
       if (res.success) {
         dispatch(
           alertChange({
             open: true,
-            message: latinToCyrillic("Acount hisob qo'shildi"),
+            message: latinToCyrillic("Ijrochi qo'shildi"),
             status: "success",
           })
         );
-        setValue({ ...value, accountNumber: "" });
+        setValue({ ...value, executor: "" });
         getUsers();
       } else {
         dispatch(
@@ -131,40 +130,30 @@ export default function Page() {
           })
         );
       }
-      getUsers();
-    } else {
-      setAccountError(
-        `Hisob raqami kamida 20 ta belgidan iborat bo'lishi kerak. Qolgan belgilari: ${
-          20 - value.accountNumber.length
-        }`
-      );
     }
   };
 
   const handleChange = (e: any) => {
     const newValue = e.target.value;
     setValue({ ...value, [e.target.name]: newValue });
-    if (e.target.name === "accountNumber") {
-      setRemainingChars(20 - newValue.length);
-      setAccountError(null);
-    }
+   
   };
 
   const handleClose = () => {
-    dispatch(setModalCoctav({ open: false, name: "" }));
+    dispatch(setModalShahar({ open: false, name: "" }));
   };
 
-  const open = useSelector((s: any) => s.coctav.modal);
+  const open = useSelector((s: any) => s.sto.shahar);
 
   const updateAuth = async (valuee: any) => {
-    const res = await updateAcount(JWT, valuee, +open.id);
+    const res = await updateShahar(JWT, valuee, +open.id);
     if (res.success) {
       handleClose();
-      setValue2({ accountNumber: null });
+      setValue2({ executor: null });
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Hisob raqami tahrirlandi"),
+          message: latinToCyrillic("Ijrochi tahrirlandi"),
           status: "success",
         })
       );
@@ -181,7 +170,7 @@ export default function Page() {
   };
 
   const handleSubmite = () => {
-    if (value2.accountNumber !== "") {
+    if (value2.executor !== "") {
       updateAuth(value2);
     } else {
       dispatch(
@@ -195,18 +184,18 @@ export default function Page() {
   };
 
   const deleteData = async () => {
-    const res = await deleteAcount(JWT, +open.id);
+    const res = await deleteShahar(JWT, +open.id);
 
     if (res.success) {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Hisob Raqam ochirildi"),
+          message: latinToCyrillic("Ijrochi ochirildi"),
           status: "success",
         })
       );
-      handleClose();
       getUsers();
+      handleClose();
     } else {
       dispatch(
         alertChange({
@@ -223,7 +212,7 @@ export default function Page() {
   };
 
   React.useEffect(() => {
-    setValue2({ accountNumber: open.name });
+    setValue2({ executor: open.name });
   }, [open.name]);
 
   return (
@@ -231,7 +220,7 @@ export default function Page() {
       <Paper sx={{ width: "95%", mx: "auto", mt: "20px", overflow: "hidden" }}>
         <div className="w-full">
           <h1 className="font-bold text-[18px] mt-2 ml-2">
-            {latinToCyrillic("Hisob qo'shing")}
+            {latinToCyrillic("Ijrochi qo'shing")}
           </h1>
           <form
             onSubmit={handleSubmit}
@@ -239,14 +228,12 @@ export default function Page() {
           >
             <TextField
               id="outlined-basic"
-              label={latinToCyrillic("Hisob raqami")}
-              value={value.accountNumber}
-              name="accountNumber"
+              label={latinToCyrillic("Ijrochi nomi")}
+              value={value.executor}
+              name="executor"
               onChange={handleChange}
               fullWidth
               variant="outlined"
-              error={!!accountError}
-              helperText={accountError || `Qolgan belgilari: ${remainingChars}`}
             />
             <Button
               color="primary"
@@ -290,7 +277,7 @@ export default function Page() {
                                 <IconButton
                                   onClick={() =>
                                     dispatch(
-                                      setModalCoctav({
+                                      setModalShahar({
                                         type: 1,
                                         open: true,
                                         id: row.id,
@@ -313,7 +300,7 @@ export default function Page() {
                                   size="medium"
                                   onClick={() =>
                                     dispatch(
-                                      setModalCoctav({
+                                      setModalShahar({
                                         type: 2,
                                         open: true,
                                         id: row.id,
@@ -329,9 +316,9 @@ export default function Page() {
                                 </IconButton>
                               </>
                             ) : column.format && typeof value === "number" ? (
-                              column.format(formatString(value))
+                              column.format(value)
                             ) : (
-                              formatString(value)
+                              value
                             )}
                           </TableCell>
                         );

@@ -10,6 +10,7 @@ import TipSlice from "./TipSlice";
 import FileSlice from "./FileSlice";
 import names from "./names";
 import bankSlice from "./bankSlice";
+import storageSlice from "./storageSlice";
 
 export const store = () => {
   return configureStore({
@@ -24,7 +25,8 @@ export const store = () => {
       tip: TipSlice,
       file: FileSlice,
       names: names,
-      bank:bankSlice
+      bank: bankSlice,
+      sto: storageSlice,
     },
   });
 };

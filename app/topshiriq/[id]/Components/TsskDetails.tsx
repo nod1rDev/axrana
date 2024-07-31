@@ -59,7 +59,7 @@ const TaskDetails: React.FC<any> = ({ data }) => {
             соат,
           </p>
           <p className="mb-4">
-            Вақт чегараси : <strong>{data.timelimit}</strong>
+            Вақт чегараси : <strong>{data.timelimit + " "}</strong>
             ушбу соат тадбир отадиган вақт ёки тадбир бир неча кун бўлса ҳар
             кунлик вақт лимити : Админ билан боғланинг ушбу тадбир ўтадиган
             вақти номаълум ,

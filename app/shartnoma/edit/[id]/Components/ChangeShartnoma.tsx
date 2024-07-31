@@ -84,8 +84,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   }, []);
   useEffect(() => {
     if (data && taskss) {
-
-
       const pureData = {
         contractNumber: data.contractnumber,
         contractDate: convertDate(data.contractdate),
@@ -101,7 +99,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         taskTimeLimit: data.tasktimelimit, // Ensure this is assigned
         taskDate: data.taskdate,
         taskTime: data.tasktime,
-        accountNumber: data.accountnumber, // Ensure this is assigned
+        accountNumber: removeSpaces(data.accountnumber), // Ensure this is assigned
       };
 
       setValue(pureData);
@@ -262,7 +260,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     };
     getAcount();
   }, []);
- 
+
   function removeSpaces(str: any) {
     const pureStr = str.replace(/\s+/g, "");
 

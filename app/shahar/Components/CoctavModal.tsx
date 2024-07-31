@@ -24,7 +24,7 @@ export default function CoctavModal({
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const open = useSelector((s: any) => s.coctav.modal);
+  const open = useSelector((s: any) => s.sto.shahar);
   const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
@@ -52,11 +52,11 @@ export default function CoctavModal({
           </DialogTitle>
           <div className="flex flex-col w-full gap-2 px-4">
             <TextField
-              name="accountNumber"
+              name="executor"
               fullWidth
-              value={value.accountNumber}
+              value={value.executor}
               onChange={(e: any) => handleChange(e)}
-              label="Hisob Raqami"
+              label="Ijrochi nomi"
               id="fullWidth"
             />
           </div>
@@ -81,7 +81,7 @@ export default function CoctavModal({
           <DialogTitle id="responsive-dialog-title">
             {`"${open.name}"` +
               " " +
-              "ushbu Hisob raqamni ochirishni istaysizmi ?"}
+              "ushbu Ijrochini ochirishni istaysizmi ?"}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

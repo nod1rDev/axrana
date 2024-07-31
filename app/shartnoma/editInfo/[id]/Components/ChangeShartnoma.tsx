@@ -93,7 +93,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        accountNumber: formatString(data.accountnumber),
+        accountNumber: data.accountnumber,
       };
 
       setValue(pureData);
@@ -138,7 +138,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       { field: "clientMFO", length: 5, message: "5 ta raqam kiriting" },
       { field: "clientAccount", length: 20, message: "20 ta raqam kiriting" },
       { field: "clientSTR", length: 9, message: "9 ta raqam kiriting" },
-    
     ];
 
     let temp: any = {};
@@ -200,7 +199,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
-
   ];
 
   const handleChangeOrgans = (e: any, index: number) => {
@@ -251,6 +249,11 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     };
     getAcount();
   }, []);
+  function removeSpaces(str: any) {
+    const pureStr = str.replace(/\s+/g, "");
+
+    return formatString(pureStr);
+  }
 
   return (
     <>
@@ -316,7 +319,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
               {acount &&
                 acount.map((e: any) => (
                   <MenuItem key={e.accountnumber} value={e.accountnumber}>
-                    {e.accountnumber}
+                    {removeSpaces(e.accountnumber)}
                   </MenuItem>
                 ))}
             </Select>

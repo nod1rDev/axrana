@@ -75,8 +75,7 @@ export function formatString(input: any): any {
     if (input.length < 2) {
       return input;
     }
-    console.log(input.toString());
-
+   
     // Split the first two characters and join with a space
     let result = input.toString().slice(0, 2);
 

@@ -84,22 +84,24 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   }, []);
   useEffect(() => {
     if (data && taskss) {
+
+
       const pureData = {
         contractNumber: data.contractnumber,
         contractDate: convertDate(data.contractdate),
         clientName: data.clientname,
         clientAddress: data.clientaddress,
-        clientMFO: data.clientmfo, // faqat 5 ta kirita olishi kerak frontdan tosiq qoying
-        clientAccount: data.clientaccount, // faqat 20 ta kirita olishi kerak frontdan tosiq qoying
-        clientSTR: data.clientstr, //faqat 9 ta kirita olishi kerak frontdan tosiq qoying
-        treasuryAccount: data.treasuryaccount, //faqat 25 ta kirita olishi kerak frontdan tosiq qoying
+        clientMFO: data.clientmfo,
+        clientAccount: data.clientaccount,
+        clientSTR: data.clientstr,
+        treasuryAccount: data.treasuryaccount,
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        taskTimeLimit: data.taskTimeLimit,
+        taskTimeLimit: data.tasktimelimit, // Ensure this is assigned
         taskDate: data.taskdate,
         taskTime: data.tasktime,
-        accountNumber: formatString(data.accountnumber),
+        accountNumber: data.accountnumber, // Ensure this is assigned
       };
 
       setValue(pureData);
@@ -116,8 +118,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     }
   }, [data]);
   const createShartnoman = async (shartnoma: any) => {
-    console.log(shartnoma);
-
     const res = await updateContract(JWT, shartnoma, data.id);
 
     if (res.success) {
@@ -262,7 +262,12 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     };
     getAcount();
   }, []);
+ 
+  function removeSpaces(str: any) {
+    const pureStr = str.replace(/\s+/g, "");
 
+    return formatString(pureStr);
+  }
   return (
     <>
       <div className="flex flex-col mt-[15vh] mb-[9vh] gap-0 w-full">
@@ -319,7 +324,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={value.accountNumber || ""}
+              value={value?.accountNumber || ""}
               name="accountNumber"
               label={latinToCyrillic("Hisob Raqam")}
               onChange={handleChangeValue}
@@ -327,7 +332,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
               {acount &&
                 acount.map((e: any) => (
                   <MenuItem key={e.accountnumber} value={e.accountnumber}>
-                    {e.accountnumber}
+                    {removeSpaces(e.accountnumber)}
                   </MenuItem>
                 ))}
             </Select>
@@ -448,6 +453,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             name="taskTimeLimit"
             autoComplete="off"
           />
+
           {smetaVal3 && (
             <TextField
               id="discount"

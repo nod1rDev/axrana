@@ -100,11 +100,18 @@ export default function Page() {
     ? users.map((e: any) => createData(1, e.accountnumber, null, e.id))
     : [];
   const dispatch = useDispatch();
+  function removeSpaces(str: any) {
+    console.log(str);
 
+    const pureStr = str.replace(/\s+/g, "");
+
+    return formatString(pureStr);
+  }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (value.accountNumber.length >= 20) {
-      const res = await createAcount(JWT, value);
+      const pureVal = { accountNumber: removeSpaces(value.accountNumber) };
+      const res = await createAcount(JWT, pureVal);
       if (res.success) {
         dispatch(
           alertChange({
@@ -113,6 +120,7 @@ export default function Page() {
             status: "success",
           })
         );
+        setValue({ ...value, accountNumber: "" });
       } else {
         dispatch(
           alertChange({
@@ -186,7 +194,6 @@ export default function Page() {
 
   const deleteData = async () => {
     const res = await deleteAcount(JWT, +open.id);
-    
 
     if (res.success) {
       dispatch(

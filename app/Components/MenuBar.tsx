@@ -4,14 +4,16 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import StorageIcon from "@mui/icons-material/Storage"; // Icon for Hisob raqami
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter } from "next/navigation";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import InterpreterModeIcon from "@mui/icons-material/InterpreterMode";
 import ShareLocationIcon from "@mui/icons-material/ShareLocation";
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import NumbersIcon from '@mui/icons-material/Numbers';
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -183,9 +185,35 @@ export default function MenuBar() {
             </span>
           </div>
         </MenuItem>
-        
+        <MenuItem
+          onClick={() => {
+            router.push("/mfo");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <FeaturedPlayListIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Mfo")}
+            </span>
+          </div>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/str");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <NumbersIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Str")}
+            </span>
+          </div>
+        </MenuItem>
       </StyledMenu>
-      
     </div>
   );
 }

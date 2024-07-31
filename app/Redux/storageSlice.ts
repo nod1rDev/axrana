@@ -8,6 +8,7 @@ const storageSlice = createSlice({
     manzil: { open: false, id: 0, name: "" },
     bank: { open: false, id: 0, name: "" },
     Mfo: { open: false, id: 0, name: "" },
+    str: { open: false, id: 0, name: "" },
   },
   reducers: {
     setModalShahar: (state, { payload }) => {
@@ -25,6 +26,9 @@ const storageSlice = createSlice({
     setModalMfo: (state, { payload }) => {
       state.Mfo = payload;
     },
+    setModalstr: (state, { payload }) => {
+      state.str = payload;
+    },
   },
 });
 export const {
@@ -33,5 +37,6 @@ export const {
   setModalManzil,
   setModalBank,
   setModalMfo,
+  setModalstr,
 } = storageSlice.actions;
 export default storageSlice.reducer;

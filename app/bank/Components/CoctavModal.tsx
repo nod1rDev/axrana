@@ -25,7 +25,7 @@ export default function CoctavModal({
   const theme = useTheme();
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const open = useSelector((s: any) => s.coctav.modal);
+  const open = useSelector((s: any) => s.sto.bank);
   const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
@@ -53,11 +53,11 @@ export default function CoctavModal({
           </DialogTitle>
           <div className="flex flex-col w-full gap-2 px-4">
             <TextField
-              name="accountNumber"
+              name="bank"
               fullWidth
-              value={value.accountNumber}
+              value={value.bank || ""}
               onChange={(e: any) => handleChange(e)}
-              label={latinToCyrillic("Hisob Raqami")}
+              label={latinToCyrillic("Bank")}
               id="fullWidth"
             />
           </div>
@@ -82,8 +82,8 @@ export default function CoctavModal({
           <DialogTitle id="responsive-dialog-title">
             {`"${open.name}"` +
               " " +
-              "ushbu Hisob raqamni " +
-              latinToCyrillic("ochirishni istaysizmi ?")}
+              " " +
+              latinToCyrillic("ushbu Bank ochirishni istaysizmi ?")}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>

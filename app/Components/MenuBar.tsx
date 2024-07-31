@@ -4,12 +4,14 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance"; // Icon for BXM
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import StorageIcon from "@mui/icons-material/Storage"; // Icon for Hisob raqami
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter } from "next/navigation";
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import InterpreterModeIcon from '@mui/icons-material/InterpreterMode';
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import InterpreterModeIcon from "@mui/icons-material/InterpreterMode";
+import ShareLocationIcon from "@mui/icons-material/ShareLocation";
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -138,7 +140,7 @@ export default function MenuBar() {
             </span>
           </div>
         </MenuItem>
-         
+
         <MenuItem
           onClick={() => {
             router.push("/boshliq");
@@ -153,7 +155,37 @@ export default function MenuBar() {
             </span>
           </div>
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/manzil");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <ShareLocationIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Manzil")}
+            </span>
+          </div>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/bank");
+            handleClose();
+          }}
+          disableRipple
+        >
+          <div className="flex items-center  w-full">
+            <AccountBalanceWalletIcon />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {latinToCyrillic("Bank")}
+            </span>
+          </div>
+        </MenuItem>
+        
       </StyledMenu>
+      
     </div>
   );
 }

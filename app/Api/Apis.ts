@@ -1084,3 +1084,111 @@ export const getAllBoshliq = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
+
+//manzil
+export const createManzil = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/address/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const updateManzil = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/address/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const deleteManzil = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/address/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getAllManzil = async (JWT: any) => {
+  const res = await fetch(URL + "/address/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+//bank
+export const createBank = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/banks/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const updateBank = async (JWT: any, value: any, id: any) => {
+  const res = await fetch(URL + "/banks/update/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+export const deleteBank = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/banks/delete/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getAllBank = async (JWT: any) => {
+  const res = await fetch(URL + "/banks/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};

@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 export default function CoctavModal({
   value,
@@ -56,17 +57,17 @@ export default function CoctavModal({
               fullWidth
               value={value.leader || ""}
               onChange={(e: any) => handleChange(e)}
-              label="Boshliq ismi"
+              label={latinToCyrillic("Boshliq ismi")}
               id="fullWidth"
             />
           </div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                {latinToCyrillic("orqaga")}
               </Button>
               <Button onClick={handleSubmite} color="info" variant="contained">
-                Saqlash
+                {latinToCyrillic("Saqlash")}
               </Button>
             </div>
           </DialogActions>
@@ -81,16 +82,17 @@ export default function CoctavModal({
           <DialogTitle id="responsive-dialog-title">
             {`"${open.name}"` +
               " " +
-              "ushbu Boshliq ismini ochirishni istaysizmi ?"}
+              "ushbu Boshliq ismini  " +
+              latinToCyrillic("Manzil ochirishni istaysizmi ?")}
           </DialogTitle>
           <div className="w-[300px] mt-5"></div>
           <DialogActions>
             <div className="flex justify-between w-full mt-3 pb-2">
               <Button variant="contained" color="inherit" onClick={handleClose}>
-                Orqaga
+                {latinToCyrillic("orqaga")}
               </Button>
               <Button onClick={handleDelete} color="error" variant="contained">
-                {"O'chirish"}
+                {latinToCyrillic("o'chirish")}
               </Button>
             </div>
           </DialogActions>

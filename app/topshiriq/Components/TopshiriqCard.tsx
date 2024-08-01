@@ -67,6 +67,8 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
     }
   }, [active]);
 
+
+
   return (
     <>
       <div

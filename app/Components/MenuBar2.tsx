@@ -1,77 +1,44 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import Menu, { MenuProps } from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance"; // Icon for BXM
-import StorageIcon from "@mui/icons-material/Storage"; // Icon for Hisob raqami
-import { latinToCyrillic } from "../tip/add/Components/lotin";
-import { useRouter } from "next/navigation";
-import DnsIcon from "@mui/icons-material/Dns";
 import DonutSmallIcon from "@mui/icons-material/DonutSmall";
+import DnsIcon from "@mui/icons-material/Dns";
 import TokenIcon from "@mui/icons-material/Token";
-const StyledMenu = styled((props: MenuProps) => (
-  <Menu
-    elevation={0}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "left",
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "left",
-    }}
-    {...props}
-  />
-))(({ theme }) => ({
-  "& .MuiPaper-root": {
-    borderRadius: 6,
-    marginTop: theme.spacing(1),
-    minWidth: 260,
-    color:
-      theme.palette.mode === "light"
-        ? "rgb(55, 65, 81)"
-        : theme.palette.grey[300],
-    boxShadow:
-      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-    "& .MuiMenu-list": {
-      padding: "4px 0",
-    },
-    "& .MuiMenuItem-root": {
-      "& .MuiSvgIcon-root": {
-        fontSize: 24,
-        color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5),
-      },
-      "&:active": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity
-        ),
-      },
-    },
-  },
-}));
+import StorageIcon from "@mui/icons-material/Storage";
+import { latinToCyrillic } from "../tip/add/Components/lotin";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function MenuBar2() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const router = useRouter();
+  const pathname = usePathname();
+
+  const menuItems = [
+    { path: "/umumiy", label: "Бригада умумий ҳисобот", icon: <DonutSmallIcon /> },
+    { path: "/main", label: "батальон умумий ҳисобот", icon: <DnsIcon /> },
+    { path: "/maxsus", label: "Бригада ҳисобот", icon: <TokenIcon /> },
+    { path: "/otchot", label: "батальон ҳисобот", icon: <StorageIcon /> },
+  ];
+
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isInitialLoad, setIsInitialLoad] = React.useState(true);
+
+  // Synchronize the menu's open state with the URL path only on initial load
+  React.useEffect(() => {
+    if (isInitialLoad) {
+      const isPathMatched = menuItems.some((item) => pathname === item.path);
+      setIsMenuOpen(isPathMatched);
+      setIsInitialLoad(false);
+    }
+  }, [pathname, menuItems, isInitialLoad]);
+
+  const handleMenuClick = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
     <div className="w-full">
       <Button
-        id="demo-customized-button"
-        aria-controls={open ? "demo-customized-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+        id="hisobot-button"
         variant="contained"
         disableElevation
         sx={{
@@ -83,77 +50,34 @@ export default function MenuBar2() {
           fontWeight: "bold",
           textAlign: "start",
         }}
-        onClick={handleClick}
+        onClick={handleMenuClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
         {latinToCyrillic("Hisobot")}
       </Button>
-      <StyledMenu
-        id="demo-customized-menu"
-        MenuListProps={{
-          "aria-labelledby": "demo-customized-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem
-          onClick={() => {
-            router.push("/umumiy");
-            handleClose();
-          }}
-          disableRipple
-        >
-          <div className="flex items-center  w-full">
-            <DonutSmallIcon />
-            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
-              Бригада умумий ҳисобот
-            </span>
+      <div className="flex flex-col gap-4">
+        {isMenuOpen && (
+          <div className="mt-2">
+            {menuItems.map((e) => (
+              <Button
+                key={e.path}
+                onClick={() => router.push(e.path)}
+                disableRipple
+                className={`flex gap-6 items-center  px-4 w-full py-2 rounded-xl transition-all duration-300 justify-start ${
+                  pathname === e.path
+                    ? "bg-white text-[#1976D2] transform scale-105"
+                    : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
+                }`}
+              >
+                {e.icon}
+                <span style={{ fontSize: "12px", fontWeight: "bold" }}>
+                  {e.label}
+                </span>
+              </Button>
+            ))}
           </div>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            router.push("/main");
-            handleClose();
-          }}
-          disableRipple
-        >
-          <div className="flex items-center  w-full">
-            <DnsIcon />
-            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
-              батальон умумий ҳисобот
-            </span>
-          </div>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            router.push("/maxsus");
-            handleClose();
-          }}
-          disableRipple
-        >
-          <div className="flex items-center  w-full">
-            <TokenIcon />
-            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
-              Бригада ҳисобот
-            </span>
-          </div>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            router.push("/otchot");
-            handleClose();
-          }}
-          disableRipple
-        >
-          <div className="flex items-center  w-full">
-            <StorageIcon />
-            <span style={{ fontSize: "17px", fontWeight: "bold" }}>
-              батальон ҳисобот
-            </span>
-          </div>
-        </MenuItem>
-      </StyledMenu>
+        )}
+      </div>
     </div>
   );
 }

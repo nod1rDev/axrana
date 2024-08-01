@@ -22,6 +22,7 @@ import {
   getAllTasks,
   getAllWorkers,
   getAllWorkers2,
+  getByTask,
   pushWorkers,
 } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -69,14 +70,13 @@ const Page: React.FC = () => {
     taskdate: "",
   });
   const getData = async () => {
-    const res = await getAllTasks(JWT);
-    const single = res.data.find((e: any) => e.id === id);
-    setData(single);
+    const res = await getByTask(JWT, id);
+
+    setData(res.data);
   };
 
   const getWorkers = async () => {
     const res = await getAllWorkers2(JWT);
-    console.log(res);
 
     const filData = res.data.map((e: any, i: number) => ({
       FIO: e.fio,
@@ -161,7 +161,9 @@ const Page: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const filtered = workers.filter((worker) => worker.FIO.includes(search));
+    const filtered = workers.filter((worker) =>
+      worker.FIO.includes(search.trim())
+    );
     setFilteredWorkers(filtered);
   };
 

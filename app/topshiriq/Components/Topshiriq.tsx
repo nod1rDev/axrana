@@ -24,7 +24,7 @@ function Topshiriq() {
     date2: "",
   });
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(20);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const [page, setPage] = React.useState(0);
   const JWT = useSelector((s: any) => s.auth.JWT);
 

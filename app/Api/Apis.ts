@@ -400,6 +400,18 @@ export const getAllTasks = async (JWT: any, page?: any, limit?: any) => {
   const data = await res.json();
   return data;
 };
+export const getByTask = async (JWT: any, id: any) => {
+  const res = await fetch(URL + `/task/get/by/id/` + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
 
 export const getWorkersForTask = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/task/get/task/workers/" + id, {

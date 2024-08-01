@@ -30,7 +30,7 @@ import { alertChange } from "@/app/Redux/ShaxsiySlice";
 function Shartnoma() {
   const [shartnomalar, setShartnomalar] = useState([]);
   const [data, setData] = useState<any>();
-  const [rowsPerPage, setRowsPerPage] = React.useState(20);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const [page, setPage] = React.useState(0);
   const [search, setSearch] = useState(false);
   const [value2, setValue2] = useState("");

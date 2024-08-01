@@ -21,19 +21,26 @@ import TipTab from "../../Components/TipTab";
 import TipModal from "@/app/Components/ExitModal";
 import AdminTab from "../../Components/AdminTab";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-function page() {
+
+function Page() {
   const { id } = useParams();
   // Umumiy
   const admin = useSelector((s: any) => s.auth.admin);
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+
+  // Load the saved states or set default values
+  const savedPage = parseInt(sessionStorage.getItem("page") || "0", 10);
+  const savedRowsPerPage = parseInt(sessionStorage.getItem("rowsPerPage") || "100", 10);
+  const savedSearch = sessionStorage.getItem("search") || "";
+
+  const [page, setPage] = useState(savedPage);
+  const [rowsPerPage, setRowsPerPage] = useState(savedRowsPerPage);
   const [batalyon, setBatalyon] = useState<any>({ username: "", id: 0 });
   const batID = useSelector((s: any) => s.tip.batalyon);
   const [allRanks, setAllRanks] = useState<any[]>([]);
   const [filteredRanks, setFilteredRanks] = useState<any[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(savedSearch);
   const [selector, setSelector] = useState([]);
   const open = useSelector((s: any) => s.tip.modal);
   const [value, setValue] = useState<any>({});
@@ -46,7 +53,12 @@ function page() {
   }, [batID.id]);
 
   const getAllRanks = async () => {
-    const res = await getAllWorkers(JWT, id, page + 1, rowsPerPage);
+    const pagiInfo: any =
+      typeof sessionStorage !== "undefined"
+        ? sessionStorage.getItem("page")
+        : "0";
+
+    const res = await getAllWorkers(JWT, id, +pagiInfo + 1, rowsPerPage);
 
     setData(res);
     setAllRanks(res.data);
@@ -175,17 +187,21 @@ function page() {
 
   const clearSearch = () => {
     setSearch("");
+    sessionStorage.removeItem("search");
     getAllRanks();
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+    sessionStorage.setItem("page", newPage.toString());
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(+event.target.value);
+    const newRowsPerPage = +event.target.value;
+    setRowsPerPage(newRowsPerPage);
+    sessionStorage.setItem("rowsPerPage", newRowsPerPage.toString());
   };
 
   const getBatalyons = async () => {
@@ -200,6 +216,7 @@ function page() {
   const handleSelect = (e: any) => {
     setBatalyon(e.target.value);
   };
+
   const downloadExcel = async () => {
     try {
       const excelBlob = await getExcelWorker2(JWT, id);
@@ -232,6 +249,11 @@ function page() {
       );
     }
   };
+
+  // Store search input in sessionStorage when it changes
+  useEffect(() => {
+    sessionStorage.setItem("search", search);
+  }, [search]);
 
   return (
     <>
@@ -304,4 +326,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

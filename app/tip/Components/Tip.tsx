@@ -26,7 +26,7 @@ function Tip() {
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(100);
   const [batalyon, setBatalyon] = useState<any>({ username: "", id: 0 });
   const batID = useSelector((s: any) => s.tip.batalyon);
   const [allRanks, setAllRanks] = useState<any[]>([]);

@@ -106,13 +106,13 @@ export default function ShowWorkerModal({
     const res = await deltePushWorker(JWT, value, id);
     if (res.success) {
       const filtRanksData = ranksData.filter(
-        (e: any) => e.worker_name == value
+        (e: any) => e.worker_name !== value
       );
       setRasnksData(filtRanksData);
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Hisob Raqam ochirildi"),
+          message: latinToCyrillic("Xodim o'chirildi ochirildi"),
           status: "success",
         })
       );

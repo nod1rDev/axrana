@@ -163,14 +163,7 @@ function page() {
                 {"орқага"}
               </Button>
               <div className="flex gap-3">
-                <Button
-                  onClick={handlePrint}
-                  color="success"
-                  startIcon={<LocalPrintshopIcon />}
-                  variant="contained"
-                >
-                  {latinToCyrillic("Chop etish")}
-                </Button>
+                
                
               </div>
             </div>

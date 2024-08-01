@@ -22,6 +22,7 @@ import {
   getBatalyonUmumiySearch,
   getByIdComan2,
   getByIdComand,
+  getExcelWorker2,
   searchByDateUmumiy,
   searchByDateUmumiy2,
 } from "@/app/Api/Apis";
@@ -38,7 +39,7 @@ import {
   TextField,
 } from "@mui/material";
 import WorkerTab2 from "./Components/WorkerTab2";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 function page() {
   const { id } = useParams();
   const [data, setData] = useState<any>();
@@ -125,6 +126,39 @@ function page() {
   const handlePrint = useReactToPrint({
     content: (): any => componentRef.current,
   });
+  const dispatch = useDispatch();
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await getExcelWorker2(JWT, id);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
   return (
     <>
       <div className=" hidden">
@@ -142,14 +176,24 @@ function page() {
               >
                 {"орқага"}
               </Button>
-              <Button
-                onClick={handlePrint}
-                color="success"
-                startIcon={<LocalPrintshopIcon />}
-                variant="contained"
-              >
-                {latinToCyrillic("Chop etish")}
-              </Button>
+              <div>
+                <Button
+                  onClick={handlePrint}
+                  color="success"
+                  startIcon={<LocalPrintshopIcon />}
+                  variant="contained"
+                >
+                  {latinToCyrillic("Chop etish")}
+                </Button>
+                <Button
+                  onClick={downloadExcel}
+                  startIcon={<CloudDownloadIcon />}
+                  variant="contained"
+                  color="success"
+                >
+                  {"Excel"}
+                </Button>
+              </div>
             </div>
             <div className="rounded-lg w-full mb-5  px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">Бригада умумий ҳисобот</h1>

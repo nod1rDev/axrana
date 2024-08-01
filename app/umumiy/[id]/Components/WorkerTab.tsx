@@ -42,9 +42,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <th className="border border-[#000] font-[500] w-[5%] text-center">
               {latinToCyrillic("Xodimlar soni")}
             </th>
-            <th className="border border-[#000] font-[500] w-[5%] text-center">
-              {latinToCyrillic("Vaqt")}
-            </th>
+           
             <th className="border border-[#000] font-[500] text-center w-[15%]">
               {latinToCyrillic("Jami summa")}
             </th>
@@ -69,9 +67,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
             </td>
-            <td className="border border-[#000] w-[8%] text-center">
-              {item.tasktime}
-            </td>
+          
             <td className="border border-[#000] text-center w-[15%]">
               {formatNumber(item.allmoney)}
             </td>
@@ -106,9 +102,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
             </td>
-            <td className="border border-[#000] w-[5%] text-center">
-              {item.tasktime}
-            </td>
+       
             <td className="border border-[#000] text-center w-[15%]">
               {formatNumber(item.allmoney)}
             </td>

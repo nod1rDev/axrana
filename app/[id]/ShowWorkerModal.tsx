@@ -29,6 +29,8 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useDispatch } from "react-redux";
 import { setModalTip } from "@/app/Redux/TipSlice";
 import { styled } from "@mui/system";
+import { deltePushWorker } from "../Api/Apis";
+import { alertChange } from "../Redux/ShaxsiySlice";
 
 const CustomTableHead = styled(TableHead)(({ theme }) => ({
   // Asosiy rang
@@ -51,25 +53,26 @@ const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
 
   { id: "FIO", label: latinToCyrillic("FIO"), align: "left", minWidth: 480 },
+  {
+    id: "Tuman",
+    label: latinToCyrillic("O'chirish"),
+    align: "right",
+    minWidth: 480,
+  },
 ];
 
 interface Data {
   number: any;
   FIO: any;
-
+  Tuman: any;
   id: number;
 }
 
-function createData(
-  number: any,
-  FIO: any,
-
-  id: number
-): Data {
+function createData(number: any, FIO: any, Tuman: any, id: number): Data {
   return {
     number,
     FIO,
-
+    Tuman,
     id,
   };
 }
@@ -86,17 +89,46 @@ export default function ShowWorkerModal({
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const open = useSelector((s: any) => s.lavozim.modal2);
   const [page, setPage] = React.useState(0);
+  const [ranksData, setRasnksData] = React.useState<any>([]);
   const [rowsPerPage, setRowsPerPage] =
     React.useState(100000000000000000000000);
 
   const rows =
-    ranks !== "Hali batalyon topshiriqni bajarmadi" &&
-    ranks !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
-      ? ranks.map((e: any, i: any) => createData(i + 1, e.worker_name, e.i + 1))
+    ranksData !== "Hali batalyon topshiriqni bajarmadi" &&
+    ranksData !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
+      ? ranksData.map((e: any, i: any) =>
+          createData(i + 1, e.worker_name, null, e.task_id)
+        )
       : [];
 
   const dispatch = useDispatch();
-
+  const handleDelte = async (id: any, value: any) => {
+    const res = await deltePushWorker(JWT, value, id);
+    if (res.success) {
+      const filtRanksData = ranksData.filter(
+        (e: any) => e.worker_name == value
+      );
+      setRasnksData(filtRanksData);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Hisob Raqam ochirildi"),
+          status: "success",
+        })
+      );
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
+  React.useEffect(() => {
+    setRasnksData(ranks);
+  }, [ranks]);
   return (
     <React.Fragment>
       <Dialog
@@ -134,26 +166,40 @@ export default function ShowWorkerModal({
                   </TableRow>
                 </CustomTableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row: any, i: any) => {
-                      return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={i}>
-                          {columns.map((column, e) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {e == 0
-                                  ? i + 1
-                                  : column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
+                  {rows.map((row: any, i: any) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={i}>
+                        {columns.map((column, e) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {e == 0 ? (
+                                i + 1
+                              ) : e == 2 ? (
+                                <IconButton
+                                  sx={{ ml: 1 }}
+                                  aria-label="delete"
+                                  size="medium"
+                                  onClick={() => {
+                                    handleDelte(row.id, row.FIO);
+                                  }}
+                                >
+                                  <RemoveCircleOutlineIcon
+                                    fontSize="inherit"
+                                    color="error"
+                                  />
+                                </IconButton>
+                              ) : column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : (
+                                value
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>

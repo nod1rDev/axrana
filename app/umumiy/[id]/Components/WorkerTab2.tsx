@@ -48,9 +48,7 @@ const WorkerTab2 = ({
             <th className="border border-[#000] font-[500] w-[5%] text-center">
               {latinToCyrillic("Xodimlar soni")}
             </th>
-            <th className="border border-[#000] font-[500] w-[5%] text-center">
-              {latinToCyrillic("Vaqt")}
-            </th>
+           
             <th className="border border-[#000] font-[500] text-center w-[15%]">
               {latinToCyrillic("Jami summa")}
             </th>
@@ -75,9 +73,7 @@ const WorkerTab2 = ({
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
             </td>
-            <td className="border border-[#000] w-[8%] text-center">
-              {item.tasktime}
-            </td>
+           
             <td className="border border-[#000] text-center w-[15%]">
               {formatNumber(item.allmoney)}
             </td>

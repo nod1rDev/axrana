@@ -237,7 +237,7 @@ const Page: React.FC = () => {
               <h1 className="font-bold">{latinToCyrillic("Filter")}</h1>
               <form
                 onSubmit={handleSearch}
-                className="flex items-center w-full"
+                className="flex items-center gap-3 w-full"
               >
                 <TextField
                   value={search}
@@ -262,6 +262,14 @@ const Page: React.FC = () => {
                     ),
                   }}
                 />
+                <Button
+                  variant="contained"
+                  color="info"
+                  sx={{ mt: 5 }}
+                  type="submit"
+                >
+                  {latinToCyrillic("Qidirush")}
+                </Button>
               </form>
               <Button
                 variant="contained"
@@ -278,6 +286,7 @@ const Page: React.FC = () => {
                 label={latinToCyrillic("Vaqt")}
                 variant="outlined"
                 sx={{ width: 400 }}
+                type="number"
                 name="tasktime"
                 value={infoData.tasktime}
                 onChange={handleChageInfoData}

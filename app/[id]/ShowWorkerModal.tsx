@@ -143,10 +143,10 @@ export default function ShowWorkerModal({
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {ranks !== "Hali batalyon topshiriqni bajarmadi" &&
-          ranks !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
-            ? latinToCyrillic(`Jami ${ranks.length} xodim mavjud`)
-            : latinToCyrillic(ranks)}
+          {ranksData !== "Hali batalyon topshiriqni bajarmadi" &&
+          ranksData !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
+            ? latinToCyrillic(`Jami ${ranksData.length} xodim mavjud`)
+            : latinToCyrillic(ranksData)}
         </DialogTitle>
         <div className="flex flex-row  min-w-[1000px] p-4 gap-2 px-4">
           <Paper sx={{ width: "800%" }}>

@@ -23,6 +23,7 @@ import {
   getByIdComan2,
   getByIdComand,
   getExcelWorker2,
+  getExcelWorker3,
   searchByDateUmumiy,
   searchByDateUmumiy2,
 } from "@/app/Api/Apis";
@@ -129,7 +130,7 @@ function page() {
   const dispatch = useDispatch();
   const downloadExcel = async () => {
     try {
-      const excelBlob = await getExcelWorker2(JWT, id);
+      const excelBlob = await getExcelWorker3(JWT, id);
 
       // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
@@ -176,7 +177,7 @@ function page() {
               >
                 {"орқага"}
               </Button>
-              <div>
+              <div className="flex gap-3">
                 <Button
                   onClick={handlePrint}
                   color="success"

@@ -663,14 +663,13 @@ export const getByIdComan2 = async (JWT: any, id: any) => {
   return data;
 };
 
-export const exel1 = async (JWT: any, value: any, id: any) => {
-  const res = await fetch(URL + "/result/excel/create/" + id, {
-    method: "POST",
+export const exel1 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/special/get/data/to/excel/" + id, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + JWT,
     },
-    body: JSON.stringify({ data: value }),
   });
 
   const data = await res.blob(); // Fayl blob formatida keladi
@@ -785,6 +784,18 @@ export const getExcelWorker2 = async (JWT: any, id: any) => {
       },
     }
   );
+
+  const data = await res.blob();
+  return data;
+};
+export const getExcelWorker3 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/special/get/data/to/excel/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
 
   const data = await res.blob();
   return data;

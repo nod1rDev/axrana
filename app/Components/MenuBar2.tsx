@@ -13,8 +13,8 @@ export default function MenuBar2() {
   const pathname = usePathname();
 
   const menuItems = [
-    { path: "/umumiy", label: "Бригада умумий ҳисобот", icon: <DonutSmallIcon /> },
-    { path: "/main", label: "батальон умумий ҳисобот", icon: <DnsIcon /> },
+    // { path: "/umumiy", label: "Бригада умумий ҳисобот", icon: <DonutSmallIcon /> },
+    // { path: "/main", label: "батальон умумий ҳисобот", icon: <DnsIcon /> },
     { path: "/maxsus", label: "Бригада ҳисобот", icon: <TokenIcon /> },
     { path: "/otchot", label: "батальон ҳисобот", icon: <StorageIcon /> },
   ];
@@ -70,7 +70,7 @@ export default function MenuBar2() {
                 }`}
               >
                 {e.icon}
-                <span style={{ fontSize: "12px", fontWeight: "bold" }}>
+                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
                   {e.label}
                 </span>
               </Button>

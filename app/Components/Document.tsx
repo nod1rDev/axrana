@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { formatString } from "../Utils";
-const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
+const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
   function formatNumber(value: number): string {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
@@ -23,21 +23,22 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
           </div>
           <div className="mb-4 flex  justify-between">
             <p className="font-bold text-[16px]">{`<<${data.contractdate}>>`}</p>
-            <p className="font-bold text-[14px]">Тошкент шаҳри</p>
+            <p className="font-bold text-[14px]">{info && info?.ijrochi}</p>
           </div>
-          <section className="mb-5 text-[14px]">
+          <section className="mb-4">
             <p>
-              <span className="font-bold">{data.clientname + " "}</span>
-              номидан _________ асосида фаолият юритувчи
-              <span className="font-bold">______________________</span>
+              <span className="font-bold">{data.clientname}</span> номидан
+              _________ асосида фаолият юритувчи
+              <span className="font-bold">______________________</span>{" "}
               келгусида «Буюртмачи» деб номланувчи бир томондан ва Ўзбекистон
-              Республикаси Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
-              номидан шартнома асосида фаолият юритувчи Бошқарма бошлиғи А.Р.
-              Ортиков келгусида «Бажарувчи» деб номланувчи иккинчи томондан
-              биргаликда эса томонлар ўртасида Ўзбекистон Республикаси Вазирлар
-              Маҳкамасининг 2014 йил 29 июлдаги 205-сон қарорига мувофиқ оммавий
-              тадбирни ўтказишда фуқаролар хавфсизлигини таъминлаш ва жамоат
-              тартибини сақлаш юзасидан шартнома тузилди.
+              Республикаси Миллий гвардияси {info && info?.ijrochi} бўйича
+              бошқармаси номидан шартнома асосида фаолият юритувчи Бошқарма
+              бошлиғи {info && info?.boshliq} келгусида «Бажарувчи» деб
+              номланувчи иккинчи томондан биргаликда эса томонлар ўртасида
+              Ўзбекистон Республикаси Вазирлар Маҳкамасининг 2014 йил 29 июлдаги
+              205-сон қарорига мувофиқ оммавий тадбирни ўтказишда фуқаролар
+              хавфсизлигини таъминлаш ва жамоат тартибини сақлаш юзасидан
+              шартнома тузилди.
             </p>
           </section>
 
@@ -284,13 +285,13 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
                         Марказий банк Тошкент ш. ХККМ
                       </span>
                       <span className="font-bold">Ғазначилиги х/р</span>
-                            <span>
-                              {formatString(
-                                data?.treasuryaccount
-                                  ? data?.treasuryaccount
-                                  : data?.treasuryaccount27
-                              )}
-                            </span>
+                      <span>
+                        {formatString(
+                          data?.treasuryaccount
+                            ? data?.treasuryaccount
+                            : data?.treasuryaccount27
+                        )}
+                      </span>
                       <span>
                         {" "}
                         <span className="font-bold">МФО:</span> {data.clientmfo}
@@ -319,46 +320,44 @@ const Documenttt = React.forwardRef(({ data, tasks }: any, ref: any) => {
               </div>
 
               <div className="flex w-[50%] justify-center relative items-center flex-col">
-                <h2 className="text-[14px] text-center font-bold mb-2">
+                <h2 className="text-lg text-center font-bold mb-2">
                   Бажарувчи:
                 </h2>
-                <p className="font-bold text-[14px] text-center">
+                <p className="font-bold text-xl text-center">
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-2">
-                  <span className="font-bold text-[14px]">Манзил:</span>
+                  <span className="font-bold text-xl">Манзил:</span>
                   <div className="flex flex-col">
-                          <p className=" text-start  text-[14px]">
-                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                            17А-уй.
-                          </p>{" "}
-                          <span>
-                            <span className="font-bold">
-                              Банк реквизитлари:
-                            </span>{" "}
-                            Марказий банк Тошкент ш. ХККМ.
-                          </span>
-                          <span>
-                            <span className="font-bold">МФО:</span> 00014.
-                          </span>
-                          <span>
-                            <span className="font-bold">х/р : </span>{" "}
-                            {formatString(data?.accountnumber)}
-                          </span>
-                          <span>
-                            {" "}
-                            <span className="font-bold"> СТИР: </span> 207 305
-                            369
-                          </span>
-                        </div>
+                    <p className=" text-start  text-[14px]">
+                      {info && info?.manzil}
+                    </p>{" "}
+                    <span>
+                      <span className="font-bold">Банк реквизитлари:</span>{" "}
+                      {info && info?.bank}
+                    </span>
+                    <span>
+                      <span className="font-bold">МФО:</span>{" "}
+                      {info && info?.mfo}
+                    </span>
+                    <span>
+                      <span className="font-bold">х/р : </span>{" "}
+                      {formatString(data?.accountnumber)}
+                    </span>
+                    <span>
+                      {" "}
+                      <span className="font-bold"> СТИР: </span>{" "}
+                      {info && formatString(info?.str)}
+                    </span>
+                  </div>
                 </div>
 
-                <div className=" absolute top-[300px] [14px] left-[40px]">
+                <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
-                    <h1 className="font-bold text-[14px] ">
-                      Раҳбари:_____________
-                      <span className="font-[400] text-[14px]">
-                        А.Р.Ортиков
+                    <h1 className="font-bold ">
+                      Раҳбари: _____________ ______________________
+                      <span className="font-[400]">
+                        {info && info?.boshliq}
                       </span>
                     </h1>
                   </div>

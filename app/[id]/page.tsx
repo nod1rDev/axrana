@@ -14,7 +14,16 @@ import BudgetTable from "./SingleTab";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import { useReactToPrint } from "react-to-print";
 import Documenttt from "../Components/Document";
-import { deleteContract, getToPrint } from "../Api/Apis";
+import {
+  deleteContract,
+  getAllBank,
+  getAllBoshliq,
+  getAllManzil,
+  getAllMfo,
+  getAllShahar,
+  getAllstr,
+  getToPrint,
+} from "../Api/Apis";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import Document2 from "../Components/Document2";
 import { formatString } from "../Utils";
@@ -62,7 +71,28 @@ function page() {
   const handlePrint = useReactToPrint({
     content: (): any => componentRef.current,
   });
+  const [info, setInfo] = useState<any>();
+  const getShahar = async () => {
+    const res = await getAllShahar(JWT);
+    const res2 = await getAllBoshliq(JWT);
+    const res3 = await getAllManzil(JWT);
+    const res4 = await getAllBank(JWT);
+    const res5 = await getAllMfo(JWT);
+    const res6 = await getAllstr(JWT);
+    setInfo({
+      ...info,
+      ijrochi: res.data[0].executor,
+      boshliq: res2.data[0].leader,
+      manzil: res3.data[0].address,
+      bank: res4.data[0].bank,
+      mfo: res5.data[0].mfo,
+      str: res6.data[0].str,
+    });
+  };
 
+  useEffect(() => {
+    getShahar();
+  }, []);
   const getMonthNameInCyrillic = (month: number): string => {
     const months = [
       "Январь",
@@ -97,9 +127,19 @@ function page() {
         <>
           <div className=" hidden">
             {versiya ? (
-              <Documenttt tasks={tasks} data={data} ref={componentRef} />
+              <Documenttt
+                tasks={tasks}
+                data={data}
+                info={info}
+                ref={componentRef}
+              />
             ) : (
-              <Document2 tasks={tasks} data={data} ref={componentRef} />
+              <Document2
+                tasks={tasks}
+                data={data}
+                info={info}
+                ref={componentRef}
+              />
             )}
           </div>
           <div className="w-[95%] mt-5 flex-col  gap-6 mx-auto">
@@ -171,7 +211,7 @@ function page() {
                 </div>
                 <div className="mb-4 flex  justify-between">
                   <p className="font-bold">{data.contractdate}</p>
-                  <p className="font-bold">Тошкент шаҳри</p>
+                  <p className="font-bold">{info && info.ijrochi}</p>
                 </div>
                 <section className="mb-4">
                   <p>
@@ -181,12 +221,13 @@ function page() {
                       ______________________
                     </span>{" "}
                     келгусида «Буюртмачи» деб номланувчи бир томондан ва
-                    Ўзбекистон Республикаси Миллий гвардияси Тошкент шаҳри
-                    бўйича бошқармаси номидан шартнома асосида фаолият юритувчи
-                    Бошқарма бошлиғи А.Р. Ортиков келгусида «Бажарувчи» деб
-                    номланувчи иккинчи томондан биргаликда эса томонлар ўртасида
-                    Ўзбекистон Республикаси Вазирлар Маҳкамасининг 2014 йил 29
-                    июлдаги 205-сон қарорига мувофиқ оммавий тадбирни ўтказишда
+                    Ўзбекистон Республикаси Миллий гвардияси{" "}
+                    {info && info?.ijrochi} бўйича бошқармаси номидан шартнома
+                    асосида фаолият юритувчи Бошқарма бошлиғи{" "}
+                    {info && info?.boshliq} келгусида «Бажарувчи» деб номланувчи
+                    иккинчи томондан биргаликда эса томонлар ўртасида Ўзбекистон
+                    Республикаси Вазирлар Маҳкамасининг 2014 йил 29 июлдаги
+                    205-сон қарорига мувофиқ оммавий тадбирни ўтказишда
                     фуқаролар хавфсизлигини таъминлаш ва жамоат тартибини сақлаш
                     юзасидан шартнома тузилди.
                   </p>
@@ -470,17 +511,17 @@ function page() {
                         <span className="font-bold text-xl">Манзил:</span>
                         <div className="flex flex-col">
                           <p className=" text-start  text-[14px]">
-                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                            17А-уй.
+                            {info && info?.manzil}
                           </p>{" "}
                           <span>
                             <span className="font-bold">
                               Банк реквизитлари:
                             </span>{" "}
-                            Марказий банк Тошкент ш. ХККМ.
+                            {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span> 00014.
+                            <span className="font-bold">МФО:</span>{" "}
+                            {info && info?.mfo}
                           </span>
                           <span>
                             <span className="font-bold">х/р : </span>{" "}
@@ -488,8 +529,8 @@ function page() {
                           </span>
                           <span>
                             {" "}
-                            <span className="font-bold"> СТИР: </span> 207 305
-                            369
+                            <span className="font-bold"> СТИР: </span>{" "}
+                            {info && formatString(info?.str)}
                           </span>
                         </div>
                       </div>
@@ -498,7 +539,9 @@ function page() {
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
                             Раҳбари: _____________ ______________________
-                            <span className="font-[400]">А.Р. Ортиков</span>
+                            <span className="font-[400]">
+                              {info && info?.boshliq}
+                            </span>
                           </h1>
                         </div>
                       </div>
@@ -548,20 +591,23 @@ function page() {
                 <div className="mb-4 flex  justify-between">
                   {" "}
                   <p className="font-bold">{data.contractdate}</p>
-                  <p className="font-bold">Тошкент шаҳри</p>
+                  <p className="font-bold">{info && info?.ijrochi}</p>
                 </div>
                 <section className="mb-4">
                   <p>
                     <span className="font-bold">{data.clientname}</span> номидан
                     _________ асосида фаолият юритувчи
-                    <span className="font-bold">______________________</span>
+                    <span className="font-bold">
+                      ______________________
+                    </span>{" "}
                     келгусида «Буюртмачи» деб номланувчи бир томондан ва
-                    Ўзбекистон Республикаси Миллий гвардияси Тошкент шаҳри
-                    бўйича бошқармаси номидан шартнома асосида фаолият юритувчи
-                    Бошқарма бошлиғи А.Р. Ортиков келгусида «Бажарувчи» деб
-                    номланувчи иккинчи томондан биргаликда эса томонлар ўртасида
-                    Ўзбекистон Республикаси Вазирлар Маҳкамасининг 2014 йил 29
-                    июлдаги 205-сон қарорига мувофиқ оммавий тадбирни ўтказишда
+                    Ўзбекистон Республикаси Миллий гвардияси{" "}
+                    {info && info?.ijrochi} бўйича бошқармаси номидан шартнома
+                    асосида фаолият юритувчи Бошқарма бошлиғи{" "}
+                    {info && info?.boshliq} келгусида «Бажарувчи» деб номланувчи
+                    иккинчи томондан биргаликда эса томонлар ўртасида Ўзбекистон
+                    Республикаси Вазирлар Маҳкамасининг 2014 йил 29 июлдаги
+                    205-сон қарорига мувофиқ оммавий тадбирни ўтказишда
                     фуқаролар хавфсизлигини таъминлаш ва жамоат тартибини сақлаш
                     юзасидан шартнома тузилди.
                   </p>
@@ -849,17 +895,17 @@ function page() {
                         <span className="font-bold text-xl">Манзил:</span>
                         <div className="flex flex-col">
                           <p className=" text-start  text-[14px]">
-                            Тошкент шаҳри, Шайхонтохур тумани, Навоий кўчаси,
-                            17А-уй.
+                            {info && info?.manzil}
                           </p>{" "}
                           <span>
                             <span className="font-bold">
                               Банк реквизитлари:
                             </span>{" "}
-                            Марказий банк Тошкент ш. ХККМ.
+                            {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span> 00014.
+                            <span className="font-bold">МФО:</span>{" "}
+                            {info && info?.mfo}
                           </span>
                           <span>
                             <span className="font-bold">х/р : </span>{" "}
@@ -867,8 +913,8 @@ function page() {
                           </span>
                           <span>
                             {" "}
-                            <span className="font-bold"> СТИР: </span> 207 305
-                            369
+                            <span className="font-bold"> СТИР: </span>{" "}
+                            {info && formatString(info?.str)}
                           </span>
                         </div>
                       </div>
@@ -876,8 +922,10 @@ function page() {
                       <div className=" absolute top-[250px] left-[40px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
-                            Раҳбари: ________ ________________
-                            <span className="font-[400]">А.Р. Ортиков</span>
+                            Раҳбари: _____________ ______________________
+                            <span className="font-[400]">
+                              {info && info?.boshliq}
+                            </span>
                           </h1>
                         </div>
                       </div>

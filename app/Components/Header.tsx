@@ -43,7 +43,9 @@ export default function Header() {
     if (pathname === "/") {
       setActive(menuListAdmin[0].path);
     } else {
-      const matchingMenuItem = menuListAdmin.find((item) => item.path === pathname);
+      const matchingMenuItem = menuListAdmin.find(
+        (item) => item.path === pathname
+      );
       if (matchingMenuItem) {
         setActive(matchingMenuItem.path);
       }
@@ -97,14 +99,15 @@ export default function Header() {
         ))}
         {admin && (
           <div className="mb-0">
-            <MenuBar2 />
-          </div>
-        )}
-        {admin && (
-          <div className="mb-10">
             <MenuBar />
           </div>
         )}
+        {admin && (
+          <div className="mb-5">
+            <MenuBar2 />
+          </div>
+        )}
+
         <button
           onClick={AuthOut}
           className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}

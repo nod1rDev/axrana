@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
@@ -15,7 +15,13 @@ import { useReactToPrint } from "react-to-print";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import { deleteData2, getByIdComan2, getByIdComand } from "@/app/Api/Apis";
+import {
+  deleteData2,
+  excel23,
+  exel1,
+  getByIdComan2,
+  getByIdComand,
+} from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 import Document4 from "./Components/Document3";
@@ -67,6 +73,38 @@ function page() {
       );
     }
   };
+  const downloadExcel = async () => {
+    try {
+      const excelBlob = await excel23(JWT, id);
+
+      // URL yaratish
+      const url = window.URL.createObjectURL(excelBlob);
+
+      // <a> elementi yaratish va yuklab olishni amalga oshirish
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel file yuklandi"),
+          status: "sucess",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("Excel faylini yuklashda xatolik"),
+          status: "error",
+        })
+      );
+    }
+  };
   return (
     <>
       {data && (
@@ -84,7 +122,6 @@ function page() {
               >
                 {"орқага"}
               </Button>
-              
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold"> Бригада ҳисобот</h1>
@@ -96,6 +133,13 @@ function page() {
                   variant="contained"
                 >
                   {latinToCyrillic("O'chirish")}
+                </Button>
+                <Button
+                  onClick={downloadExcel}
+                  startIcon={<CloudDownloadIcon />}
+                  variant="contained"
+                >
+                  {"Excel"}
                 </Button>
                 <Button
                   onClick={handlePrint}

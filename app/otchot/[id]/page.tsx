@@ -93,7 +93,7 @@ function page() {
   };
   const downloadExcel = async () => {
     try {
-      const excelBlob = await exel1(JWT, id);
+      const excelBlob = await exel1(JWT, tasks, id);
 
       // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
@@ -171,14 +171,7 @@ function page() {
                 >
                   {latinToCyrillic("Chop etish")}
                 </Button>
-                <Button
-                  onClick={downloadExcel}
-                  startIcon={<CloudDownloadIcon />}
-                  variant="contained"
-                  color="success"
-                >
-                  {"Excel"}
-                </Button>
+               
               </div>
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">

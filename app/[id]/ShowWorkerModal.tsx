@@ -178,7 +178,7 @@ export default function ShowWorkerModal({
                               {e == 0
                                 ? i + 1
                                 : e == 2
-                                ? active && (
+                                ? !active && (
                                     <IconButton
                                       sx={{ ml: 1 }}
                                       aria-label="delete"

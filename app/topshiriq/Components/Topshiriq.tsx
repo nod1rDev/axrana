@@ -35,6 +35,8 @@ function Topshiriq() {
   };
   const reload = useSelector((s: any) => s.auth.relaod);
   useEffect(() => {
+    console.log("salom");
+
     getTopshiriqApi();
   }, [page, rowsPerPage, reload]);
   function formatDateToDDMMYYYY(date: Date): string {

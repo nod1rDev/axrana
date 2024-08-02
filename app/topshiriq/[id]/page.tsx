@@ -122,7 +122,7 @@ const Page: React.FC = () => {
           status: "success",
         })
       );
-      router.push("/topshiriq");
+      router.push("/topshiriq/" + id);
     } else {
       dispatch(
         alertChange({
@@ -239,6 +239,9 @@ const Page: React.FC = () => {
                 onSubmit={handleSearch}
                 className="flex items-center gap-3 w-full"
               >
+                <Button variant="contained" color="info" type="submit">
+                  {latinToCyrillic("Qidirush")}
+                </Button>
                 <TextField
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -262,14 +265,7 @@ const Page: React.FC = () => {
                     ),
                   }}
                 />
-                <Button
-                  variant="contained"
-                  color="info"
-                  sx={{ mt: 5 }}
-                  type="submit"
-                >
-                  {latinToCyrillic("Qidirush")}
-                </Button>
+              
               </form>
               <Button
                 variant="contained"

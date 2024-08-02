@@ -31,6 +31,7 @@ import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { setModalN1 } from "@/app/Redux/CoctavsSlice";
 import ModalN1 from "./Components/pastki";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
+import { changeReload } from "@/app/Redux/AuthSlice";
 
 interface Worker {
   FIO: string;
@@ -122,7 +123,10 @@ const Page: React.FC = () => {
           status: "success",
         })
       );
+      const random: number = Math.ceil(Math.random() * 100000);
+      dispatch(changeReload(random));
       router.push("/topshiriq/" + id);
+      location.reload();
     } else {
       dispatch(
         alertChange({
@@ -265,7 +269,6 @@ const Page: React.FC = () => {
                     ),
                   }}
                 />
-              
               </form>
               <Button
                 variant="contained"

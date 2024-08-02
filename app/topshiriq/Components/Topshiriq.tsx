@@ -33,10 +33,10 @@ function Topshiriq() {
     setData2(res);
     setData(res.data);
   };
-
+  const reload = useSelector((s: any) => s.auth.relaod);
   useEffect(() => {
     getTopshiriqApi();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, reload]);
   function formatDateToDDMMYYYY(date: Date): string {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() 0-indexed

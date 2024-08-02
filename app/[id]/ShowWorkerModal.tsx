@@ -79,9 +79,11 @@ function createData(number: any, FIO: any, Tuman: any, id: number): Data {
 
 export default function ShowWorkerModal({
   ranks,
+  active,
   handleClose,
 }: {
   ranks: any;
+  active?: any;
   handleClose: any;
 }) {
   const theme = useTheme();
@@ -173,27 +175,27 @@ export default function ShowWorkerModal({
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {e == 0 ? (
-                                i + 1
-                              ) : e == 2 ? (
-                                <IconButton
-                                  sx={{ ml: 1 }}
-                                  aria-label="delete"
-                                  size="medium"
-                                  onClick={() => {
-                                    handleDelte(row.id, row.FIO);
-                                  }}
-                                >
-                                  <RemoveCircleOutlineIcon
-                                    fontSize="inherit"
-                                    color="error"
-                                  />
-                                </IconButton>
-                              ) : column.format && typeof value === "number" ? (
-                                column.format(value)
-                              ) : (
-                                value
-                              )}
+                              {e == 0
+                                ? i + 1
+                                : e == 2
+                                ? active && (
+                                    <IconButton
+                                      sx={{ ml: 1 }}
+                                      aria-label="delete"
+                                      size="medium"
+                                      onClick={() => {
+                                        handleDelte(row.id, row.FIO);
+                                      }}
+                                    >
+                                      <RemoveCircleOutlineIcon
+                                        fontSize="inherit"
+                                        color="error"
+                                      />
+                                    </IconButton>
+                                  )
+                                : column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
                             </TableCell>
                           );
                         })}

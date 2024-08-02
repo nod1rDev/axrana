@@ -214,9 +214,7 @@ const BudgetTable: any = ({
                   </Button>
                 </BorderedTableCell>
                 <BorderedTableCell></BorderedTableCell>
-                <BorderedTableCell>
-                 
-                </BorderedTableCell>
+                <BorderedTableCell></BorderedTableCell>
                 <BorderedTableCell>
                   {address && formatNumber(address.money)}
                 </BorderedTableCell>
@@ -233,7 +231,7 @@ const BudgetTable: any = ({
           </Table>
         </TableContainer>
       </Box>
-      <ShowWorkerModal ranks={worker} handleClose={hadleClose} />
+      <ShowWorkerModal active={true} ranks={worker} handleClose={hadleClose} />
     </>
   );
 };

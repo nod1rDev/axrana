@@ -72,7 +72,6 @@ const Page: React.FC = () => {
   });
   const getData = async () => {
     const res = await getByTask(JWT, id);
-    console.log(res);
 
     setData(res.data);
   };
@@ -124,7 +123,10 @@ const Page: React.FC = () => {
           status: "success",
         })
       );
-      getData();
+      const random: number = Math.ceil(Math.random() * 100000);
+      dispatch(changeReload(random));
+      router.push("/topshiriq/" + id);
+      location.reload();
     } else {
       dispatch(
         alertChange({

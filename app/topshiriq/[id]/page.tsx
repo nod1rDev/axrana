@@ -270,10 +270,15 @@ const Page: React.FC = () => {
                   }}
                 />
               </form>
+              <span className="font-bold text-[18px] mt-5 mb-2 flex justify-end w-full">
+                {latinToCyrillic("jami ") +
+                  workers?.filter((e: any) => e.selected).length +
+                  " " +
+                  latinToCyrillic("xodim biriktirildi")}
+              </span>
               <Button
                 variant="contained"
                 color="success"
-                sx={{ mt: 5 }}
                 onClick={handleSubmit}
               >
                 {latinToCyrillic("Saqlash")}

@@ -42,7 +42,7 @@ const CustomTableHead = styled(TableHead)(({ theme }) => ({
   },
 }));
 interface Column {
-  id: "number" | "FIO" | "Tuman" | "Otryad";
+  id: "number" | "FIO" | "Tuman" | "Otryad" | "Vaqt";
   label: string;
   minWidth?: number;
   align?: "right" | "center" | "left";
@@ -52,26 +52,44 @@ interface Column {
 const columns: readonly Column[] = [
   { id: "number", label: "т/р", align: "left", minWidth: 5 },
 
-  { id: "FIO", label: latinToCyrillic("FIO"), align: "left", minWidth: 480 },
+  { id: "FIO", label: latinToCyrillic("FIO"), align: "left", minWidth: 250 },
+  {
+    id: "Otryad",
+    label: latinToCyrillic("Sana"),
+    align: "center",
+    minWidth: 250,
+  },
+  { id: "Vaqt", label: latinToCyrillic("Vaqt"), align: "center", minWidth: 250 },
   {
     id: "Tuman",
     label: latinToCyrillic("O'chirish"),
     align: "right",
-    minWidth: 480,
+    minWidth: 250,
   },
 ];
 
 interface Data {
   number: any;
   FIO: any;
+  Otryad: any;
+  Vaqt: any;
   Tuman: any;
   id: number;
 }
 
-function createData(number: any, FIO: any, Tuman: any, id: number): Data {
+function createData(
+  number: any,
+  FIO: any,
+  Otryad: any,
+  Vaqt: any,
+  Tuman: any,
+  id: number
+): Data {
   return {
     number,
     FIO,
+    Otryad,
+    Vaqt,
     Tuman,
     id,
   };
@@ -99,7 +117,14 @@ export default function ShowWorkerModal({
     ranksData !== "Hali batalyon topshiriqni bajarmadi" &&
     ranksData !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
       ? ranksData.map((e: any, i: any) =>
-          createData(i + 1, e.worker_name, null, e.task_id)
+          createData(
+            i + 1,
+            e.worker_name,
+            e.taskdate,
+            e.tasktime,
+            null,
+            e.task_id
+          )
         )
       : [];
 
@@ -130,6 +155,7 @@ export default function ShowWorkerModal({
   };
   React.useEffect(() => {
     setRasnksData(ranks);
+    console.log(ranks);
   }, [ranks]);
   return (
     <React.Fragment>
@@ -177,7 +203,7 @@ export default function ShowWorkerModal({
                             <TableCell key={column.id} align={column.align}>
                               {e == 0
                                 ? i + 1
-                                : e == 2
+                                : e == 4
                                 ? !active && (
                                     <IconButton
                                       sx={{ ml: 1 }}

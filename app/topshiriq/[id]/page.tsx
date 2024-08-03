@@ -165,9 +165,13 @@ const Page: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const filtered = workers.filter((worker) =>
-      worker.FIO.includes(search.trim())
-    );
+    const filtered = workers.filter((worker) => {
+      const pureWorkers = worker.FIO.toLowerCase().toString();
+      const pureSearch = search.toLowerCase().trim().toString();
+      return pureWorkers.includes(pureSearch);
+    });
+   
+
     setFilteredWorkers(filtered);
   };
 
@@ -313,7 +317,7 @@ const Page: React.FC = () => {
               }}
             >
               <div className="flex flex-col gap-4">
-                {memoizedFilteredWorkers.map((value: Worker) => {
+                {filteredWorkers.map((value: Worker) => {
                   const labelId = `checkbox-list-label-${value._id}`;
                   return (
                     <ListItem key={value._id} disablePadding>

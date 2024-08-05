@@ -128,7 +128,7 @@ export default function ShowWorkerModal({
 
   const dispatch = useDispatch();
   const handleDelte = async (id: any, value: any) => {
-    const res = await deltePushWorker(JWT, value, id);
+    const res = await deltePushWorker(JWT, id);
     if (res.success) {
       const filtRanksData = ranksData.filter(
         (e: any) => e.worker_name !== value

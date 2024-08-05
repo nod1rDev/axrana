@@ -664,7 +664,7 @@ export const getByIdComan2 = async (JWT: any, id: any) => {
 };
 
 export const exel1 = async (JWT: any, value: any, id: any) => {
-  const res = await fetch(URL + "/special/get/data/to/excel/" + id, {
+  const res = await fetch(URL + "/result/excel/create/" + id, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

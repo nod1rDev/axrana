@@ -97,10 +97,6 @@ function Shartnoma() {
         getSearchData();
       }
     } else {
-      setValue2("");
-      const date = new Date();
-      const filtDate = formatDateToDDMMYYYY(date);
-      setValue({ date1: filtDate, date2: filtDate });
       getAllContractt();
     }
   };
@@ -309,7 +305,7 @@ function Shartnoma() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 20, 50, 100]}
           component="div"
-          count={data ? data.count : 0}
+          count={data?.count ? data.count : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

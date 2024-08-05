@@ -35,8 +35,6 @@ function Topshiriq() {
   };
   const reload = useSelector((s: any) => s.auth.relaod);
   useEffect(() => {
-    console.log("salom");
-
     getTopshiriqApi();
   }, [page, rowsPerPage, reload]);
   function formatDateToDDMMYYYY(date: Date): string {
@@ -211,7 +209,7 @@ function Topshiriq() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         component="div"
-        count={data2 ? data2.count : 0}
+        count={data2?.count ? data2.count : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -59,7 +59,12 @@ const columns: readonly Column[] = [
     align: "center",
     minWidth: 250,
   },
-  { id: "Vaqt", label: latinToCyrillic("Vaqt"), align: "center", minWidth: 250 },
+  {
+    id: "Vaqt",
+    label: latinToCyrillic("Vaqt"),
+    align: "center",
+    minWidth: 250,
+  },
   {
     id: "Tuman",
     label: latinToCyrillic("O'chirish"),
@@ -117,14 +122,7 @@ export default function ShowWorkerModal({
     ranksData !== "Hali batalyon topshiriqni bajarmadi" &&
     ranksData !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
       ? ranksData.map((e: any, i: any) =>
-          createData(
-            i + 1,
-            e.worker_name,
-            e.taskdate,
-            e.tasktime,
-            null,
-            e.task_id
-          )
+          createData(i + 1, e.worker_name, e.taskdate, e.tasktime, null, e.id)
         )
       : [];
 
@@ -177,7 +175,7 @@ export default function ShowWorkerModal({
             : latinToCyrillic(ranksData)}
         </DialogTitle>
         <div className="flex flex-row  min-w-[1000px] p-4 gap-2 px-4">
-          <Paper sx={{ width: "800%" }}>
+          <Paper sx={{ width: "100%" }}>
             <TableContainer sx={{ overflow: "auto", maxHeight: "100vh" }}>
               <Table stickyHeader aria-label="sticky table">
                 <CustomTableHead sx={{ background: "#edede9" }}>
@@ -201,27 +199,27 @@ export default function ShowWorkerModal({
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {e == 0
-                                ? i + 1
-                                : e == 4
-                                ? !active && (
-                                    <IconButton
-                                      sx={{ ml: 1 }}
-                                      aria-label="delete"
-                                      size="medium"
-                                      onClick={() => {
-                                        handleDelte(row.id, row.FIO);
-                                      }}
-                                    >
-                                      <RemoveCircleOutlineIcon
-                                        fontSize="inherit"
-                                        color="error"
-                                      />
-                                    </IconButton>
-                                  )
-                                : column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                              {e == 0 ? (
+                                i + 1
+                              ) : e == 4 ? (
+                                <IconButton
+                                  sx={{ ml: 1 }}
+                                  aria-label="delete"
+                                  size="medium"
+                                  onClick={() => {
+                                    handleDelte(row.id, row.FIO);
+                                  }}
+                                >
+                                  <RemoveCircleOutlineIcon
+                                    fontSize="inherit"
+                                    color="error"
+                                  />
+                                </IconButton>
+                              ) : column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : (
+                                value
+                              )}
                             </TableCell>
                           );
                         })}

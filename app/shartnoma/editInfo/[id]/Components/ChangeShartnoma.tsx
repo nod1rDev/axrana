@@ -152,40 +152,30 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const saqlash = () => {
     const chekcker = count ? validate() : true;
 
-    if (chekcker) {
-      const filtOrgans = organs.map((organ: any) => {
-        return {
-          name: organ.name,
-          workerNumber: +organ.workerNumber,
-        };
-      });
-
-      const shartnoma = {
-        ...value,
-        contractNumber: +value.contractNumber,
-        clientMFO: +value.clientMFO,
-        treasuryAccount: +value.treasuryAccount,
-        clientSTR: +value.clientSTR,
-        clientAccount: +value.clientAccount,
-        taskTime: +value.taskTime,
+    const filtOrgans = organs.map((organ: any) => {
+      return {
+        name: organ.name,
+        workerNumber: +organ.workerNumber,
       };
-      if (shartnoma.contractNumber) {
-        createShartnoman(shartnoma);
-      } else {
-        dispatch(
-          alertChange({
-            open: true,
-            message: latinToCyrillic("Malumotlarni toliq toldiring"),
-            status: "warning",
-          })
-        );
-      }
+    });
+
+    const shartnoma = {
+      ...value,
+      contractNumber: +value.contractNumber,
+      clientMFO: +value.clientMFO,
+      treasuryAccount: +value.treasuryAccount,
+      clientSTR: +value.clientSTR,
+      clientAccount: +value.clientAccount,
+      taskTime: +value.taskTime,
+    };
+    if (shartnoma.contractNumber) {
+      createShartnoman(shartnoma);
     } else {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Malumotlarni to'g'ri kiriting"),
-          status: "error",
+          message: latinToCyrillic("Malumotlarni toliq toldiring"),
+          status: "warning",
         })
       );
     }
@@ -199,8 +189,10 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
-  ];
 
+    { id: " treasuryaccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
+  ];
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
     updatedOrgans[index] = {
@@ -378,24 +370,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   }
                 />
               ))}
-              <TextField
-                label={latinToCyrillic("G'aznachilik xisobi")}
-                sx={{ width: "31%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                value={value.treasuryaccount || ""}
-                name="treasuryaccount"
-                autoComplete="off"
-              />
-              <TextField
-                label={latinToCyrillic("G'aznachilik xisobi 2")}
-                sx={{ width: "31%" }}
-                onChange={handleChangeValue}
-                variant="outlined"
-                value={value.treasuryaccount27 || ""}
-                name="treasuryaccount27"
-                autoComplete="off"
-              />
             </>
           )}
         </div>

@@ -164,7 +164,7 @@ export default function ShowWorkerModal({
   };
   React.useEffect(() => {
     setRasnksData(ranks);
-    console.log(ranks);
+  
   }, [ranks]);
   return (
     <React.Fragment>

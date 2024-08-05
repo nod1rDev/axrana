@@ -81,6 +81,8 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
   useEffect(() => {
     if (data && taskss) {
+     
+
       const pureData = {
         contractNumber: data.contractnumber,
         contractDate: convertDate(data.contractdate),

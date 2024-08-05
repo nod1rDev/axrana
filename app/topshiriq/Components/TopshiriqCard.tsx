@@ -52,6 +52,7 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
 
   const handleClose = () => {
     dispatch(setModalShowWorker({ open: false }));
+    location.reload();
   };
   const [info, setInfo] = useState<any>();
 
@@ -66,8 +67,6 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
       getData();
     }
   }, [active]);
-
-
 
   return (
     <>

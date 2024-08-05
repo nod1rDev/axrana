@@ -174,7 +174,7 @@ const Page: React.FC = () => {
 
     setFilteredWorkers(filtered);
   };
-
+  
   const clearSearch = () => {
     setSearch("");
     setFilteredWorkers(workers);

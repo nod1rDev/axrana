@@ -1335,14 +1335,17 @@ export const getAllstr = async (JWT: any) => {
   const data = await res.json();
   return data;
 };
-export const deltePushWorker = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/task/delete/worker/" + id, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-  });
+export const deltePushWorker = async (JWT: any, id: any, task_id: any) => {
+  const res = await fetch(
+    URL + `/task/delete/worker/${id}?task_id=${task_id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + JWT,
+      },
+    }
+  );
 
   const data = await res.json();
 

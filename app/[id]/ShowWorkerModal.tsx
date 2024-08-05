@@ -79,6 +79,7 @@ interface Data {
   Otryad: any;
   Vaqt: any;
   Tuman: any;
+  task_id: any;
   id: number;
 }
 
@@ -88,6 +89,7 @@ function createData(
   Otryad: any,
   Vaqt: any,
   Tuman: any,
+  task_id: any,
   id: number
 ): Data {
   return {
@@ -96,6 +98,7 @@ function createData(
     Otryad,
     Vaqt,
     Tuman,
+    task_id,
     id,
   };
 }
@@ -122,13 +125,21 @@ export default function ShowWorkerModal({
     ranksData !== "Hali batalyon topshiriqni bajarmadi" &&
     ranksData !== "Hali hech qaysi batalyon topshiriqni bajarmadi"
       ? ranksData.map((e: any, i: any) =>
-          createData(i + 1, e.worker_name, e.taskdate, e.tasktime, null, e.id)
+          createData(
+            i + 1,
+            e.worker_name,
+            e.taskdate,
+            e.tasktime,
+            null,
+            e.task_id,
+            e.id
+          )
         )
       : [];
 
   const dispatch = useDispatch();
-  const handleDelte = async (id: any, value: any) => {
-    const res = await deltePushWorker(JWT, id);
+  const handleDelte = async (id: any, value: any, task_id: any) => {
+    const res = await deltePushWorker(JWT, id, task_id);
     if (res.success) {
       const filtRanksData = ranksData.filter(
         (e: any) => e.worker_name !== value
@@ -207,7 +218,7 @@ export default function ShowWorkerModal({
                                   aria-label="delete"
                                   size="medium"
                                   onClick={() => {
-                                    handleDelte(row.id, row.FIO);
+                                    handleDelte(row.id, row.FIO, row.task_id);
                                   }}
                                 >
                                   <RemoveCircleOutlineIcon

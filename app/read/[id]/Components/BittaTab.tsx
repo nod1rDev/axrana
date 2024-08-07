@@ -39,7 +39,7 @@ const columns: readonly Column[] = [
   {
     id: "Tuman",
     label: latinToCyrillic("Organ nomi"),
-    minWidth: 100,
+    minWidth: 200,
     align: "center",
   },
   
@@ -47,13 +47,13 @@ const columns: readonly Column[] = [
   {
     id: "Otryad",
     label: latinToCyrillic("Xodimlar soni"),
-    minWidth: 100,
+    minWidth: 200,
     align: "center",
   },
   {
     id: "sanasi",
     label: latinToCyrillic("Topshiriq Sanasi"),
-    minWidth: 280,
+    minWidth: 480,
     align: "center",
   },
   {

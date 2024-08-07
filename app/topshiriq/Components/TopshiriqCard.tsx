@@ -99,17 +99,8 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
             {data && data.workernumber}
           </Button>
         ) : (
-          <span className="truncate w-[190px] text-center">
-            {data && data.workernumber}
-          </span>
+          ""
         )}
-        <span className="truncate w-[150px] text-center">
-          {data && data.tasktime}
-        </span>
-        <span className="truncate w-[150px] text-center">
-          {data && data.timelimit}
-        </span>
-        <span className="truncate w-[200px] ">{data && data.address}</span>
 
         <div
           className={`flex ${

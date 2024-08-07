@@ -140,10 +140,12 @@ export default function ShowWorkerModal({
   const dispatch = useDispatch();
   const handleDelte = async (id: any, value: any, task_id: any) => {
     const res = await deltePushWorker(JWT, id, task_id);
+    
+
     if (res.success) {
-      const filtRanksData = ranksData.filter(
-        (e: any) => e.worker_name !== value
-      );
+      const filtRanksData = ranksData.filter((e: any) => +e.id !== +id);
+      
+
       setRasnksData(filtRanksData);
       dispatch(
         alertChange({
@@ -164,7 +166,6 @@ export default function ShowWorkerModal({
   };
   React.useEffect(() => {
     setRasnksData(ranks);
-  
   }, [ranks]);
   return (
     <React.Fragment>
@@ -187,7 +188,7 @@ export default function ShowWorkerModal({
         </DialogTitle>
         <div className="flex flex-row  min-w-[1000px] p-4 gap-2 px-4">
           <Paper sx={{ width: "100%" }}>
-            <TableContainer sx={{ overflow: "auto", maxHeight: "100vh" }}>
+            <TableContainer sx={{ overflow: "auto", maxHeight: "600px" }}>
               <Table stickyHeader aria-label="sticky table">
                 <CustomTableHead sx={{ background: "#edede9" }}>
                   <TableRow>

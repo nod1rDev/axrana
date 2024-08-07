@@ -78,13 +78,14 @@ const Page: React.FC = () => {
 
   const getWorkers = async () => {
     const res = await getAllWorkers2(JWT);
+    console.log(res);
 
     const filData = res.data.map((e: any, i: number) => ({
       FIO: e.fio,
       selected: false,
       tasktime: "",
       taskdate: "",
-      _id: i + 1,
+      _id: e.id,
     }));
 
     setWorkers(filData);
@@ -144,7 +145,7 @@ const Page: React.FC = () => {
     const FiltWorker = workers.filter((e) => e.selected);
     const pureWorker = FiltWorker.map((e) => {
       return {
-        fio: e.FIO,
+        id: e._id,
         taskdate: infoData.taskdate,
         tasktime: +infoData.tasktime,
       };
@@ -162,19 +163,24 @@ const Page: React.FC = () => {
       );
     }
   };
-
+  function removeSpecialCharacters(input: string): string {
+    return input.replace(/[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/g, "");
+  }
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const filtered = workers.filter((worker) => {
-      const pureWorkers = worker.FIO.toLowerCase().toString();
-      const pureSearch = search.toLowerCase().trim().toString();
+      const pureWorkers = removeSpecialCharacters(
+        worker.FIO.toLowerCase().toString()
+      );
+      const pureSearch = removeSpecialCharacters(
+        search.toLowerCase().trim().toString()
+      );
       return pureWorkers.includes(pureSearch);
     });
-   
 
     setFilteredWorkers(filtered);
   };
-  
+
   const clearSearch = () => {
     setSearch("");
     setFilteredWorkers(workers);
@@ -202,27 +208,17 @@ const Page: React.FC = () => {
           <span className="font-bold text-left w-[180px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
-          <span className="font-bold text-left w-[220px] ">
+          <span className="font-bold text-left w-[300px] ">
             {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
-            className={`font-bold w-[200px] text-center overflow-hidden text-ellipsis whitespace-nowrap `}
+            className={`font-bold w-[260px] text-left overflow-hidden text-ellipsis whitespace-nowrap `}
           >
             {latinToCyrillic("Topshiriq sanasi")}
           </span>
 
-          <span className="w-[140px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
+          <span className="w-[340px] text-left overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Xodimlar soni")}
-          </span>
-
-          <span className="w-[150px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Topshiriq vaqti")}
-          </span>
-          <span className="w-[170px] text-center overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Time limit")}
-          </span>
-          <span className="w-[300px] overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Manzili")}
           </span>
 
           <div className="flex items-center text-center">

@@ -30,6 +30,7 @@ function Topshiriq() {
 
   const getTopshiriqApi = async () => {
     const res = await getAllTasks(JWT, page + 1, rowsPerPage);
+
     setData2(res);
     setData(res.data);
   };
@@ -75,6 +76,7 @@ function Topshiriq() {
 
   const getByStatus = async (value: any) => {
     const res = await filterTasks(JWT, value);
+ 
 
     setData(res.data);
   };
@@ -176,27 +178,13 @@ function Topshiriq() {
           <span className="font-bold text-left w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Shartnoma Raqami")}
           </span>
-          <span className="font-bold text-left w-[200px] ">
+          <span className="font-bold text-left w-[300px] ">
             {latinToCyrillic("Буюртмачи номи")}
           </span>
           <span
-            className={`font-bold w-[240px] text-right  overflow-hidden text-ellipsis whitespace-nowrap `}
+            className={`font-bold w-[320px] text-left  overflow-hidden text-ellipsis whitespace-nowrap `}
           >
             {latinToCyrillic("Topshiriq sanasi")}
-          </span>
-
-          <span className="w-[260px] text-right  overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Xodimlar soni")}
-          </span>
-
-          <span className="w-[180px] text-right  overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Topshiriq vaqti")}
-          </span>
-          <span className="w-[130px]  text-right overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Time limit")}
-          </span>
-          <span className="w-[300px]   overflow-hidden text-ellipsis whitespace-nowrap">
-            {latinToCyrillic("Manzili")}
           </span>
 
           <div className="flex items-center ">{latinToCyrillic("Status")}</div>
@@ -209,7 +197,7 @@ function Topshiriq() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         component="div"
-        count={data2?.count ? data2.count : 0}
+        count={data ? data.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

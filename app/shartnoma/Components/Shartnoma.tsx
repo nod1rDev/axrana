@@ -60,6 +60,7 @@ function Shartnoma() {
   const JWT = useSelector((s: any) => s.auth.JWT);
   const getAllContractt = async () => {
     const res = await getAllContract(JWT, page + 1, rowsPerPage);
+   
 
     setData(res);
     setShartnomalar(res.data);
@@ -69,6 +70,7 @@ function Shartnoma() {
   }, []);
   const getSearchData = async () => {
     const res = await filterContract(JWT, value);
+
     setData(res);
     setShartnomalar(res.data);
   };
@@ -76,6 +78,8 @@ function Shartnoma() {
   const getData2 = async () => {
     if (serarchTip == 1) {
       const res = await searchByNumber1(JWT, value2);
+    
+
       setData(res);
       setShartnomalar(res.data);
     } else if (serarchTip == 2) {

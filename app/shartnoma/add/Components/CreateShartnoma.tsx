@@ -115,7 +115,7 @@ function CreateShartnoma() {
       clientAccount: +value.clientAccount,
       taskTime: +value.taskTime,
 
-      taskTimeLimit: +value.taskTimeLimit,
+      
       battalions: filtOrgans,
     };
     if (shartnoma.contractNumber) {
@@ -359,17 +359,7 @@ function CreateShartnoma() {
             name="taskTime"
             autoComplete="off"
           />
-          <TextField
-            id="taskTimeLimit"
-            type="number"
-            label={latinToCyrillic("Time limit")}
-            sx={{ width: "30%" }}
-            onChange={handleChangeValue}
-            variant="outlined"
-            value={value.taskTimeLimit || ""}
-            name="taskTimeLimit"
-            autoComplete="off"
-          />
+          
           {smetaVal3 && (
             <>
               <TextField

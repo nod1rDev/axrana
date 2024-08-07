@@ -96,7 +96,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        taskTimeLimit: data.tasktimelimit, // Ensure this is assigned
+       // Ensure this is assigned
         taskDate: data.taskdate,
         taskTime: data.tasktime,
         accountNumber: removeSpaces(data.accountnumber), // Ensure this is assigned
@@ -177,7 +177,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       clientAccount: +value.clientAccount,
       taskTime: +value.taskTime,
 
-      taskTimeLimit: +value.taskTimeLimit,
+      
       battalions: filtOrgans,
     };
     if (shartnoma.contractNumber) {
@@ -415,17 +415,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             name="taskTime"
             autoComplete="off"
           />
-          <TextField
-            id="taskTimeLimit"
-            type="number"
-            label={latinToCyrillic("Time limit")}
-            sx={{ width: "30%" }}
-            onChange={handleChangeValue}
-            variant="outlined"
-            value={value.taskTimeLimit || ""}
-            name="taskTimeLimit"
-            autoComplete="off"
-          />
+          
 
           {smetaVal3 && (
             <TextField

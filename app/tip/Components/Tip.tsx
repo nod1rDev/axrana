@@ -38,7 +38,7 @@ function Tip() {
   const [change, setChange] = useState(1);
   const router = useRouter();
   const [data, setData] = useState([]);
-
+  const [searchStatus, setSearchStatus] = useState(false);
   const getAllRanks = async () => {
     try {
       const res = await getAllWorkers(JWT, null, page, rowsPerPage);
@@ -167,12 +167,13 @@ function Tip() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setSearchStatus(true);
     searchWorkerByName(search);
   };
 
   const clearSearch = () => {
-    setSearch("");
-    setFilteredRanks(allRanks);
+    setSearchStatus(false);
+    getAllRanks();
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -236,18 +237,18 @@ function Tip() {
                   autoComplete: "off",
                   autoCorrect: "off",
                   spellCheck: "false",
-                  endAdornment: search ? (
-                    <IconButton onClick={clearSearch}>
-                      <CloseIcon color="error" />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <PersonSearchIcon color="info" />
-                    </IconButton>
-                  ),
                 }}
               />
             </form>
+            {searchStatus ? (
+              <IconButton type="button" size="large" onClick={clearSearch}>
+                <CloseIcon fontSize="inherit" color="error" />
+              </IconButton>
+            ) : (
+              <IconButton size="large" onClick={handleSearch}>
+                <PersonSearchIcon fontSize="inherit" color="info" />
+              </IconButton>
+            )}
           </div>
           <div className="flex gap-4">
             <Button

@@ -169,17 +169,14 @@ const Page: React.FC = () => {
     }
   };
   function removeSpecialCharacters(input: string): string {
-    return input.replace(/[!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]/g, "");
+    const pure = input.toLowerCase().trim();
+    return pure.replace(/[\W_]+/g, "");
   }
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const filtered = workers.filter((worker) => {
-      const pureWorkers = removeSpecialCharacters(
-        worker.FIO.toLowerCase().toString()
-      );
-      const pureSearch = removeSpecialCharacters(
-        search.toLowerCase().trim().toString()
-      );
+      const pureWorkers = removeSpecialCharacters(worker.FIO);
+      const pureSearch = removeSpecialCharacters(search);
       return pureWorkers.includes(pureSearch);
     });
 

@@ -14,7 +14,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
 import { setModalTip } from "@/app/Redux/TipSlice";
-
 import { useParams, useRouter } from "next/navigation";
 import { latinToCyrillic } from "../../add/Components/lotin";
 import TipTab from "../../Components/TipTab";
@@ -24,15 +23,15 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 function Page() {
   const { id } = useParams();
-  // Umumiy
   const admin = useSelector((s: any) => s.auth.admin);
   const dispatch = useDispatch();
   const JWT = useSelector((s: any) => s.auth.JWT);
 
-  // Load the saved states or set default values
   const savedPage = parseInt(sessionStorage.getItem("page") || "0", 10);
-  const savedRowsPerPage = parseInt(sessionStorage.getItem("rowsPerPage") || "100", 10);
-  const savedSearch = sessionStorage.getItem("search") || "";
+  const savedRowsPerPage = parseInt(
+    sessionStorage.getItem("rowsPerPage") || "100",
+    10
+  );
 
   const [page, setPage] = useState(savedPage);
   const [rowsPerPage, setRowsPerPage] = useState(savedRowsPerPage);
@@ -40,13 +39,14 @@ function Page() {
   const batID = useSelector((s: any) => s.tip.batalyon);
   const [allRanks, setAllRanks] = useState<any[]>([]);
   const [filteredRanks, setFilteredRanks] = useState<any[]>([]);
-  const [search, setSearch] = useState(savedSearch);
+  const [search, setSearch] = useState("");
+  const [searchStatus, setSearchStatus] = useState(false);
   const [selector, setSelector] = useState([]);
   const open = useSelector((s: any) => s.tip.modal);
   const [value, setValue] = useState<any>({});
   const [change, setChange] = useState(1);
   const router = useRouter();
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
 
   useEffect(() => {
     setBatalyon(batID);
@@ -66,8 +66,12 @@ function Page() {
   };
 
   useEffect(() => {
-    getAllRanks();
-  }, [page, rowsPerPage]);
+    if (searchStatus) {
+      searchWorkerByName(search);
+    } else {
+      getAllRanks();
+    }
+  }, [page, rowsPerPage, searchStatus]);
 
   const deleteUnvon = async () => {
     const res = await deleteWorker(JWT, open.id);
@@ -164,8 +168,10 @@ function Page() {
     );
   };
 
-  const searchWorkerByName = async (value: any) => {
+  const searchWorkerByName = async (value: string) => {
     const res = await searchWorker(JWT, value);
+    console.log(res);
+
     if (!res.success) {
       dispatch(
         alertChange({
@@ -182,13 +188,14 @@ function Page() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setSearchStatus(true);
     searchWorkerByName(search);
   };
 
   const clearSearch = () => {
-    setSearch("");
-    sessionStorage.removeItem("search");
-    getAllRanks();
+    setSearchStatus(false);
+
+    getAllRanks(); // Qidiruv matni tozalanganda filtrlangan natijalarni o'chirish
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -220,11 +227,7 @@ function Page() {
   const downloadExcel = async () => {
     try {
       const excelBlob = await getExcelWorker2(JWT, id);
-
-      // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
-
-      // <a> elementi yaratish va yuklab olishni amalga oshirish
       const a = document.createElement("a");
       a.href = url;
       a.download = "excel_file.xlsx"; // Yuklab olinadigan fayl nomi
@@ -236,7 +239,7 @@ function Page() {
         alertChange({
           open: true,
           message: latinToCyrillic("Excel file yuklandi"),
-          status: "sucess",
+          status: "success",
         })
       );
     } catch (error) {
@@ -249,11 +252,6 @@ function Page() {
       );
     }
   };
-
-  // Store search input in sessionStorage when it changes
-  useEffect(() => {
-    sessionStorage.setItem("search", search);
-  }, [search]);
 
   return (
     <>
@@ -290,18 +288,18 @@ function Page() {
                   autoComplete: "off",
                   autoCorrect: "off",
                   spellCheck: "false",
-                  endAdornment: search ? (
-                    <IconButton onClick={clearSearch}>
-                      <CloseIcon color="error" />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <PersonSearchIcon color="info" />
-                    </IconButton>
-                  ),
                 }}
               />
             </form>
+            {searchStatus ? (
+              <IconButton type="button" size="large" onClick={clearSearch}>
+                <CloseIcon fontSize="inherit" color="error" />
+              </IconButton>
+            ) : (
+              <IconButton size="large" onClick={handleSearch}>
+                <PersonSearchIcon fontSize="inherit" color="info" />
+              </IconButton>
+            )}
           </div>
         </div>
         <TipTab

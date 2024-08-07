@@ -162,7 +162,7 @@ export default function BittaTab({ ranks }: { ranks: any }) {
                           ) : e == 3 ? (
                             <>
                               {row.actions == "bajarilmagan" ? (
-                                <div className="flex gap-2  items-center justify-end ">
+                                <div className="flex gap-2  items-center justify-center ">
                                   <div className={`font-bold text-red-500`}>
                                     {row.sanasi}
                                   </div>

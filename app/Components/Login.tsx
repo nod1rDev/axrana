@@ -27,7 +27,6 @@ import { alertChange } from "../Redux/ShaxsiySlice";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { TextField } from "@mui/material";
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Login() {
@@ -36,6 +35,9 @@ export default function Login() {
   const [password, setPassword] = React.useState<any>();
   const [select, setSelect] = React.useState<any>();
   const admin = useSelector((s: any) => s.auth.admin);
+  const router = useRouter();
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const login = async (username: any, password: any) => {
     const res = await loginAuth(username, password);
 
@@ -67,6 +69,7 @@ export default function Login() {
       );
     }
   };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -86,36 +89,31 @@ export default function Login() {
       dispatch(
         alertChange({
           open: true,
-          message: latinToCyrillic("Malumotlarni to'liq toldiring!"),
+          message: latinToCyrillic("Malumotlarni to'liq to'ldiring!"),
           status: "warning",
         })
       );
     }
   };
-  const router = useRouter();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   React.useEffect(() => {
     const input: any = document.getElementById("myInput");
     if (input) {
       input.setAttribute("autocomplete", "off");
-      // Optionally set the form's autocomplete to 'off'
       input.closest("form").setAttribute("autocomplete", "off");
     }
   }, []);
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
 
   return (
-    <div className="max-w-full h-[100vh] login       bg-no-repeat bg-cover ">
-      <div className="  flex items-center justify-center  ">
-        <div className="max-w-[30%]   bg-opacity-[15%] mt-[8%] rounded-lg bg-slate-50 ">
+    <div className="max-w-full h-[100vh] login bg-no-repeat bg-cover">
+      <div className="flex items-center justify-center">
+        <div className="max-w-[30%] bg-opacity-[15%] mt-[8%] rounded-lg bg-slate-50">
           <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -149,7 +147,6 @@ export default function Login() {
                     sx={{
                       backgroundColor: "whitesmoke",
                       borderRadius: "5px",
-
                       width: "100%",
                     }}
                     label={latinToCyrillic("Login")}
@@ -164,9 +161,11 @@ export default function Login() {
                       sx={{
                         backgroundColor: "whitesmoke",
                         borderRadius: "5px",
-
                         width: "100%",
                       }}
+                      type={showPassword ? "text" : "password"} // If showPassword is true, set type to "text", otherwise "password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -184,13 +183,7 @@ export default function Login() {
                       id="outlined-adornment-password"
                     />
                   </FormControl>
-
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
+                  <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
                     {latinToCyrillic("Kirish")}
                   </Button>
                   <Grid container></Grid>

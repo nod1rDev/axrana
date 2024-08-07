@@ -96,7 +96,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-       // Ensure this is assigned
+        // Ensure this is assigned
         taskDate: data.taskdate,
         taskTime: data.tasktime,
         accountNumber: removeSpaces(data.accountnumber), // Ensure this is assigned
@@ -170,9 +170,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
     const shartnoma = {
       ...value,
-     
 
-      
       battalions: filtOrgans,
     };
     if (shartnoma.contractNumber) {
@@ -368,13 +366,10 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   name={field.id}
                   autoComplete="off"
                   inputProps={{ maxLength: 27 }}
-                  
-                  helperText={
-                  
-                    `${
-                      field.length - (value[field.id]?.length || field.length)
-                    } ${latinToCyrillic("ta raqam kiriting")}`
-                  }
+                  type="number"
+                  helperText={`${
+                    field.length - (value[field.id]?.length || field.length)
+                  } ${latinToCyrillic("ta raqam kiriting")}`}
                 />
               ))}
             </>
@@ -401,7 +396,9 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           />
           <TextField
             id="taskTime"
-            label={latinToCyrillic("ommavit tadbir otkaziladigan vaqt davomiyligi")}
+            label={latinToCyrillic(
+              "ommavit tadbir otkaziladigan vaqt davomiyligi"
+            )}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"
@@ -410,7 +407,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
             name="taskTime"
             autoComplete="off"
           />
-          
 
           {smetaVal3 && (
             <TextField

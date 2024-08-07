@@ -81,8 +81,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
   useEffect(() => {
     if (data && taskss) {
-     
-
       const pureData = {
         contractNumber: data.contractnumber,
         contractDate: convertDate(data.contractdate),
@@ -163,7 +161,6 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
     const shartnoma = {
       ...value,
-   
     };
     if (shartnoma.contractNumber) {
       createShartnoman(shartnoma);
@@ -358,13 +355,10 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   name={field.id}
                   autoComplete="off"
                   inputProps={{ maxLength: 27 }}
-              
-                  helperText={
-                    
-                    `${
-                      field.length - (value[field.id]?.length || field.length)
-                    } ${latinToCyrillic("ta raqam kiriting")}`
-                  }
+                  type="number"
+                  helperText={`${
+                    field.length - (value[field.id]?.length || field.length)
+                  } ${latinToCyrillic("ta raqam kiriting")}`}
                 />
               ))}
             </>

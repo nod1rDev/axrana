@@ -308,6 +308,7 @@ function CreateShartnoma() {
                   variant="outlined"
                   value={value[field.id] || ""}
                   name={field.id}
+                  type="number"
                   autoComplete="off"
                   helperText={`${
                     field.length - (value[field.id]?.length || 0)

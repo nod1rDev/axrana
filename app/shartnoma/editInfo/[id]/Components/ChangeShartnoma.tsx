@@ -163,12 +163,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
 
     const shartnoma = {
       ...value,
-      contractNumber: +value.contractNumber,
-      clientMFO: +value.clientMFO,
-      treasuryAccount: +value.treasuryAccount,
-      clientSTR: +value.clientSTR,
-      clientAccount: +value.clientAccount,
-      taskTime: +value.taskTime,
+   
     };
     if (shartnoma.contractNumber) {
       createShartnoman(shartnoma);
@@ -192,7 +187,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
 
-    { id: " treasuryaccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: " treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
     { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
   ];
   const handleChangeOrgans = (e: any, index: number) => {
@@ -363,9 +358,9 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
                   name={field.id}
                   autoComplete="off"
                   inputProps={{ maxLength: 27 }}
-                  error={Boolean(errors[field.id])}
+              
                   helperText={
-                    errors[field.id] ||
+                    
                     `${
                       field.length - (value[field.id]?.length || field.length)
                     } ${latinToCyrillic("ta raqam kiriting")}`

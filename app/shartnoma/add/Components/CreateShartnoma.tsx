@@ -108,14 +108,7 @@ function CreateShartnoma() {
 
     const shartnoma = {
       ...value,
-      contractNumber: +value.contractNumber,
-      clientMFO: +value.clientMFO,
-      treasuryAccount: +value.treasuryAccount,
-      clientSTR: +value.clientSTR,
-      clientAccount: +value.clientAccount,
-      taskTime: +value.taskTime,
 
-      
       battalions: filtOrgans,
     };
     if (shartnoma.contractNumber) {
@@ -169,9 +162,8 @@ function CreateShartnoma() {
     { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
-
-    { id: " treasuryaccount", label: "G'aznachilik xisobi", length: 25 },
-    { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
+    { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
   ];
 
   const getData = async () => {
@@ -317,13 +309,9 @@ function CreateShartnoma() {
                   value={value[field.id] || ""}
                   name={field.id}
                   autoComplete="off"
-                  error={Boolean(errors[field.id])}
-                  helperText={
-                    errors[field.id] ||
-                    `${
-                      field.length - (value[field.id]?.length || 0)
-                    } ${latinToCyrillic("ta raqam kiriting")}`
-                  }
+                  helperText={`${
+                    field.length - (value[field.id]?.length || 0)
+                  } ${latinToCyrillic("ta raqam kiriting")}`}
                 />
               ))}
             </>
@@ -359,7 +347,7 @@ function CreateShartnoma() {
             name="taskTime"
             autoComplete="off"
           />
-          
+
           {smetaVal3 && (
             <>
               <TextField

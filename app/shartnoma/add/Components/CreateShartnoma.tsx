@@ -163,7 +163,7 @@ function CreateShartnoma() {
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
-    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
+    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
 
   const getData = async () => {

@@ -198,7 +198,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
 
     { id: " treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
-    { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 25 },
+    { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];

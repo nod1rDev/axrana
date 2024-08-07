@@ -114,7 +114,13 @@ const Page: React.FC = () => {
   const router = useRouter();
 
   const createWorker = async (value: any) => {
-    const res = await pushWorkers(JWT, id, value);
+    const res = await pushWorkers(
+      JWT,
+      id,
+      value,
+      +infoData.tasktime,
+      infoData.taskdate
+    );
 
     if (res.success) {
       dispatch(
@@ -141,13 +147,12 @@ const Page: React.FC = () => {
   const handleChageInfoData = (e: any) => {
     setInfoData({ ...infoData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = () => {
     const FiltWorker = workers.filter((e) => e.selected);
     const pureWorker = FiltWorker.map((e) => {
       return {
-        id: e._id,
-        taskdate: infoData.taskdate,
-        tasktime: +infoData.tasktime,
+        id: +e._id,
       };
     });
 

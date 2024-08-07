@@ -498,7 +498,13 @@ export const UpdateBXM = async (JWT: any, value: any) => {
 
 // worker_tasks
 
-export const pushWorkers = async (JWT: any, id: any, value: any) => {
+export const pushWorkers = async (
+  JWT: any,
+  id: any,
+  value: any,
+  tasktime: any,
+  taskdate: any
+) => {
   const res = await fetch(URL + "/worker_task/push/worker/" + id, {
     method: "POST",
     headers: {
@@ -507,6 +513,8 @@ export const pushWorkers = async (JWT: any, id: any, value: any) => {
     },
     body: JSON.stringify({
       workers: value,
+      taskdate,
+      tasktime,
     }),
   });
 

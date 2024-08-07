@@ -329,9 +329,9 @@ export default function Page() {
                                 </IconButton>
                               </>
                             ) : column.format && typeof value === "number" ? (
-                              column.format(formatString(value))
+                              column.format(value)
                             ) : (
-                              formatString(value)
+                              value
                             )}
                           </TableCell>
                         );

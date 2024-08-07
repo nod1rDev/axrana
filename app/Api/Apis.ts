@@ -612,14 +612,18 @@ export const getComand = async (JWT: any, page: any, limit: any) => {
   return data;
 };
 
-export const getByIdComand = async (JWT: any, id: any) => {
-  const res = await fetch(URL + "/result/get/battalion/workers/" + id, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + JWT,
-      "Content-Type": "application/json",
-    },
-  });
+export const getByIdComand = async (JWT: any, id: any, percent?: any) => {
+  const res = await fetch(
+    URL +
+      `/result/get/battalion/workers/${id}?percent=${percent ? percent : 100}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + JWT,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const data = await res.json();
   return data;

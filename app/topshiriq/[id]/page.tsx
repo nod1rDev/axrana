@@ -222,7 +222,7 @@ const Page: React.FC = () => {
           <span className="w-[340px] text-left overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Xodimlar soni")}
           </span>
-
+          
           <div className="flex items-center text-center">
             {latinToCyrillic("Status")}
           </div>

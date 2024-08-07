@@ -58,9 +58,9 @@ function TopshiriqCard({ data, click }: { data: any; click?: boolean }) {
 
   const getData = async () => {
     const res = await getInfo(JWT, active);
-    console.log(res.task);
+    console.log(res.data);
 
-    setInfo(res.task[0]);
+    setInfo(res.data);
   };
   React.useEffect(() => {
     if (active > 0) {

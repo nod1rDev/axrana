@@ -19,6 +19,7 @@ import { deleteData1, exel1, getByIdComand } from "@/app/Api/Apis";
 import WorkerAndBatalyon from "./Components/WorkerAndBatalyon";
 import Document3 from "./Components/Document3";
 import Document7 from "./Components/Document3";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function page() {
   const { id } = useParams();
@@ -32,7 +33,17 @@ function page() {
     setTasks(res.data);
     setData(res.command[0]);
   };
+  const [selectedValue, setSelectedValue] = useState<any>(100);
+  const getData2 = async (percent: any) => {
+    const res = await getByIdComand(JWT, id, percent);
 
+    setTasks(res.data);
+    setData(res.command[0]);
+  };
+  const handleChange = (event: any) => {
+    getData2(event.target.value);
+    setSelectedValue(event.target.value);
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -162,14 +173,29 @@ function page() {
               >
                 {"орқага"}
               </Button>
-              <div className="flex gap-3">
-                
-               
-              </div>
+              <div className="flex gap-3"></div>
             </div>
             <div className="rounded-lg w-full mb-5 bg-[#f4f3ee] px-6 py-4 flex justify-between items-center">
               <h1 className="text-[24px] font-bold">{data?.commandnumber}</h1>
               <div className="flex gap-3">
+                <FormControl sx={{ width: "140px" }}>
+                  <InputLabel id="percentage-selector-label">
+                    {latinToCyrillic("Foizni tanlang")}
+                  </InputLabel>
+                  <Select
+                    labelId="percentage-selector-label"
+                    id="percentage-selector"
+                    value={selectedValue}
+                    label="Foizni tanlang"
+                    onChange={handleChange}
+                  >
+                    {Array.from({ length: 100 }, (_, index) => (
+                      <MenuItem key={index + 1} value={index + 1}>
+                        {index + 1}%
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
                 <Button
                   onClick={deleteData}
                   color="error"

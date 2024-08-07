@@ -9,9 +9,9 @@ const TaskDetails: React.FC<any> = ({ data }) => {
     if (data) {
       const filtStat = data.done
         ? "bajarildi"
-        : data.notdone
+        : data.notDone
         ? "bajarilmagan"
-        : data.inprogress
+        : data.inProgress
         ? "bajarilmoqda"
         : "";
 
@@ -24,45 +24,33 @@ const TaskDetails: React.FC<any> = ({ data }) => {
         <div className="w-full mx-auto p-4 text-xl ">
           <h2 className="text-5xl font-bold mb-6">Топшириқ тафсилотлари</h2>
           <p className="mb-4">
-            Батальон:
-            <strong>{data.battalionname} </strong>
+            <strong>{data.address}</strong>
           </p>
           <p className="mb-4">
-            Шартнома рақами:
+            <strong>{data.batalon} </strong>
+          </p>
+          <p className="mb-4">
             <strong>{data.contractnumber} </strong>
           </p>
           <p className="mb-4">
-            Буюртмачи номи: <strong>{data.clientname} </strong>
+            <strong>{data.clientname} </strong>
           </p>
           <p className="mb-4">
-            Тадбир отадиган охирги кун : <strong>{data.taskdate}</strong> сиз
-            ушбу кун отгандан сўнг 2 кун ичида ходимларни барчасини киритиб
-            бўлган болишингсиз зарур агар тадбир бир неча кун давом этса
-            ходимларни бир неча марта киритишингиз мумкин лекин сиз учун
-            ажратилган соатга етганда топшириқ бажарилган мақомга ўзгаради
+            <strong>{data.taskdate}</strong>
+          </p>
+
+          <p className="mb-4">
+            <strong>{data.timemoney}</strong>
           </p>
           <p className="mb-4">
-            Ходимлар сони: <strong>{data.workernumber}</strong> йодда тутинг бу
-            ходимлар сизнинг батальондан ажратилган ходим сонига тенг лекин
-            тадбир бир неча кун давом этса бу ходим сони кўпайиши мумкин ва бир
-            кунлик ходим сонига тенг бўлади,
+            <strong>{data.tasktime}</strong>
+          </p>
+
+          <p className="mb-4">
+            <strong>{data.timelimit + " "}</strong>
           </p>
           <p className="mb-4">
-            Бир соат учун <strong>{data.timemoney}</strong> сўм ушбу сумма
-            буюртмачи чегирма қилиб берилса ёки БХМ кўтарилса ошиши ёки камайиши
-            мумкин,
-          </p>
-          <p className="mb-4">
-            Топшириқ вақти : <strong>{data.tasktime}</strong> соат албатта бу
-            вақт битта ходим учун, ушбу топшириқ бўйича батальон учун умумий
-            топшириқ вақти :<strong>{data.tasktime * data.workernumber}</strong>{" "}
-            соат,
-          </p>
-          <p className="mb-4">
-            Вақт чегараси : <strong>{data.timelimit + " "}</strong>
-            ушбу соат тадбир отадиган вақт ёки тадбир бир неча кун бўлса ҳар
-            кунлик вақт лимити : Админ билан боғланинг ушбу тадбир ўтадиган
-            вақти номаълум ,
+            <strong>{data.workernumber}</strong>
           </p>
           <div className="mt-6">
             <Status status={status} />

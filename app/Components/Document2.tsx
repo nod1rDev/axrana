@@ -297,7 +297,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                       Манзил:
                     </span>
                       <p className=" text-start max-w-[400px] w-[150px]  text-[14px]">{`${data.clientaddress}`}</p>
-                      <span className="w-[180px] ">
+                      <span className="max-w-[250px] ">
                         <span className="font-bold w-[180px] ">
                           Банк реквизитлари:
                         </span>
@@ -353,7 +353,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     <p className=" text-start w-[150px] text-[14px]">
                       {info && info?.manzil}
                     </p>
-                    <span className="w-[180px]">
+                    <span className="max-w-[250px]">
                       <span className="font-bold">Банк реквизитлари: </span>
                       {info && info?.bank}
                     </span>

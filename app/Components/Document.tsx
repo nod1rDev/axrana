@@ -278,7 +278,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     <div className="flex flex-col w-[250px]">
                       <span className="font-bold text-[14px] ">Манзил:</span>
                       <p className=" text-start  text-[14px]">{`${data.clientaddress}.  `}</p>
-                      <span className="w-[180px] ">
+                      <span className="max-w-[250px] ">
                         <span className="font-bold  ">Банк реквизитлари:</span>
                         <span className="ml-1">
                           Марказий банк Тошкент ш. ХККМ
@@ -337,7 +337,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                         {info && info?.manzil}
                       </span>
                     </span>
-                    <span className="w-[180px]">
+                    <span className="max-w-[250px]">
                       <span className="font-bold">Банк реквизитлари:</span>
                       <span className="ml-1"> {info && info?.bank}</span>
                     </span>

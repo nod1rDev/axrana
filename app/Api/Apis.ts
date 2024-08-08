@@ -316,6 +316,19 @@ export const paymentToContract = async (JWT: any, id: any) => {
   return data;
 };
 
+export const NotpaymentToContract = async (JWT: any, id: any) => {
+  const res = await fetch(URL + `/contract/canel/payment/` + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
 export const getToPrint = async (JWT: any, id: any) => {
   const res = await fetch(URL + `/contract/to/print/${id}`, {
     method: "GET",

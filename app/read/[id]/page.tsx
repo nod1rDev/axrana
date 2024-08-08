@@ -12,7 +12,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { setModalBitta } from "@/app/Redux/TipSlice";
 import BittaModal from "./Components/BittaModal";
-import { getContractById, giveTime, paymentToContract } from "@/app/Api/Apis";
+import {
+  NotpaymentToContract,
+  getContractById,
+  giveTime,
+  paymentToContract,
+} from "@/app/Api/Apis";
 function Page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -140,6 +145,28 @@ function Page() {
       );
     }
   };
+  const notPay = async () => {
+    const res = await NotpaymentToContract(JWT, id);
+
+    if (res.success) {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic("To'lov bekor qilindi"),
+          status: "success",
+        })
+      );
+      getData();
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -159,14 +186,19 @@ function Page() {
           </h1>
           <div className="flex gap-2">
             {payment ? (
-              <Button
-                color="secondary"
-                disabled
-                variant="contained"
-                onClick={pay}
-              >
-                {latinToCyrillic("To'lov qilingan")}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  color="secondary"
+                  disabled
+                  variant="contained"
+                  onClick={pay}
+                >
+                  {latinToCyrillic("To'lov qilingan")}
+                </Button>{" "}
+                <Button color="secondary" variant="contained" onClick={notPay}>
+                  {latinToCyrillic("To'lovni bekor qilish")}
+                </Button>
+              </div>
             ) : (
               <Button color="secondary" variant="contained" onClick={pay}>
                 {latinToCyrillic("To'lov Qilmoq")}

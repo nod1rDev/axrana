@@ -332,7 +332,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <div className="flex gap-2">
                   <span className="font-bold text-[14px]  ">Манзил:</span>
                   <div className="flex flex-col  ">
-                    <p className=" text-start  text-[14px] w-[100px]  ">
+                    <p className=" text-start  text-[12px] w-[100px]  ">
                       {info && info?.manzil}
                     </p>
                     <span>
@@ -355,7 +355,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 </div>
 
-                <div className=" absolute top-[250px] left-[40px]">
+                <div className=" absolute top-[300px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: _________________

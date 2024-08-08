@@ -337,7 +337,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <div className="flex gap-2">
                   <span className="font-bold text-[14px]">Манзил:</span>
                   <div className="flex flex-col">
-                    <p className=" text-start  text-[14px]">
+                    <p className=" text-start  text-[12px]">
                       {info && info?.manzil}
                     </p>{" "}
                     <span>

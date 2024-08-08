@@ -455,10 +455,8 @@ function page() {
                       </p>
                       {data.clientaddress && (
                         <div className="flex gap-2">
-                          <span className="font-bold text-xl mt-[-4px]">
-                            Манзил:
-                          </span>
                           <div className="flex flex-col">
+                            <span className="font-bold ">Манзил:</span>
                             <p className=" text-start max-w-[400px] w-[180px] text-[16px]">{`${data.clientaddress}.  `}</p>
                             <span className="flex gap-1">
                               <span className="font-bold">
@@ -470,7 +468,7 @@ function page() {
                               data?.treasuryaccount) && (
                               <div className="flex gap-1">
                                 <span className="font-bold">
-                                  Ғазначилиги х/р: 
+                                  Ғазначилиги х/р:
                                 </span>
                                 <span>
                                   {formatStringWithSpaces(
@@ -512,16 +510,14 @@ function page() {
                         ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                       </p>
                       <div className="flex gap-2">
-                        <span className="font-bold text-xl mt-[-4px]">
-                          Манзил:
-                        </span>
                         <div className="flex flex-col">
+                          <span className="font-bold ">Манзил:</span>
                           <p className=" text-start w-[180px] text-[16px]">
                             {info && info?.manzil}
                           </p>
                           <span className="flex gap-1">
                             <span className="font-bold">
-                              Банк реквизитлари: 
+                              Банк реквизитлари:
                             </span>
                             {info && info?.bank}
                           </span>
@@ -846,10 +842,8 @@ function page() {
                       </p>
                       {data.clientaddress && (
                         <div className="flex gap-2">
-                          <span className="font-bold text-xl mt-[-4px]">
-                            Манзил:
-                          </span>
                           <div className="flex flex-col">
+                            <span className="font-bold ">Манзил:</span>
                             <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
                             <span>Ўзбекистон Республикаси Молия вазирлиги</span>
                             <span>
@@ -892,14 +886,14 @@ function page() {
                         ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                       </p>
                       <div className="flex gap-2">
-                        <span className="font-bold text-xl mt-[-4px]">Манзил:</span>
                         <div className="flex flex-col">
+                          <span className="font-bold ">Манзил:</span>
                           <p className=" text-start  text-[14px]">
                             {info && info?.manzil}
                           </p>
                           <span>
                             <span className="font-bold">
-                              Банк реквизитлари: 
+                              Банк реквизитлари:
                             </span>
                             {info && info?.bank}
                           </span>

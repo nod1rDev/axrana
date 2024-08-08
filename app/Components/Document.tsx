@@ -275,16 +275,19 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 </p>
                 {data.clientaddress && (
                   <div className="flex gap-1">
-                    <span className="font-bold text-[14px] mt-[-1px] text-start">
-                      Манзил:
-                    </span>
                     <div className="flex flex-col">
+                    
+                      <span className="font-bold text-[14px] ">
+                        Манзил:
+                      </span>
                       <p className=" text-start max-w-[400px] w-[150px] text-[14px]">{`${data.clientaddress}.  `}</p>
                       <span className="w-[180px] ">
                         <span className="font-bold w-[180px] ">
-                          Банк реквизитлари: 
+                          Банк реквизитлари:
                         </span>
-                       <span className="ml-1">Марказий банк Тошкент ш. ХККМ</span>  
+                        <span className="ml-1">
+                          Марказий банк Тошкент ш. ХККМ
+                        </span>
                       </span>
                       {(data?.treasuryaccount27 || data?.treasuryaccount) && (
                         <>
@@ -299,8 +302,8 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
 
                       <span>
                         {" "}
-                        <span className="font-bold">МФО: </span> {data.clientmfo}
-                        .
+                        <span className="font-bold">МФО: </span>{" "}
+                        {data.clientmfo}.
                       </span>
                       <span>
                         {" "}
@@ -332,16 +335,16 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-1">
-                  <span className="font-bold text-[14px] mt-[-1px] ">
-                    Манзил:
-                  </span>
                   <div className="flex flex-col  ">
-                    <p className=" text-start w-[150px] text-[14px]    ">
-                      {info && info?.manzil}
-                    </p>
+                    <span className="max-w-[190px] flex flex-col gap-1 ">
+                      <span className="font-bold text-[14px] ">Манзил:</span>
+                      <span className=" text-[14px]">
+                        {info && info?.manzil}
+                      </span>
+                    </span>
                     <span className="w-[180px]">
-                      <span className="font-bold">Банк реквизитлари: </span>
-                      {info && info?.bank}
+                      <span className="font-bold">Банк реквизитлари:</span>
+                      <span className="ml-1"> {info && info?.bank}</span>
                     </span>
                     <span>
                       <span className="font-bold">МФО: </span>{" "}

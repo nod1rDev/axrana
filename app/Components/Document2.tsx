@@ -373,6 +373,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 </div>
 
+
                 <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">

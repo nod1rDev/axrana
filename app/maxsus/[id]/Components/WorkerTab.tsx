@@ -1,31 +1,22 @@
+"use client";
 // components/Table.tsx
 import { formatNumber } from "@/app/Utils";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-interface TableProps {
-  data: {
-    contractnumber: any;
-    taskdate: any;
-    clientname: any;
-    address: any;
-    workernumber: any;
-    allmoney: any;
-    summa: any;
-    notPaySumma: any;
-    payContracts: any[];
-    notPayContracts: any[];
-  };
-  here: boolean;
-}
+const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
+  const [payContracts, setPayContracts] = useState<any[]>([]);
+  const [notPayContracts, setNotPayContracts] = useState<any[]>([]);
 
-const WorkerTab = ({
-  data,
-  here,
-}: {
-  data: TableProps["data"];
-  here: boolean;
-}) => {
+  useEffect(() => {
+    if (data && data.tasks) {
+      const filt1 = data.tasks.filter((e: any) => e.pay);
+      const filt2 = data.tasks.filter((e: any) => !e.pay);
+      setPayContracts(filt1);
+      setNotPayContracts(filt2);
+    }
+  }, [data]);
+
   return (
     <table className="w-full border border-[#000] border-collapse">
       {here && (
@@ -40,7 +31,7 @@ const WorkerTab = ({
             <th className="border border-[#000] font-[500] w-[20%] text-center">
               {latinToCyrillic("Buyurtmachi ismi")}
             </th>
-            <th className="border border-[#000] font-[500]  w-[20%] text-center">
+            <th className="border border-[#000] font-[500] w-[20%] text-center">
               {latinToCyrillic("Manzil")}
             </th>
             <th className="border border-[#000] font-[500] w-[5%] text-center">
@@ -53,7 +44,7 @@ const WorkerTab = ({
         </thead>
       )}
       <tbody>
-        {data.payContracts.map((item: any, index: number) => (
+        {payContracts.map((item: any, index: number) => (
           <tr key={index}>
             <td className="border border-[#000] w-[5%] text-center">
               {item.contractnumber}
@@ -87,7 +78,7 @@ const WorkerTab = ({
               latinToCyrillic("so'm")}
           </td>
         </tr>
-        {data.notPayContracts.map((item: any, index: number) => (
+        {notPayContracts.map((item: any, index: number) => (
           <tr key={index}>
             <td className="border border-[#000] w-[5%] text-center">
               {item.contractnumber}

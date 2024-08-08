@@ -29,7 +29,7 @@ function page() {
   const [versiya, setVersiya] = useState(true);
   const getData = async () => {
     const res = await getByIdComand(JWT, id);
-    console.log(res);
+   
 
     setTasks(res.data);
     setData(res.command[0]);
@@ -105,7 +105,7 @@ function page() {
   };
   const downloadExcel = async () => {
     try {
-      const excelBlob = await exel1(JWT, tasks, id);
+      const excelBlob = await exel1(JWT, id, selectedValue);
 
       // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);

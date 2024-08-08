@@ -675,15 +675,17 @@ export const getByIdComan2 = async (JWT: any, id: any) => {
   return data;
 };
 
-export const exel1 = async (JWT: any, value: any, id: any) => {
-  const res = await fetch(URL + "/result/excel/create/" + id, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + JWT,
-    },
-    body: JSON.stringify({ data: value }),
-  });
+export const exel1 = async (JWT: any, id: any, percent: any) => {
+  const res = await fetch(
+    URL + `/result/excel/create/${id}?percent=${percent}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + JWT,
+      },
+    }
+  );
 
   const data = await res.blob(); // Fayl blob formatida keladi
 

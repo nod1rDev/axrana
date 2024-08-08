@@ -155,18 +155,13 @@ function page() {
             <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
               <div className="w-[90%] mb-20 flex flex-col font-bold gap-1 mx-auto text-2xl">
                 <div className="text-center">
-                  {text?.date1 + " "}
-                  {latinToCyrillic("kunidan")}
-
-                  {" " + text?.date2 + " "}
-
-                  {latinToCyrillic(
-                    "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiy xizmatchilar"
-                  )}
+                  {data?.date1 + " "}
+                  kunidan
+                  {" " + data?.date2 + " "}
+                  kuniga qadar oʻtkazilgan ommaviy tadbirlarda jamoat tartibini
+                  saqlashda ishtirok etgan harbiy xizmatchilar
                 </div>
-                <div className="w-full text-center">
-                  {latinToCyrillic("RO'YHATI")}
-                </div>
+                <div className="w-full text-center">RO'YHATI</div>
               </div>
               <div className="w-[95%] mx-auto flex gap-10 flex-col">
                 {data && data.map((e: any) => <WorkerAndBatalyon data={e} />)}

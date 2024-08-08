@@ -8,9 +8,9 @@ function WorkerAndBatalyon({ data, sal }: { data: any; sal?: boolean }) {
       <h1
         className={`w-full text-center mb-1 text-lg ${sal ? "" : "font-[600]"}`}
       >
-        {data?.batalyonName + " " + latinToCyrillic("harbiy qisim:")} 
+        {data?.batalyonName + " " + latinToCyrillic("harbiy qisim:")}
       </h1>
-      <WorkerTab sal={sal} data={data.workers} />
+      <WorkerTab sal={data?.allsumma} data={data.workers} />
     </div>
   );
 }

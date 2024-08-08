@@ -29,6 +29,7 @@ function page() {
   const [versiya, setVersiya] = useState(true);
   const getData = async () => {
     const res = await getByIdComand(JWT, id);
+    console.log(res);
 
     setTasks(res.data);
     setData(res.command[0]);
@@ -241,17 +242,12 @@ function page() {
               <div className="w-[90%] mb-20 flex flex-col font-bold gap-1 mx-auto text-2xl">
                 <div className="text-center">
                   {data?.date1 + " "}
-                  {latinToCyrillic("kunidan")}
-
+                  kunidan
                   {" " + data?.date2 + " "}
-
-                  {latinToCyrillic(
-                    "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiy xizmatchilar"
-                  )}
+                  kuniga qadar oʻtkazilgan ommaviy tadbirlarda jamoat tartibini
+                  saqlashda ishtirok etgan harbiy xizmatchilar
                 </div>
-                <div className="w-full text-center">
-                  {latinToCyrillic("RO'YHATI")}
-                </div>
+                <div className="w-full text-center">RO'YHATI</div>
               </div>
 
               <div className="w-[95%] mx-auto flex gap-10 flex-col">

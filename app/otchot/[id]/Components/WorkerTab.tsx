@@ -1,5 +1,6 @@
 // components/Table.tsx
 import { formatNumber } from "@/app/Utils";
+import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import React from "react";
 
 interface TableProps {
@@ -45,6 +46,18 @@ const WorkerTab = ({ data, sal }: { data: any; sal?: any }) => {
             </td>
           </tr>
         ))}
+        <tr>
+          <td
+            colSpan={6}
+            className="border border-[#000] text-right pr-2 font-bold"
+          >
+            {latinToCyrillic("batalonname uchun jami summa: ") +
+              " " +
+              formatNumber(sal ? sal : 0) +
+              " " +
+              latinToCyrillic("so'm")}
+          </td>
+        </tr>
       </tbody>
     </table>
   );

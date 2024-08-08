@@ -104,7 +104,7 @@ const BudgetTable: any = ({
             {data1 && address.contractdate}
           </div>
           <div className="font-bold text-[16px] flex justify-end">
-            {data1 && raq + latinToCyrillic("-sonli qaror loyihasi")}
+            {data1 && raq + latinToCyrillic("-sonli shartnomaga ilova")}
           </div>
         </div>
 

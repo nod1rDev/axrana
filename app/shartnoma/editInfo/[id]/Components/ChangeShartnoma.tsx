@@ -184,8 +184,8 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
     { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
 
-    { id: " treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
-    { id: " treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
+    { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
+    { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
   const handleChangeOrgans = (e: any, index: number) => {
     const updatedOrgans = [...organs];
@@ -345,20 +345,31 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
               />
               {validationFields.map((field) => (
                 <TextField
-                  key={field.id}
                   id={field.id}
                   label={latinToCyrillic(field.label)}
-                  sx={{ width: "31%" }}
+                  sx={{ width: "20%" }}
                   onChange={handleChangeValue}
                   variant="outlined"
                   value={value[field.id] || ""}
                   name={field.id}
                   autoComplete="off"
-                  inputProps={{ maxLength: 27 }}
                   type="number"
-                  helperText={`${
-                    field.length - (value[field.id]?.length || field.length)
-                  } ${latinToCyrillic("ta raqam kiriting")}`}
+                  error={value[field.id]?.toString().length !== field.length}
+                  helperText={
+                    value[field.id]?.toString().length !== field.length
+                      ? latinToCyrillic(
+                          latinToCyrillic("Bu inputga ") +
+                            field.length +
+                            latinToCyrillic(" kirtish kerak, siz") +
+                            ` ${
+                              field.length - value[field.id]?.length
+                                ? value[field.id]?.length
+                                : field.length
+                            } ` +
+                            latinToCyrillic("kiritdizgiz")
+                        )
+                      : ""
+                  }
                 />
               ))}
             </>

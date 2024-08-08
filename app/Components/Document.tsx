@@ -267,7 +267,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
             </h2>
             <div className="flex  justify-between items-start">
               <div className="flex w-[50%] relative justify-center items-center flex-col">
-                <h2 className="text-[16px] text-center font-bold mb-2">
+                <h2 className="text-[14px] text-center font-bold mb-2">
                   Буюртмачи:
                 </h2>
                 <p className="font-bold text-[14px] mb-4 text-center">
@@ -275,22 +275,20 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 </p>
                 {data.clientaddress && (
                   <div className="flex gap-2">
-                    <span className="font-bold text-[16px] text-start">
+                    <span className="font-bold text-[14px] text-start">
                       Манзил:
                     </span>
                     <div className="flex flex-col">
-                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}.  `}</p>
+                      <p className=" text-start max-w-[400px]  text-[12px]">{`${data.clientaddress}.  `}</p>
                       <span>
-                        <span className="font-bold">Банк реквизитлари:</span>{" "}
+                        <span className="font-bold">Банк реквизитлари:</span>
                         Марказий банк Тошкент ш. ХККМ
                       </span>
                       <span className="font-bold">Ғазначилиги х/р</span>
                       <span>
-                        {formatString(
-                          data?.treasuryaccount
-                            ? data?.treasuryaccount
-                            : data?.treasuryaccount27
-                        )}
+                        {data?.treasuryaccount
+                          ? data?.treasuryaccount
+                          : data?.treasuryaccount27}
                       </span>
                       <span>
                         {" "}
@@ -299,7 +297,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                       </span>
                       <span>
                         {" "}
-                        <span className="font-bold">х/р</span>{" "}
+                        <span className="font-bold">х/р: </span>{" "}
                         {formatString(data.clientaccount)}
                       </span>
                       <span>
@@ -310,7 +308,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: ________ ______________________
@@ -320,16 +318,16 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
               </div>
 
               <div className="flex w-[50%] justify-center relative items-center flex-col">
-                <h2 className="text-lg text-center font-bold mb-2">
+                <h2 className="text-[14px] text-center font-bold mb-2">
                   Бажарувчи:
                 </h2>
-                <p className="font-bold text-xl text-center">
+                <p className="font-bold text-[14px] mb-4 text-center">
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-2">
-                  <span className="font-bold text-xl">Манзил:</span>
-                  <div className="flex flex-col">
-                    <p className=" text-start  text-[14px]">
+                  <span className="font-bold text-[14px]  ">Манзил:</span>
+                  <div className="flex flex-col  ">
+                    <p className=" text-start  text-[14px]  ">
                       {info && info?.manzil}
                     </p>{" "}
                     <span>
@@ -342,7 +340,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     </span>
                     <span>
                       <span className="font-bold">х/р : </span>{" "}
-                      {formatString(data?.accountnumber)}
+                      {data?.accountnumber}
                     </span>
                     <span>
                       {" "}
@@ -355,7 +353,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
-                      Раҳбари: _____________ ______________________
+                      Раҳбари: __________ ___________________
                       <span className="font-[400]">
                         {info && info?.boshliq}
                       </span>

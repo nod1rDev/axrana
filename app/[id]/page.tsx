@@ -468,11 +468,11 @@ function page() {
                             </span>
                             <span className="font-bold">Ғазначилиги х/р</span>
                             <span>
-                              {formatString(
+                              {
                                 data?.treasuryaccount
                                   ? data?.treasuryaccount
                                   : data?.treasuryaccount27
-                              )}
+                            }
                             </span>
                             <span>
                               {" "}
@@ -525,7 +525,7 @@ function page() {
                           </span>
                           <span>
                             <span className="font-bold">х/р : </span>{" "}
-                            {formatString(data?.accountnumber)}
+                            {data?.accountnumber}
                           </span>
                           <span>
                             {" "}
@@ -856,11 +856,11 @@ function page() {
                             </span>
                             <span className="font-bold">Ғазначилиги х/р</span>
                             <span>
-                              {formatString(
+                              {
                                 data?.treasuryaccount
                                   ? data?.treasuryaccount
                                   : data?.treasuryaccount27
-                              )}
+                            }
                             </span>
                             <span>
                               {" "}
@@ -909,7 +909,7 @@ function page() {
                           </span>
                           <span>
                             <span className="font-bold">х/р : </span>{" "}
-                            {formatString(data?.accountnumber)}
+                            {data?.accountnumber}
                           </span>
                           <span>
                             {" "}

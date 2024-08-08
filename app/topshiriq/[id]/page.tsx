@@ -9,9 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -32,6 +30,7 @@ import { setModalN1 } from "@/app/Redux/CoctavsSlice";
 import ModalN1 from "./Components/pastki";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 import { changeReload } from "@/app/Redux/AuthSlice";
+import { ListItemText } from "@mui/material";
 
 interface Worker {
   FIO: string;
@@ -168,16 +167,105 @@ const Page: React.FC = () => {
       );
     }
   };
-  function removeSpecialCharacters(input: string): string {
-    const pure = input.toLowerCase().trim();
-    return pure.replace(/[\W_]+/g, "");
+  const cyrillicAlphabet = [
+    "А",
+    "Б",
+    "В",
+    "Г",
+    "Д",
+    "Е",
+    "Ё",
+    "Ж",
+    "З",
+    "И",
+    "Й",
+    "К",
+    "Л",
+    "М",
+    "Н",
+    "О",
+    "П",
+    "Р",
+    "С",
+    "Т",
+    "У",
+    "Ф",
+    "Х",
+    "Ц",
+    "Ч",
+    "Ш",
+    "Щ",
+    "Ъ",
+    "Ы",
+    "Ь",
+    "Э",
+    "Ю",
+    "Я",
+    "а",
+    "б",
+    "в",
+    "г",
+    "д",
+    "е",
+    "ё",
+    "ж",
+    "з",
+    "и",
+    "й",
+    "к",
+    "л",
+    "м",
+    "н",
+    "о",
+    "п",
+    "р",
+    "с",
+    "т",
+    "у",
+    "ф",
+    "х",
+    "ц",
+    "ч",
+    "ш",
+    "щ",
+    "ъ",
+    "ы",
+    "ь",
+    "э",
+    "ю",
+    "я",
+  ];
+
+  const isLatin = (char: string): boolean => {
+    return !cyrillicAlphabet.includes(char);
+  };
+
+  const checkName = (name: string): boolean => {
+    for (let i = 0; i < name.length; i++) {
+      if (!isLatin(name[i])) {
+        return false;
+      }
+    }
+    return true;
+  };
+  function normalizeText(input: string): string {
+    
+    const latinized = checkName(input) ? input : latinToCyrillic(input);
+    const normalized = latinized
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+    return normalized.replace(/[\W_]+/g, "");
   }
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const filtered = workers.filter((worker) => {
-      const pureWorkers = removeSpecialCharacters(worker.FIO);
-      const pureSearch = removeSpecialCharacters(search);
-      return pureWorkers.includes(pureSearch);
+      const normalizedWorker = normalizeText(worker.FIO);
+      const normalizedSearch = normalizeText(search);
+
+      return normalizedWorker.includes(normalizedSearch);
     });
 
     setFilteredWorkers(filtered);
@@ -222,7 +310,7 @@ const Page: React.FC = () => {
           <span className="w-[340px] text-left overflow-hidden text-ellipsis whitespace-nowrap">
             {latinToCyrillic("Xodimlar soni")}
           </span>
-          
+
           <div className="flex items-center text-center">
             {latinToCyrillic("Status")}
           </div>

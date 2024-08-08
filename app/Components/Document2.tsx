@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { formatString } from "../Utils";
-const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
+const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
   const getMonthNameInCyrillic = (month: number): string => {
     const months = [
       "Январь",
@@ -283,7 +283,7 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
             </h2>
             <div className="flex  justify-between items-start">
               <div className="flex w-[50%] relative justify-center items-center flex-col">
-                <h2 className="text-[16px] text-center font-bold mb-2">
+                <h2 className="text-[14px] text-center font-bold mb-2">
                   Буюртмачи:
                 </h2>
                 <p className="font-bold text-[14px] mb-4 text-center">
@@ -291,7 +291,7 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
                 </p>
                 {data.clientaddress && (
                   <div className="flex gap-2">
-                    <span className="font-bold text-[16px] text-start">
+                    <span className="font-bold text-[14px] text-start">
                       Манзил:
                     </span>
                     <div className="flex flex-col">
@@ -300,13 +300,11 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
                         <span className="font-bold">Банк реквизитлари:</span>{" "}
                         Марказий банк Тошкент шахар ХККМ
                       </span>
-                      <span className="font-bold">Ғазначилиги х/р</span>
+                      <span className="font-bold">Ғазначилиги х/р: </span>
                       <span>
-                        {formatString(
-                          data?.treasuryaccount
-                            ? data?.treasuryaccount
-                            : data?.treasuryaccount27
-                        )}
+                        {data?.treasuryaccount
+                          ? data?.treasuryaccount
+                          : data?.treasuryaccount27}
                       </span>
                       <span>
                         {" "}
@@ -322,7 +320,7 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">Раҳбари: ____________</h1>
                   </div>
@@ -330,20 +328,20 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
               </div>
 
               <div className="flex w-[50%] justify-center relative items-center flex-col">
-                <h2 className="text-lg text-center font-bold mb-2">
+                <h2 className="text-[14px] text-center font-bold mb-2">
                   Бажарувчи:
                 </h2>
-                <p className="font-bold text-xl text-center">
+                <p className="font-bold text-[14px] text-center mb-4">
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-2">
-                  <span className="font-bold text-xl">Манзил:</span>
+                  <span className="font-bold text-[14px]">Манзил:</span>
                   <div className="flex flex-col">
                     <p className=" text-start  text-[14px]">
                       {info && info?.manzil}
                     </p>{" "}
                     <span>
-                      <span className="font-bold">Банк реквизитлари:</span>{" "}
+                      <span className="font-bold">Банк реквизитлари:</span>
                       {info && info?.bank}
                     </span>
                     <span>
@@ -352,7 +350,7 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
                     </span>
                     <span>
                       <span className="font-bold">х/р : </span>{" "}
-                      {formatString(data?.accountnumber)}
+                      {data?.accountnumber}
                     </span>
                     <span>
                       {" "}
@@ -365,7 +363,7 @@ const Document2 = React.forwardRef(({ data, tasks,info }: any, ref: any) => {
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
-                      Раҳбари: _____________ ______________________
+                      Раҳбари: ______________________
                       <span className="font-[400]">
                         {info && info?.boshliq}
                       </span>

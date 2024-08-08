@@ -297,7 +297,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     <div className="flex flex-col">
                       <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
                       <span>
-                        <span className="font-bold">Банк реквизитлари:</span>{" "}
+                        <span className="font-bold">Банк реквизитлари:</span>
                         Марказий банк Тошкент шахар ХККМ
                       </span>
                       <span className="font-bold">Ғазначилиги х/р: </span>
@@ -320,7 +320,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[250px] left-[40px]">
+                <div className=" absolute top-[300px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">Раҳбари: ____________</h1>
                   </div>
@@ -335,11 +335,11 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-2">
-                  <span className="font-bold text-[14px]">Манзил:</span>
+                  <span className="font-bold text-[12px]">Манзил:</span>
                   <div className="flex flex-col">
                     <p className=" text-start  text-[12px]">
                       {info && info?.manzil}
-                    </p>{" "}
+                    </p>
                     <span>
                       <span className="font-bold">Банк реквизитлари:</span>
                       {info && info?.bank}
@@ -360,10 +360,10 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 </div>
 
-                <div className=" absolute top-[250px] left-[40px]">
+                <div className=" absolute top-[300px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
-                      Раҳбари: ______________________
+                      Раҳбари: ______________
                       <span className="font-[400]">
                         {info && info?.boshliq}
                       </span>

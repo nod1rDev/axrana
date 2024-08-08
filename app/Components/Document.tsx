@@ -274,8 +274,8 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   {data.clientname}
                 </p>
                 {data.clientaddress && (
-                  <div className="flex gap-2">
-                    <span className="font-bold text-[14px] text-start">
+                  <div className="flex gap-1">
+                    <span className="font-bold text-[12px] text-start">
                       Манзил:
                     </span>
                     <div className="flex flex-col">
@@ -313,7 +313,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[250px] left-[40px]">
+                <div className=" absolute top-[300px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: ________ ______________________
@@ -329,8 +329,8 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <p className="font-bold text-[14px] mb-4 text-center">
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
-                <div className="flex gap-2">
-                  <span className="font-bold text-[14px]  ">Манзил:</span>
+                <div className="flex gap-1">
+                  <span className="font-bold text-[12px]  ">Манзил:</span>
                   <div className="flex flex-col  ">
                     <p className=" text-start  text-[12px] w-[100px]  ">
                       {info && info?.manzil}

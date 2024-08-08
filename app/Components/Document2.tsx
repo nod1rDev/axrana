@@ -301,6 +301,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                         </span>
                       </span>
 
+
                       {(data?.treasuryaccount27 || data?.treasuryaccount) && (
                         <>
                           <span className="font-bold">Ғазначилиги х/р: </span>

@@ -878,6 +878,7 @@ function page() {
                       </div>
                     </div>
 
+
                     <div className="flex w-[50%] justify-center relative items-center flex-col">
                       <h2 className="text-lg text-center font-bold mb-2">
                         Бажарувчи:

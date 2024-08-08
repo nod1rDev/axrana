@@ -455,10 +455,12 @@ function page() {
                       </p>
                       {data.clientaddress && (
                         <div className="flex gap-2">
-                          <span className="font-bold text-xl">Манзил:</span>
+                          <span className="font-bold text-xl mt-[-4px]">
+                            Манзил:
+                          </span>
                           <div className="flex flex-col">
                             <p className=" text-start max-w-[400px] w-[180px] text-[16px]">{`${data.clientaddress}.  `}</p>
-                            <span>
+                            <span className="flex gap-1">
                               <span className="font-bold">
                                 Банк реквизитлари:
                               </span>
@@ -466,9 +468,9 @@ function page() {
                             </span>
                             {(data?.treasuryaccount27 ||
                               data?.treasuryaccount) && (
-                              <>
+                              <div className="flex gap-1">
                                 <span className="font-bold">
-                                  Ғазначилиги х/р
+                                  Ғазначилиги х/р: 
                                 </span>
                                 <span>
                                   {formatStringWithSpaces(
@@ -476,18 +478,18 @@ function page() {
                                       data?.treasuryaccount
                                   )}
                                 </span>
-                              </>
+                              </div>
                             )}
                             <span>
-                              <span className="font-bold">МФО:</span>
+                              <span className="font-bold">МФО: </span>
                               {data.clientmfo}.
                             </span>
                             <span>
-                              <span className="font-bold">х/р</span>
+                              <span className="font-bold">х/р: </span>
                               {formatString(data.clientaccount)}
                             </span>
                             <span>
-                              <span className="font-bold">СТИР:</span>
+                              <span className="font-bold">СТИР: </span>
                               {formatStringWithSpaces(data?.clientstr)}.
                             </span>
                           </div>
@@ -510,27 +512,29 @@ function page() {
                         ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                       </p>
                       <div className="flex gap-2">
-                        <span className="font-bold text-xl">Манзил:</span>
+                        <span className="font-bold text-xl mt-[-4px]">
+                          Манзил:
+                        </span>
                         <div className="flex flex-col">
                           <p className=" text-start w-[180px] text-[16px]">
                             {info && info?.manzil}
                           </p>
-                          <span>
+                          <span className="flex gap-1">
                             <span className="font-bold">
-                              Банк реквизитлари:
+                              Банк реквизитлари: 
                             </span>
                             {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span>
+                            <span className="font-bold">МФО: </span>
                             {info && info?.mfo}
                           </span>
                           <span>
-                            <span className="font-bold">х/р : </span>
+                            <span className="font-bold">х/р: </span>
                             {data?.accountnumber}
                           </span>
                           <span>
-                            <span className="font-bold"> СТИР: </span>
+                            <span className="font-bold">СТИР: </span>
                             {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>
@@ -842,7 +846,9 @@ function page() {
                       </p>
                       {data.clientaddress && (
                         <div className="flex gap-2">
-                          <span className="font-bold text-xl">Манзил:</span>
+                          <span className="font-bold text-xl mt-[-4px]">
+                            Манзил:
+                          </span>
                           <div className="flex flex-col">
                             <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
                             <span>Ўзбекистон Республикаси Молия вазирлиги</span>
@@ -852,18 +858,18 @@ function page() {
                               </span>
                               Марказий банк Тошкент шахар ХККМ
                             </span>
-                            <span className="font-bold">Ғазначилиги х/р</span>
+                            <span className="font-bold">Ғазначилиги х/р: </span>
                             <span>
                               {data?.treasuryaccount
                                 ? data?.treasuryaccount
                                 : data?.treasuryaccount27}
                             </span>
                             <span>
-                              <span className="font-bold">ИНН:</span>
+                              <span className="font-bold">ИНН: </span>
                               {formatString(data?.clientstr)}
                             </span>
                             <span>
-                              <span className="font-bold">МФО:</span>
+                              <span className="font-bold">МФО: </span>
                               {data?.clientmfo}
                             </span>
                           </div>
@@ -878,7 +884,6 @@ function page() {
                       </div>
                     </div>
 
-
                     <div className="flex w-[50%] justify-center relative items-center flex-col">
                       <h2 className="text-lg text-center font-bold mb-2">
                         Бажарувчи:
@@ -887,27 +892,27 @@ function page() {
                         ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                       </p>
                       <div className="flex gap-2">
-                        <span className="font-bold text-xl">Манзил:</span>
+                        <span className="font-bold text-xl mt-[-4px]">Манзил:</span>
                         <div className="flex flex-col">
                           <p className=" text-start  text-[14px]">
                             {info && info?.manzil}
                           </p>
                           <span>
                             <span className="font-bold">
-                              Банк реквизитлари:
+                              Банк реквизитлари: 
                             </span>
                             {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span>
+                            <span className="font-bold">МФО: </span>
                             {info && info?.mfo}
                           </span>
                           <span>
-                            <span className="font-bold">х/р : </span>
+                            <span className="font-bold">х/р: </span>
                             {data?.accountnumber}
                           </span>
                           <span>
-                            <span className="font-bold"> СТИР: </span>
+                            <span className="font-bold">СТИР: </span>
                             {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>

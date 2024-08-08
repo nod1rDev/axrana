@@ -50,36 +50,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
         </thead>
       )}
       <tbody>
-        {payContracts.map((item: any, index: number) => (
-          <tr key={index}>
-            <td className="border border-[#000] w-[5%] text-center">
-              {item.contractnumber}
-            </td>
-            <td className="border border-[#000] w-[15%] text-center">
-              {item.taskdate}
-            </td>
-            <td className="border border-[#000] w-[13%] text-center">
-              {item.clientname}
-            </td>
-            <td className="border border-[#000] w-[13%] text-center">
-              {item.address}
-            </td>
-            <td className="border border-[#000] w-[5%] text-center">
-              {item.workernumber}
-            </td>
-            <td className="border border-[#000] w-[10%] text-center">
-              {formatNumber(item.allmoney)}
-            </td>
-            <td className="border border-[#000] w-[8%] text-center">
-              {item.pay ? formatNumber(item.allmoney) : 0}
-            </td>
-            <td className="border border-[#000] w-[8%] text-center">
-              {!item.pay ? formatNumber(item.allmoney) : 0}
-            </td>
-          </tr>
-        ))}
-
-        {notPayContracts.map((item: any, index: number) => (
+        {data?.tasks.map((item: any, index: number) => (
           <tr key={index}>
             <td className="border border-[#000] w-[5%] text-center">
               {item.contractnumber}

@@ -291,17 +291,12 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 </p>
                 {data.clientaddress && (
                   <div className="flex gap-2">
-                    
                     <div className="flex flex-col">
-                    <span className="font-bold text-[14px] ">
-                      Манзил:
-                    </span>
+                      <span className="font-bold text-[14px] ">Манзил:</span>
                       <p className=" text-start max-w-[400px] w-[150px]  text-[14px]">{`${data.clientaddress}`}</p>
-                      <span className="max-w-[250px] ">
-                        <span className="font-bold w-[180px] ">
-                          Банк реквизитлари:
-                        </span>
-                        <span className="ml-1">
+                      <span>
+                        <span className="font-bold ">Банк реквизитлари:</span>
+                        <span  className="ml-1">
                           Марказий банк Тошкент ш. ХККМ
                         </span>
                       </span>
@@ -345,15 +340,12 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   ЎР Миллий гвардияси Тошкент шаҳри бўйича бошқармаси
                 </p>
                 <div className="flex gap-2">
-                   
                   <div className="flex flex-col">
-                  <span className="font-bold text-[14px] ">
-                    Манзил:
-                  </span>
+                    <span className="font-bold text-[14px] ">Манзил:</span>
                     <p className=" text-start w-[150px] text-[14px]">
                       {info && info?.manzil}
                     </p>
-                    <span className="max-w-[250px]">
+                    <span className="">
                       <span className="font-bold">Банк реквизитлари: </span>
                       {info && info?.bank}
                     </span>
@@ -372,7 +364,6 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     </span>
                   </div>
                 </div>
-
 
                 <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">

@@ -248,7 +248,7 @@ function Shartnoma() {
                 <MenuItem value={1}>
                   {latinToCyrillic("Shartnoma raqami")}
                 </MenuItem>
-                <MenuItem value={2}>{latinToCyrillic("Klint ismi")}</MenuItem>
+                <MenuItem value={2}>{latinToCyrillic("Mijoz nomi")}</MenuItem>
                 <MenuItem value={3}>{latinToCyrillic("Manzil")}</MenuItem>
               </Select>
             </FormControl>

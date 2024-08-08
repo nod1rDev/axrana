@@ -161,7 +161,7 @@ function page() {
                   {" " + text?.date2 + " "}
 
                   {latinToCyrillic(
-                    "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiylar xizmatchilar"
+                    "kuniga qadar omaviy tadbirlar jamoat tartibini saqlashda ishtirok etgan harbiy xizmatchilar"
                   )}
                 </div>
                 <div className="w-full text-center">

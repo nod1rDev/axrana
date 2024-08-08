@@ -407,7 +407,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           <TextField
             id="taskTime"
             label={latinToCyrillic(
-              "ommavit tadbir otkaziladigan vaqt davomiyligi"
+              "Ommaviy tadbir umumiy vaqti"
             )}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}

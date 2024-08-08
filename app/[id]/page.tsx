@@ -217,13 +217,11 @@ function page() {
                   <p>
                     <span className="font-bold">{data.clientname}</span> номидан
                     _________ асосида фаолият юритувчи
-                    <span className="font-bold">
-                      ______________________
-                    </span>{" "}
+                    <span className="font-bold">______________________</span>
                     келгусида «Буюртмачи» деб номланувчи бир томондан ва
-                    Ўзбекистон Республикаси Миллий гвардияси{" "}
+                    Ўзбекистон Республикаси Миллий гвардияси
                     {info && info?.ijrochi} бўйича бошқармаси номидан шартнома
-                    асосида фаолият юритувчи Бошқарма бошлиғи{" "}
+                    асосида фаолият юритувчи Бошқарма бошлиғи
                     {info && info?.boshliq} келгусида «Бажарувчи» деб номланувчи
                     иккинчи томондан биргаликда эса томонлар ўртасида Ўзбекистон
                     Республикаси Вазирлар Маҳкамасининг 2014 йил 29 июлдаги
@@ -238,8 +236,8 @@ function page() {
                     1. Шартнома предмети
                   </h2>
                   <p className="mb-0">
-                    1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»{" "}
-                    <span className="font-bold">{data.timelimit}</span> гача{" "}
+                    1.1 «Буюртмачи»нинг топшириғига мувофиқ «Бажарувчи»
+                    <span className="font-bold">{data.timelimit}</span> гача
                     <span className="font-bold"> {data.address} </span>да бўлиб
                     ўтадиган тадбирлар бўйича ўтказиладиган оммавий тадбир
                     вақтида фуқаролар хавфсизлигини ва жамоат тартибини сақлаш
@@ -264,7 +262,7 @@ function page() {
                     харажатлари асосида жами миқдори
                     <span className="font-bold ">
                       {" " + formatNumber(+data.allmoney)} сўм
-                    </span>{" "}
+                    </span>
                     деб белгиланди.
                   </p>
                 </section>
@@ -463,7 +461,7 @@ function page() {
                             <span>
                               <span className="font-bold">
                                 Банк реквизитлари:
-                              </span>{" "}
+                              </span>
                               Марказий банк Тошкент ш. ХККМ
                             </span>
                             {(data?.treasuryaccount27 ||
@@ -481,17 +479,15 @@ function page() {
                               </>
                             )}
                             <span>
-                              {" "}
-                              <span className="font-bold">МФО:</span>{" "}
+                              <span className="font-bold">МФО:</span>
                               {data.clientmfo}.
                             </span>
                             <span>
-                              {" "}
-                              <span className="font-bold">х/р</span>{" "}
+                              <span className="font-bold">х/р</span>
                               {formatString(data.clientaccount)}
                             </span>
                             <span>
-                              <span className="font-bold">СТИР:</span>{" "}
+                              <span className="font-bold">СТИР:</span>
                               {formatStringWithSpaces(data?.clientstr)}.
                             </span>
                           </div>
@@ -518,24 +514,23 @@ function page() {
                         <div className="flex flex-col">
                           <p className=" text-start  text-[14px]">
                             {info && info?.manzil}
-                          </p>{" "}
+                          </p>
                           <span>
                             <span className="font-bold">
                               Банк реквизитлари:
-                            </span>{" "}
+                            </span>
                             {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span>{" "}
+                            <span className="font-bold">МФО:</span>
                             {info && info?.mfo}
                           </span>
                           <span>
-                            <span className="font-bold">х/р : </span>{" "}
+                            <span className="font-bold">х/р : </span>
                             {data?.accountnumber}
                           </span>
                           <span>
-                            {" "}
-                            <span className="font-bold"> СТИР: </span>{" "}
+                            <span className="font-bold"> СТИР: </span>
                             {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>
@@ -595,7 +590,6 @@ function page() {
                   </p>
                 </div>
                 <div className="mb-4 flex  justify-between">
-                  {" "}
                   <p className="font-bold">{data.contractdate}</p>
                   <p className="font-bold">{info && info?.ijrochi}</p>
                 </div>
@@ -603,13 +597,11 @@ function page() {
                   <p>
                     <span className="font-bold">{data.clientname}</span> номидан
                     _________ асосида фаолият юритувчи
-                    <span className="font-bold">
-                      ______________________
-                    </span>{" "}
+                    <span className="font-bold">______________________</span>
                     келгусида «Буюртмачи» деб номланувчи бир томондан ва
-                    Ўзбекистон Республикаси Миллий гвардияси{" "}
+                    Ўзбекистон Республикаси Миллий гвардияси
                     {info && info?.ijrochi} бўйича бошқармаси номидан шартнома
-                    асосида фаолият юритувчи Бошқарма бошлиғи{" "}
+                    асосида фаолият юритувчи Бошқарма бошлиғи
                     {info && info?.boshliq} келгусида «Бажарувчи» деб номланувчи
                     иккинчи томондан биргаликда эса томонлар ўртасида Ўзбекистон
                     Республикаси Вазирлар Маҳкамасининг 2014 йил 29 июлдаги
@@ -628,7 +620,7 @@ function page() {
                     <span className="font-bold">{data.timelimit}</span>гача
                     <span className="font-bold">
                       {" " + data.address + "да"}
-                    </span>{" "}
+                    </span>
                     бўлиб ўтадиган тадбирлар бўйича ўтказиладиган оммавий тадбир
                     вақтида фуқаролар хавфсизлигини ва жамоат тартибини сақлаш
                     бўйича мажбуриятни ўз зиммасига олади.
@@ -652,7 +644,7 @@ function page() {
                     харажатлари асосида жами миқдори
                     <span className="font-bold ">
                       {" " + formatNumber(+data.allmoney)} сўм
-                    </span>{" "}
+                    </span>
                     деб белгиланди.
                   </p>
                 </section>
@@ -680,7 +672,7 @@ function page() {
                     томонидан рўйхатга олинган кундан 2 кун ичида «Буюртмачи»
                     тўловни <span className="font-bold">30%</span> амалга ошириш
                     мажбуриятини олади ва «Бажарувчи» томонидан шартнома
-                    талаблари тўлиқ бажарилгандан сўнг қолган{" "}
+                    талаблари тўлиқ бажарилгандан сўнг қолган
                     <span className="font-bold">70%</span> миқдори томонлар
                     имзолаган хисоб-фактурага асосан амалга оширилади
                   </p>
@@ -857,7 +849,7 @@ function page() {
                             <span>
                               <span className="font-bold">
                                 Банк реквизитлари:
-                              </span>{" "}
+                              </span>
                               Марказий банк Тошкент шахар ХККМ
                             </span>
                             <span className="font-bold">Ғазначилиги х/р</span>
@@ -867,13 +859,11 @@ function page() {
                                 : data?.treasuryaccount27}
                             </span>
                             <span>
-                              {" "}
-                              <span className="font-bold">ИНН:</span>{" "}
+                              <span className="font-bold">ИНН:</span>
                               {formatString(data?.clientstr)}
                             </span>
                             <span>
-                              {" "}
-                              <span className="font-bold">МФО:</span>{" "}
+                              <span className="font-bold">МФО:</span>
                               {data?.clientmfo}
                             </span>
                           </div>
@@ -900,24 +890,23 @@ function page() {
                         <div className="flex flex-col">
                           <p className=" text-start  text-[14px]">
                             {info && info?.manzil}
-                          </p>{" "}
+                          </p>
                           <span>
                             <span className="font-bold">
                               Банк реквизитлари:
-                            </span>{" "}
+                            </span>
                             {info && info?.bank}
                           </span>
                           <span>
-                            <span className="font-bold">МФО:</span>{" "}
+                            <span className="font-bold">МФО:</span>
                             {info && info?.mfo}
                           </span>
                           <span>
-                            <span className="font-bold">х/р : </span>{" "}
+                            <span className="font-bold">х/р : </span>
                             {data?.accountnumber}
                           </span>
                           <span>
-                            {" "}
-                            <span className="font-bold"> СТИР: </span>{" "}
+                            <span className="font-bold"> СТИР: </span>
                             {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>

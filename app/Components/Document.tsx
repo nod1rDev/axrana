@@ -22,7 +22,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
             </p>
           </div>
           <div className="mb-4 flex  justify-between">
-            <p className="font-bold text-[16px]">{`<<${data.contractdate}>>`}</p>
+            <p className="font-bold text-[16px]">{`${data.contractdate}`}</p>
             <p className="font-bold text-[14px]">{info && info?.ijrochi}</p>
           </div>
           <section className="mb-4">

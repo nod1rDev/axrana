@@ -457,7 +457,7 @@ function page() {
                         <div className="flex gap-2">
                           <span className="font-bold text-xl">Манзил:</span>
                           <div className="flex flex-col">
-                            <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}.  `}</p>
+                            <p className=" text-start max-w-[400px] w-[180px] text-[16px]">{`${data.clientaddress}.  `}</p>
                             <span>
                               <span className="font-bold">
                                 Банк реквизитлари:
@@ -493,7 +493,7 @@ function page() {
                           </div>
                         </div>
                       )}
-                      <div className=" absolute top-[250px] left-[40px]">
+                      <div className=" absolute top-[250px] left-[150px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
                             Раҳбари: ____________ ________________________
@@ -512,7 +512,7 @@ function page() {
                       <div className="flex gap-2">
                         <span className="font-bold text-xl">Манзил:</span>
                         <div className="flex flex-col">
-                          <p className=" text-start  text-[14px]">
+                          <p className=" text-start w-[180px] text-[16px]">
                             {info && info?.manzil}
                           </p>
                           <span>
@@ -536,7 +536,7 @@ function page() {
                         </div>
                       </div>
 
-                      <div className=" absolute top-[250px] left-[40px]">
+                      <div className=" absolute top-[250px] left-[200px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
                             Раҳбари: ______________________
@@ -869,7 +869,7 @@ function page() {
                           </div>
                         </div>
                       )}
-                      <div className=" absolute top-[250px] left-[40px]">
+                      <div className=" absolute top-[250px] left-[150px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
                             Раҳбари: _________ _______________________
@@ -912,7 +912,7 @@ function page() {
                         </div>
                       </div>
 
-                      <div className=" absolute top-[250px] left-[40px]">
+                      <div className=" absolute top-[250px] left-[200px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
                             Раҳбари: _____________ ______________________

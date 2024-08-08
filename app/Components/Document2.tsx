@@ -296,7 +296,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     </span>
                     <div className="flex flex-col">
                       <p className=" text-start max-w-[400px] w-[150px]  text-[14px]">{`${data.clientaddress}`}</p>
-                      <span>
+                      <span className="w-[180px]">
                         <span className="font-bold">Банк реквизитлари:</span>
                         Марказий банк Тошкент шахар ХККМ
                       </span>
@@ -337,10 +337,10 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <div className="flex gap-2">
                   <span className="font-bold text-[12px]">Манзил:</span>
                   <div className="flex flex-col">
-                    <p className=" text-start  text-[12px]">
+                    <p className=" text-start w-[150px] text-[14px]">
                       {info && info?.manzil}
                     </p>
-                    <span>
+                    <span className="w-[180px]">
                       <span className="font-bold">Банк реквизитлари:</span>
                       {info && info?.bank}
                     </span>

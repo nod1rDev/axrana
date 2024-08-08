@@ -79,19 +79,6 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
           </tr>
         ))}
 
-        
-        <tr>
-          <td
-            colSpan={8}
-            className="border border-[#000] text-right pr-2 font-bold"
-          >
-            {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
-              " " +
-              formatNumber(data.summa) +
-              " " +
-              latinToCyrillic("so'm")}
-          </td>
-        </tr>
         {notPayContracts.map((item: any, index: number) => (
           <tr key={index}>
             <td className="border border-[#000] w-[5%] text-center">
@@ -121,17 +108,30 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
           </tr>
         ))}
 
-      
         <tr>
           <td
-            colSpan={8}
-            className="border border-[#000] text-right pr-2 font-bold"
+            colSpan={5}
+            className="border border-[#000] text-center pr-2 font-bold"
           >
-            {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +
-              " " +
-              formatNumber(data.notPaySumma) +
-              " " +
-              latinToCyrillic("so'm")}
+            {data.batalyonName}
+          </td>
+          <td
+            colSpan={1}
+            className="border border-[#000] text-center pr-2 font-bold"
+          >
+            {data.allMoney}
+          </td>
+          <td
+            colSpan={1}
+            className="border border-[#000] text-center pr-2 font-bold"
+          >
+            {data.summa}
+          </td>
+          <td
+            colSpan={1}
+            className="border border-[#000] text-center pr-2 font-bold"
+          >
+            {data.notPaySumma}
           </td>
         </tr>
       </tbody>

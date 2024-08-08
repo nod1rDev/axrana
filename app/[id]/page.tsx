@@ -466,14 +466,20 @@ function page() {
                               </span>{" "}
                               Марказий банк Тошкент ш. ХККМ
                             </span>
-                            <span className="font-bold">Ғазначилиги х/р</span>
-                            <span>
-                              {
-                                data?.treasuryaccount
-                                  ? data?.treasuryaccount
-                                  : data?.treasuryaccount27
-                            }
-                            </span>
+                            {(data?.treasuryaccount27 ||
+                              data?.treasuryaccount) && (
+                              <>
+                                <span className="font-bold">
+                                  Ғазначилиги х/р
+                                </span>
+                                <span>
+                                  {formatStringWithSpaces(
+                                    data?.treasuryaccount27 ||
+                                      data?.treasuryaccount
+                                  )}
+                                </span>
+                              </>
+                            )}
                             <span>
                               {" "}
                               <span className="font-bold">МФО:</span>{" "}
@@ -538,7 +544,7 @@ function page() {
                       <div className=" absolute top-[250px] left-[40px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
-                            Раҳбари:  ______________________ 
+                            Раҳбари: ______________________
                             <span className="font-[400]">
                               {info && info?.boshliq}
                             </span>
@@ -856,11 +862,9 @@ function page() {
                             </span>
                             <span className="font-bold">Ғазначилиги х/р</span>
                             <span>
-                              {
-                                data?.treasuryaccount
-                                  ? data?.treasuryaccount
-                                  : data?.treasuryaccount27
-                            }
+                              {data?.treasuryaccount
+                                ? data?.treasuryaccount
+                                : data?.treasuryaccount27}
                             </span>
                             <span>
                               {" "}

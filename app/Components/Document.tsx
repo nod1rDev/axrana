@@ -284,12 +284,17 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                         <span className="font-bold">Банк реквизитлари:</span>
                         Марказий банк Тошкент ш. ХККМ
                       </span>
-                      <span className="font-bold">Ғазначилиги х/р</span>
-                      <span>
-                        {data?.treasuryaccount
-                          ? data?.treasuryaccount
-                          : data?.treasuryaccount27}
-                      </span>
+                      {(data?.treasuryaccount27 || data?.treasuryaccount) && (
+                        <>
+                          <span className="font-bold">Ғазначилиги х/р</span>
+                          <span>
+                            {formatStringWithSpaces(
+                              data?.treasuryaccount27 || data?.treasuryaccount
+                            )}
+                          </span>
+                        </>
+                      )}
+
                       <span>
                         {" "}
                         <span className="font-bold">МФО:</span> {data.clientmfo}

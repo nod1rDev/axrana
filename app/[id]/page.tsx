@@ -26,7 +26,7 @@ import {
 } from "../Api/Apis";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import Document2 from "../Components/Document2";
-import { formatString } from "../Utils";
+import { formatString, formatStringWithSpaces } from "../Utils";
 function page() {
   const { id } = useParams();
   const [data, setData] = useState<any>([]);
@@ -486,7 +486,7 @@ function page() {
                             </span>
                             <span>
                               <span className="font-bold">СТИР:</span>{" "}
-                              {formatString(data?.clientstr)}.
+                              {formatStringWithSpaces(data?.clientstr)}.
                             </span>
                           </div>
                         </div>
@@ -530,7 +530,7 @@ function page() {
                           <span>
                             {" "}
                             <span className="font-bold"> СТИР: </span>{" "}
-                            {info && formatString(info?.str)}
+                            {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>
                       </div>
@@ -538,7 +538,7 @@ function page() {
                       <div className=" absolute top-[250px] left-[40px]">
                         <div className="flex flex-col">
                           <h1 className="font-bold ">
-                            Раҳбари: _____________ ______________________
+                            Раҳбари:  ______________________ 
                             <span className="font-[400]">
                               {info && info?.boshliq}
                             </span>
@@ -914,7 +914,7 @@ function page() {
                           <span>
                             {" "}
                             <span className="font-bold"> СТИР: </span>{" "}
-                            {info && formatString(info?.str)}
+                            {info && formatStringWithSpaces(info?.str)}
                           </span>
                         </div>
                       </div>

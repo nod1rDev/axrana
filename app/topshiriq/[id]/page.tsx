@@ -16,19 +16,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import {
-  getAllTasks,
-  getAllWorkers,
-  getAllWorkers2,
-  getByTask,
-  pushWorkers,
-} from "@/app/Api/Apis";
+import { getAllWorkers2, getByTask, pushWorkers } from "@/app/Api/Apis";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TopshiriqCard from "../Components/TopshiriqCard";
 import { alertChange } from "@/app/Redux/ShaxsiySlice";
-import { setModalN1 } from "@/app/Redux/CoctavsSlice";
-import ModalN1 from "./Components/pastki";
-import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 import { changeReload } from "@/app/Redux/AuthSlice";
 import { ListItemText } from "@mui/material";
 
@@ -45,19 +36,6 @@ interface Task {
   inprogress: boolean;
 }
 
-// Debounce function
-const debounce = (func: Function, delay: number) => {
-  let timeoutId: NodeJS.Timeout;
-  return (...args: any) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-};
-
 const Page: React.FC = () => {
   const { id } = useParams() as { id: string };
   const [data, setData] = useState<Task | null>(null);
@@ -69,24 +47,21 @@ const Page: React.FC = () => {
     tasktime: "",
     taskdate: "",
   });
+
   const getData = async () => {
     const res = await getByTask(JWT, id);
-
     setData(res.data);
   };
 
   const getWorkers = async () => {
     const res = await getAllWorkers2(JWT);
-    console.log(res);
-
-    const filData = res.data.map((e: any, i: number) => ({
+    const filData = res.data.map((e: any) => ({
       FIO: e.fio,
       selected: false,
       tasktime: "",
       taskdate: "",
       _id: e.id,
     }));
-
     setWorkers(filData);
     setFilteredWorkers(filData);
   };
@@ -143,6 +118,7 @@ const Page: React.FC = () => {
       );
     }
   };
+
   const handleChageInfoData = (e: any) => {
     setInfoData({ ...infoData, [e.target.name]: e.target.value });
   };
@@ -167,6 +143,42 @@ const Page: React.FC = () => {
       );
     }
   };
+
+  function normalizeText(input: string): string {
+    const latinized = checkName(input) ? input : latinToCyrillic(input);
+    console.log(latinized);
+    
+    const normalized = latinized
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+    return normalized.replace(/[\W_]+/g, "");
+  }
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const filtered = workers.filter((worker) => {
+      const normalizedWorker = normalizeText(worker.FIO);
+      const normalizedSearch = normalizeText(search);
+    
+
+      return normalizedWorker.includes(normalizedSearch);
+    });
+
+    setFilteredWorkers(filtered);
+  };
+
+  const clearSearch = () => {
+    setSearch("");
+    setFilteredWorkers(workers);
+  };
+
+  const memoizedFilteredWorkers = useMemo(
+    () => filteredWorkers,
+    [filteredWorkers]
+  );
+
   const cyrillicAlphabet = [
     "А",
     "Б",
@@ -236,9 +248,7 @@ const Page: React.FC = () => {
     "я",
   ];
 
-  const isLatin = (char: string): boolean => {
-    return !cyrillicAlphabet.includes(char);
-  };
+  const isLatin = (char: string): boolean => !cyrillicAlphabet.includes(char);
 
   const checkName = (name: string): boolean => {
     for (let i = 0; i < name.length; i++) {
@@ -248,38 +258,6 @@ const Page: React.FC = () => {
     }
     return true;
   };
-  function normalizeText(input: string): string {
-    
-    const latinized = checkName(input) ? input : latinToCyrillic(input);
-    const normalized = latinized
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .trim();
-    return normalized.replace(/[\W_]+/g, "");
-  }
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const filtered = workers.filter((worker) => {
-      const normalizedWorker = normalizeText(worker.FIO);
-      const normalizedSearch = normalizeText(search);
-
-      return normalizedWorker.includes(normalizedSearch);
-    });
-
-    setFilteredWorkers(filtered);
-  };
-
-  const clearSearch = () => {
-    setSearch("");
-    setFilteredWorkers(workers);
-  };
-
-  const memoizedFilteredWorkers = useMemo(
-    () => filteredWorkers,
-    [filteredWorkers]
-  );
 
   return (
     <div className="w-[80%] mt-5 flex-col gap-6 mx-auto">
@@ -403,7 +381,7 @@ const Page: React.FC = () => {
               }}
             >
               <div className="flex flex-col gap-4">
-                {filteredWorkers.map((value: Worker) => {
+                {memoizedFilteredWorkers.map((value: Worker) => {
                   const labelId = `checkbox-list-label-${value._id}`;
                   return (
                     <ListItem key={value._id} disablePadding>

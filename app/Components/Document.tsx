@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
-import { formatString } from "../Utils";
+import { formatString, formatStringWithSpaces } from "../Utils";
 const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
   function formatNumber(value: number): string {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -302,7 +302,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                       </span>
                       <span>
                         <span className="font-bold">СТИР:</span>{" "}
-                        {formatString(data?.clientstr)}.
+                        {formatStringWithSpaces(data?.clientstr)}.
                       </span>
                     </div>
                   </div>
@@ -345,7 +345,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     <span>
                       {" "}
                       <span className="font-bold"> СТИР: </span>{" "}
-                      {info && formatString(info?.str)}
+                      {info && formatStringWithSpaces(info?.str)}
                     </span>
                   </div>
                 </div>
@@ -353,7 +353,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 <div className=" absolute top-[250px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
-                      Раҳбари: __________ ___________________
+                      Раҳбари: _________________ 
                       <span className="font-[400]">
                         {info && info?.boshliq}
                       </span>

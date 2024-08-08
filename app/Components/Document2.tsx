@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import BudgetTable from "../[id]/SingleTab";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
-import { formatString } from "../Utils";
+import { formatString, formatStringWithSpaces } from "../Utils";
 const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
   const getMonthNameInCyrillic = (month: number): string => {
     const months = [
@@ -355,7 +355,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                     <span>
                       {" "}
                       <span className="font-bold"> СТИР: </span>{" "}
-                      {info && formatString(info?.str)}
+                      {info && formatStringWithSpaces(info?.str)}
                     </span>
                   </div>
                 </div>

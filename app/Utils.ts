@@ -96,3 +96,16 @@ export function formatNumber(value: any): any {
     return 0;
   }
 }
+export function formatStringWithSpaces(input: string | number): string {
+  const str = input.toString();
+  let result = '';
+
+  for (let i = 0; i < str.length; i++) {
+    result += str[i];
+    if ((i + 1) % 3 === 0 && i !== str.length - 1) {
+      result += ' ';
+    }
+  }
+
+  return result;
+}

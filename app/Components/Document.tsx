@@ -275,16 +275,11 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 </p>
                 {data.clientaddress && (
                   <div className="flex gap-1">
-                    <div className="flex flex-col">
-                    
-                      <span className="font-bold text-[14px] ">
-                        Манзил:
-                      </span>
-                      <p className=" text-start max-w-[400px] w-[150px] text-[14px]">{`${data.clientaddress}.  `}</p>
+                    <div className="flex flex-col w-[250px]">
+                      <span className="font-bold text-[14px] ">Манзил:</span>
+                      <p className=" text-start  text-[14px]">{`${data.clientaddress}.  `}</p>
                       <span className="w-[180px] ">
-                        <span className="font-bold w-[180px] ">
-                          Банк реквизитлари:
-                        </span>
+                        <span className="font-bold  ">Банк реквизитлари:</span>
                         <span className="ml-1">
                           Марказий банк Тошкент ш. ХККМ
                         </span>
@@ -318,7 +313,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: ________ ______________________
@@ -336,7 +331,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                 </p>
                 <div className="flex gap-1">
                   <div className="flex flex-col  ">
-                    <span className="max-w-[190px] flex flex-col gap-1 ">
+                    <span className="max-w-[250px] flex flex-col gap-1 ">
                       <span className="font-bold text-[14px] ">Манзил:</span>
                       <span className=" text-[14px]">
                         {info && info?.manzil}
@@ -362,7 +357,7 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 </div>
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: _________________

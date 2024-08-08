@@ -330,7 +330,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 )}
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">Раҳбари: ____________</h1>
                   </div>
@@ -373,7 +373,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                   </div>
                 </div>
 
-                <div className=" absolute top-[300px] left-[40px]">
+                <div className=" absolute top-[350px] left-[40px]">
                   <div className="flex flex-col">
                     <h1 className="font-bold ">
                       Раҳбари: ______________

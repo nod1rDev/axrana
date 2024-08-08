@@ -25,20 +25,26 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <th className="border border-[#000] w-[5%] font-[500] text-center">
               {latinToCyrillic("Shartnoma Raqami")}
             </th>
-            <th className="border border-[#000] font-[500] w-[15%] text-center">
+            <th className="border border-[#000] font-[500] w-[20%] text-center">
               {latinToCyrillic("Tadbir Sanasi")}
             </th>
-            <th className="border border-[#000] font-[500] w-[20%] text-center">
+            <th className="border border-[#000] font-[500] w-[13%] text-center">
               {latinToCyrillic("Buyurtmachi ismi")}
             </th>
-            <th className="border border-[#000] font-[500] w-[20%] text-center">
+            <th className="border border-[#000] font-[500] w-[13%] text-center">
               {latinToCyrillic("Manzil")}
             </th>
             <th className="border border-[#000] font-[500] w-[5%] text-center">
               {latinToCyrillic("Xodimlar soni")}
             </th>
-            <th className="border border-[#000] font-[500] text-center w-[15%]">
+            <th className="border border-[#000] font-[500] text-center w-[10%]">
               {latinToCyrillic("Jami summa")}
+            </th>
+            <th className="border border-[#000] font-[500] text-center w-[8%]">
+              {latinToCyrillic("Naqd")}
+            </th>
+            <th className="border border-[#000] font-[500] text-center w-[8%]">
+              {latinToCyrillic("Kridit")}
             </th>
           </tr>
         </thead>
@@ -52,23 +58,31 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[15%] text-center">
               {item.taskdate}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[13%] text-center">
               {item.clientname}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[13%] text-center">
               {item.address}
             </td>
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
             </td>
-            <td className="border border-[#000] text-center w-[15%]">
+            <td className="border border-[#000] w-[10%] text-center">
               {formatNumber(item.allmoney)}
+            </td>
+            <td className="border border-[#000] w-[8%] text-center">
+              {item.pay ? formatNumber(item.allmoney) : 0}
+            </td>
+            <td className="border border-[#000] w-[8%] text-center">
+              {!item.pay ? formatNumber(item.allmoney) : 0}
             </td>
           </tr>
         ))}
+
+        
         <tr>
           <td
-            colSpan={6}
+            colSpan={8}
             className="border border-[#000] text-right pr-2 font-bold"
           >
             {latinToCyrillic("to‘lov qilingan shartnomalar jami summasi :") +
@@ -86,23 +100,31 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[15%] text-center">
               {item.taskdate}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[13%] text-center">
               {item.clientname}
             </td>
-            <td className="border border-[#000] w-[20%] text-center">
+            <td className="border border-[#000] w-[13%] text-center">
               {item.address}
             </td>
             <td className="border border-[#000] w-[5%] text-center">
               {item.workernumber}
             </td>
-            <td className="border border-[#000] text-center w-[15%]">
+            <td className="border border-[#000] w-[10%] text-center">
               {formatNumber(item.allmoney)}
+            </td>
+            <td className="border border-[#000] w-[8%] text-center">
+              {item.pay ? formatNumber(item.allmoney) : 0}
+            </td>
+            <td className="border border-[#000] w-[8%] text-center">
+              {!item.pay ? formatNumber(item.allmoney) : 0}
             </td>
           </tr>
         ))}
+
+      
         <tr>
           <td
-            colSpan={6}
+            colSpan={8}
             className="border border-[#000] text-right pr-2 font-bold"
           >
             {latinToCyrillic("to‘lov qilinmagan shartnomalar jami summasi :") +

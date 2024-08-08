@@ -295,7 +295,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                       Манзил:
                     </span>
                     <div className="flex flex-col">
-                      <p className=" text-start max-w-[400px]  text-[14px]">{`${data.clientaddress}`}</p>
+                      <p className=" text-start max-w-[400px] w-[150px]  text-[14px]">{`${data.clientaddress}`}</p>
                       <span>
                         <span className="font-bold">Банк реквизитлари:</span>
                         Марказий банк Тошкент шахар ХККМ

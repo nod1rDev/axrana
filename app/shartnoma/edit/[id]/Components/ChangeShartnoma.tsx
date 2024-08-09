@@ -43,7 +43,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const router = useRouter();
   const dispatch = useDispatch();
   function convertDate(dateString: string): string {
-    // Oylik nomlar ro'yxati
+    // Mapping of month names from Cyrillic to numeric format
     const months: { [key: string]: string } = {
       январь: "01",
       февраль: "02",
@@ -58,25 +58,26 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       ноябрь: "11",
       декабрь: "12",
     };
-
-    // Sanani bo'laklarga ajratish
-    const datePattern = /^(\d{2})-(\D+)\s(\d{4})-йил$/;
+  
+    // Regular expression to match the input format
+    const datePattern = /^(\d{4})-йил\s+(\d{1,2})-(\D+)$/;
+  
     const match = dateString.match(datePattern);
-
+  
     if (!match) {
       throw new Error("Invalid date format");
     }
-
-    const [, day, month, year] = match;
-
-    // Oyni raqamli formatga o'zgartirish
-    const monthNumber = months[month.trim()];
-
+  
+    const [_, year, day, month] = match;
+  
+    // Convert the month name to its numeric equivalent
+    const monthNumber = months[month.trim().toLowerCase()];
+  
     if (!monthNumber) {
       throw new Error("Invalid month name");
     }
-
-    // Yangi formatga o'tkazish
+  
+    // Return the date in the format "dd.mm.yyyy"
     return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
   }
   useEffect(() => {
@@ -406,9 +407,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           />
           <TextField
             id="taskTime"
-            label={latinToCyrillic(
-              "Ommaviy tadbir umumiy vaqti"
-            )}
+            label={latinToCyrillic("Ommaviy tadbir umumiy vaqti")}
             sx={{ width: "30%" }}
             onChange={handleChangeValue}
             variant="outlined"

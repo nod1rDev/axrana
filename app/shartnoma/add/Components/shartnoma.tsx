@@ -113,7 +113,7 @@ function Shartnoma() {
         </Button>
       </div>
       <div className="flex w-full justify-between">
-        <div className="flex gap-4 items-center">
+        {/* <div className="flex gap-4 items-center">
           <Button
             component="label"
             role={undefined}
@@ -138,7 +138,7 @@ function Shartnoma() {
               {latinToCyrillic("Fileni Yuklash")}
             </Button>
           )}
-        </div>
+        </div> */}
       </div>
       <CreateShartnoma />
     </div>

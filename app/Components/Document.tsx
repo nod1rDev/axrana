@@ -253,8 +253,8 @@ const Documenttt = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
               томонидан рўйхатга олинган кундан кучга киради ва{" "}
               {data.validityperiod
                 ? data.validityperiod
-                : "______йилнинг _______кунигача"}{" "}
-              амалда бўлади.
+                : "______йилнинг _______ "}{" "}
+              кунигача амалда бўлади.
             </p>
             <p className="mb-0">
               <span className="font-bold">7.5</span> Шартнома муддатидан олдин

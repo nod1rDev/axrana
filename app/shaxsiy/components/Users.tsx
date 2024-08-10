@@ -259,10 +259,10 @@ export default function Users() {
                 label={latinToCyrillic("Status")}
                 onChange={handleChange}
               >
-                <MenuItem value={1}>{latinToCyrillic("Hamkorlik birgada")}</MenuItem>
-                <MenuItem value={2}>
-                  {latinToCyrillic("Batay'on")}
+                <MenuItem value={1}>
+                  {latinToCyrillic("Hamkorlik birgada")}
                 </MenuItem>
+                <MenuItem value={2}>{latinToCyrillic("Batay'on")}</MenuItem>
               </Select>
             </FormControl>
             <Button
@@ -307,30 +307,14 @@ export default function Users() {
                               <>
                                 <IconButton
                                   onClick={() => {
-                                    if (row.FoydalanuvchiNomi !== "98162") {
-                                      if (row.FoydalanuvchiNomi !== "98157") {
-                                        if (
-                                          row.FoydalanuvchiNomi !==
-                                          "Toshkent Shahar IIBB"
-                                        ) {
-                                          if (
-                                            row.FoydalanuvchiNomi !==
-                                            "Тошкент шаҳар МГ"
-                                          )
-                                            dispatch(
-                                              setUserModal({
-                                                type: 1,
-                                                open: true,
-                                                id: row.id,
-                                                name: row.FoydalanuvchiNomi,
-                                              })
-                                            );
-                                        } else {
-                                        }
-                                      } else {
-                                      }
-                                    } else {
-                                    }
+                                    dispatch(
+                                      setUserModal({
+                                        type: 1,
+                                        open: true,
+                                        id: row.id,
+                                        name: row.FoydalanuvchiNomi,
+                                      })
+                                    );
                                   }}
                                   aria-label="delete"
                                   size="medium"

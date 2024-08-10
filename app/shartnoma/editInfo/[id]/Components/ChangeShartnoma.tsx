@@ -42,42 +42,46 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
   const router = useRouter();
   const dispatch = useDispatch();
   function convertDate(dateString: string): string {
-    // Mapping of month names from Cyrillic to numeric format
-    const months: { [key: string]: string } = {
-      январь: "01",
-      февраль: "02",
-      март: "03",
-      апрель: "04",
-      май: "05",
-      июнь: "06",
-      июль: "07",
-      август: "08",
-      сентябрь: "09",
-      октябрь: "10",
-      ноябрь: "11",
-      декабрь: "12",
-    };
+    if (dateString?.length > 0) {
+      // Mapping of month names from Cyrillic to numeric format
+      const months: { [key: string]: string } = {
+        январь: "01",
+        февраль: "02",
+        март: "03",
+        апрель: "04",
+        май: "05",
+        июнь: "06",
+        июль: "07",
+        август: "08",
+        сентябрь: "09",
+        октябрь: "10",
+        ноябрь: "11",
+        декабрь: "12",
+      };
 
-    // Regular expression to match the input format
-    const datePattern = /^(\d{4})-йил\s+(\d{1,2})-(\D+)$/;
+      // Regular expression to match the input format
+      const datePattern = /^(\d{4})-йил\s+(\d{1,2})-(\D+)$/;
 
-    const match = dateString.match(datePattern);
+      const match = dateString.match(datePattern);
 
-    if (!match) {
-      throw new Error("Invalid date format");
+      if (!match) {
+        throw new Error("Invalid date format");
+      }
+
+      const [_, year, day, month] = match;
+
+      // Convert the month name to its numeric equivalent
+      const monthNumber = months[month.trim().toLowerCase()];
+
+      if (!monthNumber) {
+        throw new Error("Invalid month name");
+      }
+
+      // Return the date in the format "dd.mm.yyyy"
+      return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
+    } else {
+      return dateString;
     }
-
-    const [_, year, day, month] = match;
-
-    // Convert the month name to its numeric equivalent
-    const monthNumber = months[month.trim().toLowerCase()];
-
-    if (!monthNumber) {
-      throw new Error("Invalid month name");
-    }
-
-    // Return the date in the format "dd.mm.yyyy"
-    return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
   }
 
   useEffect(() => {
@@ -98,7 +102,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        validityperiod: data.validityperiod,
+        validityperiod: convertDate(data.validityperiod),
         accountNumber: removeSpaces(data.accountnumber),
       };
 

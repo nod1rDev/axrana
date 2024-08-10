@@ -266,9 +266,11 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
               <span className="font-bold">7.4</span> Мазкур шартнома икки
               нусхада тузилиб, томонлар имзолаган кундан, бюджет ҳисобидан
               молиялаштириладиганлар учун шартнома ғазначилик бўлимлари
-              томонидан рўйхатга олинган кундан кучга киради ва  {data.validityperiod
-                      ? data.validityperiod
-                      : "______йилнинг _______кунигача"}  амалда бўлади.
+              томонидан рўйхатга олинган кундан кучга киради ва{" "}
+              {data.validityperiod
+                ? data.validityperiod
+                : "______йилнинг _______ "}{" "}
+              кунигача амалда бўлади.
             </p>
             <p className="mb-0">
               <span className="font-bold">7.5</span> Шартнома муддатидан олдин
@@ -297,11 +299,10 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
                       <p className=" text-start max-w-[400px] w-[150px]  text-[14px]">{`${data.clientaddress}`}</p>
                       <span>
                         <span className="font-bold ">Банк реквизитлари:</span>
-                        <span  className="ml-1">
+                        <span className="ml-1">
                           Марказий банк Тошкент ш. ХККМ
                         </span>
                       </span>
-
 
                       {(data?.treasuryaccount27 || data?.treasuryaccount) && (
                         <>

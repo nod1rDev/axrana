@@ -38,7 +38,7 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
               {latinToCyrillic("Xodimlar soni")}
             </th>
             <th className="border border-[#000] font-[500] text-center w-[10%]">
-              {latinToCyrillic("Jami summa")}
+              {latinToCyrillic("Shartnoma summasi")}
             </th>
             <th className="border border-[#000] font-[500] text-center w-[8%]">
               {latinToCyrillic("D-T")}

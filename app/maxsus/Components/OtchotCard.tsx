@@ -17,7 +17,8 @@ function OtchotCard({ data }: { data: any }) {
         {data && data.commandnumber}
       </span>
       <span>{data && data.commanddate}</span>
-
+      <span>{data && data.date1}</span>
+      <span>{data && data.date2}</span>
       <div>
         <KeyboardArrowRightIcon fontSize="large" color="info" />
       </div>

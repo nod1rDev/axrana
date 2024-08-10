@@ -58,25 +58,25 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
       ноябрь: "11",
       декабрь: "12",
     };
-  
+
     // Regular expression to match the input format
     const datePattern = /^(\d{4})-йил\s+(\d{1,2})-(\D+)$/;
-  
+
     const match = dateString.match(datePattern);
-  
+
     if (!match) {
       throw new Error("Invalid date format");
     }
-  
+
     const [_, year, day, month] = match;
-  
+
     // Convert the month name to its numeric equivalent
     const monthNumber = months[month.trim().toLowerCase()];
-  
+
     if (!monthNumber) {
       throw new Error("Invalid month name");
     }
-  
+
     // Return the date in the format "dd.mm.yyyy"
     return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
   }
@@ -97,7 +97,7 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
         timeLimit: data.timelimit,
         treasuryaccount27: data.treasuryaccount27,
         address: data.address,
-        // Ensure this is assigned
+        validityperiod: data.validityperiod,
         taskDate: data.taskdate,
         taskTime: data.tasktime,
         accountNumber: removeSpaces(data.accountnumber), // Ensure this is assigned
@@ -259,22 +259,32 @@ function ChangeShartnoma({ data, taskss }: { data: any; taskss: any }) {
           <TextField
             id="contractNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
-            sx={{ width: "30%" }}
+            sx={{ width: "20%" }}
+            type="number"
             value={value.contractNumber || ""}
             onChange={handleChangeValue}
             variant="outlined"
-            type="number"
             name="contractNumber"
             autoComplete="off"
           />
           <TextField
             id="contractDate"
             label={latinToCyrillic("Shartnoma Sanasi")}
-            sx={{ width: "30%" }}
+            sx={{ width: "25%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.contractDate || ""}
             name="contractDate"
+            autoComplete="off"
+          />
+          <TextField
+            id="validityperiod"
+            label={latinToCyrillic("Amal qilish muddati")}
+            sx={{ width: "25%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.validityperiod || ""}
+            name="validityperiod"
             autoComplete="off"
           />
           <TextField

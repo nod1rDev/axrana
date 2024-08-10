@@ -161,13 +161,13 @@ function CreateShartnoma() {
   const validationFields = [
     { id: "clientAccount", label: "Buyurtmachi Xisob Raqami", length: 20 },
     { id: "clientMFO", label: "Buyurtmachi MFO", length: 5 },
-    { id: "clientSTR", label: "Buyurtmachi STIR", length: 9 },
+
     { id: "treasuryAccount", label: "G'aznachilik xisobi", length: 25 },
     { id: "treasuryaccount27", label: "G'aznachilik xisobi 2", length: 27 },
   ];
 
   const getData = async () => {
-    const newVal = { clientName: value.clientName };
+    const newVal = { inn: value.clientSTR };
     const res = await searchByClintName(JWT, newVal);
     if (res.success) {
       dispatch(
@@ -201,7 +201,7 @@ function CreateShartnoma() {
           <TextField
             id="contractNumber"
             label={latinToCyrillic("Shartnoma Raqam")}
-            sx={{ width: "30%" }}
+            sx={{ width: "20%" }}
             type="number"
             value={value.contractNumber || ""}
             onChange={handleChangeValue}
@@ -212,11 +212,21 @@ function CreateShartnoma() {
           <TextField
             id="contractDate"
             label={latinToCyrillic("Shartnoma Sanasi")}
-            sx={{ width: "30%" }}
+            sx={{ width: "25%" }}
             onChange={handleChangeValue}
             variant="outlined"
             value={value.contractDate || ""}
             name="contractDate"
+            autoComplete="off"
+          />
+          <TextField
+            id="validityperiod"
+            label={latinToCyrillic("Amal qilish muddati")}
+            sx={{ width: "25%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.validityperiod || ""}
+            name="validityperiod"
             autoComplete="off"
           />
           <TextField
@@ -273,18 +283,17 @@ function CreateShartnoma() {
           <span>{latinToCyrillic("Buyurtmachi")}</span>
         </div>
         <div className="flex gap-4 mb-4">
-          <form className="w-[16.6%]" onSubmit={handleSubmit}>
-            <TextField
-              id="clientName"
-              label={latinToCyrillic("Buyurtmachi Nomi")}
-              sx={{ width: "100%" }}
-              onChange={handleChangeValue}
-              variant="outlined"
-              value={value.clientName || ""}
-              name="clientName"
-              autoComplete="off"
-            />
-          </form>
+          <TextField
+            id="clientName"
+            label={latinToCyrillic("Buyurtmachi Nomi")}
+            sx={{ width: "100%" }}
+            onChange={handleChangeValue}
+            variant="outlined"
+            value={value.clientName || ""}
+            name="clientName"
+            autoComplete="off"
+          />
+
           {count && (
             <>
               <TextField
@@ -298,6 +307,21 @@ function CreateShartnoma() {
                 multiline
                 autoComplete="off"
               />
+              <form className="w-[30%]" onSubmit={handleSubmit}>
+                <TextField
+                  id="clientSTR"
+                  label={latinToCyrillic("Buyurtmachi STIR")}
+                  sx={{ width: "100%" }}
+                  onChange={handleChangeValue}
+                  variant="outlined"
+                  value={value.clientSTR || ""}
+                  name="clientSTR"
+                  autoComplete="off"
+                  helperText={`${
+                    9 - (value.clientSTR?.length || 0)
+                  } ${latinToCyrillic("ta raqam kiriting")}`}
+                />
+              </form>
               {validationFields.map((field) => (
                 <TextField
                   key={field.id}

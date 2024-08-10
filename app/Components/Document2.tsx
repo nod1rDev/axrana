@@ -268,7 +268,7 @@ const Document2 = React.forwardRef(({ data, tasks, info }: any, ref: any) => {
               молиялаштириладиганлар учун шартнома ғазначилик бўлимлари
               томонидан рўйхатга олинган кундан кучга киради ва{" "}
               {data.validityperiod
-                ? data.validityperiod
+                ? data.validityperiod+" "
                 : "______йилнинг _______ "}{" "}
               кунигача амалда бўлади.
             </p>

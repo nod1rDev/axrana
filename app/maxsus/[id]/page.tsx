@@ -159,7 +159,7 @@ function page() {
                   kunidan
                   {" " + text?.date2 + " "}
                   kuniga qadar oʻtkazilgan ommaviy tadbirlarda jamoat tartibini
-                  saqlashda ishtirok etgan harbiy xizmatchilar
+                  saqlash xizmati uchun tuzilgan shartnomalar
                 </div>
                 <div className="w-full text-center">RO'YHATI</div>
               </div>

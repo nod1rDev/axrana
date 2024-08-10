@@ -326,30 +326,14 @@ export default function Users() {
                                 </IconButton>
                                 <IconButton
                                   onClick={() => {
-                                    if (row.FoydalanuvchiNomi !== "98162") {
-                                      if (row.FoydalanuvchiNomi !== "98157") {
-                                        if (
-                                          row.FoydalanuvchiNomi !==
-                                          "Toshkent Shahar IIBB"
-                                        ) {
-                                          if (
-                                            row.FoydalanuvchiNomi !==
-                                            "Тошкент шаҳар МГ"
-                                          )
-                                            dispatch(
-                                              setUserModal({
-                                                type: 2,
-                                                open: true,
-                                                id: row.id,
-                                                name: row.FoydalanuvchiNomi,
-                                              })
-                                            );
-                                        } else {
-                                        }
-                                      } else {
-                                      }
-                                    } else {
-                                    }
+                                    dispatch(
+                                      setUserModal({
+                                        type: 2,
+                                        open: true,
+                                        id: row.id,
+                                        name: row.FoydalanuvchiNomi,
+                                      })
+                                    );
                                   }}
                                   aria-label="delete"
                                   size="medium"

@@ -434,7 +434,7 @@ function page() {
                     кундан кучга киради ва{" "}
                     {data.validityperiod
                       ? data.validityperiod
-                      : "______йилнинг _______ "}{" "}
+                      : "______йилнинг _______  " + " "}{" "}
                     кунигача амалда бўлади.
                   </p>
                   <p className="mb-0">
@@ -824,7 +824,7 @@ function page() {
                     кундан кучга киради ва{" "}
                     {data.validityperiod
                       ? data.validityperiod
-                      : "______йилнинг _______ "}{" "}
+                      : "______йилнинг _______ " + " "}{" "}
                     кунигача амалда бўлади.
                   </p>
                   <p className="mb-0">

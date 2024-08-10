@@ -448,7 +448,7 @@ function CreateShartnoma() {
             onClick={handleAddOrgan}
             startIcon={<AddIcon />}
           >
-            {latinToCyrillic("Organ")}
+            {latinToCyrillic("Bo'lim")}
           </Button>
         </div>
         <div className="flex justify-end">

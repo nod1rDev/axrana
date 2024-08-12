@@ -61,10 +61,10 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
                   {formatNumber(item.allmoney)}
                 </td>
                 <td className="border border-[#000] w-[8%] text-center">
-                  {item.pay ? formatNumber(item.allmoney) : 0}
+                  {formatNumber(item.D_T)}
                 </td>
                 <td className="border border-[#000] w-[8%] text-center">
-                  {!item.pay ? formatNumber(item.allmoney) : 0}
+                  {formatNumber(item.K_R_T)}
                 </td>
               </tr>
             ))}

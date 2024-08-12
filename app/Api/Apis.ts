@@ -265,6 +265,35 @@ export const filterContract = async (JWT: any, value: any) => {
 
   return data;
 };
+export const filterContract2 = async (JWT: any, id: any, value: any) => {
+  const res = await fetch(URL + "/batalon/tasks/filter/by/date/" + id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const filterContract3 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/batalon/tasks/all/tasks/filter/by/date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 
 export const getAllContract = async (JWT: any, page: any, limet: any) => {
   const res = await fetch(URL + `/contract/get?page=${page}&limit=${limet}`, {
@@ -687,6 +716,30 @@ export const getByIdComan2 = async (JWT: any, id: any) => {
   const data = await res.json();
   return data;
 };
+export const getByIdComan3 = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/batalon/tasks/get/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getByIdComan4 = async (JWT: any) => {
+  const res = await fetch(URL + "/batalon/tasks/all/tasks", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
 
 export const exel1 = async (JWT: any, id: any, percent: any) => {
   const res = await fetch(
@@ -781,6 +834,34 @@ export const createAcount = async (JWT: any, value: any) => {
   });
 
   const data = await res.json();
+
+  return data;
+};
+export const excelBat = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/batalon/tasks/export/to/excel", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ data: value }),
+  });
+
+  const data = await res.blob();
+
+  return data;
+};
+export const excelBat2 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/batalon/tasks/all/tasks/exports/to/excel", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify({ data: value }),
+  });
+
+  const data = await res.blob();
 
   return data;
 };
@@ -1376,5 +1457,17 @@ export const deltePushWorker = async (JWT: any, id: any, task_id: any) => {
 
   const data = await res.json();
 
+  return data;
+};
+export const getBalalon = async (JWT: any) => {
+  const res = await fetch(URL + "/worker/get/all/batalyon", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
   return data;
 };

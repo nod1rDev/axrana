@@ -7,7 +7,7 @@ import TokenIcon from "@mui/icons-material/Token";
 import StorageIcon from "@mui/icons-material/Storage";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter, usePathname } from "next/navigation";
-
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 export default function MenuBar2() {
   const router = useRouter();
   const pathname = usePathname();
@@ -17,6 +17,7 @@ export default function MenuBar2() {
     // { path: "/main", label: "батальон умумий ҳисобот", icon: <DnsIcon /> },
     { path: "/maxsus", label: "Бригада ҳисобот", icon: <TokenIcon /> },
     { path: "/otchot", label: "батальон ҳисобот", icon: <StorageIcon /> },
+    { path: "/new", label: "Батальон кесимида", icon: <Diversity3Icon /> },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

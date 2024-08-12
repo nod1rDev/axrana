@@ -3,7 +3,7 @@ import WorkerTab from "./WorkerTab";
 import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 
 function WorkerAndBatalyon({ data, sal }: { data: any; sal?: boolean }) {
-  console.log(data);
+
 
   return (
     <div className="w-full">

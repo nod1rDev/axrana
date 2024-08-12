@@ -58,27 +58,7 @@ function page() {
   const handlePrint = useReactToPrint({
     content: (): any => componentRef.current,
   });
-  const deleteData = async () => {
-    const res = await deleteData2(JWT, id);
-    if (res.success) {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic("Otchot ochirlidi"),
-          status: "success",
-        })
-      );
-      router.push("/maxsus");
-    } else {
-      dispatch(
-        alertChange({
-          open: true,
-          message: latinToCyrillic(res.message),
-          status: "error",
-        })
-      );
-    }
-  };
+
   const [search, setSearch] = useState(false);
   const [value, setValue] = useState({
     date1: "",
@@ -122,8 +102,18 @@ function page() {
 
   const getSearchData = async () => {
     const res = await filterContract2(JWT, id, value);
-
-    setData(res);
+    console.log(res);
+    if (res.success) {
+      setData(res.data);
+    } else {
+      dispatch(
+        alertChange({
+          open: true,
+          message: latinToCyrillic(res.message),
+          status: "error",
+        })
+      );
+    }
   };
   const searchData = () => {
     setSearch(!search);

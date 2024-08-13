@@ -28,6 +28,7 @@ function Page() {
   const modal = useSelector((s: any) => s.tip.modal2);
   const getData = async () => {
     const res = await getContractById(JWT, id);
+
     const payy = res.data[0].ispay;
     setPayment(payy);
     setData(res);
@@ -40,13 +41,10 @@ function Page() {
     return input.replace(/-/g, "");
   }
 
-  function formatDate(dateString: string) {
-    if (dateString) {
-      // Sana satrini bo'sh joy va tire orqali bo'linadi
-      const [dayMonth, year] = dateString.split(" ");
-      const [day, month] = dayMonth.split("-");
-
-      const monthMap: { [key: string]: string } = {
+  function formatDate(dateString: string): string {
+    if (dateString?.length > 0) {
+      // Mapping of month names from Cyrillic to numeric format
+      const months: { [key: string]: string } = {
         январь: "01",
         февраль: "02",
         март: "03",
@@ -61,14 +59,29 @@ function Page() {
         декабрь: "12",
       };
 
-      const monthNumber = monthMap[month];
+      // Regular expression to match the input format
+      const datePattern = /^(\d{4})-йил\s+(\d{1,2})-(\D+)$/;
 
-      // "йил" so'zini olib tashlash va yildagi har qanday "-" belgilarini olib tashlash
-      const cleanedYear = removeHyphens(year.replace("йил", ""));
+      const match = dateString.match(datePattern);
 
-      return `${day}.${monthNumber}.${cleanedYear}`;
+      if (!match) {
+        throw new Error("Invalid date format");
+      }
+
+      const [_, year, day, month] = match;
+
+      // Convert the month name to its numeric equivalent
+      const monthNumber = months[month.trim().toLowerCase()];
+
+      if (!monthNumber) {
+        throw new Error("Invalid month name");
+      }
+
+      // Return the date in the format "dd.mm.yyyy"
+      return `${day.padStart(2, "0")}.${monthNumber}.${year}`;
+    } else {
+      return dateString;
     }
-    return "";
   }
   useEffect(() => {
     const pureDate = formatDate(modal.sana);

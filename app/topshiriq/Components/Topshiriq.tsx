@@ -195,6 +195,7 @@ function Topshiriq() {
             <TopshiriqCard key={e.id} click={true} data={e} />
           ))}
       </div>
+      
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         component="div"

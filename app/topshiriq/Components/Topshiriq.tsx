@@ -55,6 +55,7 @@ function Topshiriq() {
 
   const getSearchData = async () => {
     const res = await searchTasks(JWT, value);
+    setData2(res);
     setData(res.data);
   };
 
@@ -197,7 +198,7 @@ function Topshiriq() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 50, 100]}
         component="div"
-        count={data ? data.length : 0}
+        count={data2 ? data2.count : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

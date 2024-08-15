@@ -307,7 +307,7 @@ function Shartnoma() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 20, 50, 100]}
           component="div"
-          count={shartnomalar ? shartnomalar.length : 0}
+          count={data ? data.count : 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

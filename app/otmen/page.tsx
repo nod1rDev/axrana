@@ -19,6 +19,7 @@ import { latinToCyrillic } from "@/app/tip/add/Components/lotin";
 import {
   deleteData2,
   excel23,
+  excel24,
   exel1,
   filterContract20,
   filterContract3,
@@ -80,7 +81,7 @@ function page() {
   };
   const downloadExcel = async () => {
     try {
-      const excelBlob = await excel23(JWT, id);
+      const excelBlob = await excel24(JWT, data);
 
       // URL yaratish
       const url = window.URL.createObjectURL(excelBlob);
@@ -166,13 +167,7 @@ function page() {
                 >
                   {latinToCyrillic("O'chirish")}
                 </Button> */}
-                {/* <Button
-                  onClick={downloadExcel}
-                  startIcon={<CloudDownloadIcon />}
-                  variant="contained"
-                >
-                  {"Excel"}
-                </Button> */}
+
                 <div className="flex  items-center gap-4 mr-10">
                   <TextField
                     id="date1"
@@ -216,6 +211,13 @@ function page() {
                     </IconButton>
                   )}
                 </div>
+                <Button
+                  onClick={downloadExcel}
+                  startIcon={<CloudDownloadIcon />}
+                  variant="contained"
+                >
+                  {"Excel"}
+                </Button>
                 <Button
                   onClick={handlePrint}
                   color="success"

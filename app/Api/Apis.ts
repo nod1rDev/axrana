@@ -809,6 +809,20 @@ export const excel23 = async (JWT: any, id: any) => {
   return data;
 };
 
+export const excel24 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/not/pay/contracts/import/to/excel", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.blob();
+  return data;
+};
+
 export const getExcel = async (JWT: any) => {
   const res = await fetch(URL + "/worker_task/for/excel/create/page", {
     method: "GET",

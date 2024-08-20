@@ -227,9 +227,8 @@ function page() {
               </div>
             </div>
 
-            <div className="container rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
-              <div className="w-[90%] mb-20 flex flex-col font-bold gap-1 mx-auto text-2xl"></div>
-              <div className="w-[95%] mx-auto flex gap-10 flex-col">
+            <div className=" rounded-lg  bg-[#f4f3ee] px-6 py-4 mx-auto p-4  flex flex-col">
+              <div className="w-[100%] mx-auto flex gap-10 flex-col">
                 <WorkerTab here={true} data={data} />
               </div>
             </div>

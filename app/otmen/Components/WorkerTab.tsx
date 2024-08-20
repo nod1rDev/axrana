@@ -15,7 +15,6 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
       setPayContracts(filt1);
       setNotPayContracts(filt2);
     }
-    console.log(data);
   }, [data]);
 
   return (
@@ -41,7 +40,16 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <th className="border border-[#000] font-[500] text-center w-[10%]">
               {latinToCyrillic("Shartnoma summasi")}
             </th>
-           
+            {data?.battalions?.map((e: any) => (
+              <>
+                <th className="border border-[#000] text-[13px] font-[500] w-[3%] text-center">
+                  {e.username + "-" + latinToCyrillic("xodimlar soni")}
+                </th>
+                <th className="border border-[#000] text-[13px] font-[500] text-center w-[3%]">
+                  {e.username + "-" + latinToCyrillic("shartnoma summasi")}
+                </th>
+              </>
+            ))}
           </tr>
         </thead>
       )}
@@ -66,11 +74,18 @@ const WorkerTab = ({ data, here }: { data: any; here: boolean }) => {
             <td className="border border-[#000] w-[10%] text-center">
               {formatNumber(item.allmoney)}
             </td>
-            
+            {item?.tasks?.map((itemm: any) => (
+              <>
+                <td className="border border-[#000] w-[3%] text-center">
+                  {itemm.workernumber}
+                </td>
+                <td className="border border-[#000] w-[3%] text-center">
+                  {itemm.allmoney}
+                </td>
+              </>
+            ))}
           </tr>
         ))}
-
-        
       </tbody>
     </table>
   );

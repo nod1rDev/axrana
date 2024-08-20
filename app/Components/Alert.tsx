@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +32,13 @@ export default function Alertt() {
           onClose={handleClose}
           severity={alertInfo.status}
           variant="filled"
-          sx={{ width: "100%", fontSize: "24px" }}
+          sx={{
+            width: "100%",
+            fontSize: "24px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "24px",
+            },
+          }}
         >
           {alertInfo.message}
         </Alert>

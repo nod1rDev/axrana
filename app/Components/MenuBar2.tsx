@@ -8,6 +8,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter, usePathname } from "next/navigation";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import DangerousIcon from "@mui/icons-material/Dangerous";
 import Link from "next/link";
 export default function MenuBar2() {
   const router = useRouter();
@@ -22,6 +23,11 @@ export default function MenuBar2() {
       path: "/new",
       label: "Батальон кесимида",
       icon: <FiberManualRecordIcon />,
+    },
+    {
+      path: "/otmen",
+      label: "КР-Т шартномалар",
+      icon: <DangerousIcon />,
     },
   ];
 
@@ -68,7 +74,6 @@ export default function MenuBar2() {
               <Link href={e.path} key={e.path}>
                 <Button
                   key={e.path}
-               
                   disableRipple
                   className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 justify-start ${
                     pathname === e.path

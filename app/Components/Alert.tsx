@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as React from "react";
 
 import Snackbar from "@mui/material/Snackbar";
@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { alertClose } from "../Redux/ShaxsiySlice";
 
 export default function Alertt() {
-
   const alertInfo = useSelector((s: any) => s.shax.alert);
 
   const dispatch = useDispatch();
@@ -34,7 +33,7 @@ export default function Alertt() {
           onClose={handleClose}
           severity={alertInfo.status}
           variant="filled"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", fontSize: "24px" }}
         >
           {alertInfo.message}
         </Alert>

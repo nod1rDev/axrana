@@ -294,6 +294,20 @@ export const filterContract3 = async (JWT: any, value: any) => {
 
   return data;
 };
+export const filterContract20 = async (JWT: any, value: any) => {
+  const res = await fetch(URL + "/not/pay/contracts/filter/by/date", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + JWT,
+    },
+    body: JSON.stringify(value),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 
 export const getAllContract = async (JWT: any, page: any, limet: any) => {
   const res = await fetch(URL + `/contract/get?page=${page}&limit=${limet}`, {
@@ -706,6 +720,18 @@ export const getComand2 = async (JWT: any, page: any, limit: any) => {
 
 export const getByIdComan2 = async (JWT: any, id: any) => {
   const res = await fetch(URL + "/special/get/batalyon/and/contracts/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getOtmen = async (JWT: any) => {
+  const res = await fetch(URL + "/not/pay/contracts/get/all", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,

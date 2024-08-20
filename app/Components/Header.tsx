@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import SecurityIcon from "@mui/icons-material/Security";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
@@ -15,7 +15,6 @@ import Link from "next/link";
 
 export default function Header() {
   const admin = useSelector((state: any) => state.auth.admin);
-  const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -52,11 +51,6 @@ export default function Header() {
     }
   }, [pathname, menuListAdmin]);
 
-  const handleClick = (path: string) => {
-    setActive(path);
-    router.push(path);
-  };
-
   const AuthOut = () => {
     sessionStorage.setItem("token", "out");
     dispatch(puJWT("out"));
@@ -82,20 +76,21 @@ export default function Header() {
       <div className="min-w-[300px] h-[1px] bg-white my-4"></div>
       <div className="flex flex-col px-3 gap-4">
         {menuListAdmin.map((e) => (
-          <button
-            key={e.path}
-            onClick={() => handleClick(e.path)}
-            className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
-              active === e.path
-                ? "bg-white text-[#1976D2] transform scale-105"
-                : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
-            }`}
-          >
-            {e.icon}
-            <h1 className="text-[20px] font-bold text-center">
-              {latinToCyrillic(e.name)}
-            </h1>
-          </button>
+          <Link href={e.path} key={e.path}>
+            <div
+              onClick={() => setActive(e.path)}
+              className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
+                active === e.path
+                  ? "bg-white text-[#1976D2] transform scale-105"
+                  : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
+              }`}
+            >
+              {e.icon}
+              <h1 className="text-[20px] font-bold text-center">
+                {latinToCyrillic(e.name)}
+              </h1>
+            </div>
+          </Link>
         ))}
         {admin && (
           <div className="mb-0">

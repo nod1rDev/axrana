@@ -8,6 +8,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import { useRouter, usePathname } from "next/navigation";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import Link from "next/link";
 export default function MenuBar2() {
   const router = useRouter();
   const pathname = usePathname();
@@ -64,21 +65,23 @@ export default function MenuBar2() {
         {isMenuOpen && (
           <div className="mt-2">
             {menuItems.map((e) => (
-              <Button
-                key={e.path}
-                onClick={() => router.push(e.path)}
-                disableRipple
-                className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 justify-start ${
-                  pathname === e.path
-                    ? "bg-white text-[#1976D2] transform scale-105 pointer-events-none"
-                    : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
-                }`}
-              >
-                {e.icon}
-                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                  {e.label}
-                </span>
-              </Button>
+              <Link href={e.path} key={e.path}>
+                <Button
+                  key={e.path}
+               
+                  disableRipple
+                  className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 justify-start ${
+                    pathname === e.path
+                      ? "bg-white text-[#1976D2] transform scale-105 pointer-events-none"
+                      : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
+                  }`}
+                >
+                  {e.icon}
+                  <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+                    {e.label}
+                  </span>
+                </Button>
+              </Link>
             ))}
           </div>
         )}

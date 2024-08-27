@@ -1,4 +1,4 @@
-export const URL = "http://147.45.107.174:3002";
+export const URL = "http://localhost:3002";
 
 // Auth
 

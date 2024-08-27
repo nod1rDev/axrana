@@ -12,6 +12,7 @@ import MenuBar2 from "./MenuBar2";
 import { puJWT } from "../Redux/AuthSlice";
 import { latinToCyrillic } from "../tip/add/Components/lotin";
 import Link from "next/link";
+import InfoIcon from "@mui/icons-material/Info";
 
 export default function Header() {
   const admin = useSelector((state: any) => state.auth.admin);
@@ -36,18 +37,16 @@ export default function Header() {
     },
   ];
 
-  const [active, setActive] = React.useState<string>(menuListAdmin[0].path);
+  const [active, setActive] = React.useState<string>("");
 
   React.useEffect(() => {
-    if (pathname === "/") {
-      setActive(menuListAdmin[0].path);
+    const matchingMenuItem = menuListAdmin.find(
+      (item) => item.path === pathname
+    );
+    if (matchingMenuItem) {
+      setActive(matchingMenuItem.path);
     } else {
-      const matchingMenuItem = menuListAdmin.find(
-        (item) => item.path === pathname
-      );
-      if (matchingMenuItem) {
-        setActive(matchingMenuItem.path);
-      }
+      setActive(pathname);
     }
   }, [pathname, menuListAdmin]);
 
@@ -65,7 +64,7 @@ export default function Header() {
             <img
               className="w-[54px] h-[54px] rounded-[999px]"
               src="/icon-192x192.png"
-              alt=""
+              alt="Milliy Gvardiya"
             />
           </div>
           <h1 className="text-[26px] font-bold">
@@ -93,19 +92,33 @@ export default function Header() {
           </Link>
         ))}
         {admin && (
-          <div className="mb-0">
-            <MenuBar />
-          </div>
+          <>
+            <div className="mb-0">
+              <MenuBar />
+            </div>
+            <div className="mb-0">
+              <MenuBar2 />
+            </div>
+          </>
         )}
-        {admin && (
-          <div className="mb-5">
-            <MenuBar2 />
+        <Link href={"/info"}>
+          <div
+            onClick={() => setActive("/info")}
+            className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
+              active === "/info"
+                ? "bg-white text-[#1976D2] transform scale-105"
+                : "bg-[#1976D2] text-white hover:bg-[#fff] hover:text-[#1976D2] hover:scale-105"
+            }`}
+          >
+            <InfoIcon />
+            <h1 className="text-[20px] font-bold text-center">
+              {latinToCyrillic("Yuriqnoma")}
+            </h1>
           </div>
-        )}
-
+        </Link>
         <button
           onClick={AuthOut}
-          className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}
+          className={`flex gap-6 mt-10 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}
         >
           <LogoutIcon />
           <h1 className="text-[20px] font-bold text-center">

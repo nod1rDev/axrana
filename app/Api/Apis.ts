@@ -1,4 +1,4 @@
-export const URL = "http://localhost:3002";
+export const URL = "http://147.45.107.174:3002";
 
 // Auth
 
@@ -1501,6 +1501,45 @@ export const deltePushWorker = async (JWT: any, id: any, task_id: any) => {
 };
 export const getBalalon = async (JWT: any) => {
   const res = await fetch(URL + "/worker/get/all/batalyon", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+export const getInfos = async (JWT: any) => {
+  const res = await fetch(URL + "/info/get/all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getInfosByID = async (JWT: any, id: any, range: any) => {
+  const res = await fetch(URL + "/info/get/" + id, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + JWT,
+      "Content-Type": "application/json",
+      Range: range,
+    },
+  });
+
+  const data = await res.json();
+  return data;
+};
+
+export const getInfosID = async (JWT: any, id: any) => {
+  const res = await fetch(URL + "/info/get/info/" + id, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + JWT,

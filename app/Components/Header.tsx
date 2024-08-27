@@ -101,7 +101,7 @@ export default function Header() {
             </div>
           </>
         )}
-        <Link href={"/info"}>
+        {/* <Link href={"/info"}>
           <div
             onClick={() => setActive("/info")}
             className={`flex gap-6 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 ${
@@ -115,7 +115,7 @@ export default function Header() {
               {latinToCyrillic("Yuriqnoma")}
             </h1>
           </div>
-        </Link>
+        </Link> */}
         <button
           onClick={AuthOut}
           className={`flex gap-6 mt-10 items-center px-4 w-full py-2 rounded-xl transition-all duration-300 bg-red-600 text-white hover:bg-red-700 transform hover:scale-105`}

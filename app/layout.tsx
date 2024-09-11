@@ -29,10 +29,18 @@ export default function RootLayout({
             rel="stylesheet"
           />
         </head>
-        <body id="body" className={`max-w-full mx-auto ${inter.className}`} style={{ fontFamily: "'Times New Roman', serif" }}>
-          <Prodected>
+        <body
+          id="body"
+          className={`max-w-full mx-auto ${inter.className}`}
+          style={{ fontFamily: "'Times New Roman', serif" }}
+        >
+          {/* <Prodected>
             <Main>{children}</Main>
-          </Prodected>
+          </Prodected> */}
+
+          <div className="w-full h-full flex justify-center items-center text-[30px] font-bold">
+            Sayt Vaqtinchalik ishlamayapti
+          </div>
           <Alertt />
         </body>
       </html>

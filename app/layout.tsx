@@ -34,13 +34,13 @@ export default function RootLayout({
           className={`max-w-full mx-auto ${inter.className}`}
           style={{ fontFamily: "'Times New Roman', serif" }}
         >
-          {/* <Prodected>
+          <Prodected>
             <Main>{children}</Main>
-          </Prodected> */}
+          </Prodected>
 
-          <div className="w-full h-full flex justify-center items-center text-[30px] font-bold">
+          {/* <div className="w-full h-full flex justify-center items-center text-[30px] font-bold">
             Sayt Vaqtinchalik ishlamayapti
-          </div>
+          </div> */}
           <Alertt />
         </body>
       </html>
